@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:protto_customer_app/screens/services_screen.dart';
 
 import '../utils/SizeConfig.dart';
 
@@ -97,10 +98,16 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
-                                      Container(
-                                        width: 65,
-                                        height: 65,
-                                        color: Colors.blueGrey,
+                                      InkWell(
+                                        child: Container(
+                                          width: 50,
+                                          height: 50,
+                                          color: Colors.blueGrey,
+                                        ),
+                                        onTap: (){
+                                          Navigator.of(context).
+                                          push(pageRouteBuilder());
+                                        },
                                       ),
                                       Text(
                                         scheduleService,
@@ -120,8 +127,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
                                       Container(
-                                        width: 65,
-                                        height: 65,
+                                        width: 50,
+                                        height: 50,
                                         color: Colors.blueGrey,
                                       ),
                                       Text(
@@ -142,8 +149,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
                                       Container(
-                                        width: 65,
-                                        height: 65,
+                                        width: 50,
+                                        height: 50,
                                         color: Colors.blueGrey,
                                       ),
                                       Text(
@@ -168,8 +175,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
                                       Container(
-                                        width: 65,
-                                        height: 65,
+                                        width: 50,
+                                        height: 50,
                                         color: Colors.blueGrey,
                                       ),
                                       Text(
@@ -190,8 +197,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
                                       Container(
-                                        width: 65,
-                                        height: 65,
+                                        width: 50,
+                                        height: 50,
                                         color: Colors.blueGrey,
                                       ),
                                       Text(
@@ -212,8 +219,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
                                       Container(
-                                        width: 65,
-                                        height: 65,
+                                        width: 50,
+                                        height: 50,
                                         color: Colors.blueGrey,
                                       ),
                                       Text(
@@ -288,4 +295,34 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       ),
     );
   }
+
+
+  // ------------------- PageRout ------------//
+  PageRouteBuilder pageRouteBuilder(){
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+        return ServicesScreen();
+      },
+      transitionDuration:
+      Duration(
+          milliseconds: 500
+      ),
+      transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
 }
