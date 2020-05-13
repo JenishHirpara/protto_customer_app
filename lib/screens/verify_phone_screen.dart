@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:protto_customer_app/screens/dashboard_screen.dart';
+
+import './navigationBarScreen.dart';
 
 class VerifyPhoneScreen extends StatelessWidget {
   static const routeName = '/verify-phone';
@@ -83,8 +84,7 @@ class VerifyPhoneScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
-                  Navigator.of(context).
-                  push(pageRouteBuilder());
+                  Navigator.of(context).push(pageRouteBuilder());
                 },
               ),
             ),
@@ -94,16 +94,15 @@ class VerifyPhoneScreen extends StatelessWidget {
     );
   }
 
-  PageRouteBuilder pageRouteBuilder(){
+  PageRouteBuilder pageRouteBuilder() {
     return PageRouteBuilder(
-      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-        return DashBoardScreen();
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return NavigationBarScreen();
       },
-      transitionDuration:
-      Duration(
-          milliseconds: 500
-      ),
-      transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
           position: new Tween<Offset>(
             begin: const Offset(1.0, 0.0),
@@ -120,7 +119,4 @@ class VerifyPhoneScreen extends StatelessWidget {
       },
     );
   }
-
-
-
 }
