@@ -65,35 +65,45 @@ class _ServicesScreenState extends State<ServicesScreen> {
             labelColor: orangeColor,
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: bottomNavBarIndex,
-          backgroundColor: Colors.white,
-          type: BottomNavigationBarType.fixed,
-          elevation: 5,
-          iconSize: 30,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.home),
-              title: Text(''),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                width: 3.0,
+                color: Color.fromRGBO(241, 93, 36, 1),
+              ),
             ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.search),
-              title: Text(''),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.event_note),
-              title: Text(''),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.wifi_tethering),
-              title: Text(''),
-            )
-          ],
-          onTap: (int newIndex) {
-            setState(() {
-              bottomNavBarIndex = newIndex;
-            });
-          },
+          ),
+          child: BottomNavigationBar(
+            currentIndex: bottomNavBarIndex,
+            backgroundColor: Colors.white,
+            type: BottomNavigationBarType.fixed,
+            elevation: 5,
+            iconSize: 30,
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.home),
+                title: Text(''),
+              ),
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.search),
+                title: Text(''),
+              ),
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.event_note),
+                title: Text(''),
+              ),
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.flash_on),
+                title: Text(''),
+              )
+            ],
+            onTap: (int newIndex) {
+              setState(() {
+                bottomNavBarIndex = newIndex;
+              });
+            },
+          ),
         ),
         body: Padding(
           padding: EdgeInsets.all(10),

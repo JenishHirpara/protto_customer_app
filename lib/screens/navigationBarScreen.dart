@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../screens/order_details_screen.dart';
 import '../screens/dashboard_screen.dart';
@@ -17,11 +18,19 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
       {
         'page': DashBoardScreen(),
         'appbar': AppBar(
-          title: Text(
-            'Yamaha FZ',
-            style: TextStyle(
-              color: Colors.deepOrange,
-              fontSize: 20,
+          title: GestureDetector(
+            onTap: () => showPopup(),
+            child: Text(
+              'Yamaha FZ',
+              style: GoogleFonts.montserrat(
+                color: Color.fromRGBO(241, 93, 36, 1),
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
+              ),
+              // style: TextStyle(
+              //   color: Colors.deepOrange,
+              //   fontSize: 20,
+              // ),
             ),
           ),
           leading: Container(),
@@ -58,9 +67,10 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
         'appbar': AppBar(
           title: Text(
             'Order Details',
-            style: TextStyle(
-              color: Colors.deepOrange,
-              fontSize: 20,
+            style: GoogleFonts.montserrat(
+              color: Color.fromRGBO(241, 93, 36, 1),
+              fontSize: 24,
+              fontWeight: FontWeight.w500,
             ),
           ),
           leading: Container(),
@@ -76,6 +86,109 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
     super.initState();
   }
 
+  Future showPopup() {
+    return showDialog(
+      context: context,
+      builder: (ctx) => Dialog(
+        child: Container(
+          height: 210,
+          child: Column(
+            children: <Widget>[
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.clear,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 4,
+                    child: Container(
+                      child: Icon(
+                        Icons.motorcycle,
+                        size: 75,
+                        color: Color.fromRGBO(150, 150, 150, 1),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 7,
+                    child: Container(
+                      height: 110,
+                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'My Bike',
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: Color.fromRGBO(100, 100, 100, 1),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text('MH 02 KG 0904'),
+                          SizedBox(height: 10),
+                          Container(
+                            width: 150,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Theme.of(context).primaryColor,
+                                width: 1,
+                              ),
+                            ),
+                            child: RaisedButton(
+                              color: Colors.white,
+                              child: Text('Manage'),
+                              elevation: 0,
+                              onPressed: () {},
+                            ),
+                          ),
+                          SizedBox(height: 15),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Divider(
+                color: Colors.black,
+                endIndent: 10,
+                indent: 10,
+                thickness: 1,
+                height: 0,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                  child: FlatButton(
+                    child: Text(
+                      '+ Add New Bike',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 16,
+                      ),
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
@@ -87,23 +200,34 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
     return Scaffold(
       appBar: _pages[_selectedPageIndex]['appbar'],
       body: _pages[_selectedPageIndex]['page'],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _selectPage,
-        backgroundColor: Colors.white,
-        type: BottomNavigationBarType.fixed,
-        elevation: 5,
-        iconSize: 30,
-        currentIndex: _selectedPageIndex,
-        //type: BottomNavigationBarType.shifting,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: new Icon(Icons.home), title: Text('')),
-          BottomNavigationBarItem(
-              icon: new Icon(Icons.search), title: Text('')),
-          BottomNavigationBarItem(
-              icon: new Icon(Icons.event_note), title: Text('')),
-          BottomNavigationBarItem(
-              icon: new Icon(Icons.flash_on), title: Text(''))
-        ],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              width: 3.0,
+              color: Color.fromRGBO(241, 93, 36, 1),
+            ),
+          ),
+        ),
+        child: BottomNavigationBar(
+          onTap: _selectPage,
+          backgroundColor: Colors.white,
+          type: BottomNavigationBarType.fixed,
+          elevation: 5,
+          iconSize: 30,
+          currentIndex: _selectedPageIndex,
+          //type: BottomNavigationBarType.shifting,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: new Icon(Icons.home), title: Text('')),
+            BottomNavigationBarItem(
+                icon: new Icon(Icons.search), title: Text('')),
+            BottomNavigationBarItem(
+                icon: new Icon(Icons.event_note), title: Text('')),
+            BottomNavigationBarItem(
+                icon: new Icon(Icons.flash_on), title: Text(''))
+          ],
+        ),
       ),
     );
   }

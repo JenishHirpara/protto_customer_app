@@ -15,8 +15,8 @@ class HomeScreen extends StatelessWidget {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 40),
               width: double.infinity,
-              child: Image.network(
-                'https://protto.in/mumbai/images/protto-logo.png',
+              child: Image.asset(
+                'assets/images/protto-logo.png',
                 fit: BoxFit.cover,
               ),
             ),

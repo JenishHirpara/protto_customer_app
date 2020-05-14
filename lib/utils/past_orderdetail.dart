@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../providers/orders.dart';
 
@@ -36,9 +37,10 @@ class PastOrderDetail extends StatelessWidget {
                     SizedBox(width: 10),
                     Text(
                       order.name,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
+                      style: GoogleFonts.montserrat(
+                        color: Color.fromRGBO(241, 93, 36, 1),
                         fontSize: 20,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],

@@ -1,10 +1,114 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../providers/orders.dart';
 
 class ActiveOrderDetail extends StatelessWidget {
+  Future showPopup(context) {
+    return showDialog(
+      context: context,
+      builder: (ctx) => Dialog(
+        child: Container(
+          height: 210,
+          child: Column(
+            children: <Widget>[
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.clear,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 4,
+                    child: Container(
+                      child: Icon(
+                        Icons.motorcycle,
+                        size: 75,
+                        color: Color.fromRGBO(150, 150, 150, 1),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 7,
+                    child: Container(
+                      height: 110,
+                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'My Bike',
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: Color.fromRGBO(100, 100, 100, 1),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text('MH 02 KG 0904'),
+                          SizedBox(height: 10),
+                          Container(
+                            width: 150,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Theme.of(context).primaryColor,
+                                width: 1,
+                              ),
+                            ),
+                            child: RaisedButton(
+                              color: Colors.white,
+                              child: Text('Manage'),
+                              elevation: 0,
+                              onPressed: () {},
+                            ),
+                          ),
+                          SizedBox(height: 15),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Divider(
+                color: Colors.black,
+                endIndent: 10,
+                indent: 10,
+                thickness: 1,
+                height: 0,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                  child: FlatButton(
+                    child: Text(
+                      '+ Add New Bike',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 16,
+                      ),
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final order = Provider.of<ActiveOrderItem>(context);
@@ -33,11 +137,15 @@ class ActiveOrderDetail extends StatelessWidget {
                       color: Colors.grey,
                     ),
                     SizedBox(width: 10),
-                    Text(
-                      order.name,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 20,
+                    GestureDetector(
+                      onTap: () => showPopup(context),
+                      child: Text(
+                        order.name,
+                        style: GoogleFonts.montserrat(
+                          color: Color.fromRGBO(241, 93, 36, 1),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ],
