@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:protto_customer_app/screens/services_screen.dart';
 
+import './services_screen.dart';
 import '../utils/SizeConfig.dart';
 
 Color orangeColor = new Color(0xFFF69C7A);
@@ -104,10 +104,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                           height: 50,
                                           color: Colors.blueGrey,
                                         ),
-                                        onTap: (){
-                                          Navigator.of(context).
-                                          push(pageRouteBuilder());
-                                        },
+                                        onTap: () {},
                                       ),
                                       Text(
                                         scheduleService,
@@ -126,10 +123,16 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
-                                      Container(
-                                        width: 50,
-                                        height: 50,
-                                        color: Colors.blueGrey,
+                                      InkWell(
+                                        child: Container(
+                                          width: 50,
+                                          height: 50,
+                                          color: Colors.blueGrey,
+                                        ),
+                                        onTap: () {
+                                          Navigator.of(context)
+                                              .push(pageRouteBuilder());
+                                        },
                                       ),
                                       Text(
                                         regularServices,
@@ -296,18 +299,16 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     );
   }
 
-
-  // ------------------- PageRout ------------//
-  PageRouteBuilder pageRouteBuilder(){
+  // ------------------- PageRoute ------------//
+  PageRouteBuilder pageRouteBuilder() {
     return PageRouteBuilder(
-      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
         return ServicesScreen();
       },
-      transitionDuration:
-      Duration(
-          milliseconds: 500
-      ),
-      transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
           position: new Tween<Offset>(
             begin: const Offset(1.0, 0.0),
@@ -324,5 +325,4 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       },
     );
   }
-
 }

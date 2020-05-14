@@ -31,7 +31,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
             IconButton(
               icon: Icon(
                 Icons.person,
-                color: greyColor,
+                color: Colors.grey,
               ),
               onPressed: () {
                 // TODO Account icon on pressed...
@@ -40,7 +40,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
             IconButton(
               icon: Icon(
                 Icons.shopping_cart,
-                color: greyColor,
+                color: Colors.grey,
               ),
               onPressed: () {
                 // TODO Cart icon on pressed...

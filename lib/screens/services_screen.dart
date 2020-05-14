@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,29 +21,26 @@ class _ServicesScreenState extends State<ServicesScreen> {
         appBar: AppBar(
           leading: InkWell(
             child: Icon(
-              Icons.arrow_back_ios,
+              Icons.arrow_back,
               color: Colors.black,
             ),
-            onTap: (){
-              Navigator.of(context)
-                  .pop();
+            onTap: () {
+              Navigator.of(context).pop();
             },
           ),
           title: Text(
             'Yamaha FZ',
-            style: TextStyle(
-                color: orangeColor,
-                fontSize: 20
-            ),
+            style: TextStyle(color: orangeColor, fontSize: 20),
           ),
           backgroundColor: Colors.white,
+          elevation: 0,
           actions: <Widget>[
             IconButton(
               icon: Icon(
                 Icons.account_circle,
                 color: greyColor,
               ),
-              onPressed: (){
+              onPressed: () {
                 // TODO Account icon on pressed...
               },
             ),
@@ -53,7 +49,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                 Icons.shopping_cart,
                 color: greyColor,
               ),
-              onPressed: (){
+              onPressed: () {
                 // TODO Cart icon on pressed...
               },
             )
@@ -61,8 +57,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
           bottom: TabBar(
             tabs: [
               Tab(
-                text:
-                "Regular Service",
+                text: "Regular Service",
               ),
 //              Tab(text: "Tyre"),
 //              Tab(text: "Wash + Coat"),
@@ -70,50 +65,50 @@ class _ServicesScreenState extends State<ServicesScreen> {
             labelColor: orangeColor,
           ),
         ),
-
-        bottomNavigationBar: new BottomNavigationBar(
+        bottomNavigationBar: BottomNavigationBar(
           currentIndex: bottomNavBarIndex,
-          backgroundColor: greyColor,
+          backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           elevation: 5,
           iconSize: 30,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                icon: new Icon(Icons.home),
-                title: Text('')
+              icon: new Icon(Icons.home),
+              title: Text(''),
             ),
             BottomNavigationBarItem(
-                icon: new Icon(Icons.search),
-                title: Text('')
+              icon: new Icon(Icons.search),
+              title: Text(''),
             ),
             BottomNavigationBarItem(
-                icon: new Icon(Icons.event_note),
-                title: Text('')
+              icon: new Icon(Icons.event_note),
+              title: Text(''),
             ),
             BottomNavigationBarItem(
-                icon: new Icon(Icons.wifi_tethering),
-                title: Text('')
+              icon: new Icon(Icons.wifi_tethering),
+              title: Text(''),
             )
           ],
-          onTap: (int newIndex){
+          onTap: (int newIndex) {
             setState(() {
               bottomNavBarIndex = newIndex;
             });
           },
         ),
-        body: Padding(padding: EdgeInsets.all(10),
-        child: TabBarView(
+        body: Padding(
+          padding: EdgeInsets.all(10),
+          child: TabBarView(
             children: <Widget>[
-            regularServicesPage()
-        ],
-      )),
+              regularServicesPage(),
+            ],
+          ),
+        ),
       ),
     );
   }
 
   Widget regularServicesPage() {
     return GridView.count(
-        physics: BouncingScrollPhysics(),
         crossAxisCount: 2,
         children: new List<Widget>.generate(8, (index) {
           return new GridTile(
@@ -133,8 +128,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14,
-                                color: Colors.black
-                            ),
+                                color: Colors.black),
                           ),
                         ),
                         Padding(
@@ -144,8 +138,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                             style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
-                                color: orangeColor
-                            ),
+                                color: orangeColor),
                           ),
                         ),
                         SizedBox(
@@ -157,45 +150,46 @@ class _ServicesScreenState extends State<ServicesScreen> {
                             height: 50,
                             color: new Color(0xFFF0F0F0),
                             child: Center(
-                              child: FractionallySizedBox(
-                                widthFactor: 0.8,
-                                heightFactor: 0.5,
-                                child: Container(
-                                  width: 20,
-                                  height: 10,
-                                  color: (index == 2 || index == 3 || index == 6 || index == 7 ) ? new Color(0xFF4CAF50) : new Color(0xFFF15D24),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Icon(
-                                        Icons.add,
-                                        color: Colors.white
-                                      ),
-                                      Text(
-                                        (index == 2 || index == 3 || index == 6 || index == 7 ) ? 'ADDED' :
-                                        'ADD',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                child: FractionallySizedBox(
+                              widthFactor: 0.8,
+                              heightFactor: 0.5,
+                              child: Container(
+                                width: 20,
+                                height: 10,
+                                color: (index == 2 ||
+                                        index == 3 ||
+                                        index == 6 ||
+                                        index == 7)
+                                    ? new Color(0xFF4CAF50)
+                                    : new Color(0xFFF15D24),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(Icons.add, color: Colors.white),
+                                    Text(
+                                      (index == 2 ||
+                                              index == 3 ||
+                                              index == 6 ||
+                                              index == 7)
+                                          ? 'ADDED'
+                                          : 'ADD',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w500),
+                                    )
+                                  ],
                                 ),
-                              )
-                            ),
+                              ),
+                            )),
                           ),
                         )
                       ],
                     ),
-                  )
-              ),
+                  )),
             ),
           );
-        }
-        )
-    );
+        }));
   }
 }

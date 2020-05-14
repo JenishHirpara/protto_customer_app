@@ -28,7 +28,7 @@ class OrderDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  height: 160,
+                  height: 175,
                   child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
