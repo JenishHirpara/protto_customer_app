@@ -132,11 +132,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                             color: Colors.blueGrey,
                                           ),
                                           onTap: () {
-//                                            Navigator.of(context)
-//                                                .push(pageRouteBuilder());
-
                                             Navigator.of(context)
-                                                .push(jobsRoute());
+                                                .push(pageRouteBuilder());
                                           },
                                         ),
                                         Text(
@@ -311,31 +308,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     );
   }
 
-  PageRouteBuilder jobsRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation) {
-        return JobsCardScreen();
-      },
-      transitionDuration: Duration(milliseconds: 500),
-      transitionsBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation, Widget child) {
-        return SlideTransition(
-          position: new Tween<Offset>(
-            begin: const Offset(1.0, 0.0),
-            end: Offset.zero,
-          ).animate(animation),
-          child: new SlideTransition(
-            position: new Tween<Offset>(
-              begin: Offset.zero,
-              end: const Offset(-1.0, 0.0),
-            ).animate(secondaryAnimation),
-            child: child,
-          ),
-        );
-      },
-    );
-  }
+
 
   // ------------------- PageRoute ------------//
   PageRouteBuilder pageRouteBuilder() {

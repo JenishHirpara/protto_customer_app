@@ -21,6 +21,24 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        title: Text(
+            'Yamaha FZ',
+          style: TextStyle(
+            fontSize: 18,
+            color: orangeColor,
+            fontWeight: FontWeight.bold
+          ),
+        ),
+        leading: InkWell(
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+          onTap: (){
+            Navigator.of(context)
+                .pop(true);
+          },
+        )
       ),
       body: Container(
           width: SizeConfig.blockSizeHorizontal * 100,
@@ -33,17 +51,17 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                         minHeight: viewportConstraints.maxHeight,
                       ),
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                        padding: EdgeInsets.fromLTRB(40, 20, 40, 10),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
                               child: Text(
                                 'Pre-Booked Services',
+                                textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.w500,
                                     color: headingOneColor
 
@@ -57,12 +75,14 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
                                   Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
                                         'PRODRY',
+                                        textAlign: TextAlign.left,
                                         style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 16,
                                             fontWeight: FontWeight.w400,
                                             color: headingTwoColor
 
@@ -70,8 +90,9 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                       ),
                                       Text(
                                         'Regular Service',
+                                        textAlign: TextAlign.left,
                                         style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 14,
                                             fontWeight: FontWeight.normal,
                                             color: headingTwoColor
 
@@ -98,11 +119,14 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
                                     Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
                                           'Type 1',
+                                          textAlign: TextAlign.left,
                                           style: TextStyle(
-                                              fontSize: 18,
+                                              fontSize: 16,
                                               fontWeight: FontWeight.w400,
                                               color: headingTwoColor
 
@@ -110,8 +134,9 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                         ),
                                         Text(
                                           'Tyre',
+                                          textAlign: TextAlign.left,
                                           style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 14,
                                               fontWeight: FontWeight.normal,
                                               color: headingTwoColor
 
@@ -132,11 +157,11 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                 )
                             ),
                             Padding(
-                              padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                               child: Text(
                                 'Additional Services',
                                 style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.w500,
                                     color: headingOneColor
 
@@ -144,9 +169,9 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
+                              padding: EdgeInsets.fromLTRB(0, 5, 0, 20),
                               child: SizedBox(
-                                width: SizeConfig.blockSizeHorizontal * 200,
+                                width: SizeConfig.blockSizeHorizontal * 100,
                                 height: SizeConfig.blockSizeVertical * 40,
                                 child: ListView(
                                   children: <Widget>[
@@ -309,7 +334,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.fromLTRB(0, 5, 0, 10),
+                              padding: EdgeInsets.fromLTRB(0, 5, 0, 30),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -364,7 +389,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                 )
                             ),
                             Padding(
-                              padding: EdgeInsets.all(5),
+                              padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -375,6 +400,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                     height: 50,
                                     width: SizeConfig.blockSizeHorizontal * 35,
                                     child: RaisedButton(
+                                      color: Colors.white,
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(0.0),
                                           side: BorderSide(color: orangeColor)
@@ -400,9 +426,10 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                     height: 50,
                                     width : SizeConfig.blockSizeHorizontal * 35,
                                     child: RaisedButton(
+                                      color: Colors.white,
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(0.0),
-                                          side: BorderSide(color: orangeColor)
+                                          side: BorderSide(color: orangeColor),
                                       ),
                                       child: Text(
                                           'Contact Support',
@@ -428,6 +455,46 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                 );
               }
           )
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              width: 3.0,
+              color: Color.fromRGBO(241, 93, 36, 1),
+            ),
+          ),
+        ),
+        child: BottomNavigationBar(
+          currentIndex: bottomNavBarIndex,
+          backgroundColor: Colors.white,
+          type: BottomNavigationBarType.fixed,
+          elevation: 5,
+          iconSize: 30,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.home),
+              title: Text(''),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.search),
+              title: Text(''),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.event_note),
+              title: Text(''),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.flash_on),
+              title: Text(''),
+            )
+          ],
+          onTap: (int newIndex) {
+            setState(() {
+              bottomNavBarIndex = newIndex;
+            });
+          },
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:protto_customer_app/screens/jobs_card_screen.dart';
 
 import '../providers/orders.dart';
 
@@ -263,7 +264,10 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                         'Jobs',
                         style: TextStyle(color: Colors.white),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context)
+                            .push(jobsRoute());
+                      },
                       color: Theme.of(context).primaryColor,
                       elevation: 0,
                     ),
@@ -374,4 +378,31 @@ class SampleStepTile {
   Widget title;
   DateTime date;
   String time;
+}
+
+
+PageRouteBuilder jobsRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (BuildContext context, Animation<double> animation,
+        Animation<double> secondaryAnimation) {
+      return JobsCardScreen();
+    },
+    transitionDuration: Duration(milliseconds: 500),
+    transitionsBuilder: (BuildContext context, Animation<double> animation,
+        Animation<double> secondaryAnimation, Widget child) {
+      return SlideTransition(
+        position: new Tween<Offset>(
+          begin: const Offset(1.0, 0.0),
+          end: Offset.zero,
+        ).animate(animation),
+        child: new SlideTransition(
+          position: new Tween<Offset>(
+            begin: Offset.zero,
+            end: const Offset(-1.0, 0.0),
+          ).animate(secondaryAnimation),
+          child: child,
+        ),
+      );
+    },
+  );
 }
