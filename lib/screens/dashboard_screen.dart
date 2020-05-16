@@ -262,10 +262,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         padding: EdgeInsets.fromLTRB(10, 0, 0, 5),
                         child: Text(
                           'Popular Services',
-                          style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: new Color(0xffDADADA)),
+                          style: GoogleFonts.montserrat(
+                            color: Color.fromRGBO(112, 112, 112, 1),
+                            fontSize: 22,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                       swiperWidget(),
