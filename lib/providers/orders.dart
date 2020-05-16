@@ -6,6 +6,7 @@ class ActiveOrderItem with ChangeNotifier {
   final DateTime date;
   final String time;
   final String address;
+  final String number;
   String status;
 
   ActiveOrderItem({
@@ -14,6 +15,7 @@ class ActiveOrderItem with ChangeNotifier {
     @required this.date,
     @required this.time,
     @required this.address,
+    @required this.number,
     this.status,
   });
 }
@@ -40,6 +42,7 @@ class ActiveOrders with ChangeNotifier {
       date: DateTime.now(),
       time: '9am - 11am',
       address: '701 Landmark, MG Road, Vile Parle (E)',
+      number: 'MH 02 KG 0904',
       status: 'Picked Up',
     ),
   ];

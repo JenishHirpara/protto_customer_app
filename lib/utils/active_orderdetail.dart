@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../providers/orders.dart';
+import '../screens/active_order_screen.dart';
 
 class ActiveOrderDetail extends StatelessWidget {
   Future showPopup(context) {
@@ -109,12 +110,39 @@ class ActiveOrderDetail extends StatelessWidget {
     );
   }
 
+  // ------------------- PageRoute ------------//
+  PageRouteBuilder pageRouteBuilder(order) {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return ActiveOrderScreen(order);
+      },
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final order = Provider.of<ActiveOrderItem>(context);
     return Container(
       width: double.infinity,
-      height: 175,
+      height: 200,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.deepOrange,
@@ -154,15 +182,17 @@ class ActiveOrderDetail extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'Booking ID:',
-                      style: TextStyle(
+                      style: GoogleFonts.cantataOne(
+                        color: Color.fromRGBO(128, 128, 128, 1),
                         fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(100, 100, 100, 1),
                       ),
                     ),
                     SizedBox(width: 8),
                     Text(
                       order.id,
-                      style: TextStyle(color: Colors.grey),
+                      style: GoogleFonts.cantataOne(
+                        color: Colors.grey,
+                      ),
                     ),
                   ],
                 ),
@@ -171,15 +201,17 @@ class ActiveOrderDetail extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'Pickup Date:',
-                      style: TextStyle(
+                      style: GoogleFonts.cantataOne(
+                        color: Color.fromRGBO(128, 128, 128, 1),
                         fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(100, 100, 100, 1),
                       ),
                     ),
                     SizedBox(width: 8),
                     Text(
                       DateFormat('dd/MM/yy').format(order.date),
-                      style: TextStyle(color: Colors.grey),
+                      style: GoogleFonts.cantataOne(
+                        color: Colors.grey,
+                      ),
                     ),
                   ],
                 ),
@@ -188,33 +220,38 @@ class ActiveOrderDetail extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'Pickup Time:',
-                      style: TextStyle(
+                      style: GoogleFonts.cantataOne(
+                        color: Color.fromRGBO(128, 128, 128, 1),
                         fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(100, 100, 100, 1),
                       ),
                     ),
                     SizedBox(width: 8),
                     Text(
                       order.time,
-                      style: TextStyle(color: Colors.grey),
+                      style: GoogleFonts.cantataOne(
+                        color: Colors.grey,
+                      ),
                     ),
                   ],
                 ),
                 SizedBox(height: 4),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       'Pickup Address:',
-                      style: TextStyle(
+                      style: GoogleFonts.cantataOne(
+                        color: Color.fromRGBO(128, 128, 128, 1),
                         fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(100, 100, 100, 1),
                       ),
                     ),
                     SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         order.address,
-                        style: TextStyle(color: Colors.grey),
+                        style: GoogleFonts.cantataOne(
+                          color: Colors.grey,
+                        ),
                         softWrap: true,
                       ),
                     ),
@@ -231,7 +268,9 @@ class ActiveOrderDetail extends StatelessWidget {
               children: <Widget>[
                 IconButton(
                   icon: Icon(Icons.arrow_forward),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(pageRouteBuilder(order));
+                  },
                 ),
                 Column(
                   children: <Widget>[

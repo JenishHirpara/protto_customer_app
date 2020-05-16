@@ -12,7 +12,7 @@ class PastOrderDetail extends StatelessWidget {
     print(order.date);
     return Container(
       width: double.infinity,
-      height: 110,
+      height: 115,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.deepOrange,
@@ -49,15 +49,17 @@ class PastOrderDetail extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'Booking ID:',
-                      style: TextStyle(
+                      style: GoogleFonts.cantataOne(
+                        color: Color.fromRGBO(128, 128, 128, 1),
                         fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(100, 100, 100, 1),
                       ),
                     ),
                     SizedBox(width: 8),
                     Text(
                       order.id,
-                      style: TextStyle(color: Colors.grey),
+                      style: GoogleFonts.cantataOne(
+                        color: Colors.grey,
+                      ),
                     ),
                   ],
                 ),
@@ -66,15 +68,17 @@ class PastOrderDetail extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'Service Date:',
-                      style: TextStyle(
+                      style: GoogleFonts.cantataOne(
+                        color: Color.fromRGBO(128, 128, 128, 1),
                         fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(100, 100, 100, 1),
                       ),
                     ),
                     SizedBox(width: 8),
                     Text(
                       DateFormat('dd/MM/yyyy').format(order.date),
-                      style: TextStyle(color: Colors.grey),
+                      style: GoogleFonts.cantataOne(
+                        color: Colors.grey,
+                      ),
                     ),
                   ],
                 ),
