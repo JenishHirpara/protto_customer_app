@@ -142,7 +142,7 @@ class ActiveOrderDetail extends StatelessWidget {
     final order = Provider.of<ActiveOrderItem>(context);
     return Container(
       width: double.infinity,
-      height: 200,
+      height: 180,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.deepOrange,
@@ -157,26 +157,19 @@ class ActiveOrderDetail extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.motorcycle,
-                      size: 50,
-                      color: Colors.grey,
-                    ),
-                    SizedBox(width: 10),
-                    GestureDetector(
-                      onTap: () => showPopup(context),
-                      child: Text(
-                        order.name,
-                        style: GoogleFonts.montserrat(
-                          color: Color.fromRGBO(241, 93, 36, 1),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: GestureDetector(
+                    onTap: () => showPopup(context),
+                    child: Text(
+                      order.name,
+                      style: GoogleFonts.montserrat(
+                        color: Color.fromRGBO(241, 93, 36, 1),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                  ],
+                  ),
                 ),
                 Row(
                   children: <Widget>[
@@ -235,27 +228,28 @@ class ActiveOrderDetail extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 4),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Pickup Address:',
-                      style: GoogleFonts.cantataOne(
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        order.address,
-                        style: GoogleFonts.cantataOne(
-                          color: Colors.grey,
+                Container(
+                  width: double.infinity,
+                  height: 50,
+                  child: RichText(
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'PickupAddress: ',
+                          style: GoogleFonts.cantataOne(
+                            color: Color.fromRGBO(128, 128, 128, 1),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        softWrap: true,
-                      ),
+                        TextSpan(
+                          text: order.address,
+                          style: GoogleFonts.cantataOne(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),

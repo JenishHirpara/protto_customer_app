@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:protto_customer_app/screens/jobs_card_screen.dart';
 
 import '../providers/orders.dart';
+import './jobs_card_screen.dart';
+import './inspection_images_screen.dart';
 
 class ActiveOrderScreen extends StatefulWidget {
   final ActiveOrderItem order;
@@ -17,10 +19,15 @@ class ActiveOrderScreen extends StatefulWidget {
 class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
   int bottomNavBarIndex = 0;
 
+  final _focusNode1 = FocusNode();
+  final _focusNode2 = FocusNode();
+  final _focusNode3 = FocusNode();
+  final _focusNode4 = FocusNode();
+
   Future showPopUp() {
     return showDialog(
       context: context,
-      builder: (ctx) => Dialog(
+      builder: (context) => Dialog(
         child: Container(
           padding: EdgeInsets.symmetric(
             horizontal: 10,
@@ -55,6 +62,131 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               ),
               SizedBox(
                 height: 10,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      width: 45.0,
+                      height: 45.0,
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        maxLength: 1,
+                        focusNode: _focusNode1,
+                        onChanged: (value) {
+                          FocusScope.of(context).requestFocus(_focusNode2);
+                        },
+                        style: TextStyle(
+                          fontSize: 30.0,
+                          color: Colors.black,
+                        ),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          counterText: '',
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(200, 200, 200, 1),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    Container(
+                      width: 45.0,
+                      height: 45.0,
+                      alignment: Alignment.center,
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        maxLength: 1,
+                        focusNode: _focusNode2,
+                        onChanged: (_) {
+                          FocusScope.of(context).requestFocus(_focusNode3);
+                        },
+                        style: TextStyle(
+                          fontSize: 30.0,
+                          color: Colors.black,
+                        ),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          counterText: '',
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(200, 200, 200, 1),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    Container(
+                      width: 45.0,
+                      height: 45.0,
+                      alignment: Alignment.center,
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        maxLength: 1,
+                        focusNode: _focusNode3,
+                        onChanged: (_) {
+                          FocusScope.of(context).requestFocus(_focusNode4);
+                        },
+                        style: TextStyle(
+                          fontSize: 30.0,
+                          color: Colors.black,
+                        ),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          counterText: '',
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(200, 200, 200, 1),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    Container(
+                      width: 45.0,
+                      height: 45.0,
+                      alignment: Alignment.center,
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.done,
+                        maxLength: 1,
+                        focusNode: _focusNode4,
+                        style: TextStyle(
+                          fontSize: 30.0,
+                          color: Colors.black,
+                        ),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          counterText: '',
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(200, 200, 200, 1),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 15),
+              Container(
+                width: 120,
+                height: 40,
+                child: RaisedButton(
+                  child: Text(
+                    'Verify OTP',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  color: Theme.of(context).primaryColor,
+                  onPressed: () {},
+                ),
               ),
             ],
           ),
@@ -144,7 +276,9 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                     color: Color.fromRGBO(112, 112, 112, 1),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(inspectionRoute(widget.order));
+                },
               ),
             ),
           ],
@@ -188,46 +322,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         backgroundColor: Color.fromRGBO(250, 250, 250, 1),
         elevation: 0,
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(
-              width: 3.0,
-              color: Color.fromRGBO(241, 93, 36, 1),
-            ),
-          ),
-        ),
-        child: BottomNavigationBar(
-          currentIndex: bottomNavBarIndex,
-          backgroundColor: Colors.white,
-          type: BottomNavigationBarType.fixed,
-          elevation: 5,
-          iconSize: 30,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.home),
-              title: Text(''),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.search),
-              title: Text(''),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.event_note),
-              title: Text(''),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.flash_on),
-              title: Text(''),
-            )
-          ],
-          onTap: (int newIndex) {
-            setState(() {
-              bottomNavBarIndex = newIndex;
-            });
-          },
-        ),
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -237,11 +331,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Icon(
-                    Icons.motorcycle,
-                    size: 50,
-                    color: Colors.grey,
-                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -265,8 +354,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
-                        Navigator.of(context)
-                            .push(jobsRoute());
+                        Navigator.of(context).push(jobsRoute(widget.order));
                       },
                       color: Theme.of(context).primaryColor,
                       elevation: 0,
@@ -380,12 +468,37 @@ class SampleStepTile {
   String time;
 }
 
-
-PageRouteBuilder jobsRoute() {
+PageRouteBuilder jobsRoute(ActiveOrderItem order) {
   return PageRouteBuilder(
     pageBuilder: (BuildContext context, Animation<double> animation,
         Animation<double> secondaryAnimation) {
-      return JobsCardScreen();
+      return JobsCardScreen(order);
+    },
+    transitionDuration: Duration(milliseconds: 500),
+    transitionsBuilder: (BuildContext context, Animation<double> animation,
+        Animation<double> secondaryAnimation, Widget child) {
+      return SlideTransition(
+        position: new Tween<Offset>(
+          begin: const Offset(1.0, 0.0),
+          end: Offset.zero,
+        ).animate(animation),
+        child: new SlideTransition(
+          position: new Tween<Offset>(
+            begin: Offset.zero,
+            end: const Offset(-1.0, 0.0),
+          ).animate(secondaryAnimation),
+          child: child,
+        ),
+      );
+    },
+  );
+}
+
+PageRouteBuilder inspectionRoute(ActiveOrderItem order) {
+  return PageRouteBuilder(
+    pageBuilder: (BuildContext context, Animation<double> animation,
+        Animation<double> secondaryAnimation) {
+      return InspectionImagesScreen(order);
     },
     transitionDuration: Duration(milliseconds: 500),
     transitionsBuilder: (BuildContext context, Animation<double> animation,
