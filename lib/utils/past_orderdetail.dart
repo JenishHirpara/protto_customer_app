@@ -27,23 +27,16 @@ class PastOrderDetail extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.motorcycle,
-                      size: 50,
-                      color: Colors.grey,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    order.name,
+                    style: GoogleFonts.montserrat(
+                      color: Color.fromRGBO(241, 93, 36, 1),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
                     ),
-                    SizedBox(width: 10),
-                    Text(
-                      order.name,
-                      style: GoogleFonts.montserrat(
-                        color: Color.fromRGBO(241, 93, 36, 1),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
                 Row(
                   children: <Widget>[
