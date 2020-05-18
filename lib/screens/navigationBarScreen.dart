@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:protto_customer_app/screens/my_bikes_screen.dart';
 
 import '../screens/order_details_screen.dart';
 import '../screens/dashboard_screen.dart';
@@ -149,7 +150,10 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                               color: Colors.white,
                               child: Text('Manage'),
                               elevation: 0,
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .push(myBikesPageRoute());
+                              },
                             ),
                           ),
                           SizedBox(height: 15),
@@ -231,4 +235,32 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
       ),
     );
   }
+
+
+  PageRouteBuilder myBikesPageRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return MyBikesScreen();
+      },
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
 }

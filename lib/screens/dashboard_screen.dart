@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:protto_customer_app/screens/jobs_card_screen.dart';
+import 'package:protto_customer_app/screens/my_bikes_screen.dart';
 
 import './services_screen.dart';
 import '../utils/SizeConfig.dart';
@@ -336,5 +337,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       },
     );
   }
+
+
 
 }
