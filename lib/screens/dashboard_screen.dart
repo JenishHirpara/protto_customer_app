@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:protto_customer_app/screens/my_bikes_screen.dart';
 
 import './services_screen.dart';
 import '../utils/SizeConfig.dart';
@@ -88,7 +89,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 color: Colors.white,
                                 child: Text('Manage'),
                                 elevation: 0,
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .push(myBikesRouteBuilder());
+                                },
                               ),
                             ),
                             SizedBox(height: 15),
@@ -455,6 +459,32 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
         return ServicesScreen();
+      },
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  PageRouteBuilder myBikesRouteBuilder() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return MyBikesScreen();
       },
       transitionDuration: Duration(milliseconds: 500),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
