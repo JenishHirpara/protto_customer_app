@@ -29,7 +29,6 @@ class OrderDetailsScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Container(
-              //height: 200,
               width: double.infinity,
               margin: EdgeInsets.all(16),
               child: Column(
@@ -43,21 +42,25 @@ class OrderDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    height: 180,
                     child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-                        value: activeorders[i],
-                        child: ActiveOrderDetail(),
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (ctx, i) => Column(
+                        children: <Widget>[
+                          ChangeNotifierProvider.value(
+                            value: activeorders[i],
+                            child: ActiveOrderDetail(i),
+                          ),
+                          SizedBox(height: 10),
+                        ],
                       ),
-                      itemCount: 1,
+                      itemCount: activeorders.length,
                     ),
                   ),
                 ],
               ),
             ),
             Container(
-              //height: 375,
               width: double.infinity,
               margin: EdgeInsets.all(16),
               child: Column(
@@ -70,22 +73,21 @@ class OrderDetailsScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Container(
-                    height: 400,
-                    child: ListView.builder(
-                      itemBuilder: (ctx, i) => Column(
-                        children: <Widget>[
-                          ChangeNotifierProvider.value(
-                            value: pastorders[i],
-                            child: PastOrderDetail(),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                      itemCount: pastorders.length,
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (ctx, i) => Column(
+                      children: <Widget>[
+                        ChangeNotifierProvider.value(
+                          value: pastorders[i],
+                          child: PastOrderDetail(),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
                     ),
+                    itemCount: pastorders.length,
                   ),
                 ],
               ),

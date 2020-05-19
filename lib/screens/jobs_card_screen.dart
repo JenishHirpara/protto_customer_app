@@ -225,63 +225,61 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                   fontSize: 20,
                 ),
               ),
-              Container(
-                width: double.infinity,
-                height: 140,
-                child: ListView(
-                  children: <Widget>[
-                    ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                      title: Text(
-                        'PRODRY',
+              ListView(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                    title: Text(
+                      'PRODRY',
+                      style: GoogleFonts.cantataOne(
+                        color: Color.fromRGBO(128, 128, 128, 1),
+                      ),
+                    ),
+                    subtitle: Text(
+                      'Regular Service',
+                      style: GoogleFonts.cantataOne(
+                        color: Color.fromRGBO(150, 150, 150, 1),
+                      ),
+                    ),
+                    trailing: Container(
+                      width: 100,
+                      height: 20,
+                      child: Text(
+                        '₹ 1599',
                         style: GoogleFonts.cantataOne(
                           color: Color.fromRGBO(128, 128, 128, 1),
                         ),
                       ),
-                      subtitle: Text(
-                        'Regular Service',
-                        style: GoogleFonts.cantataOne(
-                          color: Color.fromRGBO(150, 150, 150, 1),
-                        ),
-                      ),
-                      trailing: Container(
-                        width: 100,
-                        height: 20,
-                        child: Text(
-                          '₹ 1599',
-                          style: GoogleFonts.cantataOne(
-                            color: Color.fromRGBO(128, 128, 128, 1),
-                          ),
-                        ),
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                    title: Text(
+                      'Tyre 1',
+                      style: GoogleFonts.cantataOne(
+                        color: Color.fromRGBO(128, 128, 128, 1),
                       ),
                     ),
-                    ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                      title: Text(
-                        'Tyre 1',
+                    subtitle: Text(
+                      'Tyre',
+                      style: GoogleFonts.cantataOne(
+                        color: Color.fromRGBO(150, 150, 150, 1),
+                      ),
+                    ),
+                    trailing: Container(
+                      width: 100,
+                      height: 20,
+                      child: Text(
+                        '₹ 1599',
                         style: GoogleFonts.cantataOne(
                           color: Color.fromRGBO(128, 128, 128, 1),
                         ),
                       ),
-                      subtitle: Text(
-                        'Tyre',
-                        style: GoogleFonts.cantataOne(
-                          color: Color.fromRGBO(150, 150, 150, 1),
-                        ),
-                      ),
-                      trailing: Container(
-                        width: 100,
-                        height: 20,
-                        child: Text(
-                          '₹ 1599',
-                          style: GoogleFonts.cantataOne(
-                            color: Color.fromRGBO(128, 128, 128, 1),
-                          ),
-                        ),
-                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               SizedBox(height: 10),
               Text(
@@ -292,163 +290,161 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                   fontSize: 20,
                 ),
               ),
-              Container(
-                width: double.infinity,
-                height: 275,
-                child: ListView(
-                  children: <Widget>[
-                    ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                      title: Text(
-                        'Job Number 1',
-                        style: GoogleFonts.cantataOne(
-                          color: Color.fromRGBO(128, 128, 128, 1),
-                        ),
-                      ),
-                      trailing: Container(
-                        width: 100,
-                        height: 20,
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              '₹ 1599',
-                              style: GoogleFonts.cantataOne(
-                                color: Color.fromRGBO(128, 128, 128, 1),
-                              ),
-                            ),
-                            Checkbox(
-                                value: checkedValue1,
-                                onChanged: (bool newValue) {
-                                  setState(() {
-                                    checkedValue1 = newValue;
-                                  });
-                                }),
-                          ],
-                        ),
+              ListView(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                    title: Text(
+                      'Job Number 1',
+                      style: GoogleFonts.cantataOne(
+                        color: Color.fromRGBO(128, 128, 128, 1),
                       ),
                     ),
-                    ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                      title: Text(
-                        'Job Number 2',
-                        style: GoogleFonts.cantataOne(
-                          color: Color.fromRGBO(128, 128, 128, 1),
-                        ),
-                      ),
-                      trailing: Container(
-                        width: 100,
-                        height: 20,
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              '₹ 1599',
-                              style: GoogleFonts.cantataOne(
-                                color: Color.fromRGBO(128, 128, 128, 1),
-                              ),
+                    trailing: Container(
+                      width: 100,
+                      height: 20,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            '₹ 1599',
+                            style: GoogleFonts.cantataOne(
+                              color: Color.fromRGBO(128, 128, 128, 1),
                             ),
-                            Checkbox(
-                                value: checkedValue2,
-                                onChanged: (bool newValue) {
-                                  setState(() {
-                                    checkedValue2 = newValue;
-                                  });
-                                }),
-                          ],
-                        ),
+                          ),
+                          Checkbox(
+                              value: checkedValue1,
+                              onChanged: (bool newValue) {
+                                setState(() {
+                                  checkedValue1 = newValue;
+                                });
+                              }),
+                        ],
                       ),
                     ),
-                    ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                      title: Text(
-                        'Job Number 3',
-                        style: GoogleFonts.cantataOne(
-                          color: Color.fromRGBO(128, 128, 128, 1),
-                        ),
-                      ),
-                      trailing: Container(
-                        width: 100,
-                        height: 20,
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              '₹ 1599',
-                              style: GoogleFonts.cantataOne(
-                                color: Color.fromRGBO(128, 128, 128, 1),
-                              ),
-                            ),
-                            Checkbox(
-                                value: checkedValue3,
-                                onChanged: (bool newValue) {
-                                  setState(() {
-                                    checkedValue3 = newValue;
-                                  });
-                                }),
-                          ],
-                        ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                    title: Text(
+                      'Job Number 2',
+                      style: GoogleFonts.cantataOne(
+                        color: Color.fromRGBO(128, 128, 128, 1),
                       ),
                     ),
-                    ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                      title: Text(
-                        'Job Number 4',
-                        style: GoogleFonts.cantataOne(
-                          color: Color.fromRGBO(128, 128, 128, 1),
-                        ),
-                      ),
-                      trailing: Container(
-                        width: 100,
-                        height: 20,
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              '₹ 1599',
-                              style: GoogleFonts.cantataOne(
-                                color: Color.fromRGBO(128, 128, 128, 1),
-                              ),
+                    trailing: Container(
+                      width: 100,
+                      height: 20,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            '₹ 1599',
+                            style: GoogleFonts.cantataOne(
+                              color: Color.fromRGBO(128, 128, 128, 1),
                             ),
-                            Checkbox(
-                                value: checkedValue4,
-                                onChanged: (bool newValue) {
-                                  setState(() {
-                                    checkedValue4 = newValue;
-                                  });
-                                }),
-                          ],
-                        ),
+                          ),
+                          Checkbox(
+                              value: checkedValue2,
+                              onChanged: (bool newValue) {
+                                setState(() {
+                                  checkedValue2 = newValue;
+                                });
+                              }),
+                        ],
                       ),
                     ),
-                    ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                      title: Text(
-                        'Job Number 5',
-                        style: GoogleFonts.cantataOne(
-                          color: Color.fromRGBO(128, 128, 128, 1),
-                        ),
-                      ),
-                      trailing: Container(
-                        width: 100,
-                        height: 20,
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              '₹ 1599',
-                              style: GoogleFonts.cantataOne(
-                                color: Color.fromRGBO(128, 128, 128, 1),
-                              ),
-                            ),
-                            Checkbox(
-                                value: checkedValue5,
-                                onChanged: (bool newValue) {
-                                  setState(() {
-                                    checkedValue5 = newValue;
-                                  });
-                                }),
-                          ],
-                        ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                    title: Text(
+                      'Job Number 3',
+                      style: GoogleFonts.cantataOne(
+                        color: Color.fromRGBO(128, 128, 128, 1),
                       ),
                     ),
-                  ],
-                ),
+                    trailing: Container(
+                      width: 100,
+                      height: 20,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            '₹ 1599',
+                            style: GoogleFonts.cantataOne(
+                              color: Color.fromRGBO(128, 128, 128, 1),
+                            ),
+                          ),
+                          Checkbox(
+                              value: checkedValue3,
+                              onChanged: (bool newValue) {
+                                setState(() {
+                                  checkedValue3 = newValue;
+                                });
+                              }),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                    title: Text(
+                      'Job Number 4',
+                      style: GoogleFonts.cantataOne(
+                        color: Color.fromRGBO(128, 128, 128, 1),
+                      ),
+                    ),
+                    trailing: Container(
+                      width: 100,
+                      height: 20,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            '₹ 1599',
+                            style: GoogleFonts.cantataOne(
+                              color: Color.fromRGBO(128, 128, 128, 1),
+                            ),
+                          ),
+                          Checkbox(
+                              value: checkedValue4,
+                              onChanged: (bool newValue) {
+                                setState(() {
+                                  checkedValue4 = newValue;
+                                });
+                              }),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                    title: Text(
+                      'Job Number 5',
+                      style: GoogleFonts.cantataOne(
+                        color: Color.fromRGBO(128, 128, 128, 1),
+                      ),
+                    ),
+                    trailing: Container(
+                      width: 100,
+                      height: 20,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            '₹ 1599',
+                            style: GoogleFonts.cantataOne(
+                              color: Color.fromRGBO(128, 128, 128, 1),
+                            ),
+                          ),
+                          Checkbox(
+                              value: checkedValue5,
+                              onChanged: (bool newValue) {
+                                setState(() {
+                                  checkedValue5 = newValue;
+                                });
+                              }),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
               ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 0),

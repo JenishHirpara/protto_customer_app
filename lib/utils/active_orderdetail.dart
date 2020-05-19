@@ -7,6 +7,9 @@ import '../providers/orders.dart';
 import '../screens/active_order_screen.dart';
 
 class ActiveOrderDetail extends StatelessWidget {
+  final int i;
+  ActiveOrderDetail(this.i);
+
   Future showPopup(context) {
     return showDialog(
       context: context,
@@ -139,7 +142,7 @@ class ActiveOrderDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final order = Provider.of<ActiveOrderItem>(context);
+    final order = Provider.of<ActiveOrders>(context).items[i];
     return Container(
       width: double.infinity,
       height: 180,

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 Color orangeColor = new Color(0xFFF69C7A);
 Color greyColor = new Color(0xFFC2C2C2);
 
-int bottomNavBarIndex = 0;
 var tabsLength = 3;
 
 class ServicesScreen extends StatefulWidget {

@@ -13,8 +13,6 @@ class InspectionImagesScreen extends StatefulWidget {
 }
 
 class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
-  int bottomNavBarIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

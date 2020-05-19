@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:protto_customer_app/screens/my_bikes_screen.dart';
 
 import './services_screen.dart';
 import '../utils/SizeConfig.dart';
+import './my_bikes_screen.dart';
+import './new_bike_screen.dart';
 
 Color orangeColor = new Color(0xFFF69C7A);
 Color greyColor = new Color(0xFFC2C2C2);
@@ -25,11 +26,11 @@ class DashBoardScreen extends StatefulWidget {
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
-  Widget build(BuildContext context) {
-    Future showPopup() {
+  Widget build(BuildContext originalcontext) {
+    Future showPopup(BuildContext context) {
       return showDialog(
         context: context,
-        builder: (ctx) => Dialog(
+        builder: (context) => Dialog(
           child: Container(
             height: 210,
             child: Column(
@@ -90,8 +91,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 child: Text('Manage'),
                                 elevation: 0,
                                 onPressed: () {
-                                  Navigator.of(context)
+                                  Navigator.of(originalcontext)
                                       .push(myBikesRouteBuilder());
+                                  Navigator.of(context).pop();
                                 },
                               ),
                             ),
@@ -121,7 +123,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           fontSize: 16,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(originalcontext)
+                            .push(myBikesRouteBuilder());
+                        Navigator.of(originalcontext)
+                            .push(newBikeRouteBuilder());
+                        Navigator.of(context).pop();
+                      },
                     ),
                   ),
                 ),
@@ -136,7 +144,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          onTap: () => showPopup(),
+          onTap: () => showPopup(context),
           child: Text(
             'Yamaha FZ',
             style: GoogleFonts.montserrat(
@@ -487,6 +495,32 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         return MyBikesScreen();
       },
       transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  PageRouteBuilder newBikeRouteBuilder() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return NewBikeScreen();
+      },
+      transitionDuration: Duration(milliseconds: 200),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(

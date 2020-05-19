@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import './screens/home_screen.dart';
 import './screens/verify_phone_screen.dart';
 import './providers/orders.dart';
+import './providers/bikes.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: PastOrders(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Bikes(),
         ),
       ],
       child: MaterialApp(
