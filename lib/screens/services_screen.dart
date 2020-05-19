@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:protto_customer_app/screens/service_details_screen.dart';
 
 Color orangeColor = new Color(0xFFF69C7A);
 Color greyColor = new Color(0xFFC2C2C2);
@@ -83,82 +84,115 @@ class _ServicesScreenState extends State<ServicesScreen> {
           return new GridTile(
             child: Padding(
               padding: EdgeInsets.all(5),
-              child: Card(
-                  color: Colors.white,
-                  child: new Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
-                          child: Text(
-                            'PRODRY',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                                color: Colors.black),
+              child: InkWell(
+                onTap: (){
+                  Navigator.of(context)
+                      .push(serviceDetailsPageRoute());
+                },
+                child: Card(
+                    color: Colors.white,
+                    child: new Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
+                            child: Text(
+                              'PRODRY',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                  color: Colors.black),
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
-                          child: Text(
-                            '₹ 1599',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: orangeColor),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
+                            child: Text(
+                              '₹ 1599',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                  color: orangeColor),
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Container(
+                          SizedBox(
                             height: 50,
-                            color: new Color(0xFFF0F0F0),
-                            child: Center(
-                                child: FractionallySizedBox(
-                              widthFactor: 0.8,
-                              heightFactor: 0.5,
-                              child: Container(
-                                width: 20,
-                                height: 10,
-                                color: (index == 2 ||
-                                        index == 3 ||
-                                        index == 6 ||
-                                        index == 7)
-                                    ? new Color(0xFF4CAF50)
-                                    : new Color(0xFFF15D24),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(Icons.add, color: Colors.white),
-                                    Text(
-                                      (index == 2 ||
-                                              index == 3 ||
-                                              index == 6 ||
-                                              index == 7)
-                                          ? 'ADDED'
-                                          : 'ADD',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )),
                           ),
-                        )
-                      ],
-                    ),
-                  )),
+                          Padding(
+                            padding: EdgeInsets.all(8),
+                            child: Container(
+                              height: 50,
+                              color: new Color(0xFFF0F0F0),
+                              child: Center(
+                                  child: FractionallySizedBox(
+                                    widthFactor: 0.8,
+                                    heightFactor: 0.5,
+                                    child: Container(
+                                      width: 20,
+                                      height: 10,
+                                      color: (index == 2 ||
+                                          index == 3 ||
+                                          index == 6 ||
+                                          index == 7)
+                                          ? new Color(0xFF4CAF50)
+                                          : new Color(0xFFF15D24),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Icon(Icons.add, color: Colors.white),
+                                          Text(
+                                            (index == 2 ||
+                                                index == 3 ||
+                                                index == 6 ||
+                                                index == 7)
+                                                ? 'ADDED'
+                                                : 'ADD',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w500),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  )),
+                            ),
+                          )
+                        ],
+                      ),
+                    )),
+              ),
             ),
           );
         }));
+  }
+
+  // -------------------------Page Route -------------------------
+  PageRouteBuilder serviceDetailsPageRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return ServiceDetailsScreen();
+      },
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
   }
 }
