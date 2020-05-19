@@ -4,21 +4,24 @@ import 'package:provider/provider.dart';
 
 import '../providers/bikes.dart';
 
-class NewBikeScreen extends StatefulWidget {
+class EditBikeScreen extends StatefulWidget {
+  final Bike bike;
+
+  EditBikeScreen(this.bike);
+
   @override
-  _NewBikeScreenState createState() => _NewBikeScreenState();
+  _EditBikeScreenState createState() => _EditBikeScreenState();
 }
 
-class _NewBikeScreenState extends State<NewBikeScreen> {
+class _EditBikeScreenState extends State<EditBikeScreen> {
   final _form = GlobalKey<FormState>();
+  var dupbike;
 
-  var _bike = Bike(
-    id: DateTime.now().toString(),
-    brand: '',
-    model: '',
-    number: '',
-    year: '',
-  );
+  @override
+  void initState() {
+    dupbike = widget.bike;
+    super.initState();
+  }
 
   void _saveForm() {
     final isValid = _form.currentState.validate();
@@ -26,7 +29,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
       return;
     }
     _form.currentState.save();
-    Provider.of<Bikes>(context, listen: false).addBike(_bike);
+    Provider.of<Bikes>(context, listen: false).updateBike(dupbike, dupbike.id);
     Navigator.of(context).pop();
   }
 
@@ -36,7 +39,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Add New Bike',
+          '${widget.bike.brand} ${widget.bike.model}',
           style: GoogleFonts.montserrat(
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 24,
@@ -61,6 +64,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
           padding: EdgeInsets.symmetric(horizontal: 28, vertical: 10),
           children: <Widget>[
             DropdownButtonFormField(
+              value: dupbike.brand,
               decoration: InputDecoration(
                 filled: true,
                 border: InputBorder.none,
@@ -81,18 +85,19 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                 return null;
               },
               onSaved: (value) {
-                _bike = Bike(
-                  id: _bike.id,
+                dupbike = Bike(
+                  id: widget.bike.id,
                   brand: value,
-                  model: _bike.model,
-                  number: _bike.number,
-                  year: _bike.year,
+                  model: widget.bike.model,
+                  number: widget.bike.number,
+                  year: widget.bike.year,
                 );
               },
               onChanged: (_) {},
             ),
             SizedBox(height: 10),
             DropdownButtonFormField(
+              value: dupbike.model,
               decoration: InputDecoration(
                 filled: true,
                 border: InputBorder.none,
@@ -113,18 +118,19 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                 return null;
               },
               onSaved: (value) {
-                _bike = Bike(
-                  id: _bike.id,
-                  brand: _bike.brand,
+                dupbike = Bike(
+                  id: widget.bike.id,
+                  brand: widget.bike.brand,
                   model: value,
-                  number: _bike.number,
-                  year: _bike.year,
+                  number: widget.bike.number,
+                  year: widget.bike.year,
                 );
               },
               onChanged: (_) {},
             ),
             SizedBox(height: 10),
             DropdownButtonFormField(
+              value: dupbike.year,
               decoration: InputDecoration(
                 filled: true,
                 border: InputBorder.none,
@@ -145,11 +151,11 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                 return null;
               },
               onSaved: (value) {
-                _bike = Bike(
-                  id: _bike.id,
-                  brand: _bike.brand,
-                  model: _bike.model,
-                  number: _bike.number,
+                dupbike = Bike(
+                  id: widget.bike.id,
+                  brand: widget.bike.brand,
+                  model: widget.bike.model,
+                  number: widget.bike.number,
                   year: value,
                 );
               },
@@ -157,6 +163,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
             ),
             SizedBox(height: 10),
             TextFormField(
+              initialValue: dupbike.number,
               decoration: InputDecoration(
                 hintText: 'Registration Number',
                 hintStyle: GoogleFonts.cantataOne(
@@ -174,12 +181,12 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                 return null;
               },
               onSaved: (value) {
-                _bike = Bike(
-                  id: _bike.id,
-                  brand: _bike.brand,
-                  model: _bike.model,
+                dupbike = Bike(
+                  id: widget.bike.id,
+                  brand: widget.bike.brand,
+                  model: widget.bike.model,
                   number: value,
-                  year: _bike.year,
+                  year: widget.bike.year,
                 );
               },
             ),
@@ -189,7 +196,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
               child: RaisedButton(
                 color: Colors.deepOrange,
                 textColor: Colors.white,
-                child: Text('+ Add'),
+                child: Text('Edit'),
                 onPressed: _saveForm,
               ),
             ),
