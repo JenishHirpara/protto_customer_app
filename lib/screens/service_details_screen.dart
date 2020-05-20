@@ -1,8 +1,9 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:protto_customer_app/utils/SizeConfig.dart';
+import 'package:provider/provider.dart';
+
+import '../utils/SizeConfig.dart';
+import '../providers/cart_item.dart';
 
 String textOne = 'Brake Inspection & Service';
 String textTwo = 'Control Inspection & Lubrication';
@@ -21,6 +22,9 @@ String text = 'Part replacements & additional repairs cost not included';
 Color backGroundColor = new Color(0xffE9E9E9);
 
 class ServiceDetailsScreen extends StatefulWidget {
+  final CartItem cartitem;
+  ServiceDetailsScreen(this.cartitem);
+
   @override
   _ServiceDetailsScreenState createState() => _ServiceDetailsScreenState();
 }
@@ -29,33 +33,29 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backGroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: InkWell(
-          child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black
+        backgroundColor: backGroundColor,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: InkWell(
+            child: Icon(Icons.arrow_back, color: Colors.black),
+            onTap: () {
+              Navigator.of(context).pop(true);
+            },
           ),
-          onTap: (){
-            Navigator.of(context)
-                .pop(true);
-          },
+          title: Image(
+            image: AssetImage('assets/images/protto-logo.png'),
+            width: 100,
+            height: 36,
+          ),
         ),
-        title: Image(
-          image: AssetImage('assets/images/protto-logo.png'),
-          width: 100,
-          height: 36,
-        ),
-      ),
-      body: Container(
-          width: SizeConfig.blockSizeHorizontal * 100,
-          height: SizeConfig.blockSizeVertical * 100,
-          color: backGroundColor,
-          child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints viewportConstraints){
-                return SingleChildScrollView(
-                    child: ConstrainedBox(
+        body: Container(
+            width: SizeConfig.blockSizeHorizontal * 100,
+            height: SizeConfig.blockSizeVertical * 100,
+            color: backGroundColor,
+            child: LayoutBuilder(builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
+              return SingleChildScrollView(
+                  child: ConstrainedBox(
                       constraints: BoxConstraints(
                         minHeight: viewportConstraints.maxHeight,
                       ),
@@ -78,17 +78,15 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                     width: 10,
                                   ),
                                   Text(
-                                    'Hours',
+                                    '5 Hours',
                                     style: TextStyle(
                                         color: Colors.blueGrey,
                                         fontSize: 18,
-                                        fontWeight: FontWeight.w400
-                                    ),
+                                        fontWeight: FontWeight.w400),
                                   )
                                 ],
                               ),
                             ),
-
                             Padding(
                               padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
                               child: Row(
@@ -106,31 +104,28 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                     style: TextStyle(
                                         color: Colors.blueGrey,
                                         fontSize: 18,
-                                        fontWeight: FontWeight.w400
-                                    ),
+                                        fontWeight: FontWeight.w400),
                                   )
                                 ],
                               ),
                             ),
-
                             Padding(
                               padding: EdgeInsets.all(10),
                               child: Container(
                                 width: SizeConfig.blockSizeHorizontal * 100,
                                 height: SizeConfig.blockSizeVertical * 50,
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                    color: Colors.white,
                                     borderRadius: BorderRadius.circular(10.0),
                                     border: Border.all(
-                                        color: Colors.white,
-                                        width: 0.0
-                                    )
-                                ),
+                                        color: Colors.white, width: 0.0)),
                                 child: Padding(
                                   padding: EdgeInsets.all(10),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Row(
                                         children: <Widget>[
@@ -144,10 +139,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                           Text(
                                             textOne,
                                             style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500
-                                            ),
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
                                           )
                                         ],
                                       ),
@@ -165,8 +159,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500
-                                            ),
+                                                fontWeight: FontWeight.w500),
                                           )
                                         ],
                                       ),
@@ -184,8 +177,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500
-                                            ),
+                                                fontWeight: FontWeight.w500),
                                           )
                                         ],
                                       ),
@@ -203,8 +195,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500
-                                            ),
+                                                fontWeight: FontWeight.w500),
                                           )
                                         ],
                                       ),
@@ -222,8 +213,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500
-                                            ),
+                                                fontWeight: FontWeight.w500),
                                           )
                                         ],
                                       ),
@@ -241,8 +231,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500
-                                            ),
+                                                fontWeight: FontWeight.w500),
                                           )
                                         ],
                                       ),
@@ -260,8 +249,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500
-                                            ),
+                                                fontWeight: FontWeight.w500),
                                           )
                                         ],
                                       ),
@@ -279,8 +267,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500
-                                            ),
+                                                fontWeight: FontWeight.w500),
                                           )
                                         ],
                                       ),
@@ -298,8 +285,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500
-                                            ),
+                                                fontWeight: FontWeight.w500),
                                           )
                                         ],
                                       ),
@@ -317,8 +303,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500
-                                            ),
+                                                fontWeight: FontWeight.w500),
                                           )
                                         ],
                                       ),
@@ -336,8 +321,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500
-                                            ),
+                                                fontWeight: FontWeight.w500),
                                           )
                                         ],
                                       ),
@@ -350,71 +334,70 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                               padding: EdgeInsets.all(8),
                               child: Center(
                                 child: Text(
-                                    text,
+                                  text,
                                   style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.blueGrey
-                                  ),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.blueGrey),
                                 ),
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(5),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
-
                                   Container(
                                     color: Theme.of(context).primaryColor,
                                     height: 50,
-                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
                                     child: RaisedButton(
                                       color: Colors.white,
-                                      onPressed: (){
-
-                                      },
+                                      onPressed: () {},
                                       child: Center(
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: <Widget>[
                                             Icon(
                                               Icons.question_answer,
                                               color: Colors.black,
                                               size: 15,
                                             ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
                                             Text(
                                               'FAQs',
                                               style: TextStyle(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.blueGrey
-                                              ),
+                                                  color: Colors.blueGrey),
                                             )
                                           ],
                                         ),
                                       ),
                                     ),
                                   ),
-
                                   Container(
                                     color: Theme.of(context).primaryColor,
                                     height: 50,
-                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
                                     child: RaisedButton(
                                       color: Colors.white,
-                                      onPressed: (){
-
-                                      },
+                                      onPressed: () {},
                                       child: Center(
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: <Widget>[
                                             Icon(
                                               Icons.question_answer,
@@ -429,16 +412,13 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                               style: TextStyle(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.blueGrey
-                                              ),
+                                                  color: Colors.blueGrey),
                                             )
                                           ],
                                         ),
                                       ),
                                     ),
                                   ),
-
-
                                 ],
                               ),
                             ),
@@ -447,44 +427,83 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                             ),
                             Padding(
                               padding: EdgeInsets.all(20),
-                              child:
-                              Container(
+                              child: Container(
                                 color: Theme.of(context).primaryColor,
                                 height: 50,
                                 width: MediaQuery.of(context).size.width * 1,
                                 child: RaisedButton(
                                   color: new Color(0xffF15D24),
-                                  onPressed: (){
+                                  onPressed: () {
+                                    if (Provider.of<Cart>(context,
+                                                listen: false)
+                                            .findByType('PRODRY') ==
+                                        -1) {
+                                      Provider.of<Cart>(context, listen: false)
+                                          .addItem(widget.cartitem);
 
+                                      Scaffold.of(context)
+                                          .hideCurrentSnackBar();
+                                      Scaffold.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Added item to cart!',
+                                          ),
+                                          duration: Duration(seconds: 2),
+                                          action: SnackBarAction(
+                                            label: 'UNDO',
+                                            onPressed: () {
+                                              Provider.of<Cart>(context,
+                                                      listen: false)
+                                                  .deleteItem(
+                                                      widget.cartitem.id);
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      Scaffold.of(context)
+                                          .hideCurrentSnackBar();
+                                      Scaffold.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Item already added',
+                                          ),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                    }
                                   },
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: <Widget>[
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                        padding:
+                                            EdgeInsets.fromLTRB(10, 5, 10, 5),
                                         child: Text(
                                           '₹ 1599',
                                           style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.white
-                                          ),
+                                              color: Colors.white),
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(0, 5, 10, 5),
+                                        padding:
+                                            EdgeInsets.fromLTRB(0, 5, 10, 5),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: <Widget>[
                                             Text(
                                               ' ADD TO CART',
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white
-                                              ),
+                                                  color: Colors.white),
                                             ),
                                             Icon(
                                               Icons.arrow_forward_ios,
@@ -497,18 +516,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                   ),
                                 ),
                               ),
-
-
-
                             )
                           ],
                         ),
-                      )
-                    )
-                );
-              }
-          )
-      )
-    );
+                      )));
+            })));
   }
 }

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:provider/provider.dart';
+
 import '../providers/orders.dart';
+import './shopping_cart_screen.dart';
+import '../providers/cart_item.dart';
+import '../utils/job_item.dart';
 
 class JobsCardScreen extends StatefulWidget {
   final ActiveOrderItem order;
@@ -32,7 +37,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
   Future<dynamic> approveAllAlertDialog(BuildContext context) {
     return showDialog(
         context: context,
-        builder: (BuildContext context) {
+        builder: (BuildContext dialogcontext) {
           return Dialog(
             elevation: 5,
             backgroundColor: Colors.white,
@@ -73,8 +78,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                             side: BorderSide(color: Colors.deepOrange),
                           ),
                           onPressed: () {
-                            // TODO Jobs button OnPressed...
-                            Navigator.of(context).pop(true);
+                            Navigator.of(dialogcontext).pop();
                           },
                           elevation: 5,
                           child: Text(
@@ -94,7 +98,9 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                   fontWeight: FontWeight.w400,
                                   color: Colors.white)),
                           onPressed: () {
-                            // TODO Approve Selected OnPressed...
+                            Navigator.of(dialogcontext).pop();
+                            Navigator.of(context)
+                                .push(shoppingCartRouteBuilder());
                           },
                         )
                       ],
@@ -110,7 +116,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
   Future<dynamic> approveSelectedAlertDialog(BuildContext context) {
     return showDialog(
         context: context,
-        builder: (BuildContext context) {
+        builder: (BuildContext dialogcontext) {
           return Dialog(
             elevation: 5,
             backgroundColor: Colors.white,
@@ -144,9 +150,9 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                             side: BorderSide(color: Colors.deepOrange),
                           ),
                           onPressed: () {
-                            // TODO Jobs button OnPressed...
-//                            Navigator.of(context)
-//                                .pop(true);
+                            Navigator.of(dialogcontext).pop();
+                            Navigator.of(context)
+                                .push(shoppingCartRouteBuilder());
                           },
                           elevation: 5,
                           child: Text(
@@ -164,8 +170,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                             side: BorderSide(color: Colors.deepOrange),
                           ),
                           onPressed: () {
-                            // TODO Jobs button OnPressed...
-                            Navigator.of(context).pop(true);
+                            Navigator.of(context).pop();
                           },
                           elevation: 5,
                           child: Text(
@@ -186,8 +191,35 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
         });
   }
 
+  PageRouteBuilder shoppingCartRouteBuilder() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return ShoppingCartScreen();
+      },
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -225,61 +257,14 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                   fontSize: 20,
                 ),
               ),
-              ListView(
+              ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                children: <Widget>[
-                  ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                    title: Text(
-                      'PRODRY',
-                      style: GoogleFonts.cantataOne(
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Regular Service',
-                      style: GoogleFonts.cantataOne(
-                        color: Color.fromRGBO(150, 150, 150, 1),
-                      ),
-                    ),
-                    trailing: Container(
-                      width: 100,
-                      height: 20,
-                      child: Text(
-                        '₹ 1599',
-                        style: GoogleFonts.cantataOne(
-                          color: Color.fromRGBO(128, 128, 128, 1),
-                        ),
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                    title: Text(
-                      'Tyre 1',
-                      style: GoogleFonts.cantataOne(
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Tyre',
-                      style: GoogleFonts.cantataOne(
-                        color: Color.fromRGBO(150, 150, 150, 1),
-                      ),
-                    ),
-                    trailing: Container(
-                      width: 100,
-                      height: 20,
-                      child: Text(
-                        '₹ 1599',
-                        style: GoogleFonts.cantataOne(
-                          color: Color.fromRGBO(128, 128, 128, 1),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                itemBuilder: (context, i) => ChangeNotifierProvider.value(
+                  value: cart.items[i],
+                  child: JobItem(),
+                ),
+                itemCount: cart.items.length,
               ),
               SizedBox(height: 10),
               Text(

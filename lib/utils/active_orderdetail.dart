@@ -5,15 +5,69 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../providers/orders.dart';
 import '../screens/active_order_screen.dart';
+import '../screens/my_bikes_screen.dart';
+import '../screens/new_bike_screen.dart';
 
 class ActiveOrderDetail extends StatelessWidget {
   final int i;
   ActiveOrderDetail(this.i);
 
-  Future showPopup(context) {
+  PageRouteBuilder myBikesRouteBuilder() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return MyBikesScreen();
+      },
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  PageRouteBuilder newBikeRouteBuilder() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return NewBikeScreen();
+      },
+      transitionDuration: Duration(milliseconds: 200),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  Future showPopup(BuildContext originalcontext) {
     return showDialog(
-      context: context,
-      builder: (ctx) => Dialog(
+      context: originalcontext,
+      builder: (context) => Dialog(
         child: Container(
           height: 210,
           child: Column(
@@ -65,7 +119,7 @@ class ActiveOrderDetail extends StatelessWidget {
                             height: 30,
                             decoration: BoxDecoration(
                               border: Border.all(
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(originalcontext).primaryColor,
                                 width: 1,
                               ),
                             ),
@@ -73,7 +127,11 @@ class ActiveOrderDetail extends StatelessWidget {
                               color: Colors.white,
                               child: Text('Manage'),
                               elevation: 0,
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(originalcontext)
+                                    .push(myBikesRouteBuilder());
+                                Navigator.of(context).pop();
+                              },
                             ),
                           ),
                           SizedBox(height: 15),
@@ -98,11 +156,15 @@ class ActiveOrderDetail extends StatelessWidget {
                     child: Text(
                       '+ Add New Bike',
                       style: TextStyle(
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(originalcontext).primaryColor,
                         fontSize: 16,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(originalcontext).push(myBikesRouteBuilder());
+                      Navigator.of(originalcontext).push(newBikeRouteBuilder());
+                      Navigator.of(context).pop();
+                    },
                   ),
                 ),
               ),
