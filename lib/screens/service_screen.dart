@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/rgservice_item.dart';
 import './shopping_cart_screen.dart';
+import 'user_profile_screen.dart';
 
 Color orangeColor = new Color(0xFFF69C7A);
 Color greyColor = new Color(0xFFC2C2C2);
@@ -21,6 +22,32 @@ class _ServiceScreenState extends State<ServiceScreen> {
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
         return ShoppingCartScreen();
+      },
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  PageRouteBuilder profileScreenPageRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return UserProfileScreen();
       },
       transitionDuration: Duration(milliseconds: 500),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
@@ -74,7 +101,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                 color: Colors.grey,
               ),
               onPressed: () {
-                // TODO Account icon on pressed...
+                Navigator.of(context).push(profileScreenPageRoute());
               },
             ),
             IconButton(

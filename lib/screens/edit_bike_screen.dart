@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:protto_customer_app/screens/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/bikes.dart';
@@ -32,10 +31,7 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
     _form.currentState.save();
     Provider.of<Bikes>(context, listen: false).updateBike(dupbike, dupbike.id);
 //    Navigator.of(context).pop();
-
   }
-
-
 
   @override
   Widget build(BuildContext context) {

@@ -6,6 +6,7 @@ import './screens/verify_phone_screen.dart';
 import './providers/orders.dart';
 import './providers/bikes.dart';
 import './providers/cart_item.dart';
+import './providers/address.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,8 +29,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Cart(),
         ),
+        ChangeNotifierProvider.value(
+          value: Addresses(),
+        ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Protto',
         theme: ThemeData(
           primarySwatch: Colors.deepOrange,

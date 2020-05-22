@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:protto_customer_app/screens/profile_screen.dart';
 
 import './service_screen.dart';
 import '../utils/SizeConfig.dart';
 import './my_bikes_screen.dart';
 import './new_bike_screen.dart';
 import './shopping_cart_screen.dart';
+import './user_profile_screen.dart';
 
 Color orangeColor = new Color(0xFFF69C7A);
 Color greyColor = new Color(0xFFC2C2C2);
@@ -164,9 +164,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               color: Colors.grey,
             ),
             onPressed: () {
-              // TODO Account icon on pressed...
-              Navigator.of(context)
-                  .push(profileScreenPageRoute());
+              Navigator.of(context).push(profileScreenPageRoute());
             },
           ),
           IconButton(
@@ -572,7 +570,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return ProfileScreen();
+        return UserProfileScreen();
       },
       transitionDuration: Duration(milliseconds: 500),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
@@ -593,5 +591,4 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       },
     );
   }
-
 }

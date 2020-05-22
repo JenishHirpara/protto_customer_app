@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 
 import '../utils/shopping_cart_item.dart';
 import '../providers/cart_item.dart';
+import '../providers/address.dart';
 import './select_address_screen.dart';
+import './add_address_screen.dart';
 
 class ShoppingCartScreen extends StatelessWidget {
   Future selectAddress(BuildContext context) {
@@ -14,9 +16,37 @@ class ShoppingCartScreen extends StatelessWidget {
     );
   }
 
+  PageRouteBuilder addAddressScreenPageRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return AddAddressScreen();
+      },
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
+
+    final addresses = Provider.of<Addresses>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -199,6 +229,32 @@ class ShoppingCartScreen extends StatelessWidget {
             SizedBox(height: 10),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Offstage(
+                offstage: false,
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: <Widget>[
+                    addresses.items.isNotEmpty
+                        ? Text(
+                            '${addresses.items[0].address}, ${addresses.items[0].landmark}',
+                            style: GoogleFonts.montserrat(
+                              color: Color.fromRGBO(112, 112, 112, 1),
+                            ),
+                          )
+                        : Text(
+                            'Please select an address',
+                            style: GoogleFonts.montserrat(
+                              color: Color.fromRGBO(112, 112, 112, 1),
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -208,7 +264,9 @@ class ShoppingCartScreen extends StatelessWidget {
                       color: Colors.white,
                       child: Text('ADD ADDRESS'),
                       elevation: 2,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(addAddressScreenPageRoute());
+                      },
                       shape: RoundedRectangleBorder(
                         side: BorderSide(color: Colors.deepOrange),
                       ),
@@ -223,6 +281,38 @@ class ShoppingCartScreen extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () => selectAddress(context),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    child: RaisedButton(
+                      color: Colors.white,
+                      child: Text('PAY LATER'),
+                      elevation: 2,
+                      onPressed: () {},
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Colors.deepOrange),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    child: RaisedButton(
+                      color: Colors.deepOrange,
+                      child: Text(
+                        'PAY NOW',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {},
                     ),
                   ),
                 ],
