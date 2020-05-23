@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/user_profile_item.dart';
 import './support_screen.dart';
 import './referral_screen.dart';
 import './dashboard_screen.dart';
+import './saved_addresses_screen.dart';
+import './edit_profile_screen.dart';
+import '../providers/profile.dart';
 
 class UserProfileScreen extends StatelessWidget {
   PageRouteBuilder supportPageRoute() {
@@ -86,8 +90,61 @@ class UserProfileScreen extends StatelessWidget {
     );
   }
 
+  PageRouteBuilder savedAddressesRouteBuilder() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return SavedAddressesScreen();
+      },
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  PageRouteBuilder editProfileRouteBuilder() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return EditProfileScreen();
+      },
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final userProfile = Provider.of<UserProfile>(context).item;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -122,17 +179,17 @@ class UserProfileScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Kunjan Hirpara',
+                    '${userProfile.firstName} ${userProfile.lastName}',
                     style: GoogleFonts.montserrat(fontSize: 30),
                   ),
                   SizedBox(height: 10),
                   Text(
-                    '+91 7990 653 359',
+                    userProfile.number,
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 5),
                   Text(
-                    'jamesondunn@gmail.com',
+                    userProfile.email,
                     style: TextStyle(fontSize: 16),
                   ),
                 ],
@@ -146,13 +203,13 @@ class UserProfileScreen extends StatelessWidget {
                 UserProfileItem(
                   icon: Icon(MdiIcons.fileEdit),
                   title: 'Edit Profile',
-                  page: pageRouteBuilder(),
+                  page: editProfileRouteBuilder(),
                 ),
                 SizedBox(height: 20),
                 UserProfileItem(
                   icon: Icon(MdiIcons.locationEnter),
                   title: 'Saved Addresses',
-                  page: pageRouteBuilder(),
+                  page: savedAddressesRouteBuilder(),
                 ),
                 SizedBox(height: 20),
                 UserProfileItem(

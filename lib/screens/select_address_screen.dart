@@ -5,6 +5,10 @@ import '../utils/select_address_item.dart';
 import '../providers/address.dart';
 
 class SelectAddressScreen extends StatelessWidget {
+  final Address addressSeen;
+
+  SelectAddressScreen(this.addressSeen);
+
   @override
   Widget build(BuildContext context) {
     final addresses = Provider.of<Addresses>(context);
@@ -30,14 +34,7 @@ class SelectAddressScreen extends StatelessWidget {
               value: addresses.items[i],
               child: Column(
                 children: <Widget>[
-                  SelectAddressItem(),
-                  SizedBox(height: 10),
-                  Divider(
-                    endIndent: 40,
-                    indent: 40,
-                    color: Color.fromRGBO(200, 200, 200, 1),
-                    thickness: 1,
-                  ),
+                  SelectAddressItem(addressSeen),
                 ],
               ),
             ),

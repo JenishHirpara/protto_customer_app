@@ -7,6 +7,7 @@ import './providers/orders.dart';
 import './providers/bikes.dart';
 import './providers/cart_item.dart';
 import './providers/address.dart';
+import './providers/profile.dart';
 
 void main() {
   runApp(MyApp());
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: Addresses(),
+        ),
+        ChangeNotifierProvider.value(
+          value: UserProfile(),
         ),
       ],
       child: MaterialApp(

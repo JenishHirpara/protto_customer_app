@@ -6,6 +6,9 @@ import 'package:provider/provider.dart';
 import '../providers/address.dart';
 
 class AddAddressScreen extends StatefulWidget {
+  final Address passedAddress;
+
+  AddAddressScreen(this.passedAddress);
   @override
   _AddAddressScreenState createState() => _AddAddressScreenState();
 }
@@ -28,10 +31,15 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     final isValid = _form.currentState.validate();
     if (!isValid) {
       return;
-    } else {
-      _form.currentState.save();
-      Provider.of<Addresses>(context, listen: false).addAddress(_address);
+    }
+    _form.currentState.save();
+    if (widget.passedAddress.id != '') {
+      Provider.of<Addresses>(context, listen: false)
+          .editAddress(widget.passedAddress.id, _address);
       Navigator.of(context).pop();
+    } else {
+      Provider.of<Addresses>(context, listen: false).addAddress(_address);
+      Navigator.of(context).pop(_address);
     }
   }
 
@@ -135,6 +143,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       ),
                     ),
                     TextFormField(
+                      initialValue: widget.passedAddress.address,
                       textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value.isEmpty) {
@@ -161,6 +170,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       ),
                     ),
                     TextFormField(
+                      initialValue: widget.passedAddress.landmark,
                       textInputAction: TextInputAction.next,
                       focusNode: focusNode2,
                       onFieldSubmitted: (_) =>
@@ -182,6 +192,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       ),
                     ),
                     TextFormField(
+                      initialValue: widget.passedAddress.saveas,
                       textInputAction: TextInputAction.done,
                       focusNode: focusNode3,
                       onFieldSubmitted: (_) => _saveForm(),
@@ -222,14 +233,23 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         Container(
                           width: MediaQuery.of(context).size.width * 0.4,
                           height: 45,
-                          child: RaisedButton(
-                            child: Text(
-                              'ADD',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            color: Colors.deepOrange,
-                            onPressed: _saveForm,
-                          ),
+                          child: widget.passedAddress.id == null
+                              ? RaisedButton(
+                                  child: Text(
+                                    'ADD',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  color: Colors.deepOrange,
+                                  onPressed: _saveForm,
+                                )
+                              : RaisedButton(
+                                  child: Text(
+                                    'SAVE',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  color: Colors.deepOrange,
+                                  onPressed: _saveForm,
+                                ),
                         ),
                       ],
                     ),

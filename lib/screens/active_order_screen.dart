@@ -287,8 +287,121 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         time: widget.order.time,
       ),
       SampleStepTile(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'Service Started',
+              textAlign: TextAlign.left,
+              style: GoogleFonts.cantataOne(),
+            ),
+            SizedBox(height: 5),
+            Text(
+              'NSW, Sydney, AU',
+              textAlign: TextAlign.left,
+              style: GoogleFonts.cantataOne(
+                fontSize: 12,
+                color: Color.fromRGBO(112, 112, 112, 1),
+              ),
+            ),
+          ],
+        ),
+        date: widget.order.date,
+        time: widget.order.time,
+      ),
+      SampleStepTile(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'Service Done',
+              textAlign: TextAlign.left,
+              style: GoogleFonts.cantataOne(),
+            ),
+            SizedBox(height: 10),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.35,
+              height: 30,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Theme.of(context).primaryColor,
+                  width: 1,
+                ),
+              ),
+              child: FlatButton(
+                color: Color.fromRGBO(250, 250, 250, 1),
+                child: Text(
+                  'Email Invoice',
+                  style: TextStyle(
+                    color: Color.fromRGBO(112, 112, 112, 1),
+                  ),
+                ),
+                onPressed: () {},
+              ),
+            ),
+          ],
+        ),
+        date: widget.order.date,
+        time: widget.order.time,
+      ),
+      SampleStepTile(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'Pre Delivery Inspection',
+              textAlign: TextAlign.left,
+              style: GoogleFonts.cantataOne(),
+            ),
+            SizedBox(height: 10),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.35,
+              height: 30,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Theme.of(context).primaryColor,
+                  width: 1,
+                ),
+              ),
+              child: FlatButton(
+                color: Color.fromRGBO(250, 250, 250, 1),
+                child: Text(
+                  'View Images',
+                  style: TextStyle(
+                    color: Color.fromRGBO(112, 112, 112, 1),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(inspectionRoute(widget.order));
+                },
+              ),
+            ),
+          ],
+        ),
+        date: widget.order.date,
+        time: widget.order.time,
+      ),
+      SampleStepTile(
         title: Text(
-          'Service Started',
+          'Bike Picked from the services station',
+          textAlign: TextAlign.left,
+          style: GoogleFonts.cantataOne(),
+        ),
+        date: widget.order.date,
+        time: widget.order.time,
+      ),
+      SampleStepTile(
+        title: Text(
+          'On route to delivery',
+          textAlign: TextAlign.left,
+          style: GoogleFonts.cantataOne(),
+        ),
+        date: widget.order.date,
+        time: widget.order.time,
+      ),
+      SampleStepTile(
+        title: Text(
+          'Delivered',
           textAlign: TextAlign.left,
           style: GoogleFonts.cantataOne(),
         ),
@@ -373,10 +486,10 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               ),
             ),
             Container(
-              height: 520,
               width: double.infinity,
               padding: EdgeInsets.all(20),
               child: ListView(
+                shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 children: steps.map((step) {
                   return Container(
@@ -427,7 +540,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                                         color: Theme.of(context).primaryColor,
                                         thickness: 2,
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -441,7 +554,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                             ),
                           ],
                         ),
-                        // SizedBox(height: 60),
                       ],
                     ),
                   );

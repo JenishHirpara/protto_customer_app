@@ -8,19 +8,26 @@ import '../providers/address.dart';
 import './select_address_screen.dart';
 import './add_address_screen.dart';
 
-class ShoppingCartScreen extends StatelessWidget {
+class ShoppingCartScreen extends StatefulWidget {
+  @override
+  _ShoppingCartScreenState createState() => _ShoppingCartScreenState();
+}
+
+class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
+  Address addressSeen;
+
   Future selectAddress(BuildContext context) {
     return showModalBottomSheet(
       context: context,
-      builder: (_) => SelectAddressScreen(),
+      builder: (_) => SelectAddressScreen(addressSeen),
     );
   }
 
-  PageRouteBuilder addAddressScreenPageRoute() {
+  PageRouteBuilder addAddressScreenPageRoute(Address address) {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return AddAddressScreen();
+        return AddAddressScreen(address);
       },
       transitionDuration: Duration(milliseconds: 500),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
@@ -45,8 +52,12 @@ class ShoppingCartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
-
-    final addresses = Provider.of<Addresses>(context);
+    final address = Address(
+      address: '',
+      id: '',
+      landmark: '',
+      saveas: '',
+    );
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -230,24 +241,19 @@ class ShoppingCartScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Offstage(
-                offstage: false,
+                offstage: addressSeen == null,
                 child: ListView(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   children: <Widget>[
-                    addresses.items.isNotEmpty
+                    addressSeen != null
                         ? Text(
-                            '${addresses.items[0].address}, ${addresses.items[0].landmark}',
+                            '${addressSeen.address}, ${addressSeen.landmark}',
                             style: GoogleFonts.montserrat(
                               color: Color.fromRGBO(112, 112, 112, 1),
                             ),
                           )
-                        : Text(
-                            'Please select an address',
-                            style: GoogleFonts.montserrat(
-                              color: Color.fromRGBO(112, 112, 112, 1),
-                            ),
-                          ),
+                        : Container(),
                   ],
                 ),
               ),
@@ -264,8 +270,14 @@ class ShoppingCartScreen extends StatelessWidget {
                       color: Colors.white,
                       child: Text('ADD ADDRESS'),
                       elevation: 2,
-                      onPressed: () {
-                        Navigator.of(context).push(addAddressScreenPageRoute());
+                      onPressed: () async {
+                        final result = await Navigator.of(context)
+                            .push(addAddressScreenPageRoute(address));
+                        setState(() {
+                          if (result != null) {
+                            addressSeen = result;
+                          }
+                        });
                       },
                       shape: RoundedRectangleBorder(
                         side: BorderSide(color: Colors.deepOrange),
@@ -280,7 +292,14 @@ class ShoppingCartScreen extends StatelessWidget {
                         'SELECT ADDRESS',
                         style: TextStyle(color: Colors.white),
                       ),
-                      onPressed: () => selectAddress(context),
+                      onPressed: () async {
+                        final result1 = await selectAddress(context);
+                        setState(() {
+                          if (result1 != null) {
+                            addressSeen = result1;
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],

@@ -43,12 +43,14 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: <Widget>[
-        _buildOffstageNavigator(TabItem.dashboard),
-        _buildOffstageNavigator(TabItem.search),
-        _buildOffstageNavigator(TabItem.orders),
-        _buildOffstageNavigator(TabItem.flash),
-      ]),
+      body: Stack(
+        children: <Widget>[
+          _buildOffstageNavigator(TabItem.dashboard),
+          _buildOffstageNavigator(TabItem.search),
+          _buildOffstageNavigator(TabItem.orders),
+          _buildOffstageNavigator(TabItem.flash),
+        ],
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           border: Border(

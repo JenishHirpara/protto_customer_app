@@ -5,175 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../providers/orders.dart';
 import '../screens/active_order_screen.dart';
-import '../screens/my_bikes_screen.dart';
-import '../screens/new_bike_screen.dart';
 
 class ActiveOrderDetail extends StatelessWidget {
   final int i;
   ActiveOrderDetail(this.i);
-
-  PageRouteBuilder myBikesRouteBuilder() {
-    return PageRouteBuilder(
-      pageBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation) {
-        return MyBikesScreen();
-      },
-      transitionDuration: Duration(milliseconds: 500),
-      transitionsBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation, Widget child) {
-        return SlideTransition(
-          position: new Tween<Offset>(
-            begin: const Offset(1.0, 0.0),
-            end: Offset.zero,
-          ).animate(animation),
-          child: new SlideTransition(
-            position: new Tween<Offset>(
-              begin: Offset.zero,
-              end: const Offset(-1.0, 0.0),
-            ).animate(secondaryAnimation),
-            child: child,
-          ),
-        );
-      },
-    );
-  }
-
-  PageRouteBuilder newBikeRouteBuilder() {
-    return PageRouteBuilder(
-      pageBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation) {
-        return NewBikeScreen();
-      },
-      transitionDuration: Duration(milliseconds: 200),
-      transitionsBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation, Widget child) {
-        return SlideTransition(
-          position: new Tween<Offset>(
-            begin: const Offset(1.0, 0.0),
-            end: Offset.zero,
-          ).animate(animation),
-          child: new SlideTransition(
-            position: new Tween<Offset>(
-              begin: Offset.zero,
-              end: const Offset(-1.0, 0.0),
-            ).animate(secondaryAnimation),
-            child: child,
-          ),
-        );
-      },
-    );
-  }
-
-  Future showPopup(BuildContext originalcontext) {
-    return showDialog(
-      context: originalcontext,
-      builder: (context) => Dialog(
-        child: Container(
-          height: 210,
-          child: Column(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.clear,
-                    size: 20,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 4,
-                    child: Container(
-                      child: Icon(
-                        Icons.motorcycle,
-                        size: 75,
-                        color: Color.fromRGBO(150, 150, 150, 1),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 7,
-                    child: Container(
-                      height: 110,
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'My Bike',
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Color.fromRGBO(100, 100, 100, 1),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text('MH 02 KG 0904'),
-                          SizedBox(height: 10),
-                          Container(
-                            width: 150,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Theme.of(originalcontext).primaryColor,
-                                width: 1,
-                              ),
-                            ),
-                            child: RaisedButton(
-                              color: Colors.white,
-                              child: Text('Manage'),
-                              elevation: 0,
-                              onPressed: () {
-                                Navigator.of(originalcontext)
-                                    .push(myBikesRouteBuilder());
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ),
-                          SizedBox(height: 15),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Divider(
-                color: Colors.black,
-                endIndent: 10,
-                indent: 10,
-                thickness: 1,
-                height: 0,
-              ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                  child: FlatButton(
-                    child: Text(
-                      '+ Add New Bike',
-                      style: TextStyle(
-                        color: Theme.of(originalcontext).primaryColor,
-                        fontSize: 16,
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.of(originalcontext).push(myBikesRouteBuilder());
-                      Navigator.of(originalcontext).push(newBikeRouteBuilder());
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
   // ------------------- PageRoute ------------//
   PageRouteBuilder pageRouteBuilder(order) {
@@ -224,15 +59,12 @@ class ActiveOrderDetail extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: GestureDetector(
-                    onTap: () => showPopup(context),
-                    child: Text(
-                      order.name,
-                      style: GoogleFonts.montserrat(
-                        color: Color.fromRGBO(241, 93, 36, 1),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
+                  child: Text(
+                    order.name,
+                    style: GoogleFonts.montserrat(
+                      color: Color.fromRGBO(241, 93, 36, 1),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),

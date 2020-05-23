@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:protto_customer_app/screens/dashboard_screen.dart';
-import 'package:protto_customer_app/screens/order_details_screen.dart';
+
+import './dashboard_screen.dart';
+import './order_details_screen.dart';
 import './navigationBarScreen.dart';
 import './flash_screen.dart';
 import './search_screen.dart';

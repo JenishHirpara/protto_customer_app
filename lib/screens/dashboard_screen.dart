@@ -147,6 +147,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           onTap: () => showPopup(context),
           child: Text(
             'Yamaha FZ',
+            textAlign: TextAlign.left,
             style: GoogleFonts.montserrat(
               color: Color.fromRGBO(241, 93, 36, 1),
               fontSize: 24,
