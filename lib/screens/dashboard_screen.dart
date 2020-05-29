@@ -155,6 +155,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             ),
           ),
         ),
+        titleSpacing: 0,
         leading: Container(),
         elevation: 0,
         backgroundColor: Color.fromRGBO(250, 250, 250, 1),
@@ -255,38 +256,19 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: <Widget>[
-                                          Container(
-                                            width: 65,
-                                            height: 65,
-                                            color: Colors.blueGrey,
-                                          ),
-                                          Text(
-                                            scheduleService,
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.cantataOne(
-                                              color: Color.fromRGBO(
-                                                  128, 128, 128, 1),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
                                           InkWell(
                                             child: Container(
-                                              width: 65,
-                                              height: 65,
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  20,
+                                              height:
+                                                  SizeConfig.blockSizeVertical *
+                                                      10,
                                               color: Colors.blueGrey,
                                             ),
                                             onTap: () {
                                               Navigator.of(context)
-                                                  .push(pageRouteBuilder());
+                                                  .push(pageRouteBuilder(0));
                                             },
                                           ),
                                           Text(
@@ -307,40 +289,23 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: <Widget>[
-                                          Container(
-                                            width: 65,
-                                            height: 65,
-                                            color: Colors.blueGrey,
+                                          InkWell(
+                                            child: Container(
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  20,
+                                              height:
+                                                  SizeConfig.blockSizeVertical *
+                                                      10,
+                                              color: Colors.blueGrey,
+                                            ),
+                                            onTap: () {
+                                              Navigator.of(context)
+                                                  .push(pageRouteBuilder(1));
+                                            },
                                           ),
                                           Text(
                                             tyres,
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.cantataOne(
-                                              color: Color.fromRGBO(
-                                                  128, 128, 128, 1),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          Container(
-                                            width: 65,
-                                            height: 65,
-                                            color: Colors.blueGrey,
-                                          ),
-                                          Text(
-                                            washPlusCoat,
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.cantataOne(
                                               color: Color.fromRGBO(
@@ -357,10 +322,57 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: <Widget>[
-                                          Container(
-                                            width: 65,
-                                            height: 65,
-                                            color: Colors.blueGrey,
+                                          InkWell(
+                                            child: Container(
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  20,
+                                              height:
+                                                  SizeConfig.blockSizeVertical *
+                                                      10,
+                                              color: Colors.blueGrey,
+                                            ),
+                                            onTap: () {
+                                              Navigator.of(context)
+                                                  .push(pageRouteBuilder(2));
+                                            },
+                                          ),
+                                          Text(
+                                            washPlusCoat,
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.cantataOne(
+                                              color: Color.fromRGBO(
+                                                  128, 128, 128, 1),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          InkWell(
+                                            child: Container(
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  20,
+                                              height:
+                                                  SizeConfig.blockSizeVertical *
+                                                      10,
+                                              color: Colors.blueGrey,
+                                            ),
+                                            onTap: () {
+                                              Navigator.of(context)
+                                                  .push(pageRouteBuilder(3));
+                                            },
                                           ),
                                           Text(
                                             customRepairs,
@@ -380,10 +392,20 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: <Widget>[
-                                          Container(
-                                            width: 65,
-                                            height: 65,
-                                            color: Colors.blueGrey,
+                                          InkWell(
+                                            child: Container(
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  20,
+                                              height:
+                                                  SizeConfig.blockSizeVertical *
+                                                      10,
+                                              color: Colors.blueGrey,
+                                            ),
+                                            onTap: () {
+                                              Navigator.of(context)
+                                                  .push(pageRouteBuilder(4));
+                                            },
                                           ),
                                           Text(
                                             dentingPainting,
@@ -395,7 +417,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                           ),
                                         ],
                                       ),
-                                    )
+                                    ),
+                                    Expanded(
+                                      child: Container(),
+                                    ),
                                   ],
                                 )
                               ],
@@ -463,11 +488,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   }
 
   // ------------------- PageRoute ------------//
-  PageRouteBuilder pageRouteBuilder() {
+  PageRouteBuilder pageRouteBuilder(int i) {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return ServiceScreen();
+        return ServiceScreen(i);
       },
       transitionDuration: Duration(milliseconds: 500),
       transitionsBuilder: (BuildContext context, Animation<double> animation,

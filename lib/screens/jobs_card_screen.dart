@@ -432,7 +432,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                 ],
               ),
               ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                contentPadding: EdgeInsets.fromLTRB(0, 0, 18, 0),
                 title: Text(
                   'Item Total',
                   style: GoogleFonts.cantataOne(),

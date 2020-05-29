@@ -12,6 +12,10 @@ Color greyColor = new Color(0xFFC2C2C2);
 var tabsLength = 3;
 
 class ServiceScreen extends StatefulWidget {
+  final int i;
+
+  ServiceScreen(this.i);
+
   @override
   _ServiceScreenState createState() => _ServiceScreenState();
 }
@@ -72,7 +76,8 @@ class _ServiceScreenState extends State<ServiceScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 1,
+      initialIndex: widget.i,
+      length: 5,
       child: Scaffold(
         appBar: AppBar(
           leading: InkWell(
@@ -115,20 +120,29 @@ class _ServiceScreenState extends State<ServiceScreen> {
             )
           ],
           bottom: TabBar(
+            isScrollable: true,
+            labelPadding: EdgeInsets.symmetric(horizontal: 40),
+            unselectedLabelColor: Colors.grey,
+            labelColor: Colors.deepOrange,
             tabs: [
               Tab(
                 text: "Regular Service",
               ),
-//              Tab(text: "Tyre"),
-//              Tab(text: "Wash + Coat"),
+              Tab(text: "Tyre"),
+              Tab(text: "Wash + Coat"),
+              Tab(text: "Custom Repairs"),
+              Tab(text: "Denting & Painting"),
             ],
-            labelColor: orangeColor,
           ),
         ),
         body: Padding(
           padding: EdgeInsets.all(10),
           child: TabBarView(
             children: <Widget>[
+              regularServicesPage(),
+              regularServicesPage(),
+              regularServicesPage(),
+              regularServicesPage(),
               regularServicesPage(),
             ],
           ),

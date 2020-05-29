@@ -124,7 +124,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 myLocationEnabled: true,
                 initialCameraPosition: CameraPosition(
                   target: _center,
-                  zoom: 11.0,
+                  zoom: 12.0,
+                  bearing: 15,
+                  tilt: 75,
                 ),
               ),
             ),

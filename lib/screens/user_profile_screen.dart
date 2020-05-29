@@ -10,6 +10,7 @@ import './dashboard_screen.dart';
 import './saved_addresses_screen.dart';
 import './edit_profile_screen.dart';
 import '../providers/profile.dart';
+import './my_bikes_screen.dart';
 
 class UserProfileScreen extends StatelessWidget {
   PageRouteBuilder supportPageRoute() {
@@ -142,6 +143,32 @@ class UserProfileScreen extends StatelessWidget {
     );
   }
 
+  PageRouteBuilder myBikesRouteBuilder() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return MyBikesScreen();
+      },
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final userProfile = Provider.of<UserProfile>(context).item;
@@ -214,14 +241,8 @@ class UserProfileScreen extends StatelessWidget {
                 SizedBox(height: 20),
                 UserProfileItem(
                   icon: Icon(MdiIcons.heart),
-                  title: 'My Garage',
-                  page: pageRouteBuilder(),
-                ),
-                SizedBox(height: 20),
-                UserProfileItem(
-                  icon: Icon(MdiIcons.history),
-                  title: 'Order History',
-                  page: pageRouteBuilder(),
+                  title: 'My Bikes',
+                  page: myBikesRouteBuilder(),
                 ),
                 SizedBox(height: 20),
                 UserProfileItem(

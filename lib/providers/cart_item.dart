@@ -20,7 +20,7 @@ class Cart with ChangeNotifier {
     //   id: DateTime.now().toString(),
     //   service: 'Regular Service',
     //   type: 'PRODRY',
-    //   price: '₹ 1599',
+    //   price: 1599,
     // ),
   ];
 

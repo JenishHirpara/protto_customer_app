@@ -491,73 +491,130 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               child: ListView(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                children: steps.map((step) {
-                  return Container(
-                    height: 110,
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Expanded(
-                              flex: 3,
-                              child: Container(
-                                height: 110,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      DateFormat('dd/MM').format(step.date),
-                                      style: GoogleFonts.cantataOne(
-                                        color: Color.fromRGBO(128, 128, 128, 1),
+                children: [
+                  ...steps.take(9).map((step) {
+                    return Container(
+                      height: 110,
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  height: 110,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        DateFormat('dd/MM').format(step.date),
+                                        style: GoogleFonts.cantataOne(
+                                          color:
+                                              Color.fromRGBO(128, 128, 128, 1),
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      step.time,
-                                      style: GoogleFonts.cantataOne(
-                                        color: Color.fromRGBO(128, 128, 128, 1),
+                                      Text(
+                                        step.time,
+                                        style: GoogleFonts.cantataOne(
+                                          color:
+                                              Color.fromRGBO(128, 128, 128, 1),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: Container(
-                                height: 110,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.radio_button_checked,
-                                      color: Theme.of(context).primaryColor,
-                                      size: 20,
-                                    ),
-                                    Container(
-                                      height: 90,
-                                      child: VerticalDivider(
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  height: 110,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.radio_button_checked,
                                         color: Theme.of(context).primaryColor,
-                                        thickness: 2,
+                                        size: 20,
                                       ),
-                                    ),
-                                  ],
+                                      Container(
+                                        height: 90,
+                                        child: VerticalDivider(
+                                          color: Theme.of(context).primaryColor,
+                                          thickness: 2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            Expanded(
-                              flex: 4,
-                              child: Container(
-                                height: 110,
-                                child: step.title,
+                              Expanded(
+                                flex: 4,
+                                child: Container(
+                                  height: 110,
+                                  child: step.title,
+                                ),
                               ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  DateFormat('dd/MM').format(steps[9].date),
+                                  style: GoogleFonts.cantataOne(
+                                    color: Color.fromRGBO(128, 128, 128, 1),
+                                  ),
+                                ),
+                                Text(
+                                  steps[9].time,
+                                  style: GoogleFonts.cantataOne(
+                                    color: Color.fromRGBO(128, 128, 128, 1),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            height: 40,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.radio_button_checked,
+                                  color: Theme.of(context).primaryColor,
+                                  size: 20,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 4,
+                          child: Container(
+                            height: 40,
+                            child: steps[9].title,
+                          ),
                         ),
                       ],
                     ),
-                  );
-                }).toList(),
+                  ),
+                ],
               ),
             ),
           ],

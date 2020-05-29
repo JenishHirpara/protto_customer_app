@@ -35,7 +35,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
     return Scaffold(
         backgroundColor: backGroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          elevation: 0,
+          titleSpacing: 0,
+          backgroundColor: backGroundColor,
           leading: InkWell(
             child: Icon(Icons.arrow_back, color: Colors.black),
             onTap: () {
@@ -43,9 +45,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
             },
           ),
           title: Image(
-            image: AssetImage('assets/images/protto-logo.png'),
-            width: 100,
-            height: 36,
+            image: AssetImage('assets/images/ProDry.png'),
+            width: 250,
+            height: 100,
           ),
         ),
         body: Container(
@@ -60,7 +62,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                         minHeight: viewportConstraints.maxHeight,
                       ),
                       child: Padding(
-                        padding: EdgeInsets.all(15),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -110,218 +113,238 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: EdgeInsets.all(5),
                               child: Container(
                                 width: SizeConfig.blockSizeHorizontal * 100,
-                                height: SizeConfig.blockSizeVertical * 50,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(0),
                                     border: Border.all(
                                         color: Colors.white, width: 0.0)),
                                 child: Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 10),
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Row(
                                         children: <Widget>[
                                           Icon(
-                                            Icons.offline_pin,
+                                            Icons.check_circle,
                                             color: Colors.green,
+                                            size: 20,
                                           ),
                                           SizedBox(
-                                            width: 5,
+                                            width: 10,
                                           ),
                                           Text(
                                             textOne,
                                             style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                            ),
                                           )
                                         ],
                                       ),
+                                      SizedBox(height: 5),
                                       Row(
                                         children: <Widget>[
                                           Icon(
-                                            Icons.offline_pin,
+                                            Icons.check_circle,
                                             color: Colors.green,
+                                            size: 20,
                                           ),
                                           SizedBox(
-                                            width: 5,
+                                            width: 10,
                                           ),
                                           Text(
                                             textTwo,
                                             style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                            ),
                                           )
                                         ],
                                       ),
+                                      SizedBox(height: 5),
                                       Row(
                                         children: <Widget>[
                                           Icon(
-                                            Icons.offline_pin,
+                                            Icons.check_circle,
                                             color: Colors.green,
+                                            size: 20,
                                           ),
                                           SizedBox(
-                                            width: 5,
+                                            width: 10,
                                           ),
                                           Text(
                                             textThree,
                                             style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                            ),
                                           )
                                         ],
                                       ),
+                                      SizedBox(height: 5),
                                       Row(
                                         children: <Widget>[
                                           Icon(
-                                            Icons.offline_pin,
+                                            Icons.check_circle,
                                             color: Colors.green,
+                                            size: 20,
                                           ),
                                           SizedBox(
-                                            width: 5,
+                                            width: 10,
                                           ),
                                           Text(
                                             textFour,
                                             style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                            ),
                                           )
                                         ],
                                       ),
+                                      SizedBox(height: 5),
                                       Row(
                                         children: <Widget>[
                                           Icon(
-                                            Icons.offline_pin,
+                                            Icons.check_circle,
                                             color: Colors.green,
+                                            size: 20,
                                           ),
                                           SizedBox(
-                                            width: 5,
+                                            width: 10,
                                           ),
                                           Text(
                                             textFive,
                                             style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                            ),
                                           )
                                         ],
                                       ),
+                                      SizedBox(height: 5),
                                       Row(
                                         children: <Widget>[
                                           Icon(
-                                            Icons.offline_pin,
+                                            Icons.check_circle,
                                             color: Colors.green,
+                                            size: 20,
                                           ),
                                           SizedBox(
-                                            width: 5,
+                                            width: 10,
                                           ),
                                           Text(
                                             textSix,
                                             style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                            ),
                                           )
                                         ],
                                       ),
+                                      SizedBox(height: 5),
                                       Row(
                                         children: <Widget>[
                                           Icon(
-                                            Icons.offline_pin,
+                                            Icons.check_circle,
                                             color: Colors.green,
+                                            size: 20,
                                           ),
                                           SizedBox(
-                                            width: 5,
+                                            width: 10,
                                           ),
                                           Text(
                                             textSeven,
                                             style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                            ),
                                           )
                                         ],
                                       ),
+                                      SizedBox(height: 5),
                                       Row(
                                         children: <Widget>[
                                           Icon(
-                                            Icons.offline_pin,
+                                            Icons.check_circle,
                                             color: Colors.green,
+                                            size: 20,
                                           ),
                                           SizedBox(
-                                            width: 5,
+                                            width: 10,
                                           ),
                                           Text(
                                             textEight,
                                             style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                            ),
                                           )
                                         ],
                                       ),
+                                      SizedBox(height: 5),
                                       Row(
                                         children: <Widget>[
                                           Icon(
-                                            Icons.offline_pin,
+                                            Icons.check_circle,
                                             color: Colors.green,
+                                            size: 20,
                                           ),
                                           SizedBox(
-                                            width: 5,
+                                            width: 10,
                                           ),
                                           Text(
                                             textNine,
                                             style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                            ),
                                           )
                                         ],
                                       ),
+                                      SizedBox(height: 5),
                                       Row(
                                         children: <Widget>[
                                           Icon(
-                                            Icons.offline_pin,
+                                            Icons.check_circle,
                                             color: Colors.green,
+                                            size: 20,
                                           ),
                                           SizedBox(
-                                            width: 5,
+                                            width: 10,
                                           ),
                                           Text(
                                             textTen,
                                             style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                            ),
                                           )
                                         ],
                                       ),
+                                      SizedBox(height: 5),
                                       Row(
                                         children: <Widget>[
                                           Icon(
-                                            Icons.offline_pin,
+                                            Icons.check_circle,
                                             color: Colors.green,
+                                            size: 20,
                                           ),
                                           SizedBox(
-                                            width: 5,
+                                            width: 10,
                                           ),
                                           Text(
                                             textEleven,
                                             style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500),
+                                              color: Colors.black,
+                                              fontSize: 14,
+                                            ),
                                           )
                                         ],
                                       ),
@@ -351,9 +374,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                 children: <Widget>[
                                   Container(
                                     color: Theme.of(context).primaryColor,
-                                    height: 50,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
+                                    height: 40,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.43,
                                     child: RaisedButton(
                                       color: Colors.white,
                                       onPressed: () {},
@@ -365,9 +388,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                               CrossAxisAlignment.center,
                                           children: <Widget>[
                                             Icon(
-                                              Icons.question_answer,
+                                              Icons.help,
                                               color: Colors.black,
-                                              size: 15,
+                                              size: 20,
                                             ),
                                             SizedBox(
                                               width: 10,
@@ -386,9 +409,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                   ),
                                   Container(
                                     color: Theme.of(context).primaryColor,
-                                    height: 50,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
+                                    height: 40,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.43,
                                     child: RaisedButton(
                                       color: Colors.white,
                                       onPressed: () {},
@@ -400,9 +423,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                               CrossAxisAlignment.center,
                                           children: <Widget>[
                                             Icon(
-                                              Icons.question_answer,
+                                              Icons.chat_bubble,
                                               color: Colors.black,
-                                              size: 15,
+                                              size: 20,
                                             ),
                                             SizedBox(
                                               width: 10,
