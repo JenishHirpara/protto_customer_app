@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import './navigationBarScreen.dart';
+import '../providers/profile.dart';
+import './signup_screen.dart';
+import '../models/http_exception.dart';
 
-class VerifyPhoneScreen extends StatelessWidget {
+class VerifyPhoneScreen extends StatefulWidget {
   static const routeName = '/verify-phone';
+
+  @override
+  _VerifyPhoneScreenState createState() => _VerifyPhoneScreenState();
+}
+
+class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
+  var _mobileController = TextEditingController();
+  final _form = GlobalKey<FormState>();
+
+  var _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -16,18 +30,6 @@ class VerifyPhoneScreen extends StatelessWidget {
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
-        actions: <Widget>[
-          FlatButton(
-            child: Text(
-              'Sign in',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontSize: 20,
-              ),
-            ),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -64,12 +66,22 @@ class VerifyPhoneScreen extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20),
-              child: TextFormField(
-                decoration: InputDecoration(labelText: 'Mobile No.'),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  WhitelistingTextInputFormatter.digitsOnly,
-                ],
+              child: Form(
+                key: _form,
+                child: TextFormField(
+                  controller: _mobileController,
+                  decoration: InputDecoration(labelText: 'Mobile No.'),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    WhitelistingTextInputFormatter.digitsOnly,
+                  ],
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter a mobile number';
+                    }
+                    return null;
+                  },
+                ),
               ),
             ),
             SizedBox(height: 50),
@@ -79,12 +91,33 @@ class VerifyPhoneScreen extends StatelessWidget {
               height: 50,
               width: double.infinity,
               child: FlatButton(
-                child: const Text(
-                  'VERIFY PHONE NUMBER',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(pageRouteBuilder());
+                child: _isLoading
+                    ? CircularProgressIndicator(
+                        backgroundColor: Colors.white,
+                      )
+                    : const Text(
+                        'VERIFY PHONE NUMBER',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                onPressed: () async {
+                  final isValid = _form.currentState.validate();
+                  if (!isValid) {
+                    return;
+                  }
+                  try {
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    await Provider.of<UserProfile>(context, listen: false)
+                        .getProfile(_mobileController.text);
+
+                    Navigator.of(context).pushReplacement(pageRouteBuilder());
+                  } on HttpException catch (_) {
+                    Navigator.of(context).pushReplacementNamed(
+                      SignupScreen.routeName,
+                      arguments: _mobileController.text,
+                    );
+                  }
                 },
               ),
             ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-// import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/profile.dart';
 
 class ReferralScreen extends StatelessWidget {
   // Future _share(BuildContext originalcontext) {
@@ -170,6 +171,7 @@ class ReferralScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final referal = Provider.of<UserProfile>(context).item.number;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -233,7 +235,7 @@ class ReferralScreen extends StatelessWidget {
             ),
             child: ListTile(
               title: Text(
-                'PROTTO001',
+                referal,
                 style: GoogleFonts.cantataOne(
                   color: Color.fromRGBO(128, 128, 128, 1),
                 ),

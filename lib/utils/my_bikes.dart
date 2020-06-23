@@ -5,7 +5,12 @@ import 'package:provider/provider.dart';
 import '../providers/bikes.dart';
 import '../screens/edit_bike_screen.dart';
 
-class MyBikes extends StatelessWidget {
+class MyBikes extends StatefulWidget {
+  @override
+  _MyBikesState createState() => _MyBikesState();
+}
+
+class _MyBikesState extends State<MyBikes> {
   PageRouteBuilder editBikeRouteBuilder(Bike bike) {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
@@ -47,9 +52,15 @@ class MyBikes extends StatelessWidget {
           ),
           FlatButton(
             child: Text('Yes'),
-            onPressed: () {
-              Provider.of<Bikes>(originalcontext, listen: false)
-                  .deleteBike(bike.number);
+            onPressed: () async {
+              setState(() {
+                _isLoading = true;
+              });
+              await Provider.of<Bikes>(originalcontext, listen: false)
+                  .deleteBike(bike.id);
+              setState(() {
+                _isLoading = false;
+              });
               Navigator.of(context).pop();
             },
           ),
@@ -58,81 +69,169 @@ class MyBikes extends StatelessWidget {
     );
   }
 
+  Border getBorder(BuildContext context, Bike bike) {
+    if (Provider.of<Bikes>(context).activeBike != null) {
+      return bike.id == Provider.of<Bikes>(context).activeBike.id
+          ? Border.all(color: Colors.deepOrange)
+          : Border.all(color: Colors.white);
+    } else {
+      return Border.all(color: Colors.white);
+    }
+  }
+
+  var _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     final bike = Provider.of<Bike>(context);
     return Card(
       elevation: 3,
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      child: Container(
-        height: 130,
-        width: double.infinity,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 3,
-              child: Container(),
-            ),
-            Expanded(
-              flex: 4,
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 30),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+      child: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : InkWell(
+              child: Container(
+                decoration: BoxDecoration(border: getBorder(context, bike)),
+                width: double.infinity,
+                height: 125,
+                child: Row(
                   children: <Widget>[
-                    Text(
-                      '${bike.brand} ${bike.model}',
-                      style: GoogleFonts.montserrat(
-                        color: Colors.deepOrange,
-                        fontSize: 20,
+                    Expanded(
+                      flex: 8,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(14, 14, 0, 14),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              '${bike.brand} ${bike.model}',
+                              style: GoogleFonts.montserrat(
+                                color: Colors.deepOrange,
+                                fontSize: 24,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  'Year: ',
+                                  style: GoogleFonts.cantataOne(
+                                    color: Color.fromRGBO(100, 100, 100, 1),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                Text(
+                                  bike.year,
+                                  style: GoogleFonts.cantataOne(
+                                    color: Color.fromRGBO(128, 128, 128, 1),
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'Registration Number: ',
+                                    style: GoogleFonts.cantataOne(
+                                      color: Color.fromRGBO(100, 100, 100, 1),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: bike.number,
+                                    style: GoogleFonts.cantataOne(
+                                      color: Color.fromRGBO(128, 128, 128, 1),
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    Text(
-                      bike.year,
-                      style: GoogleFonts.cantataOne(
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                        fontSize: 14,
-                      ),
-                    ),
-                    Text(
-                      bike.number,
-                      style: GoogleFonts.cantataOne(
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                        fontSize: 14,
-                      ),
-                    ),
+                    Provider.of<Bikes>(context, listen: false).activeBike ==
+                            null
+                        ? Expanded(
+                            flex: 2,
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.delete,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () => _handleDelete(context, bike),
+                              ),
+                            ),
+                          )
+                        : bike.id ==
+                                Provider.of<Bikes>(context, listen: false)
+                                    .activeBike
+                                    .id
+                            ? Expanded(
+                                flex: 2,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    Container(
+                                      color: Colors.deepOrange,
+                                      child: Text(
+                                        'Active',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                        color: Colors.grey,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .push(editBikeRouteBuilder(bike));
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : Expanded(
+                                flex: 2,
+                                child: Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: Colors.grey,
+                                    ),
+                                    onPressed: () =>
+                                        _handleDelete(context, bike),
+                                  ),
+                                ),
+                              ),
                   ],
                 ),
               ),
+              onTap: () async {
+                setState(() {
+                  _isLoading = true;
+                });
+                await Provider.of<Bikes>(context, listen: false)
+                    .changeActive(bike);
+                setState(() {
+                  _isLoading = false;
+                });
+              },
             ),
-            Expanded(
-              flex: 3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      Icons.edit,
-                      color: Colors.grey,
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).push(editBikeRouteBuilder(bike));
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.grey,
-                    ),
-                    onPressed: () => _handleDelete(context, bike),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

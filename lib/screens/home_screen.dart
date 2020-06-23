@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
               'Bike Service at your Finger Tips',
             ),
             SizedBox(
-              height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.2,
+              height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.25,
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -46,30 +46,14 @@ class HomeScreen extends StatelessWidget {
               width: double.infinity,
               child: FlatButton(
                 child: const Text(
-                  'Sign Up',
+                  'Continue',
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(VerifyPhoneScreen.routeName);
+                  Navigator.of(context)
+                      .pushReplacementNamed(VerifyPhoneScreen.routeName);
                 },
               ),
-            ),
-            SizedBox(
-              height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.05,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text('Already have an account?'),
-                const SizedBox(width: 10),
-                GestureDetector(
-                  child: Text(
-                    'Sign in',
-                    style: TextStyle(color: Theme.of(context).primaryColor),
-                  ),
-                  onTap: () {},
-                ),
-              ],
             ),
           ],
         ),

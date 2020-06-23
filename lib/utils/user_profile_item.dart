@@ -21,11 +21,17 @@ class UserProfileItem extends StatelessWidget {
           leading: Container(
             height: 50,
             width: 50,
-            color: new Color(0xfffca9ac),
+            color: new Color(0xffffacaf),
             child: icon,
           ),
-          title: Text(title),
-          trailing: Icon(Icons.arrow_forward_ios),
+          title: Text(
+            title,
+            style: TextStyle(color: Color.fromRGBO(112, 112, 112, 1)),
+          ),
+          trailing: Icon(
+            Icons.arrow_forward_ios,
+            size: 14,
+          ),
         ),
       ),
       onTap: () {

@@ -17,15 +17,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final _focusNode1 = FocusNode();
   final _focusNode2 = FocusNode();
   final _focusNode3 = FocusNode();
-  final _focusNode4 = FocusNode();
+  var _isInit = true;
+  var newProfile;
 
-  var newProfile = Profile(
-    id: DateTime.now().toString(),
-    firstName: '',
-    lastName: '',
-    email: '',
-    number: '',
-  );
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      newProfile = Profile(
+        id: DateTime.now().toString(),
+        name: '',
+        email: '',
+        number: '',
+        prottoBucks:
+            Provider.of<UserProfile>(context, listen: false).item.prottoBucks,
+      );
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   void _saveForm() {
     final isValid = _form.currentState.validate();
@@ -74,9 +83,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: ListView(
                 children: <Widget>[
                   TextFormField(
-                    initialValue: oldProfile.firstName,
+                    initialValue: oldProfile.name,
                     decoration: InputDecoration(
-                      hintText: 'First Name',
+                      hintText: 'Name',
                       hintStyle: GoogleFonts.cantataOne(
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontSize: 14,
@@ -91,50 +100,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     textInputAction: TextInputAction.next,
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please provide First Name';
+                        return 'Please provide Name';
                       }
                       return null;
                     },
                     onSaved: (value) {
                       newProfile = Profile(
                         id: newProfile.id,
-                        firstName: value,
-                        lastName: newProfile.lastName,
+                        name: value,
                         number: newProfile.number,
                         email: newProfile.email,
-                      );
-                    },
-                  ),
-                  SizedBox(height: 20),
-                  TextFormField(
-                    initialValue: oldProfile.lastName,
-                    decoration: InputDecoration(
-                      hintText: 'Last Name',
-                      hintStyle: GoogleFonts.cantataOne(
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                        fontSize: 14,
-                      ),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                      filled: true,
-                    ),
-                    focusNode: _focusNode2,
-                    onFieldSubmitted: (_) =>
-                        FocusScope.of(context).requestFocus(_focusNode3),
-                    textInputAction: TextInputAction.next,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please provide Last Name';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      newProfile = Profile(
-                        id: newProfile.id,
-                        firstName: newProfile.firstName,
-                        lastName: value,
-                        number: newProfile.number,
-                        email: newProfile.email,
+                        prottoBucks: newProfile.prottoBucks,
                       );
                     },
                   ),
@@ -151,9 +127,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       contentPadding: EdgeInsets.symmetric(horizontal: 10),
                       filled: true,
                     ),
-                    focusNode: _focusNode3,
+                    focusNode: _focusNode2,
                     onFieldSubmitted: (_) =>
-                        FocusScope.of(context).requestFocus(_focusNode4),
+                        FocusScope.of(context).requestFocus(_focusNode3),
                     textInputAction: TextInputAction.next,
                     validator: (value) {
                       if (value.isEmpty) {
@@ -164,10 +140,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     onSaved: (value) {
                       newProfile = Profile(
                         id: newProfile.id,
-                        firstName: newProfile.firstName,
-                        lastName: newProfile.lastName,
+                        name: newProfile.name,
                         number: newProfile.number,
                         email: value,
+                        prottoBucks: newProfile.prottoBucks,
                       );
                     },
                   ),
@@ -184,7 +160,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       contentPadding: EdgeInsets.symmetric(horizontal: 10),
                       filled: true,
                     ),
-                    focusNode: _focusNode4,
+                    focusNode: _focusNode3,
                     onFieldSubmitted: (_) => _saveForm(),
                     textInputAction: TextInputAction.done,
                     validator: (value) {
@@ -196,10 +172,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     onSaved: (value) {
                       newProfile = Profile(
                         id: newProfile.id,
-                        firstName: newProfile.firstName,
-                        lastName: newProfile.lastName,
+                        name: newProfile.name,
                         number: value,
                         email: newProfile.email,
+                        prottoBucks: newProfile.prottoBucks,
                       );
                     },
                   ),

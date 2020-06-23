@@ -6,10 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 import '../providers/orders.dart';
 
 class PastOrderDetail extends StatelessWidget {
+  final int i;
+  PastOrderDetail(this.i);
+
   @override
   Widget build(BuildContext context) {
-    final order = Provider.of<PastOrderItem>(context);
-    print(order.date);
+    final order = Provider.of<Orders>(context).pastOrders[i];
     return Container(
       width: double.infinity,
       height: 115,
@@ -30,7 +32,7 @@ class PastOrderDetail extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
-                    order.name,
+                    '${order.make} ${order.model}',
                     style: GoogleFonts.montserrat(
                       color: Color.fromRGBO(241, 93, 36, 1),
                       fontSize: 20,
@@ -49,7 +51,7 @@ class PastOrderDetail extends StatelessWidget {
                     ),
                     SizedBox(width: 8),
                     Text(
-                      order.id,
+                      order.bookingId,
                       style: GoogleFonts.cantataOne(
                         color: Colors.grey,
                       ),
@@ -68,7 +70,8 @@ class PastOrderDetail extends StatelessWidget {
                     ),
                     SizedBox(width: 8),
                     Text(
-                      DateFormat('dd/MM/yyyy').format(order.date),
+                      DateFormat('dd/MM/yyyy')
+                          .format(DateTime.parse(order.date)),
                       style: GoogleFonts.cantataOne(
                         color: Colors.grey,
                       ),
@@ -96,7 +99,7 @@ class PastOrderDetail extends StatelessWidget {
                       style: TextStyle(color: Colors.grey),
                     ),
                     Text(
-                      order.status,
+                      'Delivered',
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                       ),

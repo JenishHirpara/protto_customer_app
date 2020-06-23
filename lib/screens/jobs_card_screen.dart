@@ -5,11 +5,10 @@ import 'package:provider/provider.dart';
 
 import '../providers/orders.dart';
 import './shopping_cart_screen.dart';
-import '../providers/cart_item.dart';
 import '../utils/job_item.dart';
 
 class JobsCardScreen extends StatefulWidget {
-  final ActiveOrderItem order;
+  final OrderItem order;
 
   JobsCardScreen(this.order);
 
@@ -56,11 +55,13 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                               fontWeight: FontWeight.normal),
                           children: <TextSpan>[
                             TextSpan(
-                                text: "₹ 3198",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black))
+                              text: "₹ 3198",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            )
                           ]),
                     ),
                     padding: EdgeInsets.all(20),
@@ -217,13 +218,30 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
     );
   }
 
+  var _isInit = true;
+  var _isLoading = false;
+  @override
+  void didChangeDependencies() async {
+    setState(() {
+      _isLoading = true;
+    });
+    if (_isInit) {
+      await Provider.of<Orders>(context, listen: false)
+          .getservices(widget.order.bookingId);
+      setState(() {
+        _isLoading = false;
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<Cart>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.order.name,
+          '${widget.order.make} ${widget.order.model}',
           style: GoogleFonts.montserrat(
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 24,
@@ -242,288 +260,292 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
         backgroundColor: Color.fromRGBO(250, 250, 250, 1),
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(28),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'Pre - Booked Services',
-                style: GoogleFonts.montserrat(
-                  color: Color.fromRGBO(112, 112, 112, 1),
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, i) => ChangeNotifierProvider.value(
-                  value: cart.items[i],
-                  child: JobItem(),
-                ),
-                itemCount: cart.items.length,
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Additional Services',
-                style: GoogleFonts.montserrat(
-                  color: Color.fromRGBO(112, 112, 112, 1),
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
-              ),
-              ListView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: <Widget>[
-                  ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                    title: Text(
-                      'Job Number 1',
-                      style: GoogleFonts.cantataOne(
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                      ),
-                    ),
-                    trailing: Container(
-                      width: 100,
-                      height: 20,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            '₹ 1599',
-                            style: GoogleFonts.cantataOne(
-                              color: Color.fromRGBO(128, 128, 128, 1),
-                            ),
-                          ),
-                          Checkbox(
-                              value: checkedValue1,
-                              onChanged: (bool newValue) {
-                                setState(() {
-                                  checkedValue1 = newValue;
-                                });
-                              }),
-                        ],
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                    title: Text(
-                      'Job Number 2',
-                      style: GoogleFonts.cantataOne(
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                      ),
-                    ),
-                    trailing: Container(
-                      width: 100,
-                      height: 20,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            '₹ 1599',
-                            style: GoogleFonts.cantataOne(
-                              color: Color.fromRGBO(128, 128, 128, 1),
-                            ),
-                          ),
-                          Checkbox(
-                              value: checkedValue2,
-                              onChanged: (bool newValue) {
-                                setState(() {
-                                  checkedValue2 = newValue;
-                                });
-                              }),
-                        ],
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                    title: Text(
-                      'Job Number 3',
-                      style: GoogleFonts.cantataOne(
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                      ),
-                    ),
-                    trailing: Container(
-                      width: 100,
-                      height: 20,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            '₹ 1599',
-                            style: GoogleFonts.cantataOne(
-                              color: Color.fromRGBO(128, 128, 128, 1),
-                            ),
-                          ),
-                          Checkbox(
-                              value: checkedValue3,
-                              onChanged: (bool newValue) {
-                                setState(() {
-                                  checkedValue3 = newValue;
-                                });
-                              }),
-                        ],
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                    title: Text(
-                      'Job Number 4',
-                      style: GoogleFonts.cantataOne(
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                      ),
-                    ),
-                    trailing: Container(
-                      width: 100,
-                      height: 20,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            '₹ 1599',
-                            style: GoogleFonts.cantataOne(
-                              color: Color.fromRGBO(128, 128, 128, 1),
-                            ),
-                          ),
-                          Checkbox(
-                              value: checkedValue4,
-                              onChanged: (bool newValue) {
-                                setState(() {
-                                  checkedValue4 = newValue;
-                                });
-                              }),
-                        ],
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                    title: Text(
-                      'Job Number 5',
-                      style: GoogleFonts.cantataOne(
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                      ),
-                    ),
-                    trailing: Container(
-                      width: 100,
-                      height: 20,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            '₹ 1599',
-                            style: GoogleFonts.cantataOne(
-                              color: Color.fromRGBO(128, 128, 128, 1),
-                            ),
-                          ),
-                          Checkbox(
-                              value: checkedValue5,
-                              onChanged: (bool newValue) {
-                                setState(() {
-                                  checkedValue5 = newValue;
-                                });
-                              }),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              ListTile(
-                contentPadding: EdgeInsets.fromLTRB(0, 0, 18, 0),
-                title: Text(
-                  'Item Total',
-                  style: GoogleFonts.cantataOne(),
-                ),
-                trailing: Text(
-                  '₹ 3198',
-                  style: GoogleFonts.cantataOne(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Center(
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 0),
-                  color: Theme.of(context).primaryColor,
-                  height: 40,
-                  width: double.infinity,
-                  child: RaisedButton(
-                    color: new Color(0xffF15D24),
-                    onPressed: () {
-                      // TODO Approve All OnPressed ...
-                      approveAllAlertDialog(context);
-                    },
-                    child: Text(
-                      'Approve All',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(28),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
-                      color: Theme.of(context).primaryColor,
-                      height: 50,
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: RaisedButton(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.deepOrange),
-                        ),
-                        elevation: 0,
-                        child: Text(
-                          'Approve Selected',
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.grey),
-                        ),
-                        onPressed: () {
-                          approveSelectedAlertDialog(context);
-                        },
+                    Text(
+                      'Pre - Booked Services',
+                      style: GoogleFonts.montserrat(
+                        color: Color.fromRGBO(112, 112, 112, 1),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
                       ),
                     ),
-                    Container(
-                      color: Theme.of(context).primaryColor,
-                      height: 50,
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: RaisedButton(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0.0),
-                          side: BorderSide(color: Colors.deepOrange),
-                        ),
-                        elevation: 0,
-                        child: Text(
-                          'Contact Support',
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.grey),
-                        ),
-                        onPressed: () {
-                          // TODO Approve Selected OnPressed...
-                        },
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, i) => JobItem(
+                          widget.order,
+                          Provider.of<Orders>(context, listen: false)
+                              .services[i]),
+                      itemCount: Provider.of<Orders>(context, listen: false)
+                          .services
+                          .length,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Additional Services',
+                      style: GoogleFonts.montserrat(
+                        color: Color.fromRGBO(112, 112, 112, 1),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
                       ),
                     ),
+                    ListView(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: <Widget>[
+                        ListTile(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                          title: Text(
+                            'Job Number 1',
+                            style: GoogleFonts.cantataOne(
+                              color: Color.fromRGBO(128, 128, 128, 1),
+                            ),
+                          ),
+                          trailing: Container(
+                            width: 100,
+                            height: 20,
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  '₹ 1599',
+                                  style: GoogleFonts.cantataOne(
+                                    color: Color.fromRGBO(128, 128, 128, 1),
+                                  ),
+                                ),
+                                Checkbox(
+                                    value: checkedValue1,
+                                    onChanged: (bool newValue) {
+                                      setState(() {
+                                        checkedValue1 = newValue;
+                                      });
+                                    }),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                          title: Text(
+                            'Job Number 2',
+                            style: GoogleFonts.cantataOne(
+                              color: Color.fromRGBO(128, 128, 128, 1),
+                            ),
+                          ),
+                          trailing: Container(
+                            width: 100,
+                            height: 20,
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  '₹ 1599',
+                                  style: GoogleFonts.cantataOne(
+                                    color: Color.fromRGBO(128, 128, 128, 1),
+                                  ),
+                                ),
+                                Checkbox(
+                                    value: checkedValue2,
+                                    onChanged: (bool newValue) {
+                                      setState(() {
+                                        checkedValue2 = newValue;
+                                      });
+                                    }),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                          title: Text(
+                            'Job Number 3',
+                            style: GoogleFonts.cantataOne(
+                              color: Color.fromRGBO(128, 128, 128, 1),
+                            ),
+                          ),
+                          trailing: Container(
+                            width: 100,
+                            height: 20,
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  '₹ 1599',
+                                  style: GoogleFonts.cantataOne(
+                                    color: Color.fromRGBO(128, 128, 128, 1),
+                                  ),
+                                ),
+                                Checkbox(
+                                    value: checkedValue3,
+                                    onChanged: (bool newValue) {
+                                      setState(() {
+                                        checkedValue3 = newValue;
+                                      });
+                                    }),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                          title: Text(
+                            'Job Number 4',
+                            style: GoogleFonts.cantataOne(
+                              color: Color.fromRGBO(128, 128, 128, 1),
+                            ),
+                          ),
+                          trailing: Container(
+                            width: 100,
+                            height: 20,
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  '₹ 1599',
+                                  style: GoogleFonts.cantataOne(
+                                    color: Color.fromRGBO(128, 128, 128, 1),
+                                  ),
+                                ),
+                                Checkbox(
+                                    value: checkedValue4,
+                                    onChanged: (bool newValue) {
+                                      setState(() {
+                                        checkedValue4 = newValue;
+                                      });
+                                    }),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                          title: Text(
+                            'Job Number 5',
+                            style: GoogleFonts.cantataOne(
+                              color: Color.fromRGBO(128, 128, 128, 1),
+                            ),
+                          ),
+                          trailing: Container(
+                            width: 100,
+                            height: 20,
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  '₹ 1599',
+                                  style: GoogleFonts.cantataOne(
+                                    color: Color.fromRGBO(128, 128, 128, 1),
+                                  ),
+                                ),
+                                Checkbox(
+                                    value: checkedValue5,
+                                    onChanged: (bool newValue) {
+                                      setState(() {
+                                        checkedValue5 = newValue;
+                                      });
+                                    }),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    ListTile(
+                      contentPadding: EdgeInsets.fromLTRB(0, 0, 18, 0),
+                      title: Text(
+                        'Item Total',
+                        style: GoogleFonts.cantataOne(),
+                      ),
+                      trailing: Text(
+                        '₹ 3198',
+                        style: GoogleFonts.cantataOne(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 0),
+                        color: Theme.of(context).primaryColor,
+                        height: 40,
+                        width: double.infinity,
+                        child: RaisedButton(
+                          color: new Color(0xffF15D24),
+                          onPressed: () {
+                            // TODO Approve All OnPressed ...
+                            approveAllAlertDialog(context);
+                          },
+                          child: Text(
+                            'Approve All',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Container(
+                            color: Theme.of(context).primaryColor,
+                            height: 50,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: RaisedButton(
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(color: Colors.deepOrange),
+                              ),
+                              elevation: 0,
+                              child: Text(
+                                'Approve Selected',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.grey),
+                              ),
+                              onPressed: () {
+                                approveSelectedAlertDialog(context);
+                              },
+                            ),
+                          ),
+                          Container(
+                            color: Theme.of(context).primaryColor,
+                            height: 50,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: RaisedButton(
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(0.0),
+                                side: BorderSide(color: Colors.deepOrange),
+                              ),
+                              elevation: 0,
+                              child: Text(
+                                'Contact Support',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.grey),
+                              ),
+                              onPressed: () {
+                                // TODO Approve Selected OnPressed...
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
+              ),
+            ),
     );
   }
 }

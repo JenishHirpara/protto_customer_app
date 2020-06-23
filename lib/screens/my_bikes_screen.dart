@@ -64,28 +64,32 @@ class _MyBikesScreenState extends State<MyBikesScreen> {
         backgroundColor: Color.fromRGBO(250, 250, 250, 1),
         elevation: 0,
       ),
-      body: Column(
-        children: <Widget>[
-          ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, i) => ChangeNotifierProvider.value(
-                value: bikes.items[i], child: MyBikes()),
-            itemCount: bikes.items.length,
-          ),
-          FlatButton(
-            child: Text(
-              'Add New Bike',
-              style: GoogleFonts.montserrat(
-                color: Colors.deepOrange,
-                fontSize: 20,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, i) => ChangeNotifierProvider.value(
+                value: bikes.items[i],
+                child: MyBikes(),
               ),
+              itemCount: bikes.items.length,
             ),
-            onPressed: () {
-              Navigator.of(context).push(newBikeRouteBuilder());
-            },
-          ),
-        ],
+            FlatButton(
+              child: Text(
+                'Add New Bike',
+                style: GoogleFonts.montserrat(
+                  color: Colors.deepOrange,
+                  fontSize: 20,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).push(newBikeRouteBuilder());
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

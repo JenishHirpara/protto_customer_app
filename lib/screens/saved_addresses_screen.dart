@@ -5,13 +5,45 @@ import 'package:provider/provider.dart';
 import '../providers/address.dart';
 import '../utils/saved_addresses_item.dart';
 import './add_address_screen.dart';
+import './edit_address_screen.dart';
 
-class SavedAddressesScreen extends StatelessWidget {
-  PageRouteBuilder addAddressScreenPageRoute(Address address) {
+class SavedAddressesScreen extends StatefulWidget {
+  @override
+  _SavedAddressesScreenState createState() => _SavedAddressesScreenState();
+}
+
+class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
+  PageRouteBuilder addAddressScreenPageRoute() {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return AddAddressScreen(address);
+        return AddAddressScreen();
+      },
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  PageRouteBuilder editAddressScreenPageRoute(Address address) {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return EditAddressScreen(address);
       },
       transitionDuration: Duration(milliseconds: 500),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
@@ -36,12 +68,6 @@ class SavedAddressesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final addresses = Provider.of<Addresses>(context);
-    final address = Address(
-      address: '',
-      id: '',
-      landmark: '',
-      saveas: '',
-    );
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -94,7 +120,7 @@ class SavedAddressesScreen extends StatelessWidget {
               color: Color.fromRGBO(250, 250, 250, 1),
               child: Text('Add Address'),
               onPressed: () {
-                Navigator.of(context).push(addAddressScreenPageRoute(address));
+                Navigator.of(context).push(addAddressScreenPageRoute());
               },
             ),
           ),

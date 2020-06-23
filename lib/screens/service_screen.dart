@@ -1,15 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/rgservice_item.dart';
 import './shopping_cart_screen.dart';
 import 'user_profile_screen.dart';
+import '../providers/bikes.dart';
+import '../providers/cart_item.dart';
+import '../utils/badge.dart';
 
 Color orangeColor = new Color(0xFFF69C7A);
 Color greyColor = new Color(0xFFC2C2C2);
-
-var tabsLength = 3;
 
 class ServiceScreen extends StatefulWidget {
   final int i;
@@ -73,95 +75,131 @@ class _ServiceScreenState extends State<ServiceScreen> {
     );
   }
 
+  var _isInit = true;
+  var _isLoading = false;
+
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      final activeBike = Provider.of<Bikes>(context).activeBike;
+      if (activeBike != null) {
+        setState(() {
+          _isLoading = true;
+        });
+        await Provider.of<Bikes>(context, listen: false)
+            .getRgPrice(activeBike.brand, activeBike.model);
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      initialIndex: widget.i,
-      length: 5,
-      child: Scaffold(
-        appBar: AppBar(
-          leading: InkWell(
-            child: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          title: Text(
-            'Yamaha FZ',
-            style: GoogleFonts.montserrat(
-              color: Colors.deepOrange,
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          backgroundColor: Colors.white,
-          elevation: 0,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.person,
-                color: Colors.grey,
+    var bike = Provider.of<Bikes>(context, listen: false).activeBike;
+    return _isLoading
+        ? Center(child: CircularProgressIndicator())
+        : DefaultTabController(
+            initialIndex: widget.i,
+            length: 5,
+            child: Scaffold(
+              appBar: AppBar(
+                leading: InkWell(
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                title: Text(
+                  bike == null
+                      ? 'Choose a bike'
+                      : '${bike.brand} ${bike.model}',
+                  style: GoogleFonts.montserrat(
+                    color: Colors.deepOrange,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                backgroundColor: Colors.white,
+                elevation: 0,
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.person,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(profileScreenPageRoute());
+                    },
+                  ),
+                  Consumer<Cart>(
+                    builder: (_, cart, ch) =>
+                        Badge(child: ch, value: cart.itemCount.toString()),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.shopping_cart,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(shoppingCartRouteBuilder());
+                      },
+                    ),
+                  ),
+                ],
+                bottom: TabBar(
+                  isScrollable: true,
+                  labelPadding: EdgeInsets.symmetric(horizontal: 40),
+                  unselectedLabelColor: Colors.grey,
+                  labelColor: Colors.deepOrange,
+                  tabs: [
+                    Tab(
+                      text: "Regular Service",
+                    ),
+                    Tab(text: "Tyre"),
+                    Tab(text: "Wash + Coat"),
+                    Tab(text: "Custom Repairs"),
+                    Tab(text: "Denting & Painting"),
+                  ],
+                ),
               ),
-              onPressed: () {
-                Navigator.of(context).push(profileScreenPageRoute());
-              },
+              body: Padding(
+                padding: EdgeInsets.all(10),
+                child: TabBarView(
+                  children: <Widget>[
+                    regularServicesPage(),
+                    regularServicesPage(),
+                    regularServicesPage(),
+                    regularServicesPage(),
+                    regularServicesPage(),
+                  ],
+                ),
+              ),
             ),
-            IconButton(
-              icon: Icon(
-                Icons.shopping_cart,
-                color: Colors.grey,
-              ),
-              onPressed: () {
-                Navigator.of(context).push(shoppingCartRouteBuilder());
-              },
-            )
-          ],
-          bottom: TabBar(
-            isScrollable: true,
-            labelPadding: EdgeInsets.symmetric(horizontal: 40),
-            unselectedLabelColor: Colors.grey,
-            labelColor: Colors.deepOrange,
-            tabs: [
-              Tab(
-                text: "Regular Service",
-              ),
-              Tab(text: "Tyre"),
-              Tab(text: "Wash + Coat"),
-              Tab(text: "Custom Repairs"),
-              Tab(text: "Denting & Painting"),
-            ],
-          ),
-        ),
-        body: Padding(
-          padding: EdgeInsets.all(10),
-          child: TabBarView(
-            children: <Widget>[
-              regularServicesPage(),
-              regularServicesPage(),
-              regularServicesPage(),
-              regularServicesPage(),
-              regularServicesPage(),
-            ],
-          ),
-        ),
-      ),
-    );
+          );
   }
 
   Widget regularServicesPage() {
+    final activeBike = Provider.of<Bikes>(context).activeBike;
     return GridView(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         RgServiceItem(
-          price: 1599,
+          price: activeBike != null
+              ? double.parse(Provider.of<Bikes>(context, listen: false).proDry)
+              : 0.0,
           type: 'PRODRY',
         ),
         RgServiceItem(
-          price: 1599,
+          price: activeBike != null
+              ? double.parse(Provider.of<Bikes>(context, listen: false).proWet)
+              : 0.0,
           type: 'PROWET',
         ),
       ],

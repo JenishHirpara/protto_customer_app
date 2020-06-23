@@ -6,9 +6,10 @@ import 'package:intl/intl.dart';
 import '../providers/orders.dart';
 import './jobs_card_screen.dart';
 import './inspection_images_screen.dart';
+import './reschedule_screen.dart';
 
 class ActiveOrderScreen extends StatefulWidget {
-  final ActiveOrderItem order;
+  final OrderItem order;
 
   ActiveOrderScreen(this.order);
 
@@ -17,8 +18,6 @@ class ActiveOrderScreen extends StatefulWidget {
 }
 
 class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
-  int bottomNavBarIndex = 0;
-
   final _focusNode1 = FocusNode();
   final _focusNode2 = FocusNode();
   final _focusNode3 = FocusNode();
@@ -241,15 +240,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         time: widget.order.time,
       ),
       SampleStepTile(
-        title: Text(
-          'Bike Dropped at Service Station',
-          textAlign: TextAlign.left,
-          style: GoogleFonts.cantataOne(),
-        ),
-        date: widget.order.date,
-        time: widget.order.time,
-      ),
-      SampleStepTile(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -282,6 +272,15 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               ),
             ),
           ],
+        ),
+        date: widget.order.date,
+        time: widget.order.time,
+      ),
+      SampleStepTile(
+        title: Text(
+          'Bike Dropped at Service Station',
+          textAlign: TextAlign.left,
+          style: GoogleFonts.cantataOne(),
         ),
         date: widget.order.date,
         time: widget.order.time,
@@ -331,7 +330,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               child: FlatButton(
                 color: Color.fromRGBO(250, 250, 250, 1),
                 child: Text(
-                  'Email Invoice',
+                  'Invoice',
                   style: TextStyle(
                     color: Color.fromRGBO(112, 112, 112, 1),
                   ),
@@ -383,16 +382,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
       ),
       SampleStepTile(
         title: Text(
-          'Bike Picked from the services station',
-          textAlign: TextAlign.left,
-          style: GoogleFonts.cantataOne(),
-        ),
-        date: widget.order.date,
-        time: widget.order.time,
-      ),
-      SampleStepTile(
-        title: Text(
-          'On route to delivery',
+          'Bike Picked from the service station',
           textAlign: TextAlign.left,
           style: GoogleFonts.cantataOne(),
         ),
@@ -448,29 +438,42 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        widget.order.name,
+                        '${widget.order.make} ${widget.order.model}',
                         style: GoogleFonts.montserrat(
                           color: Color.fromRGBO(241, 93, 36, 1),
                           fontSize: 20,
                         ),
                       ),
-                      Text('2017'),
-                      Text(widget.order.number),
+                      Text(widget.order.bikeYear),
+                      Text(widget.order.bikeNumber),
                     ],
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.33,
-                    height: 40,
-                    child: RaisedButton(
-                      child: Text(
-                        'Jobs',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(jobsRoute(widget.order));
-                      },
-                      color: Theme.of(context).primaryColor,
-                      elevation: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        RaisedButton(
+                          child: Text(
+                            'Jobs',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).push(jobsRoute(widget.order));
+                          },
+                          color: Theme.of(context).primaryColor,
+                          elevation: 0,
+                        ),
+                        RaisedButton(
+                          child: Text(
+                            'Reschedule',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {},
+                          color: Theme.of(context).primaryColor,
+                          elevation: 0,
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -492,7 +495,9 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 children: [
-                  ...steps.take(9).map((step) {
+                  ...steps.asMap().entries.map((entry) {
+                    int index = entry.key;
+                    SampleStepTile step = entry.value;
                     return Container(
                       height: 110,
                       child: Column(
@@ -509,7 +514,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        DateFormat('dd/MM').format(step.date),
+                                        DateFormat('dd/MM')
+                                            .format(DateTime.parse(step.date)),
                                         style: GoogleFonts.cantataOne(
                                           color:
                                               Color.fromRGBO(128, 128, 128, 1),
@@ -534,17 +540,23 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Icon(
-                                        Icons.radio_button_checked,
+                                        int.parse(widget.order.status) >=
+                                                index + 1
+                                            ? Icons.radio_button_checked
+                                            : Icons.radio_button_unchecked,
                                         color: Theme.of(context).primaryColor,
                                         size: 20,
                                       ),
-                                      Container(
-                                        height: 90,
-                                        child: VerticalDivider(
-                                          color: Theme.of(context).primaryColor,
-                                          thickness: 2,
-                                        ),
-                                      ),
+                                      index == 8
+                                          ? Container()
+                                          : Container(
+                                              height: 90,
+                                              child: VerticalDivider(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                thickness: 2,
+                                              ),
+                                            ),
                                     ],
                                   ),
                                 ),
@@ -562,58 +574,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                       ),
                     );
                   }).toList(),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 3,
-                          child: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  DateFormat('dd/MM').format(steps[9].date),
-                                  style: GoogleFonts.cantataOne(
-                                    color: Color.fromRGBO(128, 128, 128, 1),
-                                  ),
-                                ),
-                                Text(
-                                  steps[9].time,
-                                  style: GoogleFonts.cantataOne(
-                                    color: Color.fromRGBO(128, 128, 128, 1),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Container(
-                            height: 40,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.radio_button_checked,
-                                  color: Theme.of(context).primaryColor,
-                                  size: 20,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 4,
-                          child: Container(
-                            height: 40,
-                            child: steps[9].title,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -633,11 +593,11 @@ class SampleStepTile {
   });
 
   Widget title;
-  DateTime date;
+  String date;
   String time;
 }
 
-PageRouteBuilder jobsRoute(ActiveOrderItem order) {
+PageRouteBuilder jobsRoute(OrderItem order) {
   return PageRouteBuilder(
     pageBuilder: (BuildContext context, Animation<double> animation,
         Animation<double> secondaryAnimation) {
@@ -663,7 +623,33 @@ PageRouteBuilder jobsRoute(ActiveOrderItem order) {
   );
 }
 
-PageRouteBuilder inspectionRoute(ActiveOrderItem order) {
+PageRouteBuilder rescheduleRoute(OrderItem order) {
+  return PageRouteBuilder(
+    pageBuilder: (BuildContext context, Animation<double> animation,
+        Animation<double> secondaryAnimation) {
+      return RescheduleScreen();
+    },
+    transitionDuration: Duration(milliseconds: 500),
+    transitionsBuilder: (BuildContext context, Animation<double> animation,
+        Animation<double> secondaryAnimation, Widget child) {
+      return SlideTransition(
+        position: new Tween<Offset>(
+          begin: const Offset(1.0, 0.0),
+          end: Offset.zero,
+        ).animate(animation),
+        child: new SlideTransition(
+          position: new Tween<Offset>(
+            begin: Offset.zero,
+            end: const Offset(-1.0, 0.0),
+          ).animate(secondaryAnimation),
+          child: child,
+        ),
+      );
+    },
+  );
+}
+
+PageRouteBuilder inspectionRoute(OrderItem order) {
   return PageRouteBuilder(
     pageBuilder: (BuildContext context, Animation<double> animation,
         Animation<double> secondaryAnimation) {

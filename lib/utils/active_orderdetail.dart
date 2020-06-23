@@ -37,9 +37,29 @@ class ActiveOrderDetail extends StatelessWidget {
     );
   }
 
+  String _getStatus(OrderItem order) {
+    if (order.status == '1') {
+      return 'Service Confirmed';
+    } else if (order.status == '2' || order.status == '3') {
+      return 'Picked Up';
+    } else if (order.status == '4') {
+      return 'Dropped at station';
+    } else if (order.status == '5') {
+      return 'Service Started';
+    } else if (order.status == '6' ||
+        order.status == '7' ||
+        order.status == '8') {
+      return 'Service done';
+    } else if (order.status == '9') {
+      return 'Delivered';
+    } else {
+      return 'Cancelled';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final order = Provider.of<ActiveOrders>(context).items[i];
+    final order = Provider.of<Orders>(context).activeOrders[i];
     return Container(
       width: double.infinity,
       height: 180,
@@ -60,7 +80,7 @@ class ActiveOrderDetail extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(
-                    order.name,
+                    '${order.make} ${order.model}',
                     style: GoogleFonts.montserrat(
                       color: Color.fromRGBO(241, 93, 36, 1),
                       fontSize: 20,
@@ -79,7 +99,7 @@ class ActiveOrderDetail extends StatelessWidget {
                     ),
                     SizedBox(width: 8),
                     Text(
-                      order.id,
+                      order.bookingId,
                       style: GoogleFonts.cantataOne(
                         color: Colors.grey,
                       ),
@@ -98,7 +118,7 @@ class ActiveOrderDetail extends StatelessWidget {
                     ),
                     SizedBox(width: 8),
                     Text(
-                      DateFormat('dd/MM/yy').format(order.date),
+                      DateFormat('dd/MM/yy').format(DateTime.parse(order.date)),
                       style: GoogleFonts.cantataOne(
                         color: Colors.grey,
                       ),
@@ -168,12 +188,12 @@ class ActiveOrderDetail extends StatelessWidget {
                     Text(
                       'Status:',
                       style: TextStyle(color: Colors.grey),
+                      textAlign: TextAlign.center,
                     ),
                     Text(
-                      order.status,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
+                      _getStatus(order),
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),

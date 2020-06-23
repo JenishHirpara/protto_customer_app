@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../providers/orders.dart';
 
 class InspectionImagesScreen extends StatefulWidget {
-  final ActiveOrderItem order;
+  final OrderItem order;
 
   InspectionImagesScreen(this.order);
 
@@ -48,14 +48,14 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    widget.order.name,
+                    '${widget.order.make} ${widget.order.model}',
                     style: GoogleFonts.montserrat(
                       color: Color.fromRGBO(241, 93, 36, 1),
                       fontSize: 20,
                     ),
                   ),
                   Text('2017'),
-                  Text(widget.order.number),
+                  Text(widget.order.bikeNumber),
                 ],
               ),
             ),

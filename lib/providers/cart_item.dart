@@ -28,6 +28,10 @@ class Cart with ChangeNotifier {
     return [..._items];
   }
 
+  int get itemCount {
+    return _items.length;
+  }
+
   int findByType(String type) {
     return _items.indexWhere((cartitem) => cartitem.type == type);
   }
@@ -46,8 +50,18 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
+  void removeItem(CartItem item) {
+    _items.remove(item);
+    notifyListeners();
+  }
+
   void deleteItem(String id) {
     _items.removeWhere((item) => item.id == id);
+    notifyListeners();
+  }
+
+  void resetCart() {
+    _items.clear();
     notifyListeners();
   }
 }

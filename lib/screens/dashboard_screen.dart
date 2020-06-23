@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import './service_screen.dart';
 import '../utils/SizeConfig.dart';
@@ -8,6 +9,10 @@ import './my_bikes_screen.dart';
 import './new_bike_screen.dart';
 import './shopping_cart_screen.dart';
 import './user_profile_screen.dart';
+import '../providers/bikes.dart';
+import '../providers/address.dart';
+import '../providers/cart_item.dart';
+import '../utils/badge.dart';
 
 Color orangeColor = new Color(0xFFF69C7A);
 Color greyColor = new Color(0xFFC2C2C2);
@@ -22,87 +27,93 @@ String dentingPainting = "Denting &\n" + "Painting";
 var bottomNavBarIndex = 0;
 
 class DashBoardScreen extends StatefulWidget {
+  static var isSignUp = false;
   @override
   _DashBoardScreenState createState() => _DashBoardScreenState();
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
-  Future showPopup(BuildContext originalcontext) {
+  Future showPopup(BuildContext originalcontext, Bike activebike) {
     return showDialog(
       context: originalcontext,
       builder: (context) => Dialog(
         child: Container(
-          height: 210,
+          height: 220,
           child: Column(
             children: <Widget>[
               Align(
                 alignment: Alignment.topRight,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.clear,
-                    size: 20,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 5, 5, 0),
+                  child: InkWell(
+                    child: Icon(
+                      Icons.clear,
+                      size: 24,
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
                 ),
               ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 4,
-                    child: Container(
-                      child: Icon(
-                        Icons.motorcycle,
-                        size: 75,
-                        color: Color.fromRGBO(150, 150, 150, 1),
+              Container(
+                height: 140,
+                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      activebike != null
+                          ? '${activebike.brand} ${activebike.model}'
+                          : 'My Bike',
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      overflow: TextOverflow.fade,
+                      style: GoogleFonts.montserrat(
+                        color: Color.fromRGBO(241, 93, 36, 1),
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 7,
-                    child: Container(
-                      height: 110,
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'My Bike',
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Color.fromRGBO(100, 100, 100, 1),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text('MH 02 KG 0904'),
-                          SizedBox(height: 10),
-                          Container(
-                            width: 150,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Theme.of(context).primaryColor,
-                                width: 1,
-                              ),
-                            ),
-                            child: RaisedButton(
-                              color: Colors.white,
-                              child: Text('Manage'),
-                              elevation: 0,
-                              onPressed: () {
-                                Navigator.of(originalcontext)
-                                    .push(myBikesRouteBuilder());
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ),
-                          SizedBox(height: 15),
-                        ],
+                    SizedBox(height: 10),
+                    Text(
+                      activebike != null ? activebike.year : 'My Bike',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color.fromRGBO(100, 100, 100, 1),
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 10),
+                    Text(
+                      activebike != null ? activebike.number : '',
+                      style: TextStyle(
+                        color: Color.fromRGBO(100, 100, 100, 1),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      width: 150,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Theme.of(context).primaryColor,
+                          width: 1,
+                        ),
+                      ),
+                      child: RaisedButton(
+                        color: Colors.white,
+                        child: Text('Manage'),
+                        elevation: 0,
+                        onPressed: () {
+                          Navigator.of(originalcontext)
+                              .push(myBikesRouteBuilder());
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 15),
+                  ],
+                ),
               ),
               Divider(
                 color: Colors.black,
@@ -112,7 +123,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 height: 0,
               ),
               Align(
-                alignment: Alignment.topLeft,
+                alignment: Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                   child: FlatButton(
@@ -138,15 +149,87 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     );
   }
 
+  Future<void> _showPopUp() {
+    return showDialog(
+      context: context,
+      builder: (ctx) {
+        return Dialog(
+          child: Container(
+            height: 220,
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 14),
+                  child: Text(
+                    'Thank You for Signing up!!',
+                    style: TextStyle(
+                        color: Colors.deepOrange,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+                SizedBox(height: 14),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 14),
+                  child: Text(
+                    'Use your mobile number to sign in next time. Before we get started, lets add a bike.',
+                    style: TextStyle(
+                        color: Color.fromRGBO(100, 100, 100, 1), fontSize: 18),
+                  ),
+                ),
+                SizedBox(height: 40),
+                Container(
+                  width: 120,
+                  child: RaisedButton(
+                    color: Colors.deepOrange,
+                    elevation: 0,
+                    child: Text(
+                      'Okay',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                      Navigator.of(context).push(newBikeRouteBuilder());
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  var _isInit = true;
+
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      Provider.of<Bikes>(context).fetchAndSetBikes();
+      Provider.of<Addresses>(context).fetchAndSetAddresses();
+      if (DashBoardScreen.isSignUp) {
+        Future.delayed(Duration(milliseconds: 50), _showPopUp);
+      }
+    }
+    _isInit = false;
+    DashBoardScreen.isSignUp = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    final activebike = Provider.of<Bikes>(context).activeBike;
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          onTap: () => showPopup(context),
+          onTap: () => showPopup(context, activebike),
           child: Text(
-            'Yamaha FZ',
+            activebike != null
+                ? '${activebike.brand} ${activebike.model}'
+                : '+ Add a Bike',
             textAlign: TextAlign.left,
             style: GoogleFonts.montserrat(
               color: Color.fromRGBO(241, 93, 36, 1),
@@ -169,15 +252,19 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               Navigator.of(context).push(profileScreenPageRoute());
             },
           ),
-          IconButton(
-            icon: Icon(
-              Icons.shopping_cart,
-              color: Colors.grey,
+          Consumer<Cart>(
+            builder: (_, cart, ch) =>
+                Badge(child: ch, value: cart.itemCount.toString()),
+            child: IconButton(
+              icon: Icon(
+                Icons.shopping_cart,
+                color: Colors.grey,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(shoppingCartRouteBuilder());
+              },
             ),
-            onPressed: () {
-              Navigator.of(context).push(shoppingCartRouteBuilder());
-            },
-          )
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -194,7 +281,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     width: SizeConfig.blockSizeHorizontal * 100,
                     height: SizeConfig.blockSizeVertical * 15,
                     child: Padding(
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                       child: TextField(
                         decoration: new InputDecoration(
                             suffixIcon: Icon(
@@ -222,7 +309,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     width: SizeConfig.blockSizeHorizontal * 100,
                     height: SizeConfig.blockSizeVertical * 40,
                     child: Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

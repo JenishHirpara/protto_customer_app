@@ -10,10 +10,9 @@ class SelectAddressItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final address = Provider.of<Address>(context);
+    final address = Provider.of<Address>(context, listen: false);
     return InkWell(
       child: Container(
-        height: 88,
         width: double.infinity,
         child: Column(
           children: <Widget>[
@@ -30,7 +29,10 @@ class SelectAddressItem extends StatelessWidget {
                       ),
               ),
               title: Text(address.saveas),
-              subtitle: Text('${address.address}, ${address.landmark}'),
+              subtitle: address.landmark != null
+                  ? Text(
+                      '${address.flat}, ${address.landmark}, ${address.address}')
+                  : Text('${address.flat}, ${address.address}'),
             ),
             Divider(
               endIndent: 40,

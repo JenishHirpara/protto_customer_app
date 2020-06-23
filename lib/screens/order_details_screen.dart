@@ -6,11 +6,27 @@ import '../providers/orders.dart';
 import '../utils/active_orderdetail.dart';
 import '../utils/past_orderdetail.dart';
 
-class OrderDetailsScreen extends StatelessWidget {
+class OrderDetailsScreen extends StatefulWidget {
+  @override
+  _OrderDetailsScreenState createState() => _OrderDetailsScreenState();
+}
+
+class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
+  var _isInit = true;
+
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      Provider.of<Orders>(context, listen: false).fetchAndSetOrders();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final activeorders = Provider.of<ActiveOrders>(context).items;
-    final pastorders = Provider.of<PastOrders>(context).items;
+    final activeorders = Provider.of<Orders>(context).activeOrders;
+    final pastorders = Provider.of<Orders>(context).pastOrders;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -80,7 +96,7 @@ class OrderDetailsScreen extends StatelessWidget {
                       children: <Widget>[
                         ChangeNotifierProvider.value(
                           value: pastorders[i],
-                          child: PastOrderDetail(),
+                          child: PastOrderDetail(i),
                         ),
                         SizedBox(
                           height: 10,

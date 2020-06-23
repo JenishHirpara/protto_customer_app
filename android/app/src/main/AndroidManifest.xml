@@ -7,12 +7,14 @@
          FlutterApplication and put your custom class here. -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="protto_customer_app"
         android:icon="@mipmap/ic_launcher">
 
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAXpE1oOCdAExaTkNozh8ZGQCW8qoyRwTo"/>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBPPwCzwRTHA89AOoWc9OrZ7ZGLQSVi1lc"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

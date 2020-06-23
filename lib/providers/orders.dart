@@ -1,80 +1,170 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class ActiveOrderItem with ChangeNotifier {
-  final String name;
+class OrderItem with ChangeNotifier {
   final String id;
-  final DateTime date;
+  final String bookingId;
+  final String make;
+  final String model;
+  final String rideable;
+  final String bikeid;
+  final String serviceType;
+  final String bikeYear;
+  final String status;
+  final String date;
   final String time;
+  final String bikeNumber;
+  final String flat;
   final String address;
-  final String number;
-  String status;
+  final String deliveryType;
 
-  ActiveOrderItem({
-    @required this.name,
+  OrderItem({
     @required this.id,
-    @required this.date,
+    @required this.bookingId,
+    @required this.rideable,
+    @required this.serviceType,
     @required this.time,
-    @required this.address,
-    @required this.number,
-    this.status,
-  });
-}
-
-class PastOrderItem with ChangeNotifier {
-  final String name;
-  final String id;
-  final DateTime date;
-  String status;
-
-  PastOrderItem({
-    @required this.name,
-    @required this.id,
     @required this.date,
+    @required this.bikeid,
+    @required this.flat,
+    @required this.address,
+    @required this.deliveryType,
+    this.make,
+    this.model,
+    this.bikeNumber,
+    this.bikeYear,
     this.status,
   });
 }
 
-class ActiveOrders with ChangeNotifier {
-  List<ActiveOrderItem> _items = [
-    ActiveOrderItem(
-      name: 'Yamaha FZ',
-      id: '20191004122734',
-      date: DateTime.now(),
-      time: '9am - 11am',
-      address: '701 Landmark, MG Road, Vile Parle (E)',
-      number: 'MH 02 KG 0904',
-      status: 'Picked Up',
-    ),
-  ];
+class Orders with ChangeNotifier {
+  List<OrderItem> _items = [];
 
-  List<ActiveOrderItem> get items {
+  List<dynamic> _services;
+
+  final String userId;
+
+  Orders(this.userId, this._items);
+
+  List<OrderItem> get items {
     return [..._items];
   }
-}
 
-class PastOrders with ChangeNotifier {
-  List<PastOrderItem> _items = [
-    PastOrderItem(
-      name: 'Yamaha FZ',
-      id: '20191004122734',
-      date: DateTime.now(),
-      status: 'Delivered',
-    ),
-    PastOrderItem(
-      name: 'Yamaha FZ',
-      id: '20191004122734',
-      date: DateTime.now(),
-      status: 'Delivered',
-    ),
-    PastOrderItem(
-      name: 'Yamaha FZ',
-      id: '20191004122734',
-      date: DateTime.now(),
-      status: 'Delivered',
-    ),
-  ];
+  List<OrderItem> get activeOrders {
+    var activeOrders = items.where((order) => order.status != '9').toList();
+    return activeOrders;
+  }
 
-  List<PastOrderItem> get items {
-    return [..._items];
+  List<OrderItem> get pastOrders {
+    var pastOrders = items.where((order) => order.status == '9').toList();
+    return pastOrders;
+  }
+
+  List<dynamic> get services {
+    return [..._services];
+  }
+
+  Future<void> fetchAndSetOrders() async {
+    final url1 =
+        'http://stage.protto.in/api/hitesh/getbookings.php?cid=$userId';
+    final response1 = await http.get(url1);
+    final extractedData1 = json.decode(response1.body) as Map<String, dynamic>;
+
+    List<OrderItem> data = [];
+
+    if (extractedData1['success'] == 'false') {
+      return;
+    }
+    for (int i = 0; i < int.parse(extractedData1['count']); i++) {
+      final bikeid = extractedData1['data'][i]['bike_id'];
+      final url2 = 'http://stage.protto.in/api/shivangi/getbike.php/$bikeid';
+      final response2 = await http.get(url2);
+      final extractedData2 =
+          json.decode(response2.body) as Map<String, dynamic>;
+      data.insert(
+        i,
+        OrderItem(
+          id: extractedData1['data'][i]['id'],
+          bookingId: extractedData1['data'][i]['booking_id'],
+          rideable: extractedData1['data'][i]['rideable'],
+          serviceType: extractedData1['data'][i]['service_type'],
+          status: extractedData1['data'][i]['status'],
+          address: extractedData1['data'][i]['address'],
+          flat: extractedData1['data'][i]['flat'],
+          date: extractedData1['data'][i]['date'],
+          time: extractedData1['data'][i]['timestamp'],
+          bikeid: extractedData1['data'][i]['bike_id'],
+          deliveryType: extractedData1['data'][i]['delivery_type'],
+          bikeNumber: extractedData2['data']['bike_reg'],
+          bikeYear: extractedData2['data']['year'],
+          make: extractedData2['data']['make'],
+          model: extractedData2['data']['model'],
+        ),
+      );
+    }
+    _items = data;
+    notifyListeners();
+  }
+
+  Future<void> addOrder(OrderItem order, double prottoBucks) async {
+    final url1 = 'http://stage.protto.in/api/hitesh/updatebucks.php';
+    await http.patch(url1,
+        body: json.encode({
+          'cid': userId,
+          'protto_bucks': prottoBucks,
+        }));
+    final url = 'http://stage.protto.in/api/hitesh/addbookings.php';
+    final response = await http.post(
+      url,
+      body: json.encode({
+        'cid': userId,
+        'bike_id': order.bikeid,
+        'rideable': order.rideable,
+        'service_type': order.serviceType,
+        'address': order.address,
+        'flat': order.flat,
+        'date': order.date,
+        'timestamp': order.time,
+        'delivery_type': order.deliveryType,
+      }),
+    );
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    final url2 =
+        'http://stage.protto.in/api/shivangi/getbike.php/${order.bikeid}';
+    print(extractedData['id']);
+    print(extractedData['booking_id']);
+    final response2 = await http.get(url2);
+    final extractedData2 = json.decode(response2.body) as Map<String, dynamic>;
+    _items.add(
+      OrderItem(
+        id: extractedData['id'],
+        bookingId: extractedData['booking_id'],
+        address: order.address,
+        bikeid: order.bikeid,
+        date: order.date,
+        deliveryType: order.deliveryType,
+        flat: order.flat,
+        time: order.time,
+        serviceType: order.serviceType,
+        rideable: order.rideable,
+        status: '1',
+        bikeNumber: extractedData2['data']['bike_reg'],
+        bikeYear: extractedData2['data']['year'],
+        make: extractedData2['data']['make'],
+        model: extractedData2['data']['model'],
+      ),
+    );
+    notifyListeners();
+  }
+
+  Future<void> getservices(String bookingId) async {
+    final url =
+        'http://stage.protto.in/api/shivangi/getservicetype.php/$bookingId';
+    final response = await http.get(url);
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    _services = extractedData['data'];
+    notifyListeners();
   }
 }

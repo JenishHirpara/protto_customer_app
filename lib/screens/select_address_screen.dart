@@ -4,14 +4,30 @@ import 'package:provider/provider.dart';
 import '../utils/select_address_item.dart';
 import '../providers/address.dart';
 
-class SelectAddressScreen extends StatelessWidget {
+class SelectAddressScreen extends StatefulWidget {
   final Address addressSeen;
 
   SelectAddressScreen(this.addressSeen);
 
   @override
+  _SelectAddressScreenState createState() => _SelectAddressScreenState();
+}
+
+class _SelectAddressScreenState extends State<SelectAddressScreen> {
+  var _isInit = true;
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      Provider.of<Addresses>(context, listen: false).fetchAndSetAddresses();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final addresses = Provider.of<Addresses>(context);
+    final addresses = Provider.of<Addresses>(context, listen: false);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,7 +50,7 @@ class SelectAddressScreen extends StatelessWidget {
               value: addresses.items[i],
               child: Column(
                 children: <Widget>[
-                  SelectAddressItem(addressSeen),
+                  SelectAddressItem(widget.addressSeen),
                 ],
               ),
             ),

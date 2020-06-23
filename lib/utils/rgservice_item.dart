@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart_item.dart';
+import '../providers/bikes.dart';
 import '../screens/service_details_screen.dart';
 
 class RgServiceItem extends StatefulWidget {
@@ -55,9 +56,30 @@ class _RgServiceItemState extends State<RgServiceItem> {
     );
   }
 
+  Future<void> _showPopup() {
+    return showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: Text('No bike selected'),
+          content: Text('Please select a bike'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Okay'),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
+    final activebike = Provider.of<Bikes>(context, listen: false).activeBike;
     if (cart.findByType(widget.type) != -1) {
       swap = true;
     } else {
@@ -119,11 +141,20 @@ class _RgServiceItemState extends State<RgServiceItem> {
               ),
               color: swap ? Colors.green : Colors.deepOrange,
               onPressed: () {
-                if (cart.findByType(widget.type) == -1) {
-                  setState(() {
-                    swap = !swap;
-                  });
-                  cart.addItem(item);
+                if (activebike != null) {
+                  if (cart.findByType(widget.type) == -1) {
+                    setState(() {
+                      swap = !swap;
+                    });
+                    cart.addItem(item);
+                  } else {
+                    setState(() {
+                      swap = !swap;
+                      cart.removeItem(item);
+                    });
+                  }
+                } else {
+                  _showPopup();
                 }
               },
             ),

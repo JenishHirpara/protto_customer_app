@@ -13,35 +13,35 @@ class _SupportScreenState extends State<SupportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            'Support',
-            style: GoogleFonts.montserrat(
-              color: Color.fromRGBO(241, 93, 36, 1),
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
-            ),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'Support',
+          style: GoogleFonts.montserrat(
+            color: Color.fromRGBO(241, 93, 36, 1),
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
           ),
-          leading: InkWell(
-            child: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          backgroundColor: Color.fromRGBO(250, 250, 250, 1),
-          elevation: 0,
         ),
-        body: Container(
-            width: SizeConfig.blockSizeHorizontal * 100,
-            height: SizeConfig.blockSizeVertical * 100,
-            child: LayoutBuilder(builder:
-                (BuildContext context, BoxConstraints viewportConstraints) {
-              return SingleChildScrollView(
-                  child: ConstrainedBox(
+        leading: InkWell(
+          child: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        backgroundColor: Color.fromRGBO(250, 250, 250, 1),
+        elevation: 0,
+      ),
+      body: Container(
+        width: SizeConfig.blockSizeHorizontal * 100,
+        height: SizeConfig.blockSizeVertical * 100,
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints viewportConstraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
                 constraints: BoxConstraints(
                   minHeight: viewportConstraints.maxHeight,
                 ),
@@ -180,121 +180,82 @@ class _SupportScreenState extends State<SupportScreen> {
                           ),
                         ],
                       ),
-                      // ---------------------- //
-                      Container(
-                        width: SizeConfig.blockSizeHorizontal * 100,
-                        height: SizeConfig.blockSizeVertical * 10,
-                        color: Colors.white,
-                      ),
                       Center(
                         child: Padding(
                           padding: EdgeInsets.all(10),
                           child: Container(
-                              color: Theme.of(context).primaryColor,
-                              height: 50,
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: FlatButton(
-                                  onPressed: () {},
-                                  color: orangeColor,
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.call,
-                                          color: Colors.white,
-                                        ),
-                                        Text(
-                                          'CALL',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      ],
+                            color: Theme.of(context).primaryColor,
+                            height: 50,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: FlatButton(
+                              onPressed: () {},
+                              color: orangeColor,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.call,
+                                      color: Colors.white,
                                     ),
-                                  ))),
+                                    Text(
+                                      'CALL',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                       Center(
                         child: Padding(
                           padding: EdgeInsets.all(10),
                           child: Container(
-                              color: Theme.of(context).primaryColor,
-                              height: 50,
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: FlatButton(
-                                  onPressed: () {},
-                                  color: orangeColor,
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.chat,
-                                          color: Colors.white,
-                                        ),
-//                                          SizedBox(
-//                                            width: 5,
-//                                          ),
-                                        Text(
-                                          'CHAT',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      ],
+                            color: Theme.of(context).primaryColor,
+                            height: 50,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: FlatButton(
+                              onPressed: () {},
+                              color: orangeColor,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.chat,
+                                      color: Colors.white,
                                     ),
-                                  ))),
+                                    Text(
+                                      'CHAT',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Container(
-                              color: Theme.of(context).primaryColor,
-                              height: 50,
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: FlatButton(
-                                  onPressed: () {},
-                                  color: orangeColor,
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.email,
-                                          color: Colors.white,
-                                        ),
-//                                          SizedBox(
-//                                            width: 5,
-//                                          ),
-                                        Text(
-                                          'EMAIL',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      ],
-                                    ),
-                                  ))),
-                        ),
-                      )
                     ],
                   ),
                 ),
-              ));
-            })));
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 }

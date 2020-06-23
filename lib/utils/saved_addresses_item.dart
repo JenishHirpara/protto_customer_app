@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/address.dart';
-import '../screens/add_address_screen.dart';
+import '../screens/edit_address_screen.dart';
 
 class SavedAddressesItem extends StatelessWidget {
   Future _confirmDelete(BuildContext originalcontext, Address address) {
@@ -13,9 +13,9 @@ class SavedAddressesItem extends StatelessWidget {
         content: Text('Are you sure you want to delete ${address.saveas}'),
         actions: <Widget>[
           FlatButton(
-            onPressed: () {
-              Provider.of<Addresses>(context, listen: false)
-                  .deleteAddress(address.address);
+            onPressed: () async {
+              await Provider.of<Addresses>(context, listen: false)
+                  .deleteAddress(address.id);
               Navigator.of(context).pop();
             },
             child: Text('Yes'),
@@ -31,11 +31,11 @@ class SavedAddressesItem extends StatelessWidget {
     );
   }
 
-  PageRouteBuilder addAddressScreenPageRoute(Address address) {
+  PageRouteBuilder editAddressScreenPageRoute(Address address) {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return AddAddressScreen(address);
+        return EditAddressScreen(address);
       },
       transitionDuration: Duration(milliseconds: 500),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
@@ -63,7 +63,9 @@ class SavedAddressesItem extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.all(0),
       title: Text(address.saveas),
-      subtitle: Text('${address.address}, ${address.landmark}'),
+      subtitle: address.landmark != null
+          ? Text('${address.flat}, ${address.landmark}, ${address.address}')
+          : Text('${address.flat}, ${address.address}'),
       trailing: Container(
         width: 100,
         child: Row(
@@ -79,7 +81,7 @@ class SavedAddressesItem extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context).push(addAddressScreenPageRoute(address));
+                Navigator.of(context).push(editAddressScreenPageRoute(address));
               },
             ),
             InkWell(
