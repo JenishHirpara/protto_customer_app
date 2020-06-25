@@ -287,8 +287,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
                             child: Text(
                               'Services',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
+                              style: GoogleFonts.montserrat(
                                 color: Color.fromRGBO(112, 112, 112, 1),
                                 fontSize: 22,
                                 fontWeight: FontWeight.w500,
@@ -329,7 +328,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         Text(
                                           regularServices,
                                           textAlign: TextAlign.center,
-                                          style: GoogleFonts.cantataOne(
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
                                             color: Color.fromRGBO(
                                                 128, 128, 128, 1),
                                           ),
@@ -362,7 +362,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         Text(
                                           tyres,
                                           textAlign: TextAlign.center,
-                                          style: GoogleFonts.cantataOne(
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
                                             color: Color.fromRGBO(
                                                 128, 128, 128, 1),
                                           ),
@@ -395,7 +396,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         Text(
                                           washPlusCoat,
                                           textAlign: TextAlign.center,
-                                          style: GoogleFonts.cantataOne(
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
                                             color: Color.fromRGBO(
                                                 128, 128, 128, 1),
                                           ),
@@ -432,7 +434,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         Text(
                                           customRepairs,
                                           textAlign: TextAlign.center,
-                                          style: GoogleFonts.cantataOne(
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
                                             color: Color.fromRGBO(
                                                 128, 128, 128, 1),
                                           ),
@@ -465,7 +468,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         Text(
                                           dentingPainting,
                                           textAlign: TextAlign.center,
-                                          style: GoogleFonts.cantataOne(
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
                                             color: Color.fromRGBO(
                                                 128, 128, 128, 1),
                                           ),
