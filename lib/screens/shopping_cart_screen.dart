@@ -323,6 +323,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 title: Text(
                   'New Total',
                   style: GoogleFonts.montserrat(
+                    color: Colors.red,
                     fontSize: 16,
                   ),
                 ),
