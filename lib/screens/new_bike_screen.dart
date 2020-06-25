@@ -113,7 +113,13 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                         .brands
                         .map<DropdownMenuItem>((value) {
                       return DropdownMenuItem<String>(
-                          child: Text(value), value: value);
+                          child: Text(
+                            value,
+                            textAlign: TextAlign.left,
+                            style:TextStyle(
+                                fontFamily: 'Poppins',
+                           )
+                          ), value: value);
                     }).toList(),
                     validator: (value) {
                       if (value == null) {
@@ -152,7 +158,13 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                         .models
                         .map<DropdownMenuItem>((value) {
                       return DropdownMenuItem<String>(
-                          child: Text(value), value: value);
+                          child: Text(
+                            value,
+                            textAlign: TextAlign.left,
+                            style:TextStyle(
+                                fontFamily: 'Poppins',
+                              )
+                          ), value: value);
                     }).toList(),
                     validator: (value) {
                       if (value == null) {
@@ -188,7 +200,13 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                     ),
                     items: getYears().map<DropdownMenuItem>((value) {
                       return DropdownMenuItem<String>(
-                          child: Text(value), value: value);
+                          child: Text(
+                            value,
+                            textAlign: TextAlign.left,
+                            style:TextStyle(
+                                fontFamily: 'Poppins',
+                              )
+                          ), value: value);
                     }).toList(),
                     validator: (value) {
                       if (value == null) {
@@ -251,3 +269,5 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
     );
   }
 }
+
+

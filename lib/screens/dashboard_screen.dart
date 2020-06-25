@@ -111,7 +111,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         },
                       ),
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 12),
                   ],
                 ),
               ),
@@ -267,282 +267,247 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          width: SizeConfig.blockSizeHorizontal * 100,
-          height: SizeConfig.blockSizeVertical * 100,
-          child: SingleChildScrollView(
-            child: Container(
-              width: SizeConfig.blockSizeHorizontal * 100,
-              height: SizeConfig.blockSizeVertical * 100,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    width: SizeConfig.blockSizeHorizontal * 100,
-                    height: SizeConfig.blockSizeVertical * 15,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                      child: TextField(
-                        decoration: new InputDecoration(
-                            suffixIcon: Icon(
-                              Icons.clear,
-                              color: new Color(0xff626262),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: new Color(0xff626262),
-                            ),
-                            border: new OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(10.0),
-                              ),
-                            ),
-                            filled: true,
-                            hintStyle:
-                                new TextStyle(color: new Color(0xff1D1D1)),
-                            labelText: "Location",
-                            fillColor: Colors.white),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: SizeConfig.blockSizeHorizontal * 100,
-                    height: SizeConfig.blockSizeVertical * 40,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 1,
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
-                              child: Text(
-                                'Services',
-                                style: GoogleFonts.montserrat(
-                                  color: Color.fromRGBO(112, 112, 112, 1),
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 10,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          InkWell(
-                                            child: Container(
-                                              width: SizeConfig
-                                                      .blockSizeHorizontal *
-                                                  20,
-                                              height:
-                                                  SizeConfig.blockSizeVertical *
-                                                      10,
-                                              color: Colors.blueGrey,
-                                            ),
-                                            onTap: () {
-                                              Navigator.of(context)
-                                                  .push(pageRouteBuilder(0));
-                                            },
-                                          ),
-                                          Text(
-                                            regularServices,
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.cantataOne(
-                                              color: Color.fromRGBO(
-                                                  128, 128, 128, 1),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          InkWell(
-                                            child: Container(
-                                              width: SizeConfig
-                                                      .blockSizeHorizontal *
-                                                  20,
-                                              height:
-                                                  SizeConfig.blockSizeVertical *
-                                                      10,
-                                              color: Colors.blueGrey,
-                                            ),
-                                            onTap: () {
-                                              Navigator.of(context)
-                                                  .push(pageRouteBuilder(1));
-                                            },
-                                          ),
-                                          Text(
-                                            tyres,
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.cantataOne(
-                                              color: Color.fromRGBO(
-                                                  128, 128, 128, 1),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          InkWell(
-                                            child: Container(
-                                              width: SizeConfig
-                                                      .blockSizeHorizontal *
-                                                  20,
-                                              height:
-                                                  SizeConfig.blockSizeVertical *
-                                                      10,
-                                              color: Colors.blueGrey,
-                                            ),
-                                            onTap: () {
-                                              Navigator.of(context)
-                                                  .push(pageRouteBuilder(2));
-                                            },
-                                          ),
-                                          Text(
-                                            washPlusCoat,
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.cantataOne(
-                                              color: Color.fromRGBO(
-                                                  128, 128, 128, 1),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          InkWell(
-                                            child: Container(
-                                              width: SizeConfig
-                                                      .blockSizeHorizontal *
-                                                  20,
-                                              height:
-                                                  SizeConfig.blockSizeVertical *
-                                                      10,
-                                              color: Colors.blueGrey,
-                                            ),
-                                            onTap: () {
-                                              Navigator.of(context)
-                                                  .push(pageRouteBuilder(3));
-                                            },
-                                          ),
-                                          Text(
-                                            customRepairs,
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.cantataOne(
-                                              color: Color.fromRGBO(
-                                                  128, 128, 128, 1),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          InkWell(
-                                            child: Container(
-                                              width: SizeConfig
-                                                      .blockSizeHorizontal *
-                                                  20,
-                                              height:
-                                                  SizeConfig.blockSizeVertical *
-                                                      10,
-                                              color: Colors.blueGrey,
-                                            ),
-                                            onTap: () {
-                                              Navigator.of(context)
-                                                  .push(pageRouteBuilder(4));
-                                            },
-                                          ),
-                                          Text(
-                                            dentingPainting,
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.cantataOne(
-                                              color: Color.fromRGBO(
-                                                  128, 128, 128, 1),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Container(),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: SizeConfig.blockSizeHorizontal * 100,
-                    height: SizeConfig.blockSizeVertical * 45,
+      body: Container(
+        width: SizeConfig.blockSizeHorizontal * 100,
+        height: SizeConfig.blockSizeVertical * 100,
+            child: Column(
+              children: <Widget>[  
+                Container(
+                  width: SizeConfig.blockSizeHorizontal * 100,
+                  height: SizeConfig.blockSizeVertical * 36,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(10, 0, 0, 5),
-                          child: Text(
-                            'Popular Services',
-                            style: GoogleFonts.montserrat(
-                              color: Color.fromRGBO(112, 112, 112, 1),
-                              fontSize: 22,
-                              fontWeight: FontWeight.w500,
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                            child: Text(
+                              'Services',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                                fontSize: 22,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ),
-                        swiperWidget(),
+                        Expanded(
+                          flex: 10,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        InkWell(
+                                          child: Container(
+                                            width: SizeConfig
+                                                    .blockSizeHorizontal *
+                                                20,
+                                            height:
+                                                SizeConfig.blockSizeVertical *
+                                                    10,
+                                            color: Colors.blueGrey,
+                                          ),
+                                          onTap: () {
+                                            Navigator.of(context)
+                                                .push(pageRouteBuilder(0));
+                                          },
+                                        ),
+                                        Text(
+                                          regularServices,
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.cantataOne(
+                                            color: Color.fromRGBO(
+                                                128, 128, 128, 1),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        InkWell(
+                                          child: Container(
+                                            width: SizeConfig
+                                                    .blockSizeHorizontal *
+                                                20,
+                                            height:
+                                                SizeConfig.blockSizeVertical *
+                                                    10,
+                                            color: Colors.blueGrey,
+                                          ),
+                                          onTap: () {
+                                            Navigator.of(context)
+                                                .push(pageRouteBuilder(1));
+                                          },
+                                        ),
+                                        Text(
+                                          tyres,
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.cantataOne(
+                                            color: Color.fromRGBO(
+                                                128, 128, 128, 1),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        InkWell(
+                                          child: Container(
+                                            width: SizeConfig
+                                                    .blockSizeHorizontal *
+                                                20,
+                                            height:
+                                                SizeConfig.blockSizeVertical *
+                                                    10,
+                                            color: Colors.blueGrey,
+                                          ),
+                                          onTap: () {
+                                            Navigator.of(context)
+                                                .push(pageRouteBuilder(2));
+                                          },
+                                        ),
+                                        Text(
+                                          washPlusCoat,
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.cantataOne(
+                                            color: Color.fromRGBO(
+                                                128, 128, 128, 1),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        InkWell(
+                                          child: Container(
+                                            width: SizeConfig
+                                                    .blockSizeHorizontal *
+                                                20,
+                                            height:
+                                                SizeConfig.blockSizeVertical *
+                                                    10,
+                                            color: Colors.blueGrey,
+                                          ),
+                                          onTap: () {
+                                            Navigator.of(context)
+                                                .push(pageRouteBuilder(3));
+                                          },
+                                        ),
+                                        Text(
+                                          customRepairs,
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.cantataOne(
+                                            color: Color.fromRGBO(
+                                                128, 128, 128, 1),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        InkWell(
+                                          child: Container(
+                                            width: SizeConfig
+                                                    .blockSizeHorizontal *
+                                                20,
+                                            height:
+                                                SizeConfig.blockSizeVertical *
+                                                    10,
+                                            color: Colors.blueGrey,
+                                          ),
+                                          onTap: () {
+                                            Navigator.of(context)
+                                                .push(pageRouteBuilder(4));
+                                          },
+                                        ),
+                                        Text(
+                                          dentingPainting,
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.cantataOne(
+                                            color: Color.fromRGBO(
+                                                128, 128, 128, 1),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                  )
-                ],
-              ),
-            ),
-          ),
+                  ),
+                ),
+                Container(
+                  width: SizeConfig.blockSizeHorizontal * 100,
+                  height: SizeConfig.blockSizeVertical * 45,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10, 0, 0, 5),
+                        child: Text(
+                          'Popular Services',
+                          style: GoogleFonts.montserrat(
+                            color: Color.fromRGBO(112, 112, 112, 1),
+                            fontSize: 22,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      swiperWidget(),
+                    ],
+                  ),
+                )
+              ],
         ),
       ),
     );
