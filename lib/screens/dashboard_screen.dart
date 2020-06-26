@@ -317,7 +317,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           Expanded(
                             flex: 1,
                             child: Padding(
-                              padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                              padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                               child: Text(
                                 'Services',
                                 style: GoogleFonts.montserrat(
@@ -525,7 +525,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.fromLTRB(10, 0, 0, 5),
+                          padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
                           child: Text(
                             'Popular Services',
                             style: GoogleFonts.montserrat(
