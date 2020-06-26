@@ -197,10 +197,38 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
   List<SampleStepTile> get steps {
     return [
       SampleStepTile(
-        title: Text(
-          'Service Confirmed',
-          textAlign: TextAlign.left,
-          style: GoogleFonts.cantataOne(),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'Service Confirmed',
+              textAlign: TextAlign.left,
+              style: GoogleFonts.cantataOne(),
+            ),
+            SizedBox(height: 10),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.35,
+              height: 30,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Theme.of(context).primaryColor,
+                  width: 1,
+                ),
+              ),
+              child: FlatButton(
+                color: Color.fromRGBO(250, 250, 250, 1),
+                child: Text(
+                  'Reschedule',
+                  style: TextStyle(
+                    color: Color.fromRGBO(112, 112, 112, 1),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(rescheduleRoute(widget.order));
+                },
+              ),
+            ),
+          ],
         ),
         date: widget.order.date,
         time: widget.order.time,
@@ -405,6 +433,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'Active Order',
           style: GoogleFonts.montserrat(
@@ -450,30 +479,16 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.33,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        RaisedButton(
-                          child: Text(
-                            'Jobs',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).push(jobsRoute(widget.order));
-                          },
-                          color: Theme.of(context).primaryColor,
-                          elevation: 0,
-                        ),
-                        RaisedButton(
-                          child: Text(
-                            'Reschedule',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () {},
-                          color: Theme.of(context).primaryColor,
-                          elevation: 0,
-                        ),
-                      ],
+                    child: RaisedButton(
+                      child: Text(
+                        'Jobs',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(jobsRoute(widget.order));
+                      },
+                      color: Theme.of(context).primaryColor,
+                      elevation: 0,
                     ),
                   ),
                 ],
@@ -627,7 +642,7 @@ PageRouteBuilder rescheduleRoute(OrderItem order) {
   return PageRouteBuilder(
     pageBuilder: (BuildContext context, Animation<double> animation,
         Animation<double> secondaryAnimation) {
-      return RescheduleScreen();
+      return RescheduleScreen(order);
     },
     transitionDuration: Duration(milliseconds: 500),
     transitionsBuilder: (BuildContext context, Animation<double> animation,

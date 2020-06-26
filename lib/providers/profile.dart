@@ -27,7 +27,6 @@ class Profile with ChangeNotifier {
 class UserProfile with ChangeNotifier {
   Profile _item;
   String _token;
-  Timer _authTimer;
 
   Profile get item {
     return _item;
@@ -105,8 +104,6 @@ class UserProfile with ChangeNotifier {
       number: extractedData['Data']['mobile'],
       prottoBucks: extractedData['Data']['protto_bucks'],
     );
-
-    print(item.prottoBucks);
     var rng = new Random();
     _token = '${rng.nextInt(90000000) + 10000000}';
     notifyListeners();
@@ -150,10 +147,6 @@ class UserProfile with ChangeNotifier {
   Future<void> logout() async {
     _item = null;
     _token = null;
-    if (_authTimer != null) {
-      _authTimer.cancel();
-      _authTimer = null;
-    }
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     prefs.clear();

@@ -282,7 +282,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   _isLoading
                                       ? CircularProgressIndicator()
                                       : Text(
-                                          _first.thoroughfare,
+                                          _first.thoroughfare != null
+                                              ? _first.thoroughfare
+                                              : _first.locality,
                                           style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w500,

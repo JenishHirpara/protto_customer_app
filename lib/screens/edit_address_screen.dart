@@ -5,6 +5,7 @@ import 'package:location/location.dart';
 import 'package:geocoder/geocoder.dart' as geo;
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart' as web;
+import 'package:google_fonts/google_fonts.dart';
 
 import '../providers/address.dart';
 
@@ -26,6 +27,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   final focusNode1 = FocusNode();
   final focusNode2 = FocusNode();
   final focusNode3 = FocusNode();
+  var _showFull = true;
+  var _isLoading = true;
 
   var _address = Address(
     id: DateTime.now().toString(),
@@ -94,40 +97,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     _first = _addresses[0];
     setState(() {
       _textController.text = _first.addressLine.toString();
+      _isLoading = false;
     });
-
-    // final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-    // geolocator
-    //     .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-    //     .then((Position position) {
-    //   setState(() {
-    //     _currentPosition = position;
-    //   });
-    // }).catchError((e) {
-    //   print(e);
-    // }).then((_) {
-    //   allMarkers.add(
-    //     Marker(
-    //       markerId: MarkerId('I\'m here'),
-    //       draggable: false,
-    //       position: new LatLng(
-    //         _currentPosition.latitude,
-    //         _currentPosition.longitude,
-    //       ),
-    //     ),
-    //   );
-    //   _mapController.animateCamera(
-    //     CameraUpdate.newCameraPosition(
-    //       CameraPosition(
-    //         target: new LatLng(
-    //           _currentPosition.latitude,
-    //           _currentPosition.longitude,
-    //         ),
-    //         zoom: 12.0,
-    //       ),
-    //     ),
-    //   );
-    // });
   }
 
   var _position;
@@ -139,6 +110,9 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   }
 
   void _updatePosition() async {
+    setState(() {
+      _isLoading = true;
+    });
     var latitude = _position.target.latitude == null
         ? _locationData.latitude
         : _position.target.latitude;
@@ -152,6 +126,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
 
     setState(() {
       _textController.text = _first.addressLine.toString();
+      _isLoading = false;
     });
   }
 
@@ -190,27 +165,42 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     }
   }
 
+  void _setFull() {
+    setState(() {
+      _showFull = !_showFull;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final _appBar = AppBar(
-      title: TextField(
-        controller: _textController,
-        style: TextStyle(color: Colors.deepOrange),
-        decoration: InputDecoration(
-          hintText: 'Search Address',
-          hintStyle: TextStyle(color: Colors.deepOrange),
+      automaticallyImplyLeading: false,
+      title: Text(
+        'Edit Address',
+        style: GoogleFonts.montserrat(
+          color: Color.fromRGBO(241, 93, 36, 1),
+          fontSize: 24,
+          fontWeight: FontWeight.w500,
         ),
-        onTap: () async {
-          web.Prediction p = await PlacesAutocomplete.show(
-            context: context,
-            apiKey: kGoogleApiKey,
-            language: "en",
-            components: [web.Component(web.Component.country, "in")],
-            mode: Mode.overlay,
-          );
-          displayPrediction(p);
-        },
       ),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(
+            Icons.search,
+            color: Colors.deepOrange,
+          ),
+          onPressed: () async {
+            web.Prediction p = await PlacesAutocomplete.show(
+              context: context,
+              apiKey: kGoogleApiKey,
+              language: "en",
+              components: [web.Component(web.Component.country, "in")],
+              mode: Mode.overlay,
+            );
+            displayPrediction(p);
+          },
+        ),
+      ],
       leading: InkWell(
         child: Icon(
           Icons.arrow_back,
@@ -226,185 +216,446 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     );
     return Scaffold(
       appBar: _appBar,
-      body: Stack(
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-            ),
-            child: GoogleMap(
-              onMapCreated: (GoogleMapController controller) {
-                _mapController = controller;
-              },
-              myLocationEnabled: true,
-              initialCameraPosition: CameraPosition(
-                target: LatLng(19.0760, 72.8777),
-                zoom: 12.0,
-                bearing: 15,
-                tilt: 75,
-              ),
-              onCameraMove: ((position) => _currentLocation(position)),
-              onCameraIdle: _updatePosition,
-            ),
-          ),
-          Positioned(
-            top: (MediaQuery.of(context).size.height -
-                    _appBar.preferredSize.height -
-                    MediaQuery.of(context).padding.top -
-                    kToolbarHeight -
-                    40) /
-                2,
-            right: (MediaQuery.of(context).size.width - 40) / 2,
-            child: Tooltip(
-              message: 'Move to adjust',
-              child: new Icon(
-                Icons.person_pin_circle,
-                size: 40,
-              ),
-            ),
-          ),
-          DraggableScrollableSheet(
-            initialChildSize: 0.2,
-            maxChildSize: 0.5,
-            minChildSize: 0.1,
-            builder: (context, scrollController) {
-              return SingleChildScrollView(
-                controller: scrollController,
-                child: Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.all(20),
-                  child: Form(
-                    key: _form,
-                    child: ListView(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      children: <Widget>[
-                        Text(
-                          'FLAT, FLOOR, BUILDING NAME',
-                          style: TextStyle(
-                            color: Color.fromRGBO(112, 112, 112, 1),
-                          ),
-                        ),
-                        TextFormField(
-                          initialValue: widget.passedAddress.flat,
-                          textInputAction: TextInputAction.next,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please provide flat, floor and building name';
-                            }
-                            return null;
-                          },
-                          onFieldSubmitted: (_) =>
-                              FocusScope.of(context).requestFocus(focusNode2),
-                          onSaved: (value) {
-                            _address = Address(
-                              id: _address.id,
-                              address: _first.addressLine,
-                              flat: value,
-                              landmark: _address.landmark,
-                              saveas: _address.saveas,
-                              latitude: _locationData.latitude.toString(),
-                              longitude: _locationData.longitude.toString(),
-                            );
-                          },
-                        ),
-                        SizedBox(height: 20),
-                        Text(
-                          'LANDMARK',
-                          style: TextStyle(
-                            color: Color.fromRGBO(112, 112, 112, 1),
-                          ),
-                        ),
-                        TextFormField(
-                          initialValue: widget.passedAddress.landmark,
-                          textInputAction: TextInputAction.next,
-                          focusNode: focusNode2,
-                          onFieldSubmitted: (_) =>
-                              FocusScope.of(context).requestFocus(focusNode3),
-                          onSaved: (value) {
-                            _address = Address(
-                              id: _address.id,
-                              address: _address.address,
-                              landmark: value,
-                              saveas: _address.saveas,
-                              flat: _address.flat,
-                              latitude: _locationData.latitude.toString(),
-                              longitude: _locationData.longitude.toString(),
-                            );
-                          },
-                        ),
-                        SizedBox(height: 20),
-                        Text(
-                          'SAVE AS',
-                          style: TextStyle(
-                            color: Color.fromRGBO(112, 112, 112, 1),
-                          ),
-                        ),
-                        TextFormField(
-                          initialValue: widget.passedAddress.saveas,
-                          textInputAction: TextInputAction.done,
-                          focusNode: focusNode3,
-                          onFieldSubmitted: (_) => _saveForm(),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please provide a title to this address';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            _address = Address(
-                              id: _address.id,
-                              address: _address.address,
-                              landmark: _address.landmark,
-                              saveas: value,
-                              flat: _address.flat,
-                              latitude: _locationData.latitude.toString(),
-                              longitude: _locationData.longitude.toString(),
-                            );
-                          },
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              height: 45,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.deepOrange),
-                              ),
-                              child: RaisedButton(
-                                color: Colors.white,
-                                elevation: 0,
-                                child: Text('BACK'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ),
-                            Container(
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                height: 45,
-                                child: RaisedButton(
-                                  child: Text(
-                                    'SAVE',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  color: Colors.deepOrange,
-                                  onPressed: () => _saveForm(),
-                                )),
-                          ],
-                        ),
-                      ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Container(
+                  width: double.infinity,
+                  height: (MediaQuery.of(context).size.height -
+                          _appBar.preferredSize.height -
+                          MediaQuery.of(context).padding.top) *
+                      (_showFull ? 0.75 : 0.5),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                  ),
+                  child: GoogleMap(
+                    onMapCreated: (GoogleMapController controller) {
+                      _mapController = controller;
+                    },
+                    myLocationEnabled: true,
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(19.0760, 72.8777),
+                      zoom: 12.0,
+                      bearing: 15,
+                      tilt: 75,
+                    ),
+                    onCameraMoveStarted: _showFull ? () {} : _setFull,
+                    onTap: _showFull ? (_) {} : (_) => _setFull(),
+                    onCameraMove: ((position) => _currentLocation(position)),
+                    onCameraIdle: _updatePosition,
+                  ),
+                ),
+                Positioned(
+                  top: (MediaQuery.of(context).size.height -
+                          _appBar.preferredSize.height -
+                          MediaQuery.of(context).padding.top -
+                          80) *
+                      (_showFull ? 0.75 : 0.5) /
+                      2,
+                  right: (MediaQuery.of(context).size.width - 40) / 2,
+                  child: Tooltip(
+                    message: 'Move to adjust',
+                    child: new Icon(
+                      Icons.person_pin_circle,
+                      size: 40,
                     ),
                   ),
                 ),
-              );
-            },
-          ),
-        ],
+              ],
+            ),
+            _showFull
+                ? Container(
+                    height: (MediaQuery.of(context).size.height -
+                            _appBar.preferredSize.height -
+                            MediaQuery.of(context).padding.top) *
+                        0.25,
+                    width: double.infinity,
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  _isLoading
+                                      ? CircularProgressIndicator()
+                                      : Text(
+                                          _first.thoroughfare != null
+                                              ? _first.thoroughfare
+                                              : _first.locality,
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                  FlatButton(
+                                    onPressed: () async {
+                                      web.Prediction p =
+                                          await PlacesAutocomplete.show(
+                                        context: context,
+                                        apiKey: kGoogleApiKey,
+                                        language: "en",
+                                        components: [
+                                          web.Component(
+                                              web.Component.country, "in")
+                                        ],
+                                        mode: Mode.overlay,
+                                      );
+                                      displayPrediction(p);
+                                    },
+                                    child: Text(
+                                      'CHANGE',
+                                      style:
+                                          TextStyle(color: Colors.deepOrange),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(_textController.text),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 14),
+                        Container(
+                          height: 40,
+                          width: double.infinity,
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            onPressed: _setFull,
+                            child: Text(
+                              'Next',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            color: Colors.deepOrange,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.all(20),
+                    height: (MediaQuery.of(context).size.height -
+                            _appBar.preferredSize.height -
+                            MediaQuery.of(context).padding.top) *
+                        0.5,
+                    child: Form(
+                      key: _form,
+                      child: ListView(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: <Widget>[
+                          Text(
+                            'FLAT, FLOOR, BUILDING NAME',
+                            style: TextStyle(
+                              color: Color.fromRGBO(112, 112, 112, 1),
+                            ),
+                          ),
+                          TextFormField(
+                            initialValue: widget.passedAddress.flat,
+                            textInputAction: TextInputAction.next,
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Please provide flat, floor and building name';
+                              }
+                              return null;
+                            },
+                            onFieldSubmitted: (_) =>
+                                FocusScope.of(context).requestFocus(focusNode2),
+                            onSaved: (value) {
+                              _address = Address(
+                                id: _address.id,
+                                address: _first.addressLine,
+                                flat: value,
+                                landmark: _address.landmark,
+                                saveas: _address.saveas,
+                                latitude: _locationData.latitude.toString(),
+                                longitude: _locationData.longitude.toString(),
+                              );
+                            },
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'LANDMARK',
+                            style: TextStyle(
+                              color: Color.fromRGBO(112, 112, 112, 1),
+                            ),
+                          ),
+                          TextFormField(
+                            initialValue: widget.passedAddress.landmark,
+                            textInputAction: TextInputAction.next,
+                            focusNode: focusNode2,
+                            onFieldSubmitted: (_) =>
+                                FocusScope.of(context).requestFocus(focusNode3),
+                            onSaved: (value) {
+                              _address = Address(
+                                id: _address.id,
+                                address: _address.address,
+                                landmark: value,
+                                saveas: _address.saveas,
+                                flat: _address.flat,
+                                latitude: _locationData.latitude.toString(),
+                                longitude: _locationData.longitude.toString(),
+                              );
+                            },
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'SAVE AS',
+                            style: TextStyle(
+                              color: Color.fromRGBO(112, 112, 112, 1),
+                            ),
+                          ),
+                          TextFormField(
+                            initialValue: widget.passedAddress.saveas,
+                            textInputAction: TextInputAction.done,
+                            focusNode: focusNode3,
+                            onFieldSubmitted: (_) => _saveForm(),
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Please provide a title to this address';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _address = Address(
+                                id: _address.id,
+                                address: _address.address,
+                                landmark: _address.landmark,
+                                saveas: value,
+                                flat: _address.flat,
+                                latitude: _locationData.latitude.toString(),
+                                longitude: _locationData.longitude.toString(),
+                              );
+                            },
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                height: 45,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.deepOrange),
+                                ),
+                                child: RaisedButton(
+                                  color: Colors.white,
+                                  elevation: 0,
+                                  child: Text('BACK'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ),
+                              Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  height: 45,
+                                  child: RaisedButton(
+                                    child: Text(
+                                      'SAVE',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    color: Colors.deepOrange,
+                                    onPressed: () => _saveForm(),
+                                  )),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+          ],
+        ),
       ),
+      // body: Stack(
+      //   children: <Widget>[
+      //     Container(
+      //       width: double.infinity,
+      //       decoration: BoxDecoration(
+      //         border: Border.all(color: Colors.grey),
+      //       ),
+      //       child: GoogleMap(
+      //         onMapCreated: (GoogleMapController controller) {
+      //           _mapController = controller;
+      //         },
+      //         myLocationEnabled: true,
+      //         initialCameraPosition: CameraPosition(
+      //           target: LatLng(19.0760, 72.8777),
+      //           zoom: 12.0,
+      //           bearing: 15,
+      //           tilt: 75,
+      //         ),
+      //         onCameraMove: ((position) => _currentLocation(position)),
+      //         onCameraIdle: _updatePosition,
+      //       ),
+      //     ),
+      //     Positioned(
+      //       top: (MediaQuery.of(context).size.height -
+      //               _appBar.preferredSize.height -
+      //               MediaQuery.of(context).padding.top -
+      //               kToolbarHeight -
+      //               40) /
+      //           2,
+      //       right: (MediaQuery.of(context).size.width - 40) / 2,
+      //       child: Tooltip(
+      //         message: 'Move to adjust',
+      //         child: new Icon(
+      //           Icons.person_pin_circle,
+      //           size: 40,
+      //         ),
+      //       ),
+      //     ),
+      //     DraggableScrollableSheet(
+      //       initialChildSize: 0.2,
+      //       maxChildSize: 0.5,
+      //       minChildSize: 0.1,
+      //       builder: (context, scrollController) {
+      //         return SingleChildScrollView(
+      //           controller: scrollController,
+      //           child: Container(
+      //             color: Colors.white,
+      //             padding: EdgeInsets.all(20),
+      //             child: Form(
+      //               key: _form,
+      //               child: ListView(
+      //                 shrinkWrap: true,
+      //                 physics: NeverScrollableScrollPhysics(),
+      //                 children: <Widget>[
+      //                   Text(
+      //                     'FLAT, FLOOR, BUILDING NAME',
+      //                     style: TextStyle(
+      //                       color: Color.fromRGBO(112, 112, 112, 1),
+      //                     ),
+      //                   ),
+      //                   TextFormField(
+      //                     initialValue: widget.passedAddress.flat,
+      //                     textInputAction: TextInputAction.next,
+      //                     validator: (value) {
+      //                       if (value.isEmpty) {
+      //                         return 'Please provide flat, floor and building name';
+      //                       }
+      //                       return null;
+      //                     },
+      //                     onFieldSubmitted: (_) =>
+      //                         FocusScope.of(context).requestFocus(focusNode2),
+      //                     onSaved: (value) {
+      //                       _address = Address(
+      //                         id: _address.id,
+      //                         address: _first.addressLine,
+      //                         flat: value,
+      //                         landmark: _address.landmark,
+      //                         saveas: _address.saveas,
+      //                         latitude: _locationData.latitude.toString(),
+      //                         longitude: _locationData.longitude.toString(),
+      //                       );
+      //                     },
+      //                   ),
+      //                   SizedBox(height: 20),
+      //                   Text(
+      //                     'LANDMARK',
+      //                     style: TextStyle(
+      //                       color: Color.fromRGBO(112, 112, 112, 1),
+      //                     ),
+      //                   ),
+      //                   TextFormField(
+      //                     initialValue: widget.passedAddress.landmark,
+      //                     textInputAction: TextInputAction.next,
+      //                     focusNode: focusNode2,
+      //                     onFieldSubmitted: (_) =>
+      //                         FocusScope.of(context).requestFocus(focusNode3),
+      //                     onSaved: (value) {
+      //                       _address = Address(
+      //                         id: _address.id,
+      //                         address: _address.address,
+      //                         landmark: value,
+      //                         saveas: _address.saveas,
+      //                         flat: _address.flat,
+      //                         latitude: _locationData.latitude.toString(),
+      //                         longitude: _locationData.longitude.toString(),
+      //                       );
+      //                     },
+      //                   ),
+      //                   SizedBox(height: 20),
+      //                   Text(
+      //                     'SAVE AS',
+      //                     style: TextStyle(
+      //                       color: Color.fromRGBO(112, 112, 112, 1),
+      //                     ),
+      //                   ),
+      //                   TextFormField(
+      //                     initialValue: widget.passedAddress.saveas,
+      //                     textInputAction: TextInputAction.done,
+      //                     focusNode: focusNode3,
+      //                     onFieldSubmitted: (_) => _saveForm(),
+      //                     validator: (value) {
+      //                       if (value.isEmpty) {
+      //                         return 'Please provide a title to this address';
+      //                       }
+      //                       return null;
+      //                     },
+      //                     onSaved: (value) {
+      //                       _address = Address(
+      //                         id: _address.id,
+      //                         address: _address.address,
+      //                         landmark: _address.landmark,
+      //                         saveas: value,
+      //                         flat: _address.flat,
+      //                         latitude: _locationData.latitude.toString(),
+      //                         longitude: _locationData.longitude.toString(),
+      //                       );
+      //                     },
+      //                   ),
+      //                   SizedBox(height: 10),
+      //                   Row(
+      //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                     children: <Widget>[
+      //                       Container(
+      //                         width: MediaQuery.of(context).size.width * 0.4,
+      //                         height: 45,
+      //                         decoration: BoxDecoration(
+      //                           border: Border.all(color: Colors.deepOrange),
+      //                         ),
+      //                         child: RaisedButton(
+      //                           color: Colors.white,
+      //                           elevation: 0,
+      //                           child: Text('BACK'),
+      //                           onPressed: () {
+      //                             Navigator.of(context).pop();
+      //                           },
+      //                         ),
+      //                       ),
+      //                       Container(
+      //                           width: MediaQuery.of(context).size.width * 0.4,
+      //                           height: 45,
+      //                           child: RaisedButton(
+      //                             child: Text(
+      //                               'SAVE',
+      //                               style: TextStyle(color: Colors.white),
+      //                             ),
+      //                             color: Colors.deepOrange,
+      //                             onPressed: () => _saveForm(),
+      //                           )),
+      //                     ],
+      //                   ),
+      //                 ],
+      //               ),
+      //             ),
+      //           ),
+      //         );
+      //       },
+      //     ),
+      //   ],
+      // ),
     );
   }
 }

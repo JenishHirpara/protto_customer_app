@@ -17,6 +17,7 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'Inspection Images',
           style: GoogleFonts.montserrat(

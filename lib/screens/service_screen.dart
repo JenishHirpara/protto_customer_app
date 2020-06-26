@@ -147,7 +147,8 @@ class _ServiceScreenState extends State<ServiceScreen> {
                         color: Colors.grey,
                       ),
                       onPressed: () {
-                        Navigator.of(context).push(shoppingCartRouteBuilder());
+                        Navigator.of(context, rootNavigator: true)
+                            .push(shoppingCartRouteBuilder());
                       },
                     ),
                   ),

@@ -174,6 +174,7 @@ class ReferralScreen extends StatelessWidget {
     final referal = Provider.of<UserProfile>(context).item.number;
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'Referral',
           style: GoogleFonts.montserrat(

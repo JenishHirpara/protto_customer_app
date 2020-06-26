@@ -29,6 +29,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     final pastorders = Provider.of<Orders>(context).pastOrders;
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'Order Details',
           style: GoogleFonts.montserrat(

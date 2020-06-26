@@ -333,7 +333,8 @@ class UserProfileScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  onTap: () {
+                  onTap: () async {
+                    await Provider.of<UserProfile>(context).logout();
                     Navigator.of(context, rootNavigator: true).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => VerifyPhoneScreen(),
