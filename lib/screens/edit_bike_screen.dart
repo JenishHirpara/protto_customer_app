@@ -127,7 +127,13 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                         .brands
                         .map<DropdownMenuItem>((value) {
                       return DropdownMenuItem<String>(
-                          child: Text(value), value: value);
+                          child: Text(
+                            value,
+                            textAlign: TextAlign.left,
+                            style:TextStyle(
+                                fontFamily: 'Poppins',
+                            )
+                          ), value: value);
                     }).toList(),
                     validator: (value) {
                       if (value == null) {
@@ -160,7 +166,13 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                         .models
                         .map<DropdownMenuItem>((value) {
                       return DropdownMenuItem<String>(
-                          child: Text(value), value: value);
+                          child: Text(
+                            value,
+                            textAlign: TextAlign.left,
+                            style:TextStyle(
+                                fontFamily: 'Poppins',
+                            )
+                          ), value: value);
                     }).toList(),
                     validator: (value) {
                       if (value == null) {
@@ -191,7 +203,13 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                     ),
                     items: getYears().map<DropdownMenuItem>((value) {
                       return DropdownMenuItem<String>(
-                          child: Text(value), value: value);
+                          child: Text(
+                            value,
+                            textAlign: TextAlign.left,
+                            style:TextStyle(
+                                fontFamily: 'Poppins',
+                            )
+                          ), value: value);
                     }).toList(),
                     validator: (value) {
                       if (value == null) {

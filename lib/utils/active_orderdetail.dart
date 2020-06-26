@@ -62,7 +62,7 @@ class ActiveOrderDetail extends StatelessWidget {
     final order = Provider.of<Orders>(context).activeOrders[i];
     return Container(
       width: double.infinity,
-      height: 180,
+      height: 190,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.deepOrange,
@@ -187,7 +187,10 @@ class ActiveOrderDetail extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'Status:',
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(
+                        color: Color.fromRGBO(128, 128, 128, 1),
+                        fontWeight: FontWeight.bold
+                      ),
                       textAlign: TextAlign.center,
                     ),
                     Text(
