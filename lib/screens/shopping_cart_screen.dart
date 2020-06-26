@@ -323,6 +323,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 title: Text(
                   'New Total',
                   style: GoogleFonts.montserrat(
+                    color: Colors.red,
                     fontSize: 16,
                   ),
                 ),
@@ -444,6 +445,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     child: RaisedButton(
                       color: Color.fromRGBO(240, 240, 240, 1),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
                       child: Text(
                         _date == null ? 'Date' : _date,
                         style: GoogleFonts.cantataOne(
@@ -452,6 +455,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                         ),
                         textAlign: TextAlign.left,
                       ),
+                   ),
                       elevation: 0,
                       onPressed: _presentDatePicker,
                     ),
