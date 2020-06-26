@@ -325,6 +325,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                   style: GoogleFonts.montserrat(
                     color: Colors.red,
                     fontSize: 16,
+                    fontWeight: FontWeight.bold
                   ),
                 ),
                 trailing: Text(
