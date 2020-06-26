@@ -285,7 +285,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         Expanded(
                           flex: 1,
                           child: Padding(
-                            padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                            padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                             child: Text(
                               'Services',
                               style: GoogleFonts.montserrat(
