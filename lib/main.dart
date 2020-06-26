@@ -20,54 +20,55 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(
-            value: UserProfile(),
+      providers: [
+        ChangeNotifierProvider.value(
+          value: UserProfile(),
+        ),
+        ChangeNotifierProxyProvider<UserProfile, Orders>(
+          update: (ctx, userprofile, previousOrders) => Orders(
+            userprofile.item.id,
+            previousOrders == null ? [] : previousOrders.items,
           ),
-          ChangeNotifierProxyProvider<UserProfile, Orders>(
-            update: (ctx, userprofile, previousOrders) => Orders(
-              userprofile.item.id,
-              previousOrders == null ? [] : previousOrders.items,
-            ),
+        ),
+        ChangeNotifierProxyProvider<UserProfile, Bikes>(
+          update: (ctx, userprofile, previousBikes) => Bikes(
+            userprofile.item.id,
+            previousBikes == null ? [] : previousBikes.items,
           ),
-          ChangeNotifierProxyProvider<UserProfile, Bikes>(
-            update: (ctx, userprofile, previousBikes) => Bikes(
-              userprofile.item.id,
-              previousBikes == null ? [] : previousBikes.items,
-            ),
+        ),
+        ChangeNotifierProvider.value(
+          value: Cart(),
+        ),
+        ChangeNotifierProxyProvider<UserProfile, Addresses>(
+          update: (ctx, userprofile, previousAddresses) => Addresses(
+            userprofile.item.id,
+            previousAddresses == null ? [] : previousAddresses.items,
           ),
-          ChangeNotifierProvider.value(
-            value: Cart(),
+        ),
+      ],
+      child: Consumer<UserProfile>(
+        builder: (ctx, profile, _) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Protto',
+          theme: ThemeData(
+            primarySwatch: Colors.deepOrange,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          ChangeNotifierProxyProvider<UserProfile, Addresses>(
-            update: (ctx, userprofile, previousAddresses) => Addresses(
-              userprofile.item.id,
-              previousAddresses == null ? [] : previousAddresses.items,
-            ),
-          ),
-        ],
-        child: Consumer<UserProfile>(
-          builder: (ctx, profile, _) => MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Protto',
-            theme: ThemeData(
-              primarySwatch: Colors.deepOrange,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
-            home: profile.isAuth
-                ? NavigationBarScreen()
-                : FutureBuilder(
-                    future: profile.tryAutoLogin(),
-                    builder: (ctx, snapshot) =>
-                        snapshot.connectionState == ConnectionState.waiting
-                            ? SplashScreen()
-                            : HomeScreen(),
-                  ),
-            routes: {
-              VerifyPhoneScreen.routeName: (ctx) => VerifyPhoneScreen(),
-              SignupScreen.routeName: (ctx) => SignupScreen(),
-            },
-          ),
-        ));
+          home: profile.isAuth
+              ? NavigationBarScreen()
+              : FutureBuilder(
+                  future: profile.tryAutoLogin(),
+                  builder: (ctx, snapshot) =>
+                      snapshot.connectionState == ConnectionState.waiting
+                          ? SplashScreen()
+                          : HomeScreen(),
+                ),
+          routes: {
+            VerifyPhoneScreen.routeName: (ctx) => VerifyPhoneScreen(),
+            SignupScreen.routeName: (ctx) => SignupScreen(),
+          },
+        ),
+      ),
+    );
   }
 }

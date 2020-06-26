@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../models/http_exception.dart';
 
 class OrderItem with ChangeNotifier {
   final String id;
@@ -165,6 +166,48 @@ class Orders with ChangeNotifier {
     final response = await http.get(url);
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     _services = extractedData['data'];
+    notifyListeners();
+  }
+
+  Future<void> editDate(String date, String time, String bookingId) async {
+    final url =
+        'http://stage.protto.in/api/shivangi/getstatus.php?bookingid=$bookingId';
+    final response = await http.get(url);
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedData['status'] != '1') {
+      throw HttpException('Cannot change the date now');
+    }
+    final url1 = 'http://stage.protto.in/api/prina/editdate.php';
+    await http.patch(url1,
+        body: json.encode({
+          'booking_id': bookingId,
+          'timestamp': time,
+          'date': date,
+        }));
+    var id = _items.indexWhere((order) => order.bookingId == bookingId);
+    var order = _items.firstWhere((order) => order.bookingId == bookingId);
+
+    _items.removeAt(id);
+    _items.insert(
+      id,
+      OrderItem(
+        id: order.id,
+        bookingId: order.bookingId,
+        address: order.address,
+        bikeid: order.bikeid,
+        deliveryType: order.deliveryType,
+        flat: order.flat,
+        rideable: order.rideable,
+        serviceType: order.serviceType,
+        bikeNumber: order.bikeNumber,
+        bikeYear: order.bikeYear,
+        make: order.make,
+        model: order.model,
+        status: order.status,
+        date: date,
+        time: time,
+      ),
+    );
     notifyListeners();
   }
 }
