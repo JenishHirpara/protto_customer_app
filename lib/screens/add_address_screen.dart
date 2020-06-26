@@ -322,9 +322,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           height: 40,
                           width: double.infinity,
                           child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
                             onPressed: _setFull,
                             child: Text(
                               'Next',
