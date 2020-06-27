@@ -87,9 +87,10 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
         centerTitle: true,
         title: Text(
           '${widget.bike.brand} ${widget.bike.model}',
-          style: GoogleFonts.montserrat(
+          style: TextStyle(
+            fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
-            fontSize: 24,
+            fontSize: 22,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -118,7 +119,8 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                       filled: true,
                       border: InputBorder.none,
                       hintText: 'Brand',
-                      hintStyle: GoogleFonts.cantataOne(
+                      hintStyle: TextStyle(
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontSize: 14,
                       ),
@@ -131,7 +133,7 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                             value,
                             textAlign: TextAlign.left,
                             style:TextStyle(
-                                fontFamily: 'Poppins',
+                              fontFamily: 'SourceSansPro',
                             )
                           ), value: value);
                     }).toList(),
@@ -157,7 +159,8 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                       filled: true,
                       border: InputBorder.none,
                       hintText: 'Model',
-                      hintStyle: GoogleFonts.cantataOne(
+                      hintStyle: TextStyle(
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontSize: 14,
                       ),
@@ -170,7 +173,7 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                             value,
                             textAlign: TextAlign.left,
                             style:TextStyle(
-                                fontFamily: 'Poppins',
+                              fontFamily: 'SourceSansPro',
                             )
                           ), value: value);
                     }).toList(),
@@ -196,7 +199,8 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                       filled: true,
                       border: InputBorder.none,
                       hintText: 'Year',
-                      hintStyle: GoogleFonts.cantataOne(
+                      hintStyle: TextStyle(
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontSize: 14,
                       ),
@@ -207,7 +211,7 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                             value,
                             textAlign: TextAlign.left,
                             style:TextStyle(
-                                fontFamily: 'Poppins',
+                              fontFamily: 'SourceSansPro',
                             )
                           ), value: value);
                     }).toList(),
@@ -227,7 +231,8 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                     initialValue: _rgno,
                     decoration: InputDecoration(
                       hintText: 'Registration Number',
-                      hintStyle: GoogleFonts.cantataOne(
+                      hintStyle: TextStyle(
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontSize: 14,
                       ),
@@ -251,7 +256,12 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                     child: RaisedButton(
                       color: Colors.deepOrange,
                       textColor: Colors.white,
-                      child: Text('Edit'),
+                      child: Text(
+                        'Edit',
+                        style: TextStyle(
+                        fontFamily: 'SourceSansProSB',
+                        )
+                      ),
                       onPressed: _saveForm,
                     ),
                   ),

@@ -74,7 +74,8 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
         centerTitle: true,
         title: Text(
           'Add New Bike',
-          style: GoogleFonts.montserrat(
+          style: TextStyle(
+            fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 24,
             fontWeight: FontWeight.w500,
@@ -104,7 +105,8 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                       filled: true,
                       border: InputBorder.none,
                       hintText: 'Brand',
-                      hintStyle: GoogleFonts.cantataOne(
+                      hintStyle: TextStyle(
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontSize: 14,
                       ),
@@ -117,7 +119,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                             value,
                             textAlign: TextAlign.left,
                             style:TextStyle(
-                                fontFamily: 'Poppins',
+                              fontFamily: 'SourceSansPro',
                            )
                           ), value: value);
                     }).toList(),
@@ -149,7 +151,8 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                       filled: true,
                       border: InputBorder.none,
                       hintText: 'Model',
-                      hintStyle: GoogleFonts.cantataOne(
+                      hintStyle: TextStyle(
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontSize: 14,
                       ),
@@ -162,7 +165,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                             value,
                             textAlign: TextAlign.left,
                             style:TextStyle(
-                                fontFamily: 'Poppins',
+                                fontFamily: 'SourceSansPro',
                               )
                           ), value: value);
                     }).toList(),
@@ -193,7 +196,8 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                       filled: true,
                       border: InputBorder.none,
                       hintText: 'Year',
-                      hintStyle: GoogleFonts.cantataOne(
+                      hintStyle: TextStyle(
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontSize: 14,
                       ),
@@ -204,7 +208,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                             value,
                             textAlign: TextAlign.left,
                             style:TextStyle(
-                                fontFamily: 'Poppins',
+                                fontFamily: 'SourceSansPro',
                               )
                           ), value: value);
                     }).toList(),
@@ -229,7 +233,8 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                   TextFormField(
                     decoration: InputDecoration(
                       hintText: 'Registration Number',
-                      hintStyle: GoogleFonts.cantataOne(
+                      hintStyle: TextStyle(
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontSize: 14,
                       ),
@@ -259,7 +264,9 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                     child: RaisedButton(
                       color: Colors.deepOrange,
                       textColor: Colors.white,
-                      child: Text('+ Add'),
+                      child: Text(
+                        '+ Add',
+                        style: TextStyle(fontFamily: 'SourceSansProSB'),),
                       onPressed: _saveForm,
                     ),
                   ),

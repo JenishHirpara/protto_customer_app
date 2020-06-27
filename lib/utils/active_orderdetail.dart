@@ -62,7 +62,7 @@ class ActiveOrderDetail extends StatelessWidget {
     final order = Provider.of<Orders>(context).activeOrders[i];
     return Container(
       width: double.infinity,
-      height: 215,
+      height: 220,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.deepOrange,
@@ -82,9 +82,9 @@ class ActiveOrderDetail extends StatelessWidget {
                   child: Text(
                     '${order.make} ${order.model}',
                     style: TextStyle(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Montserrat',
                       color: Color.fromRGBO(241, 93, 36, 1),
-                      fontSize: 20,
+                      fontSize: 19,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -94,7 +94,7 @@ class ActiveOrderDetail extends StatelessWidget {
                     Text(
                       'Booking ID:',
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontWeight: FontWeight.bold,
                       ),
@@ -103,7 +103,7 @@ class ActiveOrderDetail extends StatelessWidget {
                     Text(
                       order.bookingId,
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'SourceSansPro',
                         color: Colors.grey,
                       ),
                     ),
@@ -115,7 +115,7 @@ class ActiveOrderDetail extends StatelessWidget {
                     Text(
                       'Pickup Date:',
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontWeight: FontWeight.bold,
                       ),
@@ -124,7 +124,7 @@ class ActiveOrderDetail extends StatelessWidget {
                     Text(
                       DateFormat('dd/MM/yy').format(DateTime.parse(order.date)),
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'SourceSansPro',
                         color: Colors.grey,
                       ),
                     ),
@@ -136,7 +136,7 @@ class ActiveOrderDetail extends StatelessWidget {
                     Text(
                       'Pickup Time:',
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontWeight: FontWeight.bold,
                       ),
@@ -145,7 +145,7 @@ class ActiveOrderDetail extends StatelessWidget {
                     Text(
                       order.time,
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'SourceSansPro',
                         color: Colors.grey,
                       ),
                     ),
@@ -161,7 +161,7 @@ class ActiveOrderDetail extends StatelessWidget {
                         TextSpan(
                           text: 'Pickup Address: ',
                           style: TextStyle(
-                            fontFamily: 'Poppins',
+                            fontFamily: 'SourceSansPro',
                             color: Color.fromRGBO(128, 128, 128, 1),
                             fontWeight: FontWeight.bold,
                           ),
@@ -169,7 +169,7 @@ class ActiveOrderDetail extends StatelessWidget {
                         TextSpan(
                           text: order.address,
                           style: TextStyle(
-                            fontFamily: 'Poppins',
+                            fontFamily: 'SourceSansPro',
                             color: Colors.grey,
                           ),
                         ),
@@ -197,7 +197,7 @@ class ActiveOrderDetail extends StatelessWidget {
                     Text(
                       'Status:',
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontWeight: FontWeight.bold
                       ),
@@ -206,7 +206,7 @@ class ActiveOrderDetail extends StatelessWidget {
                     Text(
                       _getStatus(order),
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'SourceSansPro',
                         color: Theme.of(context).primaryColor),
                       textAlign: TextAlign.center,
                     ),

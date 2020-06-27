@@ -51,8 +51,9 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
             const Text(
               'Welcome',
               style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 40,
+                fontFamily: 'Montserrat',
+                //fontWeight: FontWeight.bold,
+                fontSize: 45,
               ),
             ),
             SizedBox(
@@ -60,6 +61,10 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
             ),
             const Text(
               'Sign up to get best Bike Service Deals',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 15,
+              ),
             ),
             SizedBox(
               height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.2,
@@ -70,7 +75,12 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
                 key: _form,
                 child: TextFormField(
                   controller: _mobileController,
-                  decoration: InputDecoration(labelText: 'Mobile No.'),
+                  decoration: InputDecoration(
+                    labelText: 'Mobile No.',
+                    labelStyle: TextStyle(
+                      fontFamily: 'SourceSansPro',
+                    )
+                    ),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
                     WhitelistingTextInputFormatter.digitsOnly,
@@ -97,7 +107,10 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
                       )
                     : const Text(
                         'VERIFY PHONE NUMBER',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          fontFamily: 'SourceSansProSB',
+                          color: Colors.white
+                          ),
                       ),
                 onPressed: () async {
                   final isValid = _form.currentState.validate();

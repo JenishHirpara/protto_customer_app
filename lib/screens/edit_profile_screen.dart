@@ -54,7 +54,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         centerTitle: true,
         title: Text(
           'Edit Profile',
-          style: GoogleFonts.montserrat(
+          style: TextStyle(
+            fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 24,
             fontWeight: FontWeight.w500,
@@ -86,7 +87,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     initialValue: oldProfile.name,
                     decoration: InputDecoration(
                       hintText: 'Name',
-                      hintStyle: GoogleFonts.cantataOne(
+                      hintStyle: TextStyle(
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontSize: 14,
                       ),
@@ -119,7 +121,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     initialValue: oldProfile.email,
                     decoration: InputDecoration(
                       hintText: 'Email',
-                      hintStyle: GoogleFonts.cantataOne(
+                      hintStyle: TextStyle(
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontSize: 14,
                       ),
@@ -152,7 +155,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     initialValue: oldProfile.number,
                     decoration: InputDecoration(
                       hintText: 'Phone Number',
-                      hintStyle: GoogleFonts.cantataOne(
+                      hintStyle: TextStyle(
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontSize: 14,
                       ),
@@ -191,6 +195,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       child: Text(
                         'Save',
                         style: TextStyle(
+                            fontFamily: 'SourceSansProSB',
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                             color: Colors.white),

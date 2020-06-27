@@ -38,7 +38,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       context: originalcontext,
       builder: (context) => Dialog(
         child: Container(
-          height: 220,
+          height: 245,
           child: Column(
             children: <Widget>[
               Align(
@@ -57,7 +57,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Container(
-                height: 140,
+                height: 167,
                 padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                 child: Column(
                   children: <Widget>[
@@ -68,29 +68,32 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       textAlign: TextAlign.center,
                       softWrap: true,
                       overflow: TextOverflow.fade,
-                      style: GoogleFonts.montserrat(
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
                         color: Color.fromRGBO(241, 93, 36, 1),
-                        fontSize: 24,
+                        fontSize: 22,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 8),
                     Text(
                       activebike != null ? activebike.year : 'My Bike',
                       textAlign: TextAlign.center,
                       style: TextStyle(
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(100, 100, 100, 1),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 8),
                     Text(
                       activebike != null ? activebike.number : '',
                       style: TextStyle(
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(100, 100, 100, 1),
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 8),
                     Container(
                       width: 150,
                       height: 30,
@@ -102,7 +105,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       ),
                       child: RaisedButton(
                         color: Colors.white,
-                        child: Text('Manage'),
+                        child: Text(
+                          'Manage',
+                          style: TextStyle(fontFamily: 'SourceSansPro'),
+                        ),
                         elevation: 0,
                         onPressed: () {
                           Navigator.of(originalcontext)
@@ -111,7 +117,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         },
                       ),
                     ),
-                    SizedBox(height: 12),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),
@@ -130,6 +136,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     child: Text(
                       '+ Add New Bike',
                       style: TextStyle(
+                        fontFamily: 'SourceSansProSB',
                         color: Theme.of(context).primaryColor,
                         fontSize: 16,
                       ),
@@ -164,6 +171,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   child: Text(
                     'Thank You for Signing up!!',
                     style: TextStyle(
+                        fontFamily: 'SourceSansPro',
                         color: Colors.deepOrange,
                         fontSize: 22,
                         fontWeight: FontWeight.w400),
@@ -175,7 +183,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   child: Text(
                     'Use your mobile number to sign in next time. Before we get started, lets add a bike.',
                     style: TextStyle(
-                        color: Color.fromRGBO(100, 100, 100, 1), fontSize: 18),
+                      fontFamily: 'SourceSansPro',
+                      color: Color.fromRGBO(100, 100, 100, 1), fontSize: 18),
                   ),
                 ),
                 SizedBox(height: 40),
@@ -186,7 +195,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     elevation: 0,
                     child: Text(
                       'Okay',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'SourceSansProSB'),
                     ),
                     onPressed: () {
                       Navigator.of(ctx).pop();
@@ -231,9 +242,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ? '${activebike.brand} ${activebike.model}'
                 : '+ Add a Bike',
             textAlign: TextAlign.left,
-            style: GoogleFonts.montserrat(
+            style: TextStyle(
+              fontFamily: 'Montserrat',
               color: Color.fromRGBO(241, 93, 36, 1),
-              fontSize: 24,
+              fontSize: 22,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -288,7 +300,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                             child: Text(
                               'Services',
-                              style: GoogleFonts.montserrat(
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
                                 color: Color.fromRGBO(112, 112, 112, 1),
                                 fontSize: 22,
                                 fontWeight: FontWeight.w500,
@@ -330,7 +343,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                           regularServices,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            fontFamily: 'Poppins',
+                                            fontFamily: 'SourceSansSB',
                                             color: Color.fromRGBO(
                                                 128, 128, 128, 1),
                                           ),
@@ -364,7 +377,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                           tyres,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            fontFamily: 'Poppins',
+                                            fontFamily: 'SourceSansSB',
                                             color: Color.fromRGBO(
                                                 128, 128, 128, 1),
                                           ),
@@ -398,7 +411,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                           washPlusCoat,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            fontFamily: 'Poppins',
+                                            fontFamily: 'SourceSansSB',
                                             color: Color.fromRGBO(
                                                 128, 128, 128, 1),
                                           ),
@@ -436,7 +449,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                           customRepairs,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            fontFamily: 'Poppins',
+                                            fontFamily: 'SourceSansSB',
                                             color: Color.fromRGBO(
                                                 128, 128, 128, 1),
                                           ),
@@ -470,7 +483,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                           dentingPainting,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            fontFamily: 'Poppins',
+                                            fontFamily: 'SourceSansSB',
                                             color: Color.fromRGBO(
                                                 128, 128, 128, 1),
                                           ),
@@ -501,7 +514,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
                         child: Text(
                           'Popular Services',
-                          style: GoogleFonts.montserrat(
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
                             color: Color.fromRGBO(112, 112, 112, 1),
                             fontSize: 22,
                             fontWeight: FontWeight.w500,

@@ -32,7 +32,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         centerTitle: true,
         title: Text(
           'Order Details',
-          style: GoogleFonts.montserrat(
+          style: TextStyle(
+            fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 24,
             fontWeight: FontWeight.w500,
@@ -54,6 +55,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   Text(
                     '  Active',
                     style: TextStyle(
+                      fontFamily: 'Montserrat',
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.bold,
                     ),
@@ -86,6 +88,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   Text(
                     '  Past Bookings',
                     style: TextStyle(
+                      fontFamily: 'Montserrat',
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.bold,
                     ),

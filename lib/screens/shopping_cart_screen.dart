@@ -149,11 +149,21 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         context: context,
         builder: (ctx) {
           return AlertDialog(
-            title: Text('No date added'),
-            content: Text('Please add a date to your current order'),
+            title: Text(
+              'No date added',
+              style: TextStyle(fontFamily:'Montserrat'),
+            ),
+            content: Text(
+              'Please add a date to your current order',
+              style: TextStyle(fontFamily:'SourceSansPro'
+              ),
+            ),
             actions: <Widget>[
               FlatButton(
-                child: Text('Okay'),
+                child: Text(
+                  'Okay',
+                  style: TextStyle(fontFamily:'SourceSansProSB'),
+              ),
                 onPressed: () {
                   Navigator.of(ctx).pop();
                 },
@@ -167,12 +177,18 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         context: context,
         builder: (ctx) {
           return AlertDialog(
-            title: Text('No service added'),
+            title: Text('No service added',
+                  style: TextStyle(fontFamily:'Montserrat'),
+             ),
             content:
-                Text('Please add atleast one service to your current order'),
+                Text('Please add atleast one service to your current order',
+                  style: TextStyle(fontFamily:'SourceSansPro'),
+                ),
             actions: <Widget>[
               FlatButton(
-                child: Text('Okay'),
+                child: Text('Okay',
+                  style: TextStyle(fontFamily:'SourceSansProSB'),
+                ),
                 onPressed: () {
                   Navigator.of(ctx).pop();
                 },
@@ -234,7 +250,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         centerTitle: true,
         title: Text(
           'Shopping Cart',
-          style: GoogleFonts.montserrat(
+          style: TextStyle(
+            fontFamily: 'Montserrrat',
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 24,
             fontWeight: FontWeight.w500,
@@ -270,7 +287,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 'Totals',
-                style: GoogleFonts.montserrat(
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
                 ),
@@ -283,13 +301,15 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 contentPadding: EdgeInsets.all(0),
                 title: Text(
                   'Item Total',
-                  style: GoogleFonts.montserrat(
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
                     fontSize: 16,
                   ),
                 ),
                 trailing: Text(
                   cart.getTotal().toString(),
-                  style: GoogleFonts.montserrat(
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w500,
                     fontSize: 16,
                   ),
@@ -302,13 +322,15 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 contentPadding: EdgeInsets.all(0),
                 title: Text(
                   'Referal Discount',
-                  style: GoogleFonts.montserrat(
+                  style:TextStyle(
+                    fontFamily: 'Montserrat',
                     fontSize: 16,
                   ),
                 ),
                 trailing: Text(
                   _getReferalDiscount(cart),
-                  style: GoogleFonts.montserrat(
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
                     fontWeight: FontWeight.bold,
                     color: Colors.green,
                     fontSize: 16,
@@ -322,7 +344,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 contentPadding: EdgeInsets.all(0),
                 title: Text(
                   'New Total',
-                  style: GoogleFonts.montserrat(
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
                     color: Colors.red,
                     fontSize: 16,
                     fontWeight: FontWeight.bold
@@ -330,7 +353,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 ),
                 trailing: Text(
                   _getNewTotal(cart),
-                  style: GoogleFonts.montserrat(
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
                     fontWeight: FontWeight.bold,
                     color: Colors.green,
                     fontSize: 16,
@@ -344,6 +368,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 enabled: true,
                 decoration: InputDecoration(
                   hintText: 'Enter Voucher Code',
+                  hintStyle: TextStyle(
+                    fontFamily: 'SourceSansPro'),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(0),
@@ -362,7 +388,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     child: InkWell(
                       child: Text(
                         'APPLY',
-                        style: TextStyle(color: Colors.deepOrange),
+                        style: TextStyle(fontFamily:'SourceSansProSB',color: Colors.deepOrange),
                       ),
                       onTap: () {},
                     ),
@@ -383,7 +409,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
                       'Select Delivery Type',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontFamily:'SourceSansPro',fontSize: 16),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -394,7 +420,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                         filled: true,
                         border: InputBorder.none,
                         hintText: 'Delivery Type',
-                        hintStyle: GoogleFonts.cantataOne(
+                        hintStyle: TextStyle(
+                          fontFamily: 'SourceSansPro',
                           color: Color.fromRGBO(128, 128, 128, 1),
                           fontSize: 14,
                         ),
@@ -402,7 +429,12 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                       items: <String>['Pick & Drop', 'Self Delivery']
                           .map<DropdownMenuItem>((value) {
                         return DropdownMenuItem<String>(
-                            child: Text(value), value: value);
+                            child: Text(
+                                    value,
+                                    style:TextStyle(
+                                      fontFamily: 'SourceSansPro'
+                                    ),
+                                  ),  value: value);
                       }).toList(),
                       validator: (value) {
                         if (value == null) {
@@ -436,7 +468,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
                       'Select Date and Time',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontFamily:'SourceSansPro',fontSize: 16),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -450,7 +482,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                         alignment: Alignment.centerLeft,
                       child: Text(
                         _date == null ? 'Date' : _date,
-                        style: GoogleFonts.cantataOne(
+                        style: TextStyle(
+                          fontFamily: 'SourceSansPro',
                           color: Color.fromRGBO(128, 128, 128, 1),
                           fontSize: 14,
                         ),
@@ -469,7 +502,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                         filled: true,
                         border: InputBorder.none,
                         hintText: 'Time Slot',
-                        hintStyle: GoogleFonts.cantataOne(
+                        hintStyle: TextStyle(
+                          fontFamily: 'SourceSansPro',
                           color: Color.fromRGBO(128, 128, 128, 1),
                           fontSize: 14,
                         ),
@@ -510,7 +544,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
                       'Select Address',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontFamily:'SourceSansPro',fontSize: 16),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -533,7 +567,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                         children: <Widget>[
                                           Text(
                                             _addressSeen.saveas,
-                                            style: GoogleFonts.montserrat(
+                                            style: TextStyle(
+                                              fontFamily: 'Montserrat',
                                               color: Color.fromRGBO(
                                                   112, 112, 112, 1),
                                               fontSize: 18,
@@ -549,6 +584,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                             child: Text(
                                               'Change Address',
                                               style: TextStyle(
+                                                fontFamily: 'SourceSansPro',
                                                 color: Colors.deepOrange,
                                                 fontWeight: FontWeight.w500,
                                               ),
@@ -559,14 +595,16 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                       _addressSeen.landmark != null
                                           ? Text(
                                               '${_addressSeen.landmark}, ${_addressSeen.address}',
-                                              style: GoogleFonts.montserrat(
+                                              style: TextStyle(
+                                                fontFamily: 'Montserrat',
                                                 color: Color.fromRGBO(
                                                     112, 112, 112, 1),
                                               ),
                                             )
                                           : Text(
                                               _addressSeen.address,
-                                              style: GoogleFonts.montserrat(
+                                              style: TextStyle(
+                                                fontFamily: 'Montserrat',
                                                 color: Color.fromRGBO(
                                                     112, 112, 112, 1),
                                               ),
@@ -590,7 +628,11 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 child: RaisedButton(
                                   color: Colors.white,
-                                  child: Text('ADD ADDRESS'),
+                                  child: Text(
+                                    'ADD ADDRESS',
+                                    style:TextStyle(
+                                    fontFamily: 'SourceSansProSB'),
+                                    ),
                                   elevation: 2,
                                   onPressed: () async {
                                     final result = await Navigator.of(context,
@@ -613,7 +655,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                   color: Colors.deepOrange,
                                   child: Text(
                                     'SELECT ADDRESS',
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(fontFamily:'SourceSansProSB',color: Colors.white),
                                   ),
                                   onPressed: () async {
                                     final result1 =
@@ -638,7 +680,11 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 child: RaisedButton(
                                   color: Colors.white,
-                                  child: Text('PAY LATER'),
+                                  child: Text(
+                                    'PAY LATER',
+                                    style:TextStyle(
+                                    fontFamily: 'SourceSansProSB'),
+                                  ),
                                   elevation: 2,
                                   onPressed: _saveForm,
                                   shape: RoundedRectangleBorder(
@@ -652,7 +698,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                   color: Colors.deepOrange,
                                   child: Text(
                                     'PAY NOW',
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(fontFamily:'SourceSansProSB',color: Colors.white),
                                   ),
                                   onPressed: () {},
                                 ),

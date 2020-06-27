@@ -46,7 +46,8 @@ class _MyBikesScreenState extends State<MyBikesScreen> {
         centerTitle: true,
         title: Text(
           'My Bikes',
-          style: GoogleFonts.montserrat(
+          style: TextStyle(
+            fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 24,
             fontWeight: FontWeight.w500,
@@ -79,7 +80,8 @@ class _MyBikesScreenState extends State<MyBikesScreen> {
             FlatButton(
               child: Text(
                 'Add New Bike',
-                style: GoogleFonts.montserrat(
+                style: TextStyle(
+                  fontFamily: 'SourceSansProSB',
                   color: Colors.deepOrange,
                   fontSize: 20,
                 ),

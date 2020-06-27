@@ -177,7 +177,8 @@ class ReferralScreen extends StatelessWidget {
         centerTitle: true,
         title: Text(
           'Referral',
-          style: GoogleFonts.montserrat(
+          style: TextStyle(
+            fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 24,
             fontWeight: FontWeight.w500,
@@ -202,7 +203,8 @@ class ReferralScreen extends StatelessWidget {
             padding: EdgeInsets.all(24),
             child: Text(
               'Description of using the referral code',
-              style: GoogleFonts.montserrat(
+              style: TextStyle(
+                fontFamily: 'Montserrat',
                 color: Color.fromRGBO(112, 112, 112, 1),
                 fontSize: 20,
               ),
@@ -212,7 +214,8 @@ class ReferralScreen extends StatelessWidget {
             padding: EdgeInsets.all(24),
             child: Text(
               '(Copy link or press share button)',
-              style: GoogleFonts.montserrat(
+              style: TextStyle(
+                fontFamily: 'Montserrat',
                 color: Color.fromRGBO(112, 112, 112, 1),
                 fontSize: 20,
               ),
@@ -222,7 +225,9 @@ class ReferralScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: Text(
               'Your Referral Code',
-              style: GoogleFonts.montserrat(),
+              style: TextStyle(
+                fontFamily: 'Montserrat'
+              ),
             ),
           ),
           Container(
@@ -273,7 +278,7 @@ class ReferralScreen extends StatelessWidget {
                     flex: 9,
                     child: Text(
                       'Share',
-                      style: GoogleFonts.cantataOne(color: Colors.white),
+                      style: TextStyle(fontFamily:'SourceSansProSB',color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
                   ),

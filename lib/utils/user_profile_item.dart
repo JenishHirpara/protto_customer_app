@@ -26,7 +26,9 @@ class UserProfileItem extends StatelessWidget {
           ),
           title: Text(
             title,
-            style: TextStyle(color: Color.fromRGBO(112, 112, 112, 1)),
+            style: TextStyle(
+              fontFamily: 'SourceSansPro',
+              color: Color.fromRGBO(112, 112, 112, 1)),
           ),
           trailing: Icon(
             Icons.arrow_forward_ios,

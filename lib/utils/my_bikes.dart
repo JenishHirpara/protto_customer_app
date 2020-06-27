@@ -93,21 +93,22 @@ class _MyBikesState extends State<MyBikes> {
               child: Container(
                 decoration: BoxDecoration(border: getBorder(context, bike)),
                 width: double.infinity,
-                height: 125,
+                height: 140,
                 child: Row(
                   children: <Widget>[
                     Expanded(
                       flex: 8,
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(14, 14, 0, 14),
+                        padding: const EdgeInsets.fromLTRB(12, 14, 0, 12),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
                               '${bike.brand} ${bike.model}',
-                              style: GoogleFonts.montserrat(
+                                style: TextStyle(
+                                fontFamily: 'Montserrat',
                                 color: Colors.deepOrange,
-                                fontSize: 24,
+                                fontSize: 20,
                               ),
                             ),
                             SizedBox(height: 10),
@@ -115,7 +116,8 @@ class _MyBikesState extends State<MyBikes> {
                               children: <Widget>[
                                 Text(
                                   'Year: ',
-                                  style: GoogleFonts.cantataOne(
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
                                     color: Color.fromRGBO(100, 100, 100, 1),
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
@@ -123,7 +125,8 @@ class _MyBikesState extends State<MyBikes> {
                                 ),
                                 Text(
                                   bike.year,
-                                  style: GoogleFonts.cantataOne(
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
                                     color: Color.fromRGBO(128, 128, 128, 1),
                                     fontSize: 14,
                                   ),
@@ -135,7 +138,8 @@ class _MyBikesState extends State<MyBikes> {
                                 children: <TextSpan>[
                                   TextSpan(
                                     text: 'Registration Number: ',
-                                    style: GoogleFonts.cantataOne(
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
                                       color: Color.fromRGBO(100, 100, 100, 1),
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
@@ -143,7 +147,8 @@ class _MyBikesState extends State<MyBikes> {
                                   ),
                                   TextSpan(
                                     text: bike.number,
-                                    style: GoogleFonts.cantataOne(
+                                    style: TextStyle(
+                                      fontFamily: 'SourceSansPro',
                                       color: Color.fromRGBO(128, 128, 128, 1),
                                       fontSize: 14,
                                     ),
@@ -186,6 +191,7 @@ class _MyBikesState extends State<MyBikes> {
                                       child: Text(
                                         'Active',
                                         style: TextStyle(
+                                          fontFamily: 'SourceSansProSB',
                                           color: Colors.white,
                                           fontWeight: FontWeight.w500,
                                         ),
