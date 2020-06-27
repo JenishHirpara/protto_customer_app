@@ -204,9 +204,10 @@ class UserProfileScreen extends StatelessWidget {
         centerTitle: true,
         title: Text(
           'Profile',
-          style: GoogleFonts.montserrat(
+          style: TextStyle(
+            fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
-            fontSize: 24,
+            fontSize: 22,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -234,17 +235,26 @@ class UserProfileScreen extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     '${userProfile.name}',
-                    style: GoogleFonts.montserrat(fontSize: 30),
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Color.fromRGBO(112, 112, 112, 1),
+                      fontSize: 30),
                   ),
                   SizedBox(height: 10),
                   Text(
                     userProfile.number,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Color.fromRGBO(112, 112, 112, 1),
+                      fontSize: 16),
                   ),
                   SizedBox(height: 5),
                   Text(
                     userProfile.email,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Color.fromRGBO(112, 112, 112, 1),                      
+                      fontSize: 16),
                   ),
                 ],
               ),
@@ -325,7 +335,9 @@ class UserProfileScreen extends StatelessWidget {
                       title: Text(
                         'Log Out',
                         style:
-                            TextStyle(color: Color.fromRGBO(112, 112, 112, 1)),
+                            TextStyle(
+                              fontFamily: 'SourceSansPro',
+                              color: Color.fromRGBO(112, 112, 112, 1)),
                       ),
                       trailing: Icon(
                         Icons.arrow_forward_ios,

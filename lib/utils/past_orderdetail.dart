@@ -14,7 +14,7 @@ class PastOrderDetail extends StatelessWidget {
     final order = Provider.of<Orders>(context).pastOrders[i];
     return Container(
       width: double.infinity,
-      height: 125,
+      height: 110,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.deepOrange,
@@ -34,9 +34,9 @@ class PastOrderDetail extends StatelessWidget {
                   child: Text(
                     '${order.make} ${order.model}',
                     style: TextStyle(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Montserrat',
                       color: Color.fromRGBO(241, 93, 36, 1),
-                      fontSize: 20,
+                      fontSize: 19,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -46,7 +46,7 @@ class PastOrderDetail extends StatelessWidget {
                     Text(
                       'Booking ID:',
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontWeight: FontWeight.bold,
                       ),
@@ -55,7 +55,7 @@ class PastOrderDetail extends StatelessWidget {
                     Text(
                       order.bookingId,
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'SourceSansPro',
                         color: Colors.grey,
                       ),
                     ),
@@ -67,7 +67,7 @@ class PastOrderDetail extends StatelessWidget {
                     Text(
                       'Service Date:',
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'SourceSansPro',
                         color: Color.fromRGBO(128, 128, 128, 1),
                         fontWeight: FontWeight.bold,
                       ),
@@ -77,7 +77,7 @@ class PastOrderDetail extends StatelessWidget {
                       DateFormat('dd/MM/yyyy')
                           .format(DateTime.parse(order.date)),
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'SourceSansPro',
                         color: Colors.grey,
                       ),
                     ),
@@ -102,7 +102,7 @@ class PastOrderDetail extends StatelessWidget {
                     Text(
                       'Status:',
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'SourceSansPro',
                         fontWeight: FontWeight.bold,
                         color: Color.fromRGBO(128, 128, 128, 1),
                       ),
@@ -110,7 +110,7 @@ class PastOrderDetail extends StatelessWidget {
                     Text(
                       'Delivered',
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'SourceSansPro',
                         color: Theme.of(context).primaryColor,
                       ),
                     ),

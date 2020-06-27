@@ -17,7 +17,8 @@ class _SupportScreenState extends State<SupportScreen> {
         centerTitle: true,
         title: Text(
           'Support',
-          style: GoogleFonts.montserrat(
+          style: TextStyle(
+            fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 24,
             fontWeight: FontWeight.w500,
@@ -55,13 +56,152 @@ class _SupportScreenState extends State<SupportScreen> {
                         child: Text(
                           'FAQs',
                           style: TextStyle(
+                              fontFamily: 'Montserrat',
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
                         ),
                       ),
                       ExpansionTile(
-                        title: Text('Subtitle 1'),
+                        title: Text(
+                          'Subtitle 1',
+                          style: TextStyle(
+                            fontFamily:'SourceSansPro'
+                          ),
+                        ),
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ExpansionTile(
+                        title: Text(
+                          'Subtitle 2',
+                          style: TextStyle(
+                            fontFamily:'SourceSansPro'
+                          ),
+                        ),
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ExpansionTile(
+                        title: Text(
+                          'Subtitle 3',
+                          style: TextStyle(
+                            fontFamily:'SourceSansPro'
+                          ),
+                        ),
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ExpansionTile(
+                        title: Text(
+                          'Subtitle 4',
+                          style: TextStyle(
+                            fontFamily:'SourceSansPro'
+                          ),
+                        ),
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ExpansionTile(
+                        title: Text(
+                          'Subtitle 5',
+                          style: TextStyle(
+                            fontFamily:'SourceSansPro'
+                          ),
+                        ),
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ExpansionTile(
+                        title: Text(
+                          'Subtitle 6',
+                          style: TextStyle(
+                            fontFamily:'SourceSansPro'
+                          ),
+                        ),
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ExpansionTile(
+                        title: Text(
+                          'Subtitle 7',
+                          style: TextStyle(
+                            fontFamily:'SourceSansPro'
+                          ),
+                        ),
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ExpansionTile(
+                        title: Text(
+                          'Subtitle 8',
+                          style: TextStyle(
+                            fontFamily:'SourceSansPro'
+                          ),
+                        ),
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.all(10),
@@ -73,109 +213,39 @@ class _SupportScreenState extends State<SupportScreen> {
                         ],
                       ),
                       ExpansionTile(
-                        title: Text('Subtitle 2'),
+                        title: Text(
+                          'Subtitle 9',
+                          style: TextStyle(
+                            fontFamily:'SourceSansPro'
+                          ),
+                        ),
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.all(10),
                             child: Text(
                               'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
-                              style: GoogleFonts.montserrat(fontSize: 15),
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15),
                             ),
                           ),
                         ],
                       ),
                       ExpansionTile(
-                        title: Text('Subtitle 3'),
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
-                              style: GoogleFonts.montserrat(fontSize: 15),
-                            ),
+                        title: Text(
+                          'Subtitle 10',
+                          style: TextStyle(
+                            fontFamily:'SourceSansPro'
                           ),
-                        ],
-                      ),
-                      ExpansionTile(
-                        title: Text('Subtitle 4'),
+                        ),
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.all(10),
                             child: Text(
                               'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
-                              style: GoogleFonts.montserrat(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      ExpansionTile(
-                        title: Text('Subtitle 5'),
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
-                              style: GoogleFonts.montserrat(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      ExpansionTile(
-                        title: Text('Subtitle 6'),
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
-                              style: GoogleFonts.montserrat(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      ExpansionTile(
-                        title: Text('Subtitle 7'),
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
-                              style: GoogleFonts.montserrat(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      ExpansionTile(
-                        title: Text('Subtitle 8'),
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
-                              style: GoogleFonts.montserrat(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      ExpansionTile(
-                        title: Text('Subtitle 9'),
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
-                              style: GoogleFonts.montserrat(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      ExpansionTile(
-                        title: Text('Subtitle 10'),
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
-                              style: GoogleFonts.montserrat(fontSize: 15),
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15),
                             ),
                           ),
                         ],
@@ -203,6 +273,7 @@ class _SupportScreenState extends State<SupportScreen> {
                                     Text(
                                       'CALL',
                                       style: TextStyle(
+                                          fontFamily: 'SourcsSansProSB',
                                           color: Colors.white,
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
@@ -237,6 +308,7 @@ class _SupportScreenState extends State<SupportScreen> {
                                     Text(
                                       'CHAT',
                                       style: TextStyle(
+                                          fontFamily: 'SourceSansProSB',
                                           color: Colors.white,
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
