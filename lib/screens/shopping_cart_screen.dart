@@ -550,7 +550,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     child: Text(
                       'Select Address',
                       style:
-                          TextStyle(fontFamily: 'SourceSansPro', fontSize: 16),
+                          TextStyle(fontFamily: 'SourceSansPro', fontSize: 15),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -637,7 +637,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                   child: Text(
                                     'ADD ADDRESS',
                                     style: TextStyle(
-                                        fontFamily: 'SourceSansProSB'),
+                                        fontFamily: 'SourceSansProSB',
+                                        fontSize: 15),
                                   ),
                                   elevation: 2,
                                   onPressed: () async {

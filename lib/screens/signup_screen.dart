@@ -302,8 +302,8 @@ class _SignupScreenState extends State<SignupScreen> {
                               'SIGN UP',
                               style: TextStyle(
                                 fontFamily: 'SourceSansProSB',
-                                color: Colors.white
-                                ),
+                                color: Colors.white,
+                                fontSize: 15),
                             ),
                       onPressed: _saveForm,
                       color: Colors.deepOrange,

@@ -109,8 +109,8 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
                         'VERIFY PHONE NUMBER',
                         style: TextStyle(
                           fontFamily: 'SourceSansProSB',
-                          color: Colors.white
-                          ),
+                          color: Colors.white,
+                          fontSize: 15),
                       ),
                 onPressed: () async {
                   final isValid = _form.currentState.validate();

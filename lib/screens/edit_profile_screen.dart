@@ -195,7 +195,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         'Save',
                         style: TextStyle(
                             fontFamily: 'SourceSansProSB',
-                            fontSize: 16,
+                            fontSize: 15,
                             fontWeight: FontWeight.w400,
                             color: Colors.white),
                       ),

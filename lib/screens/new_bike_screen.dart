@@ -262,7 +262,8 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                       textColor: Colors.white,
                       child: Text(
                         '+ Add',
-                        style: TextStyle(fontFamily: 'SourceSansProSB'),
+                        style: TextStyle(fontFamily: 'SourceSansProSB',
+                        fontSize: 15),
                       ),
                       onPressed: _saveForm,
                     ),
