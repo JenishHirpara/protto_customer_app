@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../providers/orders.dart';
 import '../screens/active_order_screen.dart';
@@ -62,7 +61,7 @@ class ActiveOrderDetail extends StatelessWidget {
     final order = Provider.of<Orders>(context).activeOrders[i];
     return Container(
       width: double.infinity,
-      height: 220,
+      height: 190,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.deepOrange,
@@ -154,7 +153,6 @@ class ActiveOrderDetail extends StatelessWidget {
                 SizedBox(height: 4),
                 Container(
                   width: double.infinity,
-                  height: 58,
                   child: RichText(
                     text: TextSpan(
                       children: <TextSpan>[
@@ -167,7 +165,7 @@ class ActiveOrderDetail extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: order.address,
+                          text: '${order.flat}, ${order.address}',
                           style: TextStyle(
                             fontFamily: 'SourceSansPro',
                             color: Colors.grey,
@@ -197,17 +195,16 @@ class ActiveOrderDetail extends StatelessWidget {
                     Text(
                       'Status:',
                       style: TextStyle(
-                        fontFamily: 'SourceSansPro',
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                        fontWeight: FontWeight.bold
-                      ),
+                          fontFamily: 'SourceSansPro',
+                          color: Color.fromRGBO(128, 128, 128, 1),
+                          fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                     Text(
                       _getStatus(order),
                       style: TextStyle(
-                        fontFamily: 'SourceSansPro',
-                        color: Theme.of(context).primaryColor),
+                          fontFamily: 'SourceSansPro',
+                          color: Theme.of(context).primaryColor),
                       textAlign: TextAlign.center,
                     ),
                   ],

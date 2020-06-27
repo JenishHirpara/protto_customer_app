@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/bikes.dart';
@@ -105,7 +104,7 @@ class _MyBikesState extends State<MyBikes> {
                           children: <Widget>[
                             Text(
                               '${bike.brand} ${bike.model}',
-                                style: TextStyle(
+                              style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 color: Colors.deepOrange,
                                 fontSize: 20,

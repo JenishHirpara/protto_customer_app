@@ -56,6 +56,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
         return TabItem.flash;
         break;
     }
+    return TabItem.dashboard;
   }
 
   @override

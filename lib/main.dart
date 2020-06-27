@@ -26,13 +26,13 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<UserProfile, Orders>(
           update: (ctx, userprofile, previousOrders) => Orders(
-            userprofile.item.id,
+            userprofile.item == null ? null : userprofile.item.id,
             previousOrders == null ? [] : previousOrders.items,
           ),
         ),
         ChangeNotifierProxyProvider<UserProfile, Bikes>(
           update: (ctx, userprofile, previousBikes) => Bikes(
-            userprofile.item.id,
+            userprofile.item == null ? null : userprofile.item.id,
             previousBikes == null ? [] : previousBikes.items,
           ),
         ),
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<UserProfile, Addresses>(
           update: (ctx, userprofile, previousAddresses) => Addresses(
-            userprofile.item.id,
+            userprofile.item == null ? null : userprofile.item.id,
             previousAddresses == null ? [] : previousAddresses.items,
           ),
         ),

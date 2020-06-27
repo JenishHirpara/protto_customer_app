@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../providers/orders.dart';
-
 class JobItem extends StatelessWidget {
-  final OrderItem order;
   final dynamic service;
-  JobItem(this.order, this.service);
+  JobItem(this.service);
 
   @override
   Widget build(BuildContext context) {

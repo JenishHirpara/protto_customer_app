@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -115,13 +114,12 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                         .brands
                         .map<DropdownMenuItem>((value) {
                       return DropdownMenuItem<String>(
-                          child: Text(
-                            value,
-                            textAlign: TextAlign.left,
-                            style:TextStyle(
-                              fontFamily: 'SourceSansPro',
-                           )
-                          ), value: value);
+                          child: Text(value,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                              )),
+                          value: value);
                     }).toList(),
                     validator: (value) {
                       if (value == null) {
@@ -161,13 +159,12 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                         .models
                         .map<DropdownMenuItem>((value) {
                       return DropdownMenuItem<String>(
-                          child: Text(
-                            value,
-                            textAlign: TextAlign.left,
-                            style:TextStyle(
+                          child: Text(value,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
                                 fontFamily: 'SourceSansPro',
-                              )
-                          ), value: value);
+                              )),
+                          value: value);
                     }).toList(),
                     validator: (value) {
                       if (value == null) {
@@ -204,13 +201,12 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                     ),
                     items: getYears().map<DropdownMenuItem>((value) {
                       return DropdownMenuItem<String>(
-                          child: Text(
-                            value,
-                            textAlign: TextAlign.left,
-                            style:TextStyle(
+                          child: Text(value,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
                                 fontFamily: 'SourceSansPro',
-                              )
-                          ), value: value);
+                              )),
+                          value: value);
                     }).toList(),
                     validator: (value) {
                       if (value == null) {
@@ -266,7 +262,8 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                       textColor: Colors.white,
                       child: Text(
                         '+ Add',
-                        style: TextStyle(fontFamily: 'SourceSansProSB'),),
+                        style: TextStyle(fontFamily: 'SourceSansProSB'),
+                      ),
                       onPressed: _saveForm,
                     ),
                   ),
@@ -276,5 +273,3 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
     );
   }
 }
-
-

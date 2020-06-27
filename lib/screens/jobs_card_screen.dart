@@ -281,7 +281,6 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, i) => JobItem(
-                          widget.order,
                           Provider.of<Orders>(context, listen: false)
                               .services[i]),
                       itemCount: Provider.of<Orders>(context, listen: false)
@@ -475,7 +474,6 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                         child: RaisedButton(
                           color: new Color(0xffF15D24),
                           onPressed: () {
-                            // TODO Approve All OnPressed ...
                             approveAllAlertDialog(context);
                           },
                           child: Text(
@@ -534,9 +532,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                     fontWeight: FontWeight.w400,
                                     color: Colors.grey),
                               ),
-                              onPressed: () {
-                                // TODO Approve Selected OnPressed...
-                              },
+                              onPressed: () {},
                             ),
                           ),
                         ],

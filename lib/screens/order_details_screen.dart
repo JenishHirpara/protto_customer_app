@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../providers/orders.dart';
 import '../utils/active_orderdetail.dart';
@@ -13,11 +12,15 @@ class OrderDetailsScreen extends StatefulWidget {
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   var _isInit = true;
+  var _isLoading = true;
 
   @override
   void didChangeDependencies() async {
     if (_isInit) {
-      Provider.of<Orders>(context, listen: false).fetchAndSetOrders();
+      await Provider.of<Orders>(context, listen: false).fetchAndSetOrders();
+      setState(() {
+        _isLoading = false;
+      });
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -43,78 +46,80 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         backgroundColor: Color.fromRGBO(250, 250, 250, 1),
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.all(16),
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    '  Active',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                   Container(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (ctx, i) => Column(
-                        children: <Widget>[
-                          ChangeNotifierProvider.value(
-                            value: activeorders[i],
-                            child: ActiveOrderDetail(i),
-                          ),
-                          SizedBox(height: 10),
-                        ],
-                      ),
-                      itemCount: activeorders.length,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    '  Past Bookings',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (ctx, i) => Column(
+                    width: double.infinity,
+                    margin: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        ChangeNotifierProvider.value(
-                          value: pastorders[i],
-                          child: PastOrderDetail(i),
+                        Text(
+                          '  Active',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        SizedBox(
-                          height: 10,
+                        Container(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (ctx, i) => Column(
+                              children: <Widget>[
+                                ChangeNotifierProvider.value(
+                                  value: activeorders[i],
+                                  child: ActiveOrderDetail(i),
+                                ),
+                                SizedBox(height: 10),
+                              ],
+                            ),
+                            itemCount: activeorders.length,
+                          ),
                         ),
                       ],
                     ),
-                    itemCount: pastorders.length,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          '  Past Bookings',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (ctx, i) => Column(
+                            children: <Widget>[
+                              ChangeNotifierProvider.value(
+                                value: pastorders[i],
+                                child: PastOrderDetail(i),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                          itemCount: pastorders.length,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }
