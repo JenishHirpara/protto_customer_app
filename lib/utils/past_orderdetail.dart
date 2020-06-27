@@ -14,7 +14,7 @@ class PastOrderDetail extends StatelessWidget {
     final order = Provider.of<Orders>(context).pastOrders[i];
     return Container(
       width: double.infinity,
-      height: 110,
+      height: 140,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.deepOrange,
@@ -90,7 +90,7 @@ class PastOrderDetail extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Column(
-              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 IconButton(

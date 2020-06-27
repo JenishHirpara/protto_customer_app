@@ -62,7 +62,7 @@ class ActiveOrderDetail extends StatelessWidget {
     final order = Provider.of<Orders>(context).activeOrders[i];
     return Container(
       width: double.infinity,
-      height: 187,
+      height: 220,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.deepOrange,

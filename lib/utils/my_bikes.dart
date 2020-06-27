@@ -93,7 +93,7 @@ class _MyBikesState extends State<MyBikes> {
               child: Container(
                 decoration: BoxDecoration(border: getBorder(context, bike)),
                 width: double.infinity,
-                height: 103,
+                height: 140,
                 child: Row(
                   children: <Widget>[
                     Expanded(

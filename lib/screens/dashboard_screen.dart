@@ -38,7 +38,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       context: originalcontext,
       builder: (context) => Dialog(
         child: Container(
-          height: 220,
+          height: 245,
           child: Column(
             children: <Widget>[
               Align(
@@ -57,7 +57,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Container(
-                height: 140,
+                height: 167,
                 padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                 child: Column(
                   children: <Widget>[
