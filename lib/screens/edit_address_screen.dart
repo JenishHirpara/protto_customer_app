@@ -177,7 +177,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       automaticallyImplyLeading: false,
       title: Text(
         'Edit Address',
-        style: GoogleFonts.montserrat(
+        style: TextStyle(
+          fontFamily: 'Montserrat',
           color: Color.fromRGBO(241, 93, 36, 1),
           fontSize: 24,
           fontWeight: FontWeight.w500,
@@ -312,12 +313,18 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                     child: Text(
                                       'CHANGE',
                                       style:
-                                          TextStyle(color: Colors.deepOrange),
+                                          TextStyle(
+                                            fontFamily: 'SourceSansProSB',
+                                            color: Colors.deepOrange),
                                     ),
                                   ),
                                 ],
                               ),
-                              Text(_textController.text),
+                              Text(_textController.text,
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                              ),
+                              ),
                             ],
                           ),
                         ),
@@ -356,6 +363,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                           Text(
                             'FLAT, FLOOR, BUILDING NAME',
                             style: TextStyle(
+                              fontFamily: 'SourceSansPro',
                               color: Color.fromRGBO(112, 112, 112, 1),
                             ),
                           ),
@@ -386,6 +394,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                           Text(
                             'LANDMARK',
                             style: TextStyle(
+                              fontFamily: 'SourceSansPro',
                               color: Color.fromRGBO(112, 112, 112, 1),
                             ),
                           ),
@@ -411,6 +420,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                           Text(
                             'SAVE AS',
                             style: TextStyle(
+                              fontFamily: 'SourceSansPro',
                               color: Color.fromRGBO(112, 112, 112, 1),
                             ),
                           ),

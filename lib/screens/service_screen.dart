@@ -120,7 +120,8 @@ class _ServiceScreenState extends State<ServiceScreen> {
                   bike == null
                       ? 'Choose a bike'
                       : '${bike.brand} ${bike.model}',
-                  style: GoogleFonts.montserrat(
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
                     color: Colors.deepOrange,
                     fontSize: 20,
                     fontWeight: FontWeight.w500,

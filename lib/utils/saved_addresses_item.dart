@@ -9,8 +9,8 @@ class SavedAddressesItem extends StatelessWidget {
     return showDialog(
       context: originalcontext,
       builder: (context) => AlertDialog(
-        title: Text('Are you sure?'),
-        content: Text('Are you sure you want to delete ${address.saveas}'),
+        title: Text('Are you sure?',style: TextStyle(fontFamily:'Montserrat'),),
+        content: Text('Are you sure you want to delete ${address.saveas}',style: TextStyle(fontFamily:'SourceSansPro'),),
         actions: <Widget>[
           FlatButton(
             onPressed: () async {
@@ -18,13 +18,13 @@ class SavedAddressesItem extends StatelessWidget {
                   .deleteAddress(address.id);
               Navigator.of(context).pop();
             },
-            child: Text('Yes'),
+            child: Text('Yes',style: TextStyle(fontFamily:'SourceSansProSB'),),
           ),
           FlatButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('No'),
+            child: Text('No',style: TextStyle(fontFamily:'SourceSansProSB'),),
           ),
         ],
       ),
@@ -64,8 +64,8 @@ class SavedAddressesItem extends StatelessWidget {
       contentPadding: EdgeInsets.all(0),
       title: Text(address.saveas),
       subtitle: address.landmark != null
-          ? Text('${address.flat}, ${address.landmark}, ${address.address}')
-          : Text('${address.flat}, ${address.address}'),
+          ? Text('${address.flat}, ${address.landmark}, ${address.address}',style: TextStyle(fontFamily:'SourceSansPro'),)
+          : Text('${address.flat}, ${address.address}',style: TextStyle(fontFamily:'SourceSansPro'),),
       trailing: Container(
         width: 100,
         child: Row(

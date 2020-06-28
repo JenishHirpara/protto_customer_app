@@ -37,6 +37,7 @@ class _SelectAddressScreenState extends State<SelectAddressScreen> {
             child: Text(
               'Select Address',
               style: TextStyle(
+                fontFamily: 'Montserrat',
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),

@@ -74,14 +74,14 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
         context: context,
         builder: (ctx) {
           return AlertDialog(
-            title: Text('Too late!'),
+            title: Text('Too late!',style: TextStyle(fontFamily:'Montserrat'),),
             content: Text(error.message),
             actions: <Widget>[
               FlatButton(
                 onPressed: () {
                   Navigator.of(ctx).pop();
                 },
-                child: Text('Okay'),
+                child: Text('Okay',style: TextStyle(fontFamily:'SourceSansProSB'),),
               ),
             ],
           );
@@ -97,7 +97,8 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
         centerTitle: true,
         title: Text(
           'Reschedule Service',
-          style: GoogleFonts.montserrat(
+          style: TextStyle(
+            fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 24,
             fontWeight: FontWeight.w500,
@@ -125,7 +126,7 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 'Select Date and Time',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                style: TextStyle(fontFamily:'Montserrat',fontSize: 20, fontWeight: FontWeight.w500),
               ),
             ),
             SizedBox(height: 10),
@@ -137,7 +138,8 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
                 color: Color.fromRGBO(240, 240, 240, 1),
                 child: Text(
                   _date == null ? 'Date' : _date,
-                  style: GoogleFonts.cantataOne(
+                  style: TextStyle(
+                    fontFamily: 'SourceSansPro',
                     color: Color.fromRGBO(128, 128, 128, 1),
                     fontSize: 14,
                   ),
@@ -155,7 +157,8 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
                   filled: true,
                   border: InputBorder.none,
                   hintText: 'Time Slot',
-                  hintStyle: GoogleFonts.cantataOne(
+                  hintStyle: TextStyle(
+                    fontFamily: 'SourceSansPro',
                     color: Color.fromRGBO(128, 128, 128, 1),
                     fontSize: 14,
                   ),
@@ -184,7 +187,7 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
                 onPressed: _saveForm,
                 child: Text(
                   'Reschedule',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(fontFamily:'SourceSansProSB',color: Colors.white),
                 ),
                 color: Colors.deepOrange,
                 elevation: 0,

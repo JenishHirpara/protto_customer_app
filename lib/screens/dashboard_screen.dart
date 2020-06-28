@@ -328,7 +328,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                             SizeConfig.blockSizeHorizontal * 20,
                                         height:
                                             SizeConfig.blockSizeVertical * 10,
-                                        color: Colors.blueGrey,
+                                        child:Image(image: AssetImage('assets/images/gear_with_car.png'))
                                       ),
                                       onTap: () {
                                         Navigator.of(context)
@@ -358,7 +358,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                             SizeConfig.blockSizeHorizontal * 20,
                                         height:
                                             SizeConfig.blockSizeVertical * 10,
-                                        color: Colors.blueGrey,
+                                        child:Image(image: AssetImage('assets/images/tyres.png'))
                                       ),
                                       onTap: () {
                                         Navigator.of(context)
@@ -388,7 +388,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                             SizeConfig.blockSizeHorizontal * 20,
                                         height:
                                             SizeConfig.blockSizeVertical * 10,
-                                        color: Colors.blueGrey,
+                                        child:Image(image: AssetImage('assets/images/wash_plus_coat.png'))
                                       ),
                                       onTap: () {
                                         Navigator.of(context)
@@ -422,7 +422,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                             SizeConfig.blockSizeHorizontal * 20,
                                         height:
                                             SizeConfig.blockSizeVertical * 10,
-                                        color: Colors.blueGrey,
+                                        child:Image(image: AssetImage('assets/images/custom_repairs.png'))
                                       ),
                                       onTap: () {
                                         Navigator.of(context)
@@ -452,7 +452,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                             SizeConfig.blockSizeHorizontal * 20,
                                         height:
                                             SizeConfig.blockSizeVertical * 10,
-                                        color: Colors.blueGrey,
+                                        child:Image(image: AssetImage('assets/images/denting_penting.png'))
                                       ),
                                       onTap: () {
                                         Navigator.of(context)
