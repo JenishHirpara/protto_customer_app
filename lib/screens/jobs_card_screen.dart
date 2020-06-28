@@ -57,6 +57,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                             TextSpan(
                               text: "₹ 3198",
                               style: TextStyle(
+                                fontFamily: 'SourceSansPro',
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
@@ -85,6 +86,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           child: Text(
                             'Jobs',
                             style: TextStyle(
+                                fontFamily: 'SourceSansPro',
                                 color: Colors.black,
                                 fontSize: 14,
                                 fontWeight: FontWeight.normal),
@@ -95,6 +97,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           color: Colors.deepOrange,
                           child: Text('Checkout',
                               style: TextStyle(
+                                  fontFamily: 'SourceSansProSB',
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
                                   color: Colors.white)),
@@ -159,6 +162,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           child: Text(
                             'Yes',
                             style: TextStyle(
+                                fontFamily: 'SourceSansProSB',
                                 color: Colors.black,
                                 fontSize: 14,
                                 fontWeight: FontWeight.normal),
@@ -177,6 +181,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           child: Text(
                             'No',
                             style: TextStyle(
+                                fontFamily: 'SourceSansProSB',
                                 color: Colors.black,
                                 fontSize: 14,
                                 fontWeight: FontWeight.normal),
@@ -271,7 +276,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                   children: <Widget>[
                     Text(
                       'Pre - Booked Services',
-                      style: GoogleFonts.montserrat(
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
                         color: Color.fromRGBO(112, 112, 112, 1),
                         fontWeight: FontWeight.w500,
                         fontSize: 20,
@@ -290,7 +296,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                     SizedBox(height: 10),
                     Text(
                       'Additional Services',
-                      style: GoogleFonts.montserrat(
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
                         color: Color.fromRGBO(112, 112, 112, 1),
                         fontWeight: FontWeight.w500,
                         fontSize: 20,
@@ -304,7 +311,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           contentPadding: EdgeInsets.symmetric(horizontal: 0),
                           title: Text(
                             'Job Number 1',
-                            style: GoogleFonts.cantataOne(
+                            style: TextStyle(
+                              fontFamily: 'SourceSansPro',
                               color: Color.fromRGBO(128, 128, 128, 1),
                             ),
                           ),
@@ -315,7 +323,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                               children: <Widget>[
                                 Text(
                                   '₹ 1599',
-                                  style: GoogleFonts.cantataOne(
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
                                     color: Color.fromRGBO(128, 128, 128, 1),
                                   ),
                                 ),
@@ -334,7 +343,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           contentPadding: EdgeInsets.symmetric(horizontal: 0),
                           title: Text(
                             'Job Number 2',
-                            style: GoogleFonts.cantataOne(
+                            style: TextStyle(
+                              fontFamily: 'SourceSansPro',
                               color: Color.fromRGBO(128, 128, 128, 1),
                             ),
                           ),
@@ -345,7 +355,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                               children: <Widget>[
                                 Text(
                                   '₹ 1599',
-                                  style: GoogleFonts.cantataOne(
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
                                     color: Color.fromRGBO(128, 128, 128, 1),
                                   ),
                                 ),
@@ -364,7 +375,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           contentPadding: EdgeInsets.symmetric(horizontal: 0),
                           title: Text(
                             'Job Number 3',
-                            style: GoogleFonts.cantataOne(
+                            style: TextStyle(
+                              fontFamily: 'SourceSansPro',
                               color: Color.fromRGBO(128, 128, 128, 1),
                             ),
                           ),
@@ -375,7 +387,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                               children: <Widget>[
                                 Text(
                                   '₹ 1599',
-                                  style: GoogleFonts.cantataOne(
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
                                     color: Color.fromRGBO(128, 128, 128, 1),
                                   ),
                                 ),
@@ -394,7 +407,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           contentPadding: EdgeInsets.symmetric(horizontal: 0),
                           title: Text(
                             'Job Number 4',
-                            style: GoogleFonts.cantataOne(
+                            style: TextStyle(
+                              fontFamily: 'SourceSansPro',
                               color: Color.fromRGBO(128, 128, 128, 1),
                             ),
                           ),
@@ -405,7 +419,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                               children: <Widget>[
                                 Text(
                                   '₹ 1599',
-                                  style: GoogleFonts.cantataOne(
+                                  style: TextStyle(
+                                  fontFamily: 'SourceSansPro',
                                     color: Color.fromRGBO(128, 128, 128, 1),
                                   ),
                                 ),
@@ -424,7 +439,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           contentPadding: EdgeInsets.symmetric(horizontal: 0),
                           title: Text(
                             'Job Number 5',
-                            style: GoogleFonts.cantataOne(
+                            style: TextStyle(
+                              fontFamily: 'SourceSansPro',
                               color: Color.fromRGBO(128, 128, 128, 1),
                             ),
                           ),
@@ -435,7 +451,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                               children: <Widget>[
                                 Text(
                                   '₹ 1599',
-                                  style: GoogleFonts.cantataOne(
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
                                     color: Color.fromRGBO(128, 128, 128, 1),
                                   ),
                                 ),
@@ -456,11 +473,12 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                       contentPadding: EdgeInsets.fromLTRB(0, 0, 18, 0),
                       title: Text(
                         'Item Total',
-                        style: GoogleFonts.cantataOne(),
+                        style: TextStyle(fontFamily: 'SourceSansPro',)
                       ),
                       trailing: Text(
                         '₹ 3198',
-                        style: GoogleFonts.cantataOne(
+                        style: TextStyle(
+                          fontFamily: 'SourceSansPro',
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -479,6 +497,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           child: Text(
                             'Approve All',
                             style: TextStyle(
+                                fontFamily: 'SourceSansProSB',
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
@@ -505,6 +524,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                               child: Text(
                                 'Approve Selected',
                                 style: TextStyle(
+                                    fontFamily: 'SourceSansProSB',
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.grey),
@@ -528,6 +548,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                               child: Text(
                                 'Contact Support',
                                 style: TextStyle(
+                                    fontFamily: 'SourceSansProSB',
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.grey),
