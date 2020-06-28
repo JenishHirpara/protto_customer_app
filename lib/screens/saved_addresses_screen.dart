@@ -118,7 +118,7 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
             child: RaisedButton(
               elevation: 0,
               color: Color.fromRGBO(250, 250, 250, 1),
-              child: Text('Add Address'),
+              child: Text('Add Address',style:TextStyle(fontSize: 15),),
               onPressed: () {
                 Navigator.of(context, rootNavigator: true)
                     .push(addAddressScreenPageRoute());
