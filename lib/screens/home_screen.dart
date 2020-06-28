@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:protto_customer_app/screens/verify_phone_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -24,7 +23,7 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.15,
             ),
-           const Text(
+            const Text(
               'Welcome',
               style: TextStyle(
                 fontFamily: 'Montserrat',
@@ -53,9 +52,7 @@ class HomeScreen extends StatelessWidget {
                 child: const Text(
                   'Continue',
                   style: TextStyle(
-                    fontFamily: 'SourceSansProSB',
-                    color: Colors.white
-                    ),
+                      fontFamily: 'SourceSansProSB', color: Colors.white),
                 ),
                 onPressed: () {
                   Navigator.of(context)

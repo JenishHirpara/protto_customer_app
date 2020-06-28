@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -129,13 +128,12 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                         .brands
                         .map<DropdownMenuItem>((value) {
                       return DropdownMenuItem<String>(
-                          child: Text(
-                            value,
-                            textAlign: TextAlign.left,
-                            style:TextStyle(
-                              fontFamily: 'SourceSansPro',
-                            )
-                          ), value: value);
+                          child: Text(value,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                              )),
+                          value: value);
                     }).toList(),
                     validator: (value) {
                       if (value == null) {
@@ -169,13 +167,12 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                         .models
                         .map<DropdownMenuItem>((value) {
                       return DropdownMenuItem<String>(
-                          child: Text(
-                            value,
-                            textAlign: TextAlign.left,
-                            style:TextStyle(
-                              fontFamily: 'SourceSansPro',
-                            )
-                          ), value: value);
+                          child: Text(value,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                              )),
+                          value: value);
                     }).toList(),
                     validator: (value) {
                       if (value == null) {
@@ -207,13 +204,12 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                     ),
                     items: getYears().map<DropdownMenuItem>((value) {
                       return DropdownMenuItem<String>(
-                          child: Text(
-                            value,
-                            textAlign: TextAlign.left,
-                            style:TextStyle(
-                              fontFamily: 'SourceSansPro',
-                            )
-                          ), value: value);
+                          child: Text(value,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                              )),
+                          value: value);
                     }).toList(),
                     validator: (value) {
                       if (value == null) {
@@ -256,12 +252,10 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                     child: RaisedButton(
                       color: Colors.deepOrange,
                       textColor: Colors.white,
-                      child: Text(
-                        'Edit',
-                        style: TextStyle(
-                        fontFamily: 'SourceSansProSB',
-                        )
-                      ),
+                      child: Text('Edit',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansProSB',
+                          )),
                       onPressed: _saveForm,
                     ),
                   ),
