@@ -19,6 +19,7 @@ class OrderItem with ChangeNotifier {
   final String bikeNumber;
   final String flat;
   final String address;
+  final String landmark;
   final String deliveryType;
 
   OrderItem({
@@ -32,6 +33,7 @@ class OrderItem with ChangeNotifier {
     @required this.flat,
     @required this.address,
     @required this.deliveryType,
+    @required this.landmark,
     this.make,
     this.model,
     this.bikeNumber,
@@ -94,6 +96,7 @@ class Orders with ChangeNotifier {
           status: extractedData1['data'][i]['status'],
           address: extractedData1['data'][i]['address'],
           flat: extractedData1['data'][i]['flat'],
+          landmark: extractedData1['data'][i]['landmark'],
           date: extractedData1['data'][i]['date'],
           time: extractedData1['data'][i]['timestamp'],
           bikeid: extractedData1['data'][i]['bike_id'],
@@ -126,6 +129,7 @@ class Orders with ChangeNotifier {
         'service_type': order.serviceType,
         'address': order.address,
         'flat': order.flat,
+        'landmark': order.landmark,
         'date': order.date,
         'timestamp': order.time,
         'delivery_type': order.deliveryType,
@@ -147,6 +151,7 @@ class Orders with ChangeNotifier {
         date: order.date,
         deliveryType: order.deliveryType,
         flat: order.flat,
+        landmark: order.landmark,
         time: order.time,
         serviceType: order.serviceType,
         rideable: order.rideable,
@@ -197,6 +202,7 @@ class Orders with ChangeNotifier {
         bikeid: order.bikeid,
         deliveryType: order.deliveryType,
         flat: order.flat,
+        landmark: order.landmark,
         rideable: order.rideable,
         serviceType: order.serviceType,
         bikeNumber: order.bikeNumber,

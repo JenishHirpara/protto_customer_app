@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../providers/orders.dart';
@@ -184,8 +183,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                   child: Text(
                     'Verify OTP',
                     style: TextStyle(
-                      fontFamily: 'SourceSansProSB',
-                      color: Colors.white),
+                        fontFamily: 'SourceSansProSB', color: Colors.white),
                   ),
                   color: Theme.of(context).primaryColor,
                   onPressed: () {},
@@ -208,7 +206,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               'Service Confirmed',
               textAlign: TextAlign.left,
               style: TextStyle(
-                      fontFamily: 'SourceSansPro',),
+                fontFamily: 'SourceSansPro',
+              ),
             ),
             SizedBox(height: 10),
             Container(
@@ -246,7 +245,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             Text(
               'Bike Picked Up',
               style: TextStyle(
-                      fontFamily: 'SourceSansPro',),
+                fontFamily: 'SourceSansPro',
+              ),
             ),
             SizedBox(height: 10),
             Container(
@@ -283,7 +283,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               'Pre Service Inspection',
               textAlign: TextAlign.left,
               style: TextStyle(
-                      fontFamily: 'SourceSansPro',),
+                fontFamily: 'SourceSansPro',
+              ),
             ),
             SizedBox(height: 10),
             Container(
@@ -330,8 +331,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             Text(
               'Service Started',
               textAlign: TextAlign.left,
-              style: TextStyle(fontFamily: 'SourceSansPro'),            
-              ),
+              style: TextStyle(fontFamily: 'SourceSansPro'),
+            ),
             SizedBox(height: 5),
             Text(
               'NSW, Sydney, AU',
@@ -449,7 +450,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         centerTitle: true,
         title: Text(
           'Active Order',
-          style:TextStyle(
+          style: TextStyle(
             fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 24,
@@ -498,8 +499,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                       child: Text(
                         'Jobs',
                         style: TextStyle(
-                          fontFamily: 'SourceSansProSB',
-                          color: Colors.white),
+                            fontFamily: 'SourceSansProSB', color: Colors.white),
                       ),
                       onPressed: () {
                         Navigator.of(context).push(jobsRoute(widget.order));

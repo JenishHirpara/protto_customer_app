@@ -5,7 +5,6 @@ import 'package:location/location.dart';
 import 'package:geocoder/geocoder.dart' as geo;
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart' as web;
-import 'package:google_fonts/google_fonts.dart';
 
 import '../providers/address.dart';
 
@@ -312,18 +311,18 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                     },
                                     child: Text(
                                       'CHANGE',
-                                      style:
-                                          TextStyle(
-                                            fontFamily: 'SourceSansProSB',
-                                            color: Colors.deepOrange),
+                                      style: TextStyle(
+                                          fontFamily: 'SourceSansProSB',
+                                          color: Colors.deepOrange),
                                     ),
                                   ),
                                 ],
                               ),
-                              Text(_textController.text,
-                              style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                              ),
+                              Text(
+                                _textController.text,
+                                style: TextStyle(
+                                  fontFamily: 'SourceSansPro',
+                                ),
                               ),
                             ],
                           ),

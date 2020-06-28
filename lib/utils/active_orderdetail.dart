@@ -61,7 +61,7 @@ class ActiveOrderDetail extends StatelessWidget {
     final order = Provider.of<Orders>(context).activeOrders[i];
     return Container(
       width: double.infinity,
-      height: 190,
+      height: order.landmark != null ? 210 : 190,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
@@ -69,12 +69,12 @@ class ActiveOrderDetail extends StatelessWidget {
           width: 1,
         ),
         boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(1.0, 1.0), //(x,y)
-                    blurRadius: 3.0,
-                  ),
-                ],
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(1.0, 1.0), //(x,y)
+            blurRadius: 3.0,
+          ),
+        ],
       ),
       padding: EdgeInsets.all(8),
       child: Row(
@@ -173,7 +173,9 @@ class ActiveOrderDetail extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: '${order.flat}, ${order.address}',
+                          text: order.landmark == null
+                              ? '${order.flat}, ${order.address}'
+                              : '${order.flat},${order.landmark}, ${order.address}',
                           style: TextStyle(
                             fontFamily: 'SourceSansPro',
                             color: Colors.grey,

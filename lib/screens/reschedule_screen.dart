@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/orders.dart';
@@ -74,14 +73,20 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
         context: context,
         builder: (ctx) {
           return AlertDialog(
-            title: Text('Too late!',style: TextStyle(fontFamily:'Montserrat'),),
+            title: Text(
+              'Too late!',
+              style: TextStyle(fontFamily: 'Montserrat'),
+            ),
             content: Text(error.message),
             actions: <Widget>[
               FlatButton(
                 onPressed: () {
                   Navigator.of(ctx).pop();
                 },
-                child: Text('Okay',style: TextStyle(fontFamily:'SourceSansProSB'),),
+                child: Text(
+                  'Okay',
+                  style: TextStyle(fontFamily: 'SourceSansProSB'),
+                ),
               ),
             ],
           );
@@ -126,7 +131,10 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 'Select Date and Time',
-                style: TextStyle(fontFamily:'Montserrat',fontSize: 20, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500),
               ),
             ),
             SizedBox(height: 10),
@@ -187,7 +195,8 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
                 onPressed: _saveForm,
                 child: Text(
                   'Reschedule',
-                  style: TextStyle(fontFamily:'SourceSansProSB',color: Colors.white),
+                  style: TextStyle(
+                      fontFamily: 'SourceSansProSB', color: Colors.white),
                 ),
                 color: Colors.deepOrange,
                 elevation: 0,

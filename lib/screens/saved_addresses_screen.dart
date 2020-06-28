@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/address.dart';
@@ -119,9 +118,10 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
             child: RaisedButton(
               elevation: 0,
               color: Color.fromRGBO(250, 250, 250, 1),
-              child: Text('Add Address',style:TextStyle(
-                fontFamily: 'SourceSansProSB',
-                fontSize: 15),),
+              child: Text(
+                'Add Address',
+                style: TextStyle(fontFamily: 'SourceSansProSB', fontSize: 15),
+              ),
               onPressed: () {
                 Navigator.of(context, rootNavigator: true)
                     .push(addAddressScreenPageRoute());
