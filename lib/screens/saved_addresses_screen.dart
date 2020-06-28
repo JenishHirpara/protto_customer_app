@@ -81,7 +81,7 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
         ),
         leading: InkWell(
           child: Icon(
-            Icons.arrow_back,
+            Icons.arrow_back_ios,
             color: Colors.black,
           ),
           onTap: () {
@@ -118,7 +118,7 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
             child: RaisedButton(
               elevation: 0,
               color: Color.fromRGBO(250, 250, 250, 1),
-              child: Text('Add Address',style:TextStyle(fontSize: 15),),
+              child: Text('Add Address',style:TextStyle(fontSize: 15,fontFamily: "SourceSansProSB"),),
               onPressed: () {
                 Navigator.of(context, rootNavigator: true)
                     .push(addAddressScreenPageRoute());

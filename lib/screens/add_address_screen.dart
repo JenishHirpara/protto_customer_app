@@ -199,7 +199,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       ],
       leading: InkWell(
         child: Icon(
-          Icons.arrow_back,
+          Icons.arrow_back_ios,
           color: Colors.black,
         ),
         onTap: () {
@@ -325,7 +325,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                             onPressed: _setFull,
                             child: Text(
                               'Next',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.white,fontFamily: 'SourceSansProSB'),
                             ),
                             color: Colors.deepOrange,
                           ),
@@ -440,7 +440,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                 child: RaisedButton(
                                   color: Colors.white,
                                   elevation: 0,
-                                  child: Text('BACK'),
+                                  child: Text('BACK',style: TextStyle(fontFamily: 'SourceSansProSB'),),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
@@ -453,7 +453,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   child: RaisedButton(
                                     child: Text(
                                       'ADD',
-                                      style: TextStyle(color: Colors.white),
+                                      style: TextStyle(color: Colors.white,fontFamily: 'SourceSansProSB'),
                                     ),
                                     color: Colors.deepOrange,
                                     onPressed: () => _saveForm(),
