@@ -73,7 +73,8 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
         centerTitle: true,
         title: Text(
           'Saved Addresses',
-          style: GoogleFonts.montserrat(
+          style: TextStyle(
+            fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 24,
             fontWeight: FontWeight.w500,
@@ -118,7 +119,9 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
             child: RaisedButton(
               elevation: 0,
               color: Color.fromRGBO(250, 250, 250, 1),
-              child: Text('Add Address',style:TextStyle(fontSize: 15,fontFamily: "SourceSansProSB"),),
+              child: Text('Add Address',style:TextStyle(
+                fontFamily: 'SourceSansProSB',
+                fontSize: 15),),
               onPressed: () {
                 Navigator.of(context, rootNavigator: true)
                     .push(addAddressScreenPageRoute());

@@ -42,7 +42,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                     child: Text(
                       'OTP',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
@@ -80,6 +81,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                           FocusScope.of(context).requestFocus(_focusNode2);
                         },
                         style: TextStyle(
+                          fontFamily: 'SourceSansPro',
                           fontSize: 30.0,
                           color: Colors.black,
                         ),
@@ -181,7 +183,9 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                 child: RaisedButton(
                   child: Text(
                     'Verify OTP',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      fontFamily: 'SourceSansProSB',
+                      color: Colors.white),
                   ),
                   color: Theme.of(context).primaryColor,
                   onPressed: () {},
@@ -203,7 +207,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             Text(
               'Service Confirmed',
               textAlign: TextAlign.left,
-              style: GoogleFonts.cantataOne(),
+              style: TextStyle(
+                      fontFamily: 'SourceSansPro',),
             ),
             SizedBox(height: 10),
             Container(
@@ -220,6 +225,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                 child: Text(
                   'Reschedule',
                   style: TextStyle(
+                    fontFamily: 'SourceSansProSB',
                     color: Color.fromRGBO(112, 112, 112, 1),
                   ),
                 ),
@@ -239,7 +245,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
           children: <Widget>[
             Text(
               'Bike Picked Up',
-              style: GoogleFonts.cantataOne(),
+              style: TextStyle(
+                      fontFamily: 'SourceSansPro',),
             ),
             SizedBox(height: 10),
             Container(
@@ -256,6 +263,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                 child: Text(
                   'OTP',
                   style: TextStyle(
+                    fontFamily: 'SourcsSansProSB',
                     color: Color.fromRGBO(112, 112, 112, 1),
                   ),
                 ),
@@ -274,7 +282,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             Text(
               'Pre Service Inspection',
               textAlign: TextAlign.left,
-              style: GoogleFonts.cantataOne(),
+              style: TextStyle(
+                      fontFamily: 'SourceSansPro',),
             ),
             SizedBox(height: 10),
             Container(
@@ -291,6 +300,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                 child: Text(
                   'View Images',
                   style: TextStyle(
+                    fontFamily: 'SourceSansProSB',
                     color: Color.fromRGBO(112, 112, 112, 1),
                   ),
                 ),
@@ -308,7 +318,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         title: Text(
           'Bike Dropped at Service Station',
           textAlign: TextAlign.left,
-          style: GoogleFonts.cantataOne(),
+          style: TextStyle(fontFamily: 'SourceSansPro'),
         ),
         date: widget.order.date,
         time: widget.order.time,
@@ -320,13 +330,14 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             Text(
               'Service Started',
               textAlign: TextAlign.left,
-              style: GoogleFonts.cantataOne(),
-            ),
+              style: TextStyle(fontFamily: 'SourceSansPro'),            
+              ),
             SizedBox(height: 5),
             Text(
               'NSW, Sydney, AU',
               textAlign: TextAlign.left,
-              style: GoogleFonts.cantataOne(
+              style: TextStyle(
+                fontFamily: 'SourceSansPro',
                 fontSize: 12,
                 color: Color.fromRGBO(112, 112, 112, 1),
               ),
@@ -343,7 +354,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             Text(
               'Service Done',
               textAlign: TextAlign.left,
-              style: GoogleFonts.cantataOne(),
+              style: TextStyle(fontFamily: 'SourceSansPro'),
             ),
             SizedBox(height: 10),
             Container(
@@ -360,6 +371,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                 child: Text(
                   'Invoice',
                   style: TextStyle(
+                    fontFamily: 'SourceSansProSB',
                     color: Color.fromRGBO(112, 112, 112, 1),
                   ),
                 ),
@@ -378,7 +390,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             Text(
               'Pre Delivery Inspection',
               textAlign: TextAlign.left,
-              style: GoogleFonts.cantataOne(),
+              style: TextStyle(fontFamily: 'SourceSansPro'),
             ),
             SizedBox(height: 10),
             Container(
@@ -395,6 +407,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                 child: Text(
                   'View Images',
                   style: TextStyle(
+                    fontFamily: 'SourcsSansProSB',
                     color: Color.fromRGBO(112, 112, 112, 1),
                   ),
                 ),
@@ -412,7 +425,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         title: Text(
           'Bike Picked from the service station',
           textAlign: TextAlign.left,
-          style: GoogleFonts.cantataOne(),
+          style: TextStyle(fontFamily: 'SourceSansPro'),
         ),
         date: widget.order.date,
         time: widget.order.time,
@@ -421,7 +434,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         title: Text(
           'Delivered',
           textAlign: TextAlign.left,
-          style: GoogleFonts.cantataOne(),
+          style: TextStyle(fontFamily: 'SourceSansPro'),
         ),
         date: widget.order.date,
         time: widget.order.time,
@@ -436,7 +449,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         centerTitle: true,
         title: Text(
           'Active Order',
-          style: GoogleFonts.montserrat(
+          style:TextStyle(
+            fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 24,
             fontWeight: FontWeight.w500,
@@ -468,7 +482,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                     children: <Widget>[
                       Text(
                         '${widget.order.make} ${widget.order.model}',
-                        style: GoogleFonts.montserrat(
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
                           color: Color.fromRGBO(241, 93, 36, 1),
                           fontSize: 20,
                         ),
@@ -482,7 +497,9 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                     child: RaisedButton(
                       child: Text(
                         'Jobs',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          fontFamily: 'SourceSansProSB',
+                          color: Colors.white),
                       ),
                       onPressed: () {
                         Navigator.of(context).push(jobsRoute(widget.order));
@@ -497,7 +514,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             SizedBox(height: 20),
             Text(
               'Track the progress',
-              style: GoogleFonts.montserrat(
+              style: TextStyle(
+                fontFamily: 'Montserrat',
                 color: Color.fromRGBO(112, 112, 112, 1),
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
@@ -531,14 +549,16 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                                       Text(
                                         DateFormat('dd/MM')
                                             .format(DateTime.parse(step.date)),
-                                        style: GoogleFonts.cantataOne(
+                                        style: TextStyle(
+                                          fontFamily: 'SourceSansPro',
                                           color:
                                               Color.fromRGBO(128, 128, 128, 1),
                                         ),
                                       ),
                                       Text(
                                         step.time,
-                                        style: GoogleFonts.cantataOne(
+                                        style: TextStyle(
+                                          fontFamily: 'SourceSansPro',
                                           color:
                                               Color.fromRGBO(128, 128, 128, 1),
                                         ),

@@ -173,7 +173,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       automaticallyImplyLeading: false,
       title: Text(
         'Add Address',
-        style: GoogleFonts.montserrat(
+        style: TextStyle(
+          fontFamily:'Montserrat',
           color: Color.fromRGBO(241, 93, 36, 1),
           fontSize: 24,
           fontWeight: FontWeight.w500,
@@ -308,12 +309,17 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                     child: Text(
                                       'CHANGE',
                                       style:
-                                          TextStyle(color: Colors.deepOrange),
+                                          TextStyle(
+                                            fontFamily: 'SourceSansProSB',
+                                            color: Colors.deepOrange),
                                     ),
                                   ),
                                 ],
                               ),
-                              Text(_textController.text),
+                              Text(_textController.text,
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                              ),),
                             ],
                           ),
                         ),
@@ -325,7 +331,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                             onPressed: _setFull,
                             child: Text(
                               'Next',
-                              style: TextStyle(color: Colors.white,fontFamily: 'SourceSansProSB'),
+                              style: TextStyle(
+                                fontFamily: 'SourceSansProSB',
+                                color: Colors.white),
                             ),
                             color: Colors.deepOrange,
                           ),
@@ -349,6 +357,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           Text(
                             'FLAT, FLOOR, BUILDING NAME',
                             style: TextStyle(
+                              fontFamily: 'SourceSansPro',
                               color: Color.fromRGBO(112, 112, 112, 1),
                             ),
                           ),
@@ -378,6 +387,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           Text(
                             'LANDMARK',
                             style: TextStyle(
+                              fontFamily: 'SourceSansPro',                             
                               color: Color.fromRGBO(112, 112, 112, 1),
                             ),
                           ),
@@ -402,6 +412,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           Text(
                             'SAVE AS',
                             style: TextStyle(
+                              fontFamily: 'SourceSansPro',
                               color: Color.fromRGBO(112, 112, 112, 1),
                             ),
                           ),
@@ -453,7 +464,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   child: RaisedButton(
                                     child: Text(
                                       'ADD',
-                                      style: TextStyle(color: Colors.white,fontFamily: 'SourceSansProSB'),
+                                      style: TextStyle(
+                                        fontFamily: 'SourceSansProSB',
+                                        color: Colors.white),
                                     ),
                                     color: Colors.deepOrange,
                                     onPressed: () => _saveForm(),

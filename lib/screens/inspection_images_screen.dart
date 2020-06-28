@@ -20,7 +20,8 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
         centerTitle: true,
         title: Text(
           'Inspection Images',
-          style: GoogleFonts.montserrat(
+          style:TextStyle(
+            fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 24,
             fontWeight: FontWeight.w500,
@@ -50,13 +51,19 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                 children: <Widget>[
                   Text(
                     '${widget.order.make} ${widget.order.model}',
-                    style: GoogleFonts.montserrat(
+                    style: TextStyle(
+                      fontFamily:'Montserrat',
                       color: Color.fromRGBO(241, 93, 36, 1),
                       fontSize: 20,
                     ),
                   ),
-                  Text('2017'),
-                  Text(widget.order.bikeNumber),
+                  Text('2017', 
+                      style: TextStyle(
+                      fontFamily:'Montserrat',)
+                    ),
+                  Text(widget.order.bikeNumber,
+                        style: TextStyle(
+                        fontFamily:'Montserrat',)),
                 ],
               ),
             ),
@@ -64,7 +71,8 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
               padding: EdgeInsets.symmetric(horizontal: 36),
               child: Text(
                 'Pre Service Inspection',
-                style: GoogleFonts.montserrat(
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
                   color: Color.fromRGBO(112, 112, 112, 1),
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
@@ -116,7 +124,8 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                 children: <Widget>[
                   Text(
                     'Odometer:',
-                    style: GoogleFonts.cantataOne(
+                    style: TextStyle(
+                      fontFamily: 'SourceSansPro',
                       color: Color.fromRGBO(112, 112, 112, 1),
                     ),
                   ),
@@ -124,6 +133,7 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                   Text(
                     '12,500',
                     style: TextStyle(
+                      fontFamily: 'SourceSansPro',
                       color: Colors.deepOrange,
                       fontSize: 15,
                     ),
@@ -142,7 +152,8 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                 children: <Widget>[
                   Text(
                     'Fuel Level:',
-                    style: GoogleFonts.cantataOne(
+                    style: TextStyle(
+                      fontFamily: 'SourceSansPro',
                       color: Color.fromRGBO(112, 112, 112, 1),
                     ),
                   ),
@@ -150,6 +161,7 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                   Text(
                     '75%',
                     style: TextStyle(
+                      fontFamily: 'SourceSansPro',
                       color: Colors.deepOrange,
                       fontSize: 15,
                     ),
@@ -162,7 +174,8 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
               padding: EdgeInsets.symmetric(horizontal: 36),
               child: Text(
                 'Pre Delivery Inspection',
-                style: GoogleFonts.montserrat(
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
                   color: Color.fromRGBO(112, 112, 112, 1),
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
@@ -214,7 +227,8 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                 children: <Widget>[
                   Text(
                     'Odometer:',
-                    style: GoogleFonts.cantataOne(
+                    style: TextStyle(
+                      fontFamily: 'SourceSansPro',
                       color: Color.fromRGBO(112, 112, 112, 1),
                     ),
                   ),
@@ -222,6 +236,7 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                   Text(
                     '12,500',
                     style: TextStyle(
+                      fontFamily: 'SourceSansPro',
                       color: Colors.deepOrange,
                       fontSize: 15,
                     ),

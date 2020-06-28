@@ -63,10 +63,18 @@ class ActiveOrderDetail extends StatelessWidget {
       width: double.infinity,
       height: 190,
       decoration: BoxDecoration(
+        color: Colors.white,
         border: Border.all(
           color: Colors.deepOrange,
           width: 1,
         ),
+        boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(1.0, 1.0), //(x,y)
+                    blurRadius: 3.0,
+                  ),
+                ],
       ),
       padding: EdgeInsets.all(8),
       child: Row(

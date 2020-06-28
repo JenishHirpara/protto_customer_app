@@ -62,10 +62,13 @@ flutter:
     - assets/images/protto-logo.png
     - assets/images/ProDry.png
     - assets/images/ic_bike.png
+    - assets/images/gear_with_car.png
+    - assets/images/wash_plus_coat.png
+    - assets/images/custom_repairs.png
+    - assets/images/tyres.png
+    - assets/images/denting_penting.png
+
   fonts:
-    - family: Poppins
-      fonts:
-        - asset: assets/fonts/Poppins-Regular.ttf
     - family: SourceSansPro
       fonts:
         - asset: assets/fonts/SourceSansPro-Regular.ttf    
