@@ -550,7 +550,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     child: Text(
                       'Select Address',
                       style:
-                          TextStyle(fontFamily: 'SourceSansPro', fontSize: 15),
+                          TextStyle(fontFamily: 'SourceSansProSB', fontSize: 15),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -635,7 +635,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 child: RaisedButton(
                                   color: Colors.white,
                                   child: Text(
-                                    'ADD ADDRESS',
+                                    'Add Address',
                                     style: TextStyle(
                                         fontFamily: 'SourceSansProSB',
                                         fontSize: 15),
@@ -661,7 +661,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 child: RaisedButton(
                                   color: Colors.deepOrange,
                                   child: Text(
-                                    'SELECT ADDRESS',
+                                    'Select Address',
                                     style: TextStyle(
                                         fontFamily: 'SourceSansProSB',
                                         color: Colors.white),
@@ -690,7 +690,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 child: RaisedButton(
                                   color: Colors.white,
                                   child: Text(
-                                    'PAY LATER',
+                                    'Pay Later',
                                     style: TextStyle(
                                         fontFamily: 'SourceSansProSB'),
                                   ),
@@ -706,7 +706,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 child: RaisedButton(
                                   color: Colors.deepOrange,
                                   child: Text(
-                                    'PAY NOW',
+                                    'Pay Now',
                                     style: TextStyle(
                                         fontFamily: 'SourceSansProSB',
                                         color: Colors.white),

@@ -60,6 +60,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                 child: Column(
                   children: <Widget>[
+                    Row(
+                      children: [
                     Text(
                       activebike != null
                           ? '${activebike.brand} ${activebike.model}'
@@ -74,7 +76,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
+                      ],
+                    ),
                     SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Text('Year: '),
                     Text(
                       activebike != null ? activebike.year : 'My Bike',
                       textAlign: TextAlign.center,
@@ -83,7 +90,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         color: Color.fromRGBO(100, 100, 100, 1),
                       ),
                     ),
+                      ],
+                    ),
                     SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Text('Registration Number: '),
                     Text(
                       activebike != null ? activebike.number : '',
                       style: TextStyle(
@@ -91,6 +103,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         color: Color.fromRGBO(100, 100, 100, 1),
                       ),
                       textAlign: TextAlign.center,
+                    ),
+                      ],
                     ),
                     SizedBox(height: 8),
                     Container(
@@ -106,7 +120,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         color: Colors.white,
                         child: Text(
                           'Manage',
-                          style: TextStyle(fontFamily: 'SourceSansPro'),
+                          style: TextStyle(fontFamily: 'SourceSansProSB'),
                         ),
                         elevation: 0,
                         onPressed: () {

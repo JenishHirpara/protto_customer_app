@@ -200,7 +200,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       ],
       leading: InkWell(
         child: Icon(
-          Icons.arrow_back,
+          Icons.arrow_back_ios,
           color: Colors.black,
         ),
         onTap: () {
@@ -451,10 +451,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                 child: RaisedButton(
                                   color: Colors.white,
                                   elevation: 0,
-                                  child: Text(
-                                    'BACK',
-                                  style: TextStyle(fontFamily: 'SourceSansProSB',),
-                                  ),
+                                  child: Text('BACK',style: TextStyle(fontFamily: 'SourceSansProSB'),),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
