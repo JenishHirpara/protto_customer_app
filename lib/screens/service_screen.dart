@@ -158,6 +158,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                   labelPadding: EdgeInsets.symmetric(horizontal: 40),
                   unselectedLabelColor: Colors.grey,
                   labelColor: Colors.deepOrange,
+                  labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
                   tabs: [
                     Tab(
                       text: "Regular Service",

@@ -225,9 +225,7 @@ class ReferralScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: Text(
               'Your Referral Code',
-              style: TextStyle(
-                fontFamily: 'Montserrat'
-              ),
+              style: TextStyle(fontFamily: 'Montserrat'),
             ),
           ),
           Container(
@@ -242,7 +240,8 @@ class ReferralScreen extends StatelessWidget {
             child: ListTile(
               title: Text(
                 referal,
-                style: GoogleFonts.cantataOne(
+                style: TextStyle(
+                  fontFamily: 'SourceSansPro',
                   color: Color.fromRGBO(128, 128, 128, 1),
                 ),
               ),
@@ -271,6 +270,17 @@ class ReferralScreen extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
             width: double.infinity,
             height: 45,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey[300],
+                  spreadRadius: 0.0,
+                  offset: Offset(2.0, 2.0), //(x,y)
+                  blurRadius: 6.0,
+                ),
+              ],
+            ),
             child: RaisedButton(
               child: Row(
                 children: <Widget>[
@@ -278,7 +288,8 @@ class ReferralScreen extends StatelessWidget {
                     flex: 9,
                     child: Text(
                       'Share',
-                      style: TextStyle(fontFamily:'SourceSansProSB',color: Colors.white),
+                      style: TextStyle(
+                          fontFamily: 'SourceSansProSB', color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
                   ),

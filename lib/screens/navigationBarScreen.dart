@@ -80,10 +80,12 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
               context: context,
               builder: (ctx) {
                 return AlertDialog(
-                  title: Text('Do you wish to exit the app?'),
+                  title: Text('Do you wish to exit the app?',
+                      style: TextStyle(fontFamily: 'Montserrat')),
                   actions: <Widget>[
                     FlatButton(
-                      child: Text('Yes'),
+                      child: Text('Yes',
+                          style: TextStyle(fontFamily: 'SourceSansProSB')),
                       onPressed: () {
                         Navigator.of(ctx).pop();
                         SystemNavigator.pop();
@@ -93,7 +95,8 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                         onPressed: () {
                           Navigator.of(ctx).pop();
                         },
-                        child: Text('No')),
+                        child: Text('No',
+                            style: TextStyle(fontFamily: 'SourceSansProSB'))),
                   ],
                 );
               },

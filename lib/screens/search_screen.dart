@@ -122,7 +122,8 @@ class _SearchScreenState extends State<SearchScreen> {
         automaticallyImplyLeading: false,
         title: Text(
           'Search Services',
-          style: GoogleFonts.montserrat(
+          style: TextStyle(
+            fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 22,
             fontWeight: FontWeight.w500,
@@ -161,8 +162,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   labelText: "Search Service",
                   hintText: "Search Service",
+                  labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
                   filled: true,
-                  hintStyle: new TextStyle(color: new Color(0xff1D1D1)),
+                  hintStyle: new TextStyle(
+                      fontFamily: 'SourceSansPro', color: new Color(0xff1D1D1)),
                   fillColor: Colors.white),
             ),
           ),
@@ -172,8 +175,14 @@ class _SearchScreenState extends State<SearchScreen> {
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (ctx, i) => InkWell(
               child: ListTile(
-                title: Text(display[i].type),
-                subtitle: Text(display[i].service),
+                title: Text(
+                  display[i].type,
+                  style: TextStyle(fontFamily: 'SourceSansPro'),
+                ),
+                subtitle: Text(
+                  display[i].service,
+                  style: TextStyle(fontFamily: 'SourceSansPro'),
+                ),
                 trailing: Icon(Icons.arrow_forward_ios),
               ),
               onTap: () {

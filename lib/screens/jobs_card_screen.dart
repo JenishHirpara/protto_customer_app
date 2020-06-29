@@ -76,7 +76,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                         RaisedButton(
                           color: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0.0),
+                            borderRadius: BorderRadius.circular(3.0),
                             side: BorderSide(color: Colors.deepOrange),
                           ),
                           onPressed: () {
@@ -95,6 +95,9 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                         RaisedButton(
                           elevation: 5,
                           color: Colors.deepOrange,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(3.0),
+                          ),
                           child: Text('Checkout',
                               style: TextStyle(
                                   fontFamily: 'SourceSansProSB',
@@ -150,7 +153,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                         RaisedButton(
                           color: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0.0),
+                            borderRadius: BorderRadius.circular(3.0),
                             side: BorderSide(color: Colors.deepOrange),
                           ),
                           onPressed: () {
@@ -171,7 +174,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                         RaisedButton(
                           color: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0.0),
+                            borderRadius: BorderRadius.circular(3.0),
                             side: BorderSide(color: Colors.deepOrange),
                           ),
                           onPressed: () {
@@ -420,7 +423,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                 Text(
                                   '₹ 1599',
                                   style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
+                                    fontFamily: 'SourceSansPro',
                                     color: Color.fromRGBO(128, 128, 128, 1),
                                   ),
                                 ),
@@ -471,10 +474,10 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                     ),
                     ListTile(
                       contentPadding: EdgeInsets.fromLTRB(0, 0, 18, 0),
-                      title: Text(
-                        'Item Total',
-                        style: TextStyle(fontFamily: 'SourceSansPro',)
-                      ),
+                      title: Text('Item Total',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansPro',
+                          )),
                       trailing: Text(
                         '₹ 3198',
                         style: TextStyle(
@@ -487,10 +490,13 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                       child: Container(
                         margin: const EdgeInsets.symmetric(horizontal: 0),
                         color: Theme.of(context).primaryColor,
-                        height: 40,
+                        height: 50,
                         width: double.infinity,
                         child: RaisedButton(
                           color: new Color(0xffF15D24),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
                           onPressed: () {
                             approveAllAlertDialog(context);
                           },
@@ -512,12 +518,24 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           Container(
-                            color: Theme.of(context).primaryColor,
                             height: 50,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(3.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  spreadRadius: 0.0,
+                                  offset: Offset(2.0, 2.0), //(x,y)
+                                  blurRadius: 6.0,
+                                ),
+                              ],
+                            ),
                             width: MediaQuery.of(context).size.width * 0.4,
                             child: RaisedButton(
                               color: Colors.white,
                               shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(3.0),
                                 side: BorderSide(color: Colors.deepOrange),
                               ),
                               elevation: 0,
@@ -535,13 +553,24 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                             ),
                           ),
                           Container(
-                            color: Theme.of(context).primaryColor,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(3.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  spreadRadius: 0.0,
+                                  offset: Offset(2.0, 2.0), //(x,y)
+                                  blurRadius: 6.0,
+                                ),
+                              ],
+                            ),
                             height: 50,
                             width: MediaQuery.of(context).size.width * 0.4,
                             child: RaisedButton(
                               color: Colors.white,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(0.0),
+                                borderRadius: BorderRadius.circular(3.0),
                                 side: BorderSide(color: Colors.deepOrange),
                               ),
                               elevation: 0,

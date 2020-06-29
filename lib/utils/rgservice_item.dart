@@ -61,11 +61,16 @@ class _RgServiceItemState extends State<RgServiceItem> {
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          title: Text('No bike selected'),
-          content: Text('Please select a bike'),
+          title: Text(
+            'No bike selected',
+            style: TextStyle(fontFamily: 'Montserrat'),
+          ),
+          content: Text('Please select a bike',
+              style: TextStyle(fontFamily: 'Montserrat')),
           actions: <Widget>[
             FlatButton(
-              child: Text('Okay'),
+              child:
+                  Text('Okay', style: TextStyle(fontFamily: 'SourceSansProSB')),
               onPressed: () {
                 Navigator.of(ctx).pop();
               },
@@ -94,6 +99,7 @@ class _RgServiceItemState extends State<RgServiceItem> {
             Text(
               widget.type,
               style: TextStyle(
+                fontFamily: 'Montserrat',
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -102,6 +108,7 @@ class _RgServiceItemState extends State<RgServiceItem> {
             Text(
               '₹ ${widget.price.toString()}',
               style: TextStyle(
+                fontFamily: 'Montserrat',
                 fontSize: 16,
                 color: Colors.deepOrange,
               ),
@@ -131,11 +138,15 @@ class _RgServiceItemState extends State<RgServiceItem> {
                   swap
                       ? Text(
                           'ADDED',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(
+                              fontFamily: 'SourceSansProSB',
+                              color: Colors.white),
                         )
                       : Text(
                           'ADD',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(
+                              fontFamily: 'SourceSansProSB',
+                              color: Colors.white),
                         ),
                 ],
               ),

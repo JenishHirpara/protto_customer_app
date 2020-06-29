@@ -89,25 +89,16 @@ class _SignupScreenState extends State<SignupScreen> {
         builder: (ctx) {
           return AlertDialog(
             title: Text('Referal Error!',
-                   style: TextStyle(
-                    fontFamily:'SourceSansPro'
-                    )),
-            content:
-                Text(
-                  'You cant refer yourself, please refer someone else.',
-                  style: TextStyle(
-                    fontFamily:'SourceSansPro'
-                  )
-                ),
+                style: TextStyle(fontFamily: 'Montserrat')),
+            content: Text('You cant refer yourself, please refer someone else.',
+                style: TextStyle(fontFamily: 'SourceSansPro')),
             actions: <Widget>[
               FlatButton(
                   onPressed: () {
                     Navigator.of(ctx).pop();
                   },
                   child: Text('Okay',
-                   style: TextStyle(
-                     fontFamily:'SourceSansProSB'
-                 ))),
+                      style: TextStyle(fontFamily: 'SourceSansProSB'))),
             ],
           );
         },
@@ -134,30 +125,19 @@ class _SignupScreenState extends State<SignupScreen> {
                 onPressed: () {
                   Navigator.of(ctx).pop();
                 },
-                child: Text(
-                  'Okay',
-                  style: TextStyle(
-                    fontFamily:'SourceSansProSB'
-                  )),
+                child: Text('Okay',
+                    style: TextStyle(fontFamily: 'SourceSansProSB')),
               ),
             ],
             title: Text(
               'An error occurred!',
-              style: TextStyle(
-                fontFamily:'SourceSansPro'
-              ),
+              style: TextStyle(fontFamily: 'Montserrat'),
             ),
             content: error.message == 'User already exists.'
-                ? Text(
-                  'User already exists!',
-                  style: TextStyle(
-                    fontFamily:'SourceSansPro'
-                  ))
-                : Text(
-                  'Invalid referal',
-                  style: TextStyle(
-                    fontFamily:'SourceSansPro'
-                  )),
+                ? Text('User already exists!',
+                    style: TextStyle(fontFamily: 'SourceSansPro'))
+                : Text('Invalid referal',
+                    style: TextStyle(fontFamily: 'SourceSansPro')),
           );
         },
       );
@@ -200,11 +180,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'Name',
-                        labelStyle: TextStyle(
-                          fontFamily: 'SourceSansPro'
-                        )
-                        ),
+                          labelText: 'Name',
+                          labelStyle: TextStyle(fontFamily: 'SourceSansPro')),
                       textInputAction: TextInputAction.next,
                       focusNode: _focus1,
                       onFieldSubmitted: (_) {
@@ -227,10 +204,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: TextFormField(
                       initialValue: mobile,
                       decoration: InputDecoration(
-                        labelText: 'Mobile No.',
-                        labelStyle: TextStyle(
-                          fontFamily: 'SourceSansPro'
-                        )),
+                          labelText: 'Mobile No.',
+                          labelStyle: TextStyle(fontFamily: 'SourceSansPro')),
                       textInputAction: TextInputAction.next,
                       focusNode: _focus2,
                       onFieldSubmitted: (_) {
@@ -252,10 +227,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'Email',
-                        labelStyle: TextStyle(
-                          fontFamily: 'SourceSansPro'
-                        )),
+                          labelText: 'Email',
+                          labelStyle: TextStyle(fontFamily: 'SourceSansPro')),
                       textInputAction: TextInputAction.next,
                       focusNode: _focus3,
                       onFieldSubmitted: (_) {
@@ -277,10 +250,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'Referal code',
-                        labelStyle: TextStyle(
-                          fontFamily: 'SourceSansPro'
-                        )),
+                          labelText: 'Referal code',
+                          labelStyle: TextStyle(fontFamily: 'SourceSansPro')),
                       textInputAction: TextInputAction.done,
                       focusNode: _focus4,
                       onSaved: (value) {
@@ -290,20 +261,31 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   SizedBox(height: 40),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                     width: double.infinity,
                     height: 45,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          spreadRadius: 0.0,
+                          offset: Offset(2.0, 2.0), //(x,y)
+                          blurRadius: 6.0,
+                        ),
+                      ],
+                    ),
                     child: RaisedButton(
                       child: _isLoading
                           ? CircularProgressIndicator(
                               backgroundColor: Colors.white,
                             )
                           : Text(
-                              'SIGN UP',
+                              'Sign Up',
                               style: TextStyle(
-                                fontFamily: 'SourceSansProSB',
-                                color: Colors.white,
-                                fontSize: 15),
+                                  fontFamily: 'SourceSansProSB',
+                                  color: Colors.white,
+                                  fontSize: 15),
                             ),
                       onPressed: _saveForm,
                       color: Colors.deepOrange,

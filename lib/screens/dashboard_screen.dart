@@ -81,7 +81,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     SizedBox(height: 8),
                     Row(
                       children: [
-                        Text('Year: '),
+                        Text(
+                          'Year: ',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansProSB',
+                            color: Color.fromRGBO(100, 100, 100, 0.9),
+                          ),
+                        ),
                         Text(
                           activebike != null ? activebike.year : 'My Bike',
                           textAlign: TextAlign.center,
@@ -95,7 +101,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     SizedBox(height: 8),
                     Row(
                       children: [
-                        Text('Registration Number: '),
+                        Text(
+                          'Registration Number: ',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansProSB',
+                            color: Color.fromRGBO(100, 100, 100, 0.9),
+                          ),
+                        ),
                         Text(
                           activebike != null ? activebike.number : '',
                           style: TextStyle(
@@ -115,12 +127,24 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           color: Theme.of(context).primaryColor,
                           width: 1,
                         ),
+                        borderRadius: BorderRadius.circular(4.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            spreadRadius: 0.0,
+                            offset: Offset(2.0, 2.0), //(x,y)
+                            blurRadius: 6.0,
+                          ),
+                        ],
                       ),
                       child: RaisedButton(
                         color: Colors.white,
                         child: Text(
                           'Manage',
-                          style: TextStyle(fontFamily: 'SourceSansProSB'),
+                          style: TextStyle(
+                            fontFamily: 'SourceSansProSB',
+                            color: Color.fromRGBO(100, 100, 100, 1),
+                          ),
                         ),
                         elevation: 0,
                         onPressed: () {
@@ -135,7 +159,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Divider(
-                color: Colors.black,
+                color: Colors.grey[400],
                 endIndent: 10,
                 indent: 10,
                 thickness: 1,
@@ -147,7 +171,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                   child: FlatButton(
                     child: Text(
-                      '+ Add New Bike',
+                      'Add New Bike',
                       style: TextStyle(
                         fontFamily: 'SourceSansProSB',
                         color: Theme.of(context).primaryColor,
@@ -184,7 +208,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   child: Text(
                     'Thank You for Signing up!!',
                     style: TextStyle(
-                        fontFamily: 'SourceSansPro',
+                        fontFamily: 'Montserrat',
                         color: Colors.deepOrange,
                         fontSize: 22,
                         fontWeight: FontWeight.w400),
@@ -556,6 +580,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         viewportFraction: 1,
         control: new SwiperControl(color: Colors.grey),
         controller: new SwiperController(),
+        pagination: SwiperPagination(),
         scale: 1,
       ),
     );

@@ -77,7 +77,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
             fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
             fontSize: 24,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w300,
           ),
         ),
         leading: InkWell(
@@ -257,13 +257,24 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                   SizedBox(height: 28),
                   Container(
                     height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey[300],
+                          spreadRadius: 0.0,
+                          offset: Offset(2.0, 2.0), //(x,y)
+                          blurRadius: 6.0,
+                        ),
+                      ],
+                    ),
                     child: RaisedButton(
                       color: Colors.deepOrange,
                       textColor: Colors.white,
                       child: Text(
-                        '+ Add',
-                        style: TextStyle(fontFamily: 'SourceSansProSB',
-                        fontSize: 15),
+                        'Add',
+                        style: TextStyle(
+                            fontFamily: 'SourceSansProSB', fontSize: 15),
                       ),
                       onPressed: _saveForm,
                     ),
