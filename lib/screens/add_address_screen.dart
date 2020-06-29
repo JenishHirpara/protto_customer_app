@@ -328,6 +328,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           height: 40,
                           width: double.infinity,
                           child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(3.0),
+                            ),
                             onPressed: _setFull,
                             child: Text(
                               'Next',
@@ -336,6 +339,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   color: Colors.white),
                             ),
                             color: Colors.deepOrange,
+                            elevation: 5,
                           ),
                         ),
                       ],
@@ -447,10 +451,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                 height: 45,
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.deepOrange),
+                                  borderRadius: BorderRadius.circular(3.0),
                                 ),
                                 child: RaisedButton(
                                   color: Colors.white,
-                                  elevation: 0,
+                                  elevation: 5,
                                   child: Text(
                                     'BACK',
                                     style: TextStyle(
@@ -466,6 +471,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                       MediaQuery.of(context).size.width * 0.4,
                                   height: 45,
                                   child: RaisedButton(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(3.0),
+                                    ),
                                     child: Text(
                                       'ADD',
                                       style: TextStyle(
@@ -473,6 +481,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                           color: Colors.white),
                                     ),
                                     color: Colors.deepOrange,
+                                    elevation: 5,
                                     onPressed: () => _saveForm(),
                                   )),
                             ],

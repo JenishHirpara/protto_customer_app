@@ -189,8 +189,12 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
             ),
             SizedBox(height: 20),
             Container(
-              width: double.infinity,
+              width: double.maxFinite,
+              height: 40,
               padding: EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4.0),
+              ),
               child: RaisedButton(
                 onPressed: _saveForm,
                 child: Text(

@@ -44,15 +44,28 @@ class HomeScreen extends StatelessWidget {
               height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.25,
             ),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              color: Theme.of(context).primaryColor,
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               height: 50,
               width: double.infinity,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.circular(4.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    spreadRadius: 0.0,
+                    offset: Offset(2.0, 2.0), //(x,y)
+                    blurRadius: 6.0,
+                  ),
+                ],
+              ),
               child: FlatButton(
                 child: const Text(
                   'Continue',
                   style: TextStyle(
-                      fontFamily: 'SourceSansProSB', color: Colors.white,fontSize: 15),
+                      fontFamily: 'SourceSansProSB',
+                      color: Colors.white,
+                      fontSize: 15),
                 ),
                 onPressed: () {
                   Navigator.of(context)

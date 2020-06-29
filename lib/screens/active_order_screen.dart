@@ -179,6 +179,9 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               Container(
                 width: 120,
                 height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
                 child: RaisedButton(
                   child: Text(
                     'Verify OTP',
@@ -186,6 +189,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                         fontFamily: 'SourceSansProSB', color: Colors.white),
                   ),
                   color: Theme.of(context).primaryColor,
+                  elevation: 5,
                   onPressed: () {},
                 ),
               ),
@@ -216,8 +220,17 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Theme.of(context).primaryColor,
-                  width: 1,
+                  width: 1.2,
                 ),
+                borderRadius: BorderRadius.circular(4.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey[400],
+                    spreadRadius: 0.0,
+                    offset: Offset(2.0, 2.0), //(x,y)
+                    blurRadius: 4.0,
+                  ),
+                ],
               ),
               child: FlatButton(
                 color: Color.fromRGBO(250, 250, 250, 1),
@@ -255,8 +268,17 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Theme.of(context).primaryColor,
-                  width: 1,
+                  width: 1.2,
                 ),
+                borderRadius: BorderRadius.circular(4.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey[400],
+                    spreadRadius: 0.0,
+                    offset: Offset(2.0, 2.0), //(x,y)
+                    blurRadius: 4.0,
+                  ),
+                ],
               ),
               child: FlatButton(
                 color: Color.fromRGBO(250, 250, 250, 1),
@@ -293,8 +315,17 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Theme.of(context).primaryColor,
-                  width: 1,
+                  width: 1.2,
                 ),
+                borderRadius: BorderRadius.circular(4.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey[400],
+                    spreadRadius: 0.0,
+                    offset: Offset(2.0, 2.0), //(x,y)
+                    blurRadius: 4.0,
+                  ),
+                ],
               ),
               child: FlatButton(
                 color: Color.fromRGBO(250, 250, 250, 1),
@@ -364,8 +395,17 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Theme.of(context).primaryColor,
-                  width: 1,
+                  width: 1.2,
                 ),
+                borderRadius: BorderRadius.circular(4.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey[400],
+                    spreadRadius: 0.0,
+                    offset: Offset(2.0, 2.0), //(x,y)
+                    blurRadius: 4.0,
+                  ),
+                ],
               ),
               child: FlatButton(
                 color: Color.fromRGBO(250, 250, 250, 1),
@@ -400,15 +440,24 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Theme.of(context).primaryColor,
-                  width: 1,
+                  width: 1.2,
                 ),
+                borderRadius: BorderRadius.circular(4.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey[400],
+                    spreadRadius: 0.0,
+                    offset: Offset(2.0, 2.0), //(x,y)
+                    blurRadius: 4.0,
+                  ),
+                ],
               ),
               child: FlatButton(
                 color: Color.fromRGBO(250, 250, 250, 1),
                 child: Text(
                   'View Images',
                   style: TextStyle(
-                    fontFamily: 'SourcsSansProSB',
+                    fontFamily: 'SourceSansProSB',
                     color: Color.fromRGBO(112, 112, 112, 1),
                   ),
                 ),
@@ -495,6 +544,10 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.33,
+                    margin: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
                     child: RaisedButton(
                       child: Text(
                         'Jobs',
@@ -505,7 +558,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                         Navigator.of(context).push(jobsRoute(widget.order));
                       },
                       color: Theme.of(context).primaryColor,
-                      elevation: 0,
+                      elevation: 6,
                     ),
                   ),
                 ],
