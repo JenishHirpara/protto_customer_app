@@ -62,48 +62,48 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   children: <Widget>[
                     Row(
                       children: [
-                    Text(
-                      activebike != null
-                          ? '${activebike.brand} ${activebike.model}'
-                          : 'My Bike',
-                      textAlign: TextAlign.center,
-                      softWrap: true,
-                      overflow: TextOverflow.fade,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        color: Color.fromRGBO(241, 93, 36, 1),
-                        fontSize: 22,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                        Text(
+                          activebike != null
+                              ? '${activebike.brand} ${activebike.model}'
+                              : 'My Bike',
+                          textAlign: TextAlign.center,
+                          softWrap: true,
+                          overflow: TextOverflow.fade,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Color.fromRGBO(241, 93, 36, 1),
+                            fontSize: 22,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(height: 8),
                     Row(
                       children: [
                         Text('Year: '),
-                    Text(
-                      activebike != null ? activebike.year : 'My Bike',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'SourceSansPro',
-                        color: Color.fromRGBO(100, 100, 100, 1),
-                      ),
-                    ),
+                        Text(
+                          activebike != null ? activebike.year : 'My Bike',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'SourceSansPro',
+                            color: Color.fromRGBO(100, 100, 100, 1),
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(height: 8),
                     Row(
                       children: [
                         Text('Registration Number: '),
-                    Text(
-                      activebike != null ? activebike.number : '',
-                      style: TextStyle(
-                        fontFamily: 'SourceSansPro',
-                        color: Color.fromRGBO(100, 100, 100, 1),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                        Text(
+                          activebike != null ? activebike.number : '',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansPro',
+                            color: Color.fromRGBO(100, 100, 100, 1),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ],
                     ),
                     SizedBox(height: 8),
@@ -248,6 +248,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     final activebike = Provider.of<Bikes>(context).activeBike;
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: GestureDetector(
           onTap: () => showPopup(context, activebike),
           child: Text(
@@ -263,8 +264,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             ),
           ),
         ),
-        titleSpacing: 0,
-        leading: Container(),
+        titleSpacing: 20,
         elevation: 0,
         backgroundColor: Color.fromRGBO(250, 250, 250, 1),
         actions: <Widget>[
@@ -338,12 +338,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   children: <Widget>[
                                     InkWell(
                                       child: Container(
-                                        width:
-                                            SizeConfig.blockSizeHorizontal * 20,
-                                        height:
-                                            SizeConfig.blockSizeVertical * 10,
-                                        child:Image(image: AssetImage('assets/images/gear_with_car.png'))
-                                      ),
+                                          width:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  25,
+                                          height:
+                                              SizeConfig.blockSizeVertical * 10,
+                                          child: Image(
+                                              image: AssetImage(
+                                                  'assets/images/gear_with_car.png'))),
                                       onTap: () {
                                         Navigator.of(context)
                                             .push(pageRouteBuilder(0));
@@ -368,12 +370,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   children: <Widget>[
                                     InkWell(
                                       child: Container(
-                                        width:
-                                            SizeConfig.blockSizeHorizontal * 20,
-                                        height:
-                                            SizeConfig.blockSizeVertical * 10,
-                                        child:Image(image: AssetImage('assets/images/tyres.png'))
-                                      ),
+                                          width:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  25,
+                                          height:
+                                              SizeConfig.blockSizeVertical * 10,
+                                          child: Image(
+                                              image: AssetImage(
+                                                  'assets/images/tyres.png'))),
                                       onTap: () {
                                         Navigator.of(context)
                                             .push(pageRouteBuilder(1));
@@ -398,12 +402,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   children: <Widget>[
                                     InkWell(
                                       child: Container(
-                                        width:
-                                            SizeConfig.blockSizeHorizontal * 20,
-                                        height:
-                                            SizeConfig.blockSizeVertical * 10,
-                                        child:Image(image: AssetImage('assets/images/wash_plus_coat.png'))
-                                      ),
+                                          width:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  25,
+                                          height:
+                                              SizeConfig.blockSizeVertical * 10,
+                                          child: Image(
+                                              image: AssetImage(
+                                                  'assets/images/wash_plus_coat.png'))),
                                       onTap: () {
                                         Navigator.of(context)
                                             .push(pageRouteBuilder(2));
@@ -432,12 +438,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   children: <Widget>[
                                     InkWell(
                                       child: Container(
-                                        width:
-                                            SizeConfig.blockSizeHorizontal * 20,
-                                        height:
-                                            SizeConfig.blockSizeVertical * 10,
-                                        child:Image(image: AssetImage('assets/images/custom_repairs.png'))
-                                      ),
+                                          width:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  25,
+                                          height:
+                                              SizeConfig.blockSizeVertical * 10,
+                                          child: Image(
+                                              image: AssetImage(
+                                                  'assets/images/custom_repairs.png'))),
                                       onTap: () {
                                         Navigator.of(context)
                                             .push(pageRouteBuilder(3));
@@ -462,12 +470,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   children: <Widget>[
                                     InkWell(
                                       child: Container(
-                                        width:
-                                            SizeConfig.blockSizeHorizontal * 20,
-                                        height:
-                                            SizeConfig.blockSizeVertical * 10,
-                                        child:Image(image: AssetImage('assets/images/denting_penting.png'))
-                                      ),
+                                          width:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  25,
+                                          height:
+                                              SizeConfig.blockSizeVertical * 10,
+                                          child: Image(
+                                              image: AssetImage(
+                                                  'assets/images/denting_penting.png'))),
                                       onTap: () {
                                         Navigator.of(context)
                                             .push(pageRouteBuilder(4));

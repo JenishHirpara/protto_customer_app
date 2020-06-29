@@ -32,9 +32,16 @@ class SelectAddressItem extends StatelessWidget {
               subtitle: address.landmark != null
                   ? Text(
                       '${address.flat}, ${address.landmark}, ${address.address}',
-                      style: TextStyle(fontFamily: 'SourceSansPro',),)
-                  : Text('${address.flat}, ${address.address}',
-                  style: TextStyle(fontFamily: 'SourceSansPro',),),
+                      style: TextStyle(
+                        fontFamily: 'SourceSansPro',
+                      ),
+                    )
+                  : Text(
+                      '${address.flat}, ${address.address}',
+                      style: TextStyle(
+                        fontFamily: 'SourceSansPro',
+                      ),
+                    ),
             ),
             Divider(
               endIndent: 40,

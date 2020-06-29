@@ -119,16 +119,16 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        automaticallyImplyLeading: false,
         title: Text(
           'Search Services',
           style: GoogleFonts.montserrat(
             color: Color.fromRGBO(241, 93, 36, 1),
-            fontSize: 24,
+            fontSize: 22,
             fontWeight: FontWeight.w500,
           ),
         ),
-        leading: Container(),
+        titleSpacing: 20,
         backgroundColor: Color.fromRGBO(250, 250, 250, 1),
         elevation: 0,
       ),

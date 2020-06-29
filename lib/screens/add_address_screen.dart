@@ -5,7 +5,6 @@ import 'package:location/location.dart';
 import 'package:geocoder/geocoder.dart' as geo;
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart' as web;
-import 'package:google_fonts/google_fonts.dart';
 
 import '../providers/address.dart';
 
@@ -174,7 +173,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       title: Text(
         'Add Address',
         style: TextStyle(
-          fontFamily:'Montserrat',
+          fontFamily: 'Montserrat',
           color: Color.fromRGBO(241, 93, 36, 1),
           fontSize: 24,
           fontWeight: FontWeight.w500,
@@ -308,18 +307,19 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                     },
                                     child: Text(
                                       'CHANGE',
-                                      style:
-                                          TextStyle(
-                                            fontFamily: 'SourceSansProSB',
-                                            color: Colors.deepOrange),
+                                      style: TextStyle(
+                                          fontFamily: 'SourceSansProSB',
+                                          color: Colors.deepOrange),
                                     ),
                                   ),
                                 ],
                               ),
-                              Text(_textController.text,
-                              style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                              ),),
+                              Text(
+                                _textController.text,
+                                style: TextStyle(
+                                  fontFamily: 'SourceSansPro',
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -332,8 +332,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                             child: Text(
                               'Next',
                               style: TextStyle(
-                                fontFamily: 'SourceSansProSB',
-                                color: Colors.white),
+                                  fontFamily: 'SourceSansProSB',
+                                  color: Colors.white),
                             ),
                             color: Colors.deepOrange,
                           ),
@@ -387,7 +387,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           Text(
                             'LANDMARK',
                             style: TextStyle(
-                              fontFamily: 'SourceSansPro',                             
+                              fontFamily: 'SourceSansPro',
                               color: Color.fromRGBO(112, 112, 112, 1),
                             ),
                           ),
@@ -451,7 +451,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                 child: RaisedButton(
                                   color: Colors.white,
                                   elevation: 0,
-                                  child: Text('BACK',style: TextStyle(fontFamily: 'SourceSansProSB'),),
+                                  child: Text(
+                                    'BACK',
+                                    style: TextStyle(
+                                        fontFamily: 'SourceSansProSB'),
+                                  ),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
@@ -465,8 +469,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                     child: Text(
                                       'ADD',
                                       style: TextStyle(
-                                        fontFamily: 'SourceSansProSB',
-                                        color: Colors.white),
+                                          fontFamily: 'SourceSansProSB',
+                                          color: Colors.white),
                                     ),
                                     color: Colors.deepOrange,
                                     onPressed: () => _saveForm(),
