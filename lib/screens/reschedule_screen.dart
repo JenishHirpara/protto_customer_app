@@ -111,7 +111,7 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
         ),
         leading: InkWell(
           child: Icon(
-            Icons.arrow_back,
+            Icons.arrow_back_ios,
             color: Colors.black,
           ),
           onTap: () {

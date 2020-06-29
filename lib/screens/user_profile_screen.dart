@@ -255,7 +255,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         ),
         leading: InkWell(
           child: Icon(
-            Icons.arrow_back,
+            Icons.arrow_back_ios,
             color: Colors.black,
           ),
           onTap: () {
@@ -282,13 +282,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               color: Color.fromRGBO(112, 112, 112, 1),
-                              fontSize: 30),
+                              fontSize: 20),
                         ),
                         SizedBox(height: 10),
                         Text(
                           userProfile.number,
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              //fontFamily: 'Montserrat',
                               color: Color.fromRGBO(112, 112, 112, 1),
                               fontSize: 16),
                         ),
@@ -296,7 +296,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         Text(
                           userProfile.email,
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
+                              //fontFamily: 'Montserrat',
                               color: Color.fromRGBO(112, 112, 112, 1),
                               fontSize: 16),
                         ),

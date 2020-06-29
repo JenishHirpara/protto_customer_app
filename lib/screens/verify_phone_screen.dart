@@ -106,7 +106,7 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
                         backgroundColor: Colors.white,
                       )
                     : const Text(
-                        'VERIFY PHONE NUMBER',
+                        'Verify Phone Number',
                         style: TextStyle(
                           fontFamily: 'SourceSansProSB',
                           color: Colors.white,
