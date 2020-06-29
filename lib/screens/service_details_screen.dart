@@ -40,7 +40,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
         titleSpacing: 0,
         backgroundColor: backGroundColor,
         leading: InkWell(
-          child: Icon(Icons.arrow_back, color: Colors.black),
+          child: Icon(Icons.arrow_back_ios, color: Colors.black),
           onTap: () {
             Navigator.of(context).pop(true);
           },

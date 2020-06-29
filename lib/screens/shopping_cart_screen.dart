@@ -264,7 +264,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         ),
         leading: InkWell(
           child: Icon(
-            Icons.arrow_back,
+            Icons.arrow_back_ios,
             color: Colors.black,
           ),
           onTap: () {
@@ -295,7 +295,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.bold,
-                  fontSize: 24,
+                  fontSize: 20,
                 ),
               ),
             ),

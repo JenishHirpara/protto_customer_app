@@ -459,7 +459,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         ),
         leading: InkWell(
           child: Icon(
-            Icons.arrow_back,
+            Icons.arrow_back_ios,
             color: Colors.black,
           ),
           onTap: () {
@@ -516,7 +516,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               'Track the progress',
               style: TextStyle(
                 fontFamily: 'Montserrat',
-                color: Color.fromRGBO(112, 112, 112, 1),
+                //color: Color.fromRGBO(112, 112, 112, 1),
+                color: Color(0xff707070),
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
               ),

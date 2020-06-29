@@ -299,7 +299,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               backgroundColor: Colors.white,
                             )
                           : Text(
-                              'SIGN UP',
+                              'Sign Up',
                               style: TextStyle(
                                 fontFamily: 'SourceSansProSB',
                                 color: Colors.white,

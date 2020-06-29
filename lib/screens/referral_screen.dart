@@ -204,9 +204,9 @@ class ReferralScreen extends StatelessWidget {
             child: Text(
               'Description of using the referral code',
               style: TextStyle(
-                fontFamily: 'Montserrat',
+                //fontFamily: 'Montserrat',
                 color: Color.fromRGBO(112, 112, 112, 1),
-                fontSize: 20,
+                fontSize: 16,
               ),
             ),
           ),
@@ -215,9 +215,9 @@ class ReferralScreen extends StatelessWidget {
             child: Text(
               '(Copy link or press share button)',
               style: TextStyle(
-                fontFamily: 'Montserrat',
+                //fontFamily: 'Montserrat',
                 color: Color.fromRGBO(112, 112, 112, 1),
-                fontSize: 20,
+                fontSize: 16,
               ),
             ),
           ),
