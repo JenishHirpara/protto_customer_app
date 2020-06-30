@@ -252,9 +252,10 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: false,
         title: Text(
           'Shopping Cart',
+          textAlign: TextAlign.start,
           style: TextStyle(
             fontFamily: 'Montserrrat',
             color: Color.fromRGBO(241, 93, 36, 1),
@@ -378,7 +379,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                   hintStyle: TextStyle(fontFamily: 'SourceSansPro'),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
-                      Radius.circular(0),
+                      Radius.circular(4),
                     ),
                     borderSide: BorderSide(color: Colors.deepOrange),
                   ),
@@ -418,21 +419,27 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
                       'Select Delivery Type',
-                      style:
-                          TextStyle(fontFamily: 'SourceSansPro', fontSize: 16),
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: 18,
+                        color: Color.fromRGBO(112, 112, 112, 1),
+                      ),
                     ),
                   ),
                   SizedBox(height: 10),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: DropdownButtonFormField(
+                      elevation: 1,
                       decoration: InputDecoration(
+                        fillColor: Color.fromRGBO(240, 240, 240, 1),
                         filled: true,
                         border: InputBorder.none,
                         hintText: 'Delivery Type',
                         hintStyle: TextStyle(
                           fontFamily: 'SourceSansPro',
-                          color: Color.fromRGBO(128, 128, 128, 1),
+                          //color: Color.fromRGBO(128, 128, 128, 1),
+                          color: Colors.black,
                           fontSize: 14,
                         ),
                       ),
@@ -595,14 +602,16 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                   //     ],
                   //   ),
                   // ),
+
                   SizedBox(height: 20),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
                       'Select Date and Time',
                       style: TextStyle(
-                        fontFamily: 'SourceSansPro',
-                        fontSize: 16,
+                        fontFamily: 'Montserrat',
+                        fontSize: 18,
+                        color: Color.fromRGBO(112, 112, 112, 1),
                       ),
                     ),
                   ),
@@ -611,15 +620,18 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     height: 45,
                     width: double.infinity,
                     margin: EdgeInsets.symmetric(horizontal: 20),
-                    child: RaisedButton(
+                    decoration: BoxDecoration(
                       color: Color.fromRGBO(240, 240, 240, 1),
+                      //borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    child: RaisedButton(
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
                           _date == null ? 'Date' : _date,
                           style: TextStyle(
                             fontFamily: 'SourceSansPro',
-                            color: Color.fromRGBO(128, 128, 128, 1),
+                            //color: Color.fromRGBO(128, 128, 128, 1),
                             fontSize: 14,
                           ),
                           textAlign: TextAlign.left,
@@ -633,13 +645,16 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: DropdownButtonFormField(
+                      elevation: 1,
                       decoration: InputDecoration(
+                        fillColor: Color.fromRGBO(240, 240, 240, 1),
                         filled: true,
                         border: InputBorder.none,
                         hintText: 'Time Slot',
                         hintStyle: TextStyle(
                           fontFamily: 'SourceSansPro',
-                          color: Color.fromRGBO(128, 128, 128, 1),
+                          //color: Color.fromRGBO(128, 128, 128, 1),
+                          color: Colors.black,
                           fontSize: 14,
                         ),
                       ),
@@ -681,7 +696,10 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     child: Text(
                       'Select Address',
                       style: TextStyle(
-                          fontFamily: 'SourceSansProSB', fontSize: 15),
+                        fontFamily: 'Montserrat',
+                        fontSize: 18,
+                        color: Color.fromRGBO(112, 112, 112, 1),
+                      ),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -774,6 +792,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                     style: TextStyle(
                                       fontFamily: 'SourceSansProSB',
                                       fontSize: 15,
+                                      color: Color.fromRGBO(112, 112, 112, 1),
                                     ),
                                   ),
                                   elevation: 2,

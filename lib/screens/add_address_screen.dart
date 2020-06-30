@@ -176,7 +176,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           fontFamily: 'Montserrat',
           color: Color.fromRGBO(241, 93, 36, 1),
           fontSize: 24,
-          fontWeight: FontWeight.w500,
         ),
       ),
       actions: <Widget>[
