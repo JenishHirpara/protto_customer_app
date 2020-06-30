@@ -37,13 +37,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       context: originalcontext,
       builder: (context) => Dialog(
         child: Container(
-          height: 220,
+          height: 230,
           child: Column(
             children: <Widget>[
               Align(
                 alignment: Alignment.topRight,
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 5, 5, 0),
+                  margin: EdgeInsets.fromLTRB(0, 10, 10, 0),
                   child: InkWell(
                     child: Icon(
                       Icons.clear,
@@ -56,8 +56,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Container(
-                height: 140,
-                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                height: 148,
+                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -84,8 +84,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         Text(
                           'Year: ',
                           style: TextStyle(
-                            fontFamily: 'SourceSansProSB',
-                            color: Color.fromRGBO(100, 100, 100, 0.9),
+                            fontFamily: 'Montserrat',
+                            color: Color.fromRGBO(100, 100, 100, 1),
                           ),
                         ),
                         Text(
@@ -104,8 +104,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         Text(
                           'Registration Number: ',
                           style: TextStyle(
-                            fontFamily: 'SourceSansProSB',
-                            color: Color.fromRGBO(100, 100, 100, 0.9),
+                            fontFamily: 'Montserrat',
+                            color: Color.fromRGBO(100, 100, 100, 1),
                           ),
                         ),
                         Text(
@@ -118,7 +118,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 14),
                     Container(
                       width: 150,
                       height: 30,
@@ -154,7 +154,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         },
                       ),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 12),
                   ],
                 ),
               ),
@@ -166,7 +166,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 height: 0,
               ),
               Align(
-                alignment: Alignment.center,
+                alignment: Alignment.topCenter,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                   child: FlatButton(
