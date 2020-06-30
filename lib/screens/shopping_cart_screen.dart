@@ -19,8 +19,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   Address _addressSeen;
   var _date;
   var _prottoBucks;
-  var _pressedOne = false;
-  var _pressedTwo = false;
+  // var _pressedOne = false;
+  // var _pressedTwo = false;
   final _form = GlobalKey<FormState>();
 
   Future selectAddress(BuildContext context) {
@@ -480,128 +480,129 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                       },
                     ),
                   ),
-                  /*SizedBox(height: 20),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          'Is Bike rideable?',
-                          style: TextStyle(
-                            fontFamily: 'SourceSansPro',
-                            fontSize: 16,
-                          ),
-                        ),
-                        Container(
-                          height: 30,
-                          width: MediaQuery.of(context).size.width * 0.25,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              side: _pressedOne
-                                  ? BorderSide()
-                                  : BorderSide(color: Colors.deepOrange),
-                            ),
-                            elevation: 2,
-                            color:
-                                _pressedOne ? Colors.deepOrange : Colors.white,
-                            child: Text(
-                              'Yes',
-                              style: TextStyle(
-                                fontFamily: 'SourceSansProSB',
-                                fontSize: 15,
-                                color:
-                                    _pressedOne ? Colors.white : Colors.black,
-                              ),
-                            ),
-                            onPressed: () {
-                              if (_pressedOne) {
-                                return;
-                              }
-                              setState(() {
-                                _pressedOne = !_pressedOne;
-                                if (_pressedTwo) {
-                                  _pressedTwo = !_pressedTwo;
-                                }
-                              });
-                              _orderItem = OrderItem(
-                                id: _orderItem.id,
-                                bookingId: _orderItem.bookingId,
-                                address: _orderItem.address,
-                                bikeid: _orderItem.bikeid,
-                                bikeNumber: _orderItem.bikeNumber,
-                                bikeYear: _orderItem.bikeYear,
-                                flat: _orderItem.flat,
-                                landmark: _orderItem.landmark,
-                                make: _orderItem.make,
-                                model: _orderItem.model,
-                                status: _orderItem.status,
-                                rideable: 'Yes',
-                                serviceType: _orderItem.serviceType,
-                                date: _orderItem.date,
-                                time: _orderItem.time,
-                                deliveryType: _orderItem.deliveryType,
-                              );
-                            },
-                          ),
-                        ),
-                        Container(
-                          height: 30,
-                          width: MediaQuery.of(context).size.width * 0.25,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              side: _pressedTwo
-                                  ? BorderSide()
-                                  : BorderSide(color: Colors.deepOrange),
-                            ),
-                            elevation: 2,
-                            color:
-                                _pressedTwo ? Colors.deepOrange : Colors.white,
-                            child: Text(
-                              'No',
-                              style: TextStyle(
-                                fontFamily: 'SourceSansProSB',
-                                fontSize: 15,
-                                color:
-                                    _pressedTwo ? Colors.white : Colors.black,
-                              ),
-                            ),
-                            onPressed: () {
-                              if (_pressedTwo) {
-                                return;
-                              }
-                              setState(() {
-                                _pressedTwo = !_pressedTwo;
-                                if (_pressedOne) {
-                                  _pressedOne = !_pressedOne;
-                                }
-                              });
-                              _orderItem = OrderItem(
-                                id: _orderItem.id,
-                                bookingId: _orderItem.bookingId,
-                                address: _orderItem.address,
-                                bikeid: _orderItem.bikeid,
-                                bikeNumber: _orderItem.bikeNumber,
-                                bikeYear: _orderItem.bikeYear,
-                                flat: _orderItem.flat,
-                                landmark: _orderItem.landmark,
-                                make: _orderItem.make,
-                                model: _orderItem.model,
-                                status: _orderItem.status,
-                                rideable: 'No',
-                                serviceType: _orderItem.serviceType,
-                                date: _orderItem.date,
-                                time: _orderItem.time,
-                                deliveryType: _orderItem.deliveryType,
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),*/
+                  // SizedBox(height: 20),
+                  // Padding(
+                  //   padding: EdgeInsets.symmetric(horizontal: 20),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: <Widget>[
+                  //       Text(
+                  //         'Is Bike rideable?',
+                  //         style: TextStyle(
+                  //           fontFamily: 'SourceSansPro',
+                  //           fontSize: 16,
+                  //         ),
+                  //       ),
+                  //       Container(
+                  //         height: 30,
+                  //         width: MediaQuery.of(context).size.width * 0.25,
+                  //         child: RaisedButton(
+                  //           shape: RoundedRectangleBorder(
+                  //             borderRadius: BorderRadius.circular(8),
+                  //             side: _pressedOne
+                  //                 ? BorderSide()
+                  //                 : BorderSide(color: Colors.deepOrange),
+                  //           ),
+                  //           elevation: 2,
+                  //           color:
+                  //               _pressedOne ? Colors.deepOrange : Colors.white,
+                  //           child: Text(
+                  //             'Yes',
+                  //             style: TextStyle(
+                  //               fontFamily: 'SourceSansProSB',
+                  //               fontSize: 15,
+                  //               color:
+                  //                   _pressedOne ? Colors.white : Colors.black,
+                  //             ),
+                  //           ),
+                  //           onPressed: () {
+                  //             if (_pressedOne) {
+                  //               return;
+                  //             }
+                  //             setState(() {
+                  //               _pressedOne = !_pressedOne;
+                  //               if (_pressedTwo) {
+                  //                 _pressedTwo = !_pressedTwo;
+                  //               }
+                  //             });
+                  //             _orderItem = OrderItem(
+                  //               id: _orderItem.id,
+                  //               bookingId: _orderItem.bookingId,
+                  //               address: _orderItem.address,
+                  //               bikeid: _orderItem.bikeid,
+                  //               bikeNumber: _orderItem.bikeNumber,
+                  //               bikeYear: _orderItem.bikeYear,
+                  //               flat: _orderItem.flat,
+                  //               landmark: _orderItem.landmark,
+                  //               make: _orderItem.make,
+                  //               model: _orderItem.model,
+                  //               status: _orderItem.status,
+                  //               rideable: 'Yes',
+                  //               serviceType: _orderItem.serviceType,
+                  //               date: _orderItem.date,
+                  //               time: _orderItem.time,
+                  //               deliveryType: _orderItem.deliveryType,
+                  //             );
+                  //           },
+                  //         ),
+                  //       ),
+                  //       Container(
+                  //         height: 30,
+                  //         width: MediaQuery.of(context).size.width * 0.25,
+                  //         child: RaisedButton(
+                  //           shape: RoundedRectangleBorder(
+                  //             borderRadius: BorderRadius.circular(8),
+                  //             side: _pressedTwo
+                  //                 ? BorderSide()
+                  //                 : BorderSide(color: Colors.deepOrange),
+                  //           ),
+                  //           elevation: 2,
+                  //           color:
+                  //               _pressedTwo ? Colors.deepOrange : Colors.white,
+                  //           child: Text(
+                  //             'No',
+                  //             style: TextStyle(
+                  //               fontFamily: 'SourceSansProSB',
+                  //               fontSize: 15,
+                  //               color:
+                  //                   _pressedTwo ? Colors.white : Colors.black,
+                  //             ),
+                  //           ),
+                  //           onPressed: () {
+                  //             if (_pressedTwo) {
+                  //               return;
+                  //             }
+                  //             setState(() {
+                  //               _pressedTwo = !_pressedTwo;
+                  //               if (_pressedOne) {
+                  //                 _pressedOne = !_pressedOne;
+                  //               }
+                  //             });
+                  //             _orderItem = OrderItem(
+                  //               id: _orderItem.id,
+                  //               bookingId: _orderItem.bookingId,
+                  //               address: _orderItem.address,
+                  //               bikeid: _orderItem.bikeid,
+                  //               bikeNumber: _orderItem.bikeNumber,
+                  //               bikeYear: _orderItem.bikeYear,
+                  //               flat: _orderItem.flat,
+                  //               landmark: _orderItem.landmark,
+                  //               make: _orderItem.make,
+                  //               model: _orderItem.model,
+                  //               status: _orderItem.status,
+                  //               rideable: 'No',
+                  //               serviceType: _orderItem.serviceType,
+                  //               date: _orderItem.date,
+                  //               time: _orderItem.time,
+                  //               deliveryType: _orderItem.deliveryType,
+                  //             );
+                  //           },
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+
                   SizedBox(height: 20),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
@@ -796,8 +797,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                   ),
                                   elevation: 2,
                                   onPressed: () async {
-                                    final result = await Navigator.of(context,
-                                            rootNavigator: true)
+                                    final result = await Navigator.of(context)
                                         .push(addAddressScreenPageRoute());
                                     setState(() {
                                       if (result != null) {

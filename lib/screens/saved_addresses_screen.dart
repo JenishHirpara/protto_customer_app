@@ -123,8 +123,7 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
                 style: TextStyle(fontFamily: 'SourceSansProSB', fontSize: 15),
               ),
               onPressed: () {
-                Navigator.of(context, rootNavigator: true)
-                    .push(addAddressScreenPageRoute());
+                Navigator.of(context).push(addAddressScreenPageRoute());
               },
             ),
           ),

@@ -218,7 +218,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   _isLoading = true;
                 });
                 Navigator.of(context).pop();
-                Navigator.of(context, rootNavigator: true).pushReplacement(
+                Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => VerifyPhoneScreen(),
                   ),

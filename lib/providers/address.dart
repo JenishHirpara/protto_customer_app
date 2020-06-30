@@ -52,7 +52,6 @@ class Addresses with ChangeNotifier {
           longitude: extractedData['addresses'][i]['lon'],
         ),
       );
-      print(data[0].address);
       _items = data;
     }
     notifyListeners();

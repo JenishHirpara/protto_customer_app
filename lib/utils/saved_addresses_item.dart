@@ -99,8 +99,7 @@ class SavedAddressesItem extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context, rootNavigator: true)
-                    .push(editAddressScreenPageRoute(address));
+                Navigator.of(context).push(editAddressScreenPageRoute(address));
               },
             ),
             InkWell(

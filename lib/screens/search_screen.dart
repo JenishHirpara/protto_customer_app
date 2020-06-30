@@ -116,85 +116,68 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Search Services',
-          style: TextStyle(
-            fontFamily: 'Montserrat',
-            color: Color.fromRGBO(241, 93, 36, 1),
-            fontSize: 22,
-            fontWeight: FontWeight.w500,
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: TextField(
+            controller: _editingController,
+            onChanged: (value) {
+              filterSearchResults(value);
+            },
+            decoration: new InputDecoration(
+                suffixIcon: GestureDetector(
+                    child: Icon(
+                      Icons.clear,
+                      color: new Color(0xff626262),
+                    ),
+                    onTap: () {
+                      _editingController.clear();
+                    }),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: new Color(0xff626262),
+                ),
+                border: new OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(
+                    const Radius.circular(10.0),
+                  ),
+                ),
+                labelText: "Search Service",
+                hintText: "Search Service",
+                labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
+                filled: true,
+                hintStyle: new TextStyle(
+                    fontFamily: 'SourceSansPro', color: new Color(0xff1D1D1)),
+                fillColor: Colors.white),
           ),
         ),
-        titleSpacing: 20,
-        backgroundColor: Color.fromRGBO(250, 250, 250, 1),
-        elevation: 0,
-      ),
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: TextField(
-              controller: _editingController,
-              onChanged: (value) {
-                filterSearchResults(value);
-              },
-              decoration: new InputDecoration(
-                  suffixIcon: GestureDetector(
-                      child: Icon(
-                        Icons.clear,
-                        color: new Color(0xff626262),
-                      ),
-                      onTap: () {
-                        _editingController.clear();
-                      }),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: new Color(0xff626262),
-                  ),
-                  border: new OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      const Radius.circular(10.0),
-                    ),
-                  ),
-                  labelText: "Search Service",
-                  hintText: "Search Service",
-                  labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
-                  filled: true,
-                  hintStyle: new TextStyle(
-                      fontFamily: 'SourceSansPro', color: new Color(0xff1D1D1)),
-                  fillColor: Colors.white),
-            ),
-          ),
-          ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (ctx, i) => InkWell(
-              child: ListTile(
-                title: Text(
-                  display[i].type,
-                  style: TextStyle(fontFamily: 'SourceSansPro'),
-                ),
-                subtitle: Text(
-                  display[i].service,
-                  style: TextStyle(fontFamily: 'SourceSansPro'),
-                ),
-                trailing: Icon(Icons.arrow_forward_ios),
+        ListView.builder(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (ctx, i) => InkWell(
+            child: ListTile(
+              title: Text(
+                display[i].type,
+                style: TextStyle(fontFamily: 'SourceSansPro'),
               ),
-              onTap: () {
-                if (display[i].service == 'regular service') {
-                  int i = 0;
-                  Navigator.of(context).push(pageRouteBuilder(i));
-                }
-              },
+              subtitle: Text(
+                display[i].service,
+                style: TextStyle(fontFamily: 'SourceSansPro'),
+              ),
+              trailing: Icon(Icons.arrow_forward_ios),
             ),
-            itemCount: display.length,
+            onTap: () {
+              if (display[i].service == 'regular service') {
+                int i = 0;
+                Navigator.of(context).push(pageRouteBuilder(i));
+              }
+            },
           ),
-        ],
-      ),
+          itemCount: display.length,
+        ),
+      ],
     );
   }
 }
