@@ -101,7 +101,7 @@ class PastOrderDetail extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.arrow_forward),
+                  icon: Icon(Icons.arrow_forward_ios),
                   onPressed: () {},
                 ),
                 Column(
