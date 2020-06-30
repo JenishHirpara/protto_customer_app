@@ -19,18 +19,24 @@ class ShoppingCartItem extends StatelessWidget {
             contentPadding: EdgeInsets.all(0),
             title: Text(
               cartitem.type,
-              style: GoogleFonts.montserrat(),
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                color: Color.fromRGBO(112, 112, 112, 1),
+              ),
             ),
             subtitle: Text(
               cartitem.service,
-              style: GoogleFonts.montserrat(
+              style: TextStyle(
+                fontFamily: 'SourceSansPro',
                 color: Color.fromRGBO(128, 128, 128, 1),
               ),
             ),
             trailing: Text(
               '${cartitem.price} ',
-              style: GoogleFonts.montserrat(
-                color: Colors.deepOrange,
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                color: Color.fromRGBO(112, 112, 112, 1),
+                //color: Colors.deepOrange,
               ),
             ),
           ),

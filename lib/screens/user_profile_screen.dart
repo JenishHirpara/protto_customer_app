@@ -243,9 +243,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     final userProfile = Provider.of<UserProfile>(context).item;
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: false,
         title: Text(
           'Profile',
+          textAlign: TextAlign.start,
           style: TextStyle(
             fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
