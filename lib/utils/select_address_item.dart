@@ -29,7 +29,7 @@ class SelectAddressItem extends StatelessWidget {
                       ),
               ),
               title: Text(address.saveas),
-              subtitle: address.landmark != null
+              subtitle: address.landmark != ''
                   ? Text(
                       '${address.flat}, ${address.landmark}, ${address.address}',
                       style: TextStyle(

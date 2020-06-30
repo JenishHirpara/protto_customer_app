@@ -61,7 +61,7 @@ class ActiveOrderDetail extends StatelessWidget {
     final order = Provider.of<Orders>(context).activeOrders[i];
     return Container(
       width: double.infinity,
-      height: order.landmark != null ? 210 : 190,
+      height: order.landmark != '' ? 220 : 200,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
@@ -173,7 +173,7 @@ class ActiveOrderDetail extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: order.landmark == null
+                          text: order.landmark == ''
                               ? '${order.flat}, ${order.address}'
                               : '${order.flat},${order.landmark}, ${order.address}',
                           style: TextStyle(
@@ -191,6 +191,7 @@ class ActiveOrderDetail extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
