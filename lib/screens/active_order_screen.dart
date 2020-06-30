@@ -210,6 +210,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               'Service Confirmed',
               textAlign: TextAlign.left,
               style: TextStyle(
+                color: Color(0xff707070),
                 fontFamily: 'SourceSansPro',
               ),
             ),
@@ -238,7 +239,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                   'Reschedule',
                   style: TextStyle(
                     fontFamily: 'SourceSansProSB',
-                    color: Color.fromRGBO(112, 112, 112, 1),
+                    color: Color.fromRGBO(112, 112, 112, 0.7),
                   ),
                 ),
                 onPressed: () {
@@ -258,6 +259,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             Text(
               'Bike Picked Up',
               style: TextStyle(
+                color: Color(0xff707070),
                 fontFamily: 'SourceSansPro',
               ),
             ),
@@ -286,7 +288,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                   'OTP',
                   style: TextStyle(
                     fontFamily: 'SourcsSansProSB',
-                    color: Color.fromRGBO(112, 112, 112, 1),
+                    color: Color.fromRGBO(112, 112, 112, 0.7),
                   ),
                 ),
                 onPressed: showPopUp,
@@ -305,6 +307,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               'Pre Service Inspection',
               textAlign: TextAlign.left,
               style: TextStyle(
+                color: Color(0xff707070),
                 fontFamily: 'SourceSansPro',
               ),
             ),
@@ -333,7 +336,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                   'View Images',
                   style: TextStyle(
                     fontFamily: 'SourceSansProSB',
-                    color: Color.fromRGBO(112, 112, 112, 1),
+                    color: Color.fromRGBO(112, 112, 112, 0.7),
                   ),
                 ),
                 onPressed: () {
@@ -350,7 +353,10 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         title: Text(
           'Bike Dropped at Service Station',
           textAlign: TextAlign.left,
-          style: TextStyle(fontFamily: 'SourceSansPro'),
+          style: TextStyle(
+            fontFamily: 'SourceSansPro',
+            color: Color(0xff707070),
+            ),
         ),
         date: widget.order.date,
         time: widget.order.time,
@@ -362,7 +368,10 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             Text(
               'Service Started',
               textAlign: TextAlign.left,
-              style: TextStyle(fontFamily: 'SourceSansPro'),
+              style: TextStyle(
+                fontFamily: 'SourceSansPro',
+                color: Color(0xff707070),
+                ),
             ),
             SizedBox(height: 5),
             Text(
@@ -371,7 +380,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               style: TextStyle(
                 fontFamily: 'SourceSansPro',
                 fontSize: 12,
-                color: Color.fromRGBO(112, 112, 112, 1),
+                color: Color.fromRGBO(112, 112, 112, 0.7),
               ),
             ),
           ],
@@ -386,7 +395,10 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             Text(
               'Service Done',
               textAlign: TextAlign.left,
-              style: TextStyle(fontFamily: 'SourceSansPro'),
+              style: TextStyle(
+                fontFamily: 'SourceSansPro',
+                color: Color(0xff707070),
+                ),
             ),
             SizedBox(height: 10),
             Container(
@@ -413,7 +425,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                   'Invoice',
                   style: TextStyle(
                     fontFamily: 'SourceSansProSB',
-                    color: Color.fromRGBO(112, 112, 112, 1),
+                    color: Color.fromRGBO(112, 112, 112, 0.7),
                   ),
                 ),
                 onPressed: () {},
@@ -431,7 +443,10 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             Text(
               'Pre Delivery Inspection',
               textAlign: TextAlign.left,
-              style: TextStyle(fontFamily: 'SourceSansPro'),
+              style: TextStyle(
+                fontFamily: 'SourceSansPro',
+                color: Color(0xff707070),
+                ),
             ),
             SizedBox(height: 10),
             Container(
@@ -458,7 +473,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                   'View Images',
                   style: TextStyle(
                     fontFamily: 'SourceSansProSB',
-                    color: Color.fromRGBO(112, 112, 112, 1),
+                    color: Color.fromRGBO(112, 112, 112, 0.7),
                   ),
                 ),
                 onPressed: () {
@@ -475,7 +490,10 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         title: Text(
           'Bike Picked from the service station',
           textAlign: TextAlign.left,
-          style: TextStyle(fontFamily: 'SourceSansPro'),
+          style: TextStyle(
+            fontFamily: 'SourceSansPro',
+            color: Color(0xff707070),
+            ),
         ),
         date: widget.order.date,
         time: widget.order.time,
@@ -484,7 +502,10 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         title: Text(
           'Delivered',
           textAlign: TextAlign.left,
-          style: TextStyle(fontFamily: 'SourceSansPro'),
+          style: TextStyle(
+            fontFamily: 'SourceSansPro',
+            color: Color(0xff707070),
+            ),
         ),
         date: widget.order.date,
         time: widget.order.time,
@@ -496,9 +517,10 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        //centerTitle: true,
         title: Text(
           'Active Order',
+          textAlign: TextAlign.left,
           style: TextStyle(
             fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
@@ -538,8 +560,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                           fontSize: 20,
                         ),
                       ),
-                      Text(widget.order.bikeYear),
-                      Text(widget.order.bikeNumber),
+                      Text(widget.order.bikeYear,style: TextStyle(color: Color.fromRGBO(112,112,112,0.7))),
+                      Text(widget.order.bikeNumber,style: TextStyle(color: Color.fromRGBO(112,112,112,0.7))),
                     ],
                   ),
                   Container(
