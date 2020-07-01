@@ -131,13 +131,13 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
       context: context,
       builder: (ctx) => Dialog(
         child: Container(
-          height: 220,
+          height: 245,
           child: Column(
             children: <Widget>[
               Align(
                 alignment: Alignment.topRight,
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 5, 5, 0),
+                  margin: EdgeInsets.fromLTRB(0, 10, 10, 0),
                   child: InkWell(
                     child: Icon(
                       Icons.clear,
@@ -150,8 +150,8 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                 ),
               ),
               Container(
-                height: 140,
-                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                height: 150,
+                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -178,7 +178,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                         Text(
                           'Year: ',
                           style: TextStyle(
-                            fontFamily: 'SourceSansProSB',
+                            fontFamily: 'Montserrat',
                             color: Color.fromRGBO(100, 100, 100, 0.9),
                           ),
                         ),
@@ -198,7 +198,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                         Text(
                           'Registration Number: ',
                           style: TextStyle(
-                            fontFamily: 'SourceSansProSB',
+                            fontFamily: 'Montserrat',
                             color: Color.fromRGBO(100, 100, 100, 0.9),
                           ),
                         ),
@@ -212,7 +212,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 12),
                     Container(
                       width: 150,
                       height: 30,
@@ -247,7 +247,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                         },
                       ),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 12),
                   ],
                 ),
               ),
