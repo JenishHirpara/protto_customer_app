@@ -30,96 +30,79 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   Widget build(BuildContext context) {
     final activeorders = Provider.of<Orders>(context).activeOrders;
     final pastorders = Provider.of<Orders>(context).pastOrders;
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Order Details',
-          style: TextStyle(
-            fontFamily: 'Montserrat',
-            color: Color.fromRGBO(241, 93, 36, 1),
-            fontSize: 22,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        titleSpacing: 20,
-        backgroundColor: Color.fromRGBO(250, 250, 250, 1),
-        elevation: 0,
-      ),
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          '  Active',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                          ),
+    return _isLoading
+        ? Center(child: CircularProgressIndicator())
+        : SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        '  Active',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
                         ),
-                        Container(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (ctx, i) => Column(
-                              children: <Widget>[
-                                ChangeNotifierProvider.value(
-                                  value: activeorders[i],
-                                  child: ActiveOrderDetail(i),
-                                ),
-                                SizedBox(height: 10),
-                              ],
-                            ),
-                            itemCount: activeorders.length,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          '  Past Bookings',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        ListView.builder(
+                      ),
+                      Container(
+                        child: ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (ctx, i) => Column(
                             children: <Widget>[
                               ChangeNotifierProvider.value(
-                                value: pastorders[i],
-                                child: PastOrderDetail(i),
+                                value: activeorders[i],
+                                child: ActiveOrderDetail(i),
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
+                              SizedBox(height: 10),
                             ],
                           ),
-                          itemCount: pastorders.length,
+                          itemCount: activeorders.length,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        '  Past Bookings',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (ctx, i) => Column(
+                          children: <Widget>[
+                            ChangeNotifierProvider.value(
+                              value: pastorders[i],
+                              child: PastOrderDetail(i),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
+                        itemCount: pastorders.length,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-    );
+          );
   }
 }

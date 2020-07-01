@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:protto_customer_app/screens/dashboard_screen.dart';
+import 'package:protto_customer_app/screens/flash_screen.dart';
+import 'package:protto_customer_app/screens/order_details_screen.dart';
+import 'package:protto_customer_app/screens/search_screen.dart';
 
-import './tab_navigator.dart';
-
-enum TabItem { dashboard, search, orders, flash }
+import '../providers/bikes.dart';
+import '../providers/address.dart';
+import '../providers/cart_item.dart';
+import '../utils/badge.dart';
+import './user_profile_screen.dart';
+import './shopping_cart_screen.dart';
+import './my_bikes_screen.dart';
+import './new_bike_screen.dart';
 
 class NavigationBarScreen extends StatefulWidget {
   @override
@@ -11,138 +20,429 @@ class NavigationBarScreen extends StatefulWidget {
 }
 
 class _NavigationBarScreenState extends State<NavigationBarScreen> {
-  TabItem _selectedPageIndex = TabItem.dashboard;
   int _currentIndex = 0;
-
-  Map<TabItem, GlobalKey<NavigatorState>> _navigatorKeys = {
-    TabItem.dashboard: GlobalKey<NavigatorState>(),
-    TabItem.search: GlobalKey<NavigatorState>(),
-    TabItem.orders: GlobalKey<NavigatorState>(),
-    TabItem.flash: GlobalKey<NavigatorState>(),
-  };
-
-  void _selectPage(TabItem tabItem, int index) {
-    if (tabItem == _selectedPageIndex) {
-      // pop to first route
-      _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
-    } else {
-      setState(() => _selectedPageIndex = tabItem);
-    }
-    setState(() => _currentIndex = index);
+  List<Map<String, Object>> _pages;
+  PageRouteBuilder profileScreenPageRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return UserProfileScreen();
+      },
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
   }
 
-  Widget _buildOffstageNavigator(TabItem tabItem) {
-    return Offstage(
-      offstage: _selectedPageIndex != tabItem,
-      child: TabNavigator(
-        navigatorKey: _navigatorKeys[tabItem],
-        tabItem: tabItem,
+  PageRouteBuilder shoppingCartRouteBuilder() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return ShoppingCartScreen();
+      },
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  PageRouteBuilder myBikesRouteBuilder() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return MyBikesScreen();
+      },
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  PageRouteBuilder newBikeRouteBuilder() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return NewBikeScreen();
+      },
+      transitionDuration: Duration(milliseconds: 200),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  Future showPopup(Bike activebike) {
+    return showDialog(
+      context: context,
+      builder: (ctx) => Dialog(
+        child: Container(
+          height: 220,
+          child: Column(
+            children: <Widget>[
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(0, 5, 5, 0),
+                  child: InkWell(
+                    child: Icon(
+                      Icons.clear,
+                      size: 24,
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ),
+              ),
+              Container(
+                height: 140,
+                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        Text(
+                          activebike != null
+                              ? '${activebike.brand} ${activebike.model}'
+                              : 'My Bike',
+                          textAlign: TextAlign.center,
+                          softWrap: true,
+                          overflow: TextOverflow.fade,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Color.fromRGBO(241, 93, 36, 1),
+                            fontSize: 22,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Text(
+                          'Year: ',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansProSB',
+                            color: Color.fromRGBO(100, 100, 100, 0.9),
+                          ),
+                        ),
+                        Text(
+                          activebike != null ? activebike.year : 'My Bike',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'SourceSansPro',
+                            color: Color.fromRGBO(100, 100, 100, 1),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Text(
+                          'Registration Number: ',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansProSB',
+                            color: Color.fromRGBO(100, 100, 100, 0.9),
+                          ),
+                        ),
+                        Text(
+                          activebike != null ? activebike.number : '',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansPro',
+                            color: Color.fromRGBO(100, 100, 100, 1),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Container(
+                      width: 150,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Theme.of(context).primaryColor,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(4.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            spreadRadius: 0.0,
+                            offset: Offset(2.0, 2.0), //(x,y)
+                            blurRadius: 6.0,
+                          ),
+                        ],
+                      ),
+                      child: RaisedButton(
+                        color: Colors.white,
+                        child: Text(
+                          'Manage',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansProSB',
+                            color: Color.fromRGBO(100, 100, 100, 1),
+                          ),
+                        ),
+                        elevation: 0,
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                          Navigator.of(context).push(myBikesRouteBuilder());
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                  ],
+                ),
+              ),
+              Divider(
+                color: Colors.grey[400],
+                endIndent: 10,
+                indent: 10,
+                thickness: 1,
+                height: 0,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                  child: FlatButton(
+                    child: Text(
+                      'Add New Bike',
+                      style: TextStyle(
+                        fontFamily: 'SourceSansProSB',
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 16,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                      Navigator.of(context).push(myBikesRouteBuilder());
+                      Navigator.of(context).push(newBikeRouteBuilder());
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  TabItem get item {
-    switch (_currentIndex) {
-      case 0:
-        return TabItem.dashboard;
-        break;
-      case 1:
-        return TabItem.search;
-        break;
-      case 2:
-        return TabItem.orders;
-        break;
-      case 3:
-        return TabItem.flash;
-        break;
+  var _isInit = true;
+  var _isLoading = true;
+
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      Provider.of<Addresses>(context, listen: false).fetchAndSetAddresses();
+      await Provider.of<Bikes>(context, listen: false).fetchAndSetBikes();
+      setState(() {
+        _isLoading = false;
+      });
     }
-    return TabItem.dashboard;
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  void _selectPage(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        final isFirstRouteInCurrentTab =
-            !await _navigatorKeys[item].currentState.maybePop();
-        if (isFirstRouteInCurrentTab) {
-          // if not on the 'main' tab
-          if (_currentIndex != 0) {
-            // select 'main' tab
-            setState(() {
-              _currentIndex = 0;
-              _selectedPageIndex = TabItem.dashboard;
-            });
-            // back button handled by app
-            return false;
-          } else {
-            showDialog(
-              context: context,
-              builder: (ctx) {
-                return AlertDialog(
-                  title: Text('Do you wish to exit the app?',
-                      style: TextStyle(fontFamily: 'Montserrat')),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text('Yes',
-                          style: TextStyle(fontFamily: 'SourceSansProSB')),
-                      onPressed: () {
-                        Navigator.of(ctx).pop();
-                        SystemNavigator.pop();
-                      },
-                    ),
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.of(ctx).pop();
-                        },
-                        child: Text('No',
-                            style: TextStyle(fontFamily: 'SourceSansProSB'))),
-                  ],
-                );
-              },
-            );
-          }
-        }
-        // let system handle back button if we're on the first route
-        return isFirstRouteInCurrentTab;
-      },
-      child: Scaffold(
-        body: Stack(
-          children: <Widget>[
-            _buildOffstageNavigator(TabItem.dashboard),
-            _buildOffstageNavigator(TabItem.search),
-            _buildOffstageNavigator(TabItem.orders),
-            _buildOffstageNavigator(TabItem.flash),
-          ],
-        ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(
-                width: 3.0,
+    final activebike = Provider.of<Bikes>(context).activeBike;
+    _pages = [
+      {
+        'page': DashBoardScreen(),
+        'appbar': AppBar(
+          automaticallyImplyLeading: false,
+          title: GestureDetector(
+            onTap: () => showPopup(activebike),
+            child: Text(
+              activebike != null
+                  ? '${activebike.brand} ${activebike.model}'
+                  : '+ Add a Bike',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontFamily: 'Montserrat',
                 color: Color.fromRGBO(241, 93, 36, 1),
+                fontSize: 22,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
-          child: BottomNavigationBar(
-            onTap: (index) => _selectPage(TabItem.values[index], index),
-            backgroundColor: Colors.white,
-            type: BottomNavigationBarType.fixed,
-            elevation: 5,
-            iconSize: 30,
-            currentIndex: _currentIndex,
-            //type: BottomNavigationBarType.shifting,
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                  icon: new Icon(Icons.home), title: Text('')),
-              BottomNavigationBarItem(
-                  icon: new Icon(Icons.search), title: Text('')),
-              BottomNavigationBarItem(
-                  icon: new Icon(Icons.event_note), title: Text('')),
-              BottomNavigationBarItem(
-                  icon: new Icon(Icons.flash_on), title: Text(''))
-            ],
+          titleSpacing: 20,
+          elevation: 0,
+          backgroundColor: Color.fromRGBO(250, 250, 250, 1),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.person,
+                color: Colors.grey,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(profileScreenPageRoute());
+              },
+            ),
+            Consumer<Cart>(
+              builder: (_, cart, ch) =>
+                  Badge(child: ch, value: cart.itemCount.toString()),
+              child: IconButton(
+                icon: Icon(
+                  Icons.shopping_cart,
+                  color: Colors.grey,
+                ),
+                onPressed: () {
+                  Navigator.of(context, rootNavigator: true)
+                      .push(shoppingCartRouteBuilder());
+                },
+              ),
+            ),
+          ],
+        ),
+      },
+      {
+        'page': SearchScreen(),
+        'appbar': AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(
+            'Search Services',
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              color: Color.fromRGBO(241, 93, 36, 1),
+              fontSize: 22,
+              fontWeight: FontWeight.w500,
+            ),
           ),
+          titleSpacing: 20,
+          backgroundColor: Color.fromRGBO(250, 250, 250, 1),
+          elevation: 0,
+        ),
+      },
+      {
+        'page': OrderDetailsScreen(),
+        'appbar': AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(
+            'Order Details',
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              color: Color.fromRGBO(241, 93, 36, 1),
+              fontSize: 22,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          titleSpacing: 20,
+          backgroundColor: Color.fromRGBO(250, 250, 250, 1),
+          elevation: 0,
+        ),
+      },
+      {
+        'page': FlashScreen(),
+        'appbar': AppBar(),
+      },
+    ];
+    return Scaffold(
+      appBar: _isLoading ? null : _pages[_currentIndex]['appbar'],
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : _pages[_currentIndex]['page'],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              width: 3.0,
+              color: Color.fromRGBO(241, 93, 36, 1),
+            ),
+          ),
+        ),
+        child: BottomNavigationBar(
+          onTap: (index) => _selectPage(index),
+          backgroundColor: Colors.white,
+          type: BottomNavigationBarType.shifting,
+          elevation: 5,
+          iconSize: 30,
+          selectedItemColor: Colors.deepOrange,
+          unselectedItemColor: Colors.grey,
+          currentIndex: _currentIndex,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.home),
+              title: Text(''),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.search),
+              title: Text(''),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.event_note),
+              title: Text(''),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.flash_on),
+              title: Text(''),
+            )
+          ],
         ),
       ),
     );
