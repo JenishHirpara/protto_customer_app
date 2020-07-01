@@ -432,6 +432,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     child: DropdownButtonFormField(
                       elevation: 1,
                       decoration: InputDecoration(
+                        focusColor: Color.fromRGBO(240, 240, 240, 1),
                         fillColor: Color.fromRGBO(240, 240, 240, 1),
                         filled: true,
                         border: InputBorder.none,
@@ -759,7 +760,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                           : Text(
                                               _addressSeen.address,
                                               style: TextStyle(
-                                                fontFamily: 'Montserrat',
+                                                fontFamily: 'SourceSansPro',
                                                 color: Color.fromRGBO(
                                                     112, 112, 112, 1),
                                               ),
