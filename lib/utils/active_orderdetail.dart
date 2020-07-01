@@ -196,7 +196,7 @@ class ActiveOrderDetail extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.arrow_forward),
+                  icon: Icon(Icons.arrow_forward_ios),
                   onPressed: () {
                     Navigator.of(context).push(pageRouteBuilder(order));
                   },
