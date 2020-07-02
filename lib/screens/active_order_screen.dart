@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../providers/orders.dart';
 import './jobs_card_screen.dart';
@@ -17,15 +18,22 @@ class ActiveOrderScreen extends StatefulWidget {
 }
 
 class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
+  final _form = GlobalKey<FormState>();
   final _focusNode1 = FocusNode();
   final _focusNode2 = FocusNode();
   final _focusNode3 = FocusNode();
   final _focusNode4 = FocusNode();
+  var _digit1;
+  var _digit2;
+  var _digit3;
+  var _digit4;
+  var _isLoading = false;
+  var _order;
 
   Future showPopUp() {
     return showDialog(
       context: context,
-      builder: (context) => Dialog(
+      builder: (dialogcontext) => Dialog(
         child: Container(
           padding: EdgeInsets.symmetric(
             horizontal: 10,
@@ -64,115 +72,133 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Container(
-                      width: 45.0,
-                      height: 45.0,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        maxLength: 1,
-                        focusNode: _focusNode1,
-                        onChanged: (value) {
-                          FocusScope.of(context).requestFocus(_focusNode2);
-                        },
-                        style: TextStyle(
-                          fontFamily: 'SourceSansPro',
-                          fontSize: 30.0,
-                          color: Colors.black,
+                child: Form(
+                  key: _form,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Container(
+                        width: 45.0,
+                        height: 45.0,
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          textInputAction: TextInputAction.next,
+                          maxLength: 1,
+                          focusNode: _focusNode1,
+                          onChanged: (_) {
+                            FocusScope.of(dialogcontext)
+                                .requestFocus(_focusNode2);
+                          },
+                          onSaved: (value) {
+                            _digit1 = value;
+                          },
+                          style: TextStyle(
+                            fontFamily: 'SourceSansPro',
+                            fontSize: 30.0,
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterText: '',
+                          ),
                         ),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          counterText: '',
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(200, 200, 200, 1),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                    Container(
-                      width: 45.0,
-                      height: 45.0,
-                      alignment: Alignment.center,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        maxLength: 1,
-                        focusNode: _focusNode2,
-                        onChanged: (_) {
-                          FocusScope.of(context).requestFocus(_focusNode3);
-                        },
-                        style: TextStyle(
-                          fontSize: 30.0,
-                          color: Colors.black,
-                        ),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          counterText: '',
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(200, 200, 200, 1),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(200, 200, 200, 1),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                    Container(
-                      width: 45.0,
-                      height: 45.0,
-                      alignment: Alignment.center,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        maxLength: 1,
-                        focusNode: _focusNode3,
-                        onChanged: (_) {
-                          FocusScope.of(context).requestFocus(_focusNode4);
-                        },
-                        style: TextStyle(
-                          fontSize: 30.0,
-                          color: Colors.black,
+                      Container(
+                        width: 45.0,
+                        height: 45.0,
+                        alignment: Alignment.center,
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          textInputAction: TextInputAction.next,
+                          maxLength: 1,
+                          focusNode: _focusNode2,
+                          onChanged: (_) {
+                            FocusScope.of(dialogcontext)
+                                .requestFocus(_focusNode3);
+                          },
+                          onSaved: (value) {
+                            _digit2 = value;
+                          },
+                          style: TextStyle(
+                            fontSize: 30.0,
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterText: '',
+                          ),
                         ),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          counterText: '',
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(200, 200, 200, 1),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                    Container(
-                      width: 45.0,
-                      height: 45.0,
-                      alignment: Alignment.center,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.done,
-                        maxLength: 1,
-                        focusNode: _focusNode4,
-                        style: TextStyle(
-                          fontSize: 30.0,
-                          color: Colors.black,
-                        ),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          counterText: '',
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(200, 200, 200, 1),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(200, 200, 200, 1),
-                        borderRadius: BorderRadius.circular(5),
+                      Container(
+                        width: 45.0,
+                        height: 45.0,
+                        alignment: Alignment.center,
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          textInputAction: TextInputAction.next,
+                          maxLength: 1,
+                          focusNode: _focusNode3,
+                          onChanged: (_) {
+                            FocusScope.of(dialogcontext)
+                                .requestFocus(_focusNode4);
+                          },
+                          onSaved: (value) {
+                            _digit3 = value;
+                          },
+                          style: TextStyle(
+                            fontSize: 30.0,
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterText: '',
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(200, 200, 200, 1),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
                       ),
-                    ),
-                  ],
+                      Container(
+                        width: 45.0,
+                        height: 45.0,
+                        alignment: Alignment.center,
+                        child: TextFormField(
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          textInputAction: TextInputAction.done,
+                          maxLength: 1,
+                          focusNode: _focusNode4,
+                          onSaved: (value) {
+                            _digit4 = value;
+                          },
+                          style: TextStyle(
+                            fontSize: 30.0,
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterText: '',
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(200, 200, 200, 1),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 15),
@@ -183,14 +209,55 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                   borderRadius: BorderRadius.circular(4.0),
                 ),
                 child: RaisedButton(
-                  child: Text(
-                    'Verify OTP',
-                    style: TextStyle(
-                        fontFamily: 'SourceSansProSB', color: Colors.white),
-                  ),
+                  child: _isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.white,
+                          ),
+                        )
+                      : Text(
+                          'Verify OTP',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansProSB',
+                            color: Colors.white,
+                          ),
+                        ),
                   color: Theme.of(context).primaryColor,
                   elevation: 5,
-                  onPressed: () {},
+                  onPressed: () async {
+                    _form.currentState.save();
+                    try {
+                      setState(() {
+                        _isLoading = true;
+                      });
+                      var message =
+                          await Provider.of<Orders>(context, listen: false)
+                              .verifyotp(widget.order.bookingId,
+                                  '$_digit1$_digit2$_digit3$_digit4');
+                      setState(() {
+                        _isLoading = false;
+                      });
+                      Navigator.of(dialogcontext).pop();
+                      showDialog(
+                        context: context,
+                        builder: (ctx) {
+                          return AlertDialog(
+                            title: Text(message),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text('Okay'),
+                                onPressed: () {
+                                  Navigator.of(ctx).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } catch (error) {
+                      print(error.message);
+                    }
+                  },
                 ),
               ),
             ],
@@ -198,6 +265,12 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _refreshPage() async {
+    _order = await Provider.of<Orders>(context, listen: false)
+        .fetchbooking(widget.order.bookingId, widget.order);
+    setState(() {});
   }
 
   List<SampleStepTile> get steps {
@@ -243,14 +316,66 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(rescheduleRoute(widget.order));
+                  Navigator.of(context).push(
+                      rescheduleRoute(_order == null ? widget.order : _order));
                 },
               ),
             ),
           ],
         ),
-        date: widget.order.date,
-        time: widget.order.time,
+        date: _order == null ? widget.order.date : _order.date,
+        time: _order == null ? widget.order.time : _order.time,
+      ),
+      SampleStepTile(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'Pre Service Inspection',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                color: Color(0xff707070),
+                fontFamily: 'SourceSansPro',
+              ),
+            ),
+            SizedBox(height: 10),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.35,
+              height: 30,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Theme.of(context).primaryColor,
+                  width: 1.2,
+                ),
+                borderRadius: BorderRadius.circular(4.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey[400],
+                    spreadRadius: 0.0,
+                    offset: Offset(2.0, 2.0), //(x,y)
+                    blurRadius: 4.0,
+                  ),
+                ],
+              ),
+              child: FlatButton(
+                color: Color.fromRGBO(250, 250, 250, 1),
+                child: Text(
+                  'View Images',
+                  style: TextStyle(
+                    fontFamily: 'SourceSansProSB',
+                    color: Color.fromRGBO(112, 112, 112, 0.7),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      inspectionRoute(_order == null ? widget.order : _order));
+                },
+              ),
+            ),
+          ],
+        ),
+        date: _order == null ? widget.order.date : _order.date,
+        time: _order == null ? widget.order.time : _order.time,
       ),
       SampleStepTile(
         title: Column(
@@ -296,58 +421,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             ),
           ],
         ),
-        date: widget.order.date,
-        time: widget.order.time,
-      ),
-      SampleStepTile(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'Pre Service Inspection',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                color: Color(0xff707070),
-                fontFamily: 'SourceSansPro',
-              ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.35,
-              height: 30,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Theme.of(context).primaryColor,
-                  width: 1.2,
-                ),
-                borderRadius: BorderRadius.circular(4.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey[400],
-                    spreadRadius: 0.0,
-                    offset: Offset(2.0, 2.0), //(x,y)
-                    blurRadius: 4.0,
-                  ),
-                ],
-              ),
-              child: FlatButton(
-                color: Color.fromRGBO(250, 250, 250, 1),
-                child: Text(
-                  'View Images',
-                  style: TextStyle(
-                    fontFamily: 'SourceSansProSB',
-                    color: Color.fromRGBO(112, 112, 112, 0.7),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(inspectionRoute(widget.order));
-                },
-              ),
-            ),
-          ],
-        ),
-        date: widget.order.date,
-        time: widget.order.time,
+        date: _order == null ? widget.order.date : _order.date,
+        time: _order == null ? widget.order.time : _order.time,
       ),
       SampleStepTile(
         title: Text(
@@ -356,7 +431,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
           style: TextStyle(
             fontFamily: 'SourceSansPro',
             color: Color(0xff707070),
-            ),
+          ),
         ),
         date: widget.order.date,
         time: widget.order.time,
@@ -371,11 +446,13 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               style: TextStyle(
                 fontFamily: 'SourceSansPro',
                 color: Color(0xff707070),
-                ),
+              ),
             ),
             SizedBox(height: 5),
             Text(
-              'NSW, Sydney, AU',
+              widget.order.ssName == null
+                  ? 'Service station not allocated'
+                  : widget.order.ssName,
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontFamily: 'SourceSansPro',
@@ -385,8 +462,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             ),
           ],
         ),
-        date: widget.order.date,
-        time: widget.order.time,
+        date: _order == null ? widget.order.date : _order.date,
+        time: _order == null ? widget.order.time : _order.time,
       ),
       SampleStepTile(
         title: Column(
@@ -398,7 +475,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               style: TextStyle(
                 fontFamily: 'SourceSansPro',
                 color: Color(0xff707070),
-                ),
+              ),
             ),
             SizedBox(height: 10),
             Container(
@@ -433,8 +510,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             ),
           ],
         ),
-        date: widget.order.date,
-        time: widget.order.time,
+        date: _order == null ? widget.order.date : _order.date,
+        time: _order == null ? widget.order.time : _order.time,
       ),
       SampleStepTile(
         title: Column(
@@ -446,7 +523,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               style: TextStyle(
                 fontFamily: 'SourceSansPro',
                 color: Color(0xff707070),
-                ),
+              ),
             ),
             SizedBox(height: 10),
             Container(
@@ -477,14 +554,15 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(inspectionRoute(widget.order));
+                  Navigator.of(context).push(
+                      inspectionRoute(_order == null ? widget.order : _order));
                 },
               ),
             ),
           ],
         ),
-        date: widget.order.date,
-        time: widget.order.time,
+        date: _order == null ? widget.order.date : _order.date,
+        time: _order == null ? widget.order.time : _order.time,
       ),
       SampleStepTile(
         title: Text(
@@ -493,7 +571,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
           style: TextStyle(
             fontFamily: 'SourceSansPro',
             color: Color(0xff707070),
-            ),
+          ),
         ),
         date: widget.order.date,
         time: widget.order.time,
@@ -505,10 +583,10 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
           style: TextStyle(
             fontFamily: 'SourceSansPro',
             color: Color(0xff707070),
-            ),
+          ),
         ),
-        date: widget.order.date,
-        time: widget.order.time,
+        date: _order == null ? widget.order.date : _order.date,
+        time: _order == null ? widget.order.time : _order.time,
       ),
     ];
   }
@@ -517,7 +595,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //centerTitle: true,
         title: Text(
           'Active Order',
           textAlign: TextAlign.left,
@@ -540,155 +617,175 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         backgroundColor: Color.fromRGBO(250, 250, 250, 1),
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        '${widget.order.make} ${widget.order.model}',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          color: Color.fromRGBO(241, 93, 36, 1),
-                          fontSize: 20,
-                        ),
-                      ),
-                      Text(widget.order.bikeYear,style: TextStyle(color: Color.fromRGBO(112,112,112,0.7))),
-                      Text(widget.order.bikeNumber,style: TextStyle(color: Color.fromRGBO(112,112,112,0.7))),
-                    ],
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.33,
-                    margin: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    child: RaisedButton(
-                      child: Text(
-                        'Jobs',
-                        style: TextStyle(
-                            fontFamily: 'SourceSansProSB', color: Colors.white),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(jobsRoute(widget.order));
-                      },
-                      color: Theme.of(context).primaryColor,
-                      elevation: 6,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Track the progress',
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                //color: Color.fromRGBO(112, 112, 112, 1),
-                color: Color(0xff707070),
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(20),
-              child: ListView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  ...steps.asMap().entries.map((entry) {
-                    int index = entry.key;
-                    SampleStepTile step = entry.value;
-                    return Container(
-                      height: 110,
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              Expanded(
-                                flex: 3,
-                                child: Container(
-                                  height: 110,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        DateFormat('dd/MM')
-                                            .format(DateTime.parse(step.date)),
-                                        style: TextStyle(
-                                          fontFamily: 'SourceSansPro',
-                                          color:
-                                              Color.fromRGBO(128, 128, 128, 1),
-                                        ),
-                                      ),
-                                      Text(
-                                        step.time,
-                                        style: TextStyle(
-                                          fontFamily: 'SourceSansPro',
-                                          color:
-                                              Color.fromRGBO(128, 128, 128, 1),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 3,
-                                child: Container(
-                                  height: 110,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Icon(
-                                        int.parse(widget.order.status) >=
-                                                index + 1
-                                            ? Icons.radio_button_checked
-                                            : Icons.radio_button_unchecked,
-                                        color: Theme.of(context).primaryColor,
-                                        size: 20,
-                                      ),
-                                      index == 8
-                                          ? Container()
-                                          : Container(
-                                              height: 90,
-                                              child: VerticalDivider(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                thickness: 2,
-                                              ),
-                                            ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 4,
-                                child: Container(
-                                  height: 110,
-                                  child: step.title,
-                                ),
-                              ),
-                            ],
+      body: RefreshIndicator(
+        onRefresh: _refreshPage,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          '${widget.order.make} ${widget.order.model}',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Color.fromRGBO(241, 93, 36, 1),
+                            fontSize: 20,
                           ),
-                        ],
+                        ),
+                        Text(
+                          widget.order.bikeYear,
+                          style: TextStyle(
+                            color: Color.fromRGBO(112, 112, 112, 0.7),
+                          ),
+                        ),
+                        Text(
+                          widget.order.bikeNumber,
+                          style: TextStyle(
+                            color: Color.fromRGBO(112, 112, 112, 0.7),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.33,
+                      margin: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4.0),
                       ),
-                    );
-                  }).toList(),
-                ],
+                      child: RaisedButton(
+                        child: Text(
+                          'Jobs',
+                          style: TextStyle(
+                              fontFamily: 'SourceSansProSB',
+                              color: Colors.white),
+                        ),
+                        onPressed: () async {
+                          Navigator.of(context).push(jobsRoute(
+                              _order == null ? widget.order : _order));
+
+                          _refreshPage();
+                        },
+                        color: Theme.of(context).primaryColor,
+                        elevation: 6,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              SizedBox(height: 20),
+              Text(
+                'Track the progress',
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  //color: Color.fromRGBO(112, 112, 112, 1),
+                  color: Color(0xff707070),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(20),
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: [
+                    ...steps.asMap().entries.map((entry) {
+                      int index = entry.key;
+                      SampleStepTile step = entry.value;
+                      return Container(
+                        height: 110,
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 3,
+                                  child: Container(
+                                    height: 110,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          DateFormat('dd/MM').format(
+                                              DateTime.parse(step.date)),
+                                          style: TextStyle(
+                                            fontFamily: 'SourceSansPro',
+                                            color: Color.fromRGBO(
+                                                128, 128, 128, 1),
+                                          ),
+                                        ),
+                                        Text(
+                                          step.time,
+                                          style: TextStyle(
+                                            fontFamily: 'SourceSansPro',
+                                            color: Color.fromRGBO(
+                                                128, 128, 128, 1),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Container(
+                                    height: 110,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Icon(
+                                          int.parse(_order == null
+                                                      ? widget.order.status
+                                                      : _order.status) >=
+                                                  index + 1
+                                              ? Icons.radio_button_checked
+                                              : Icons.radio_button_unchecked,
+                                          color: Theme.of(context).primaryColor,
+                                          size: 20,
+                                        ),
+                                        index == 8
+                                            ? Container()
+                                            : Container(
+                                                height: 90,
+                                                child: VerticalDivider(
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                  thickness: 2,
+                                                ),
+                                              ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 4,
+                                  child: Container(
+                                    height: 110,
+                                    child: step.title,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
