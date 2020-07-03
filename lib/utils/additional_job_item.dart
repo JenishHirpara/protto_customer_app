@@ -1,31 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class JobItem extends StatelessWidget {
-  final dynamic service;
-  JobItem(this.service);
+import '../providers/orders.dart';
+
+class AdditionalJobItem extends StatelessWidget {
+  final Jobs job;
+
+  AdditionalJobItem(this.job);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 0),
       title: Text(
-        service['type'],
+        job.name,
         style: GoogleFonts.cantataOne(
           color: Color.fromRGBO(128, 128, 128, 1),
-        ),
-      ),
-      subtitle: Text(
-        'Regular Service',
-        style: GoogleFonts.cantataOne(
-          color: Color.fromRGBO(150, 150, 150, 1),
         ),
       ),
       trailing: Container(
         width: 100,
         height: 20,
         child: Text(
-          '₹ ' + service['offer'],
+          '₹ ${job.cost}',
           style: GoogleFonts.cantataOne(
             color: Color.fromRGBO(128, 128, 128, 1),
           ),

@@ -101,7 +101,7 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Reschedule Service',
+          'Reschedule',
           style: TextStyle(
             fontFamily: 'Montserrat',
             color: Color.fromRGBO(241, 93, 36, 1),
@@ -144,14 +144,17 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: RaisedButton(
                 color: Color.fromRGBO(240, 240, 240, 1),
-                child: Text(
-                  _date == null ? 'Date' : _date,
-                  style: TextStyle(
-                    fontFamily: 'SourceSansPro',
-                    color: Color.fromRGBO(128, 128, 128, 1),
-                    fontSize: 14,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    _date == null ? 'Date' : _date,
+                    style: TextStyle(
+                      fontFamily: 'SourceSansPro',
+                      color: Color.fromRGBO(128, 128, 128, 1),
+                      fontSize: 14,
+                    ),
+                    textAlign: TextAlign.left,
                   ),
-                  textAlign: TextAlign.left,
                 ),
                 elevation: 0,
                 onPressed: _presentDatePicker,
@@ -187,7 +190,7 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
                 },
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 50),
             Container(
               width: double.maxFinite,
               height: 40,
@@ -195,15 +198,18 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4.0),
               ),
-              child: RaisedButton(
-                onPressed: _saveForm,
-                child: Text(
-                  'Reschedule',
-                  style: TextStyle(
-                      fontFamily: 'SourceSansProSB', color: Colors.white),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 120),
+                child: RaisedButton(
+                  onPressed: _saveForm,
+                  child: Text(
+                    'Save',
+                    style: TextStyle(
+                        fontFamily: 'SourceSansProSB', color: Colors.white),
+                  ),
+                  color: Colors.deepOrange,
+                  elevation: 5,
                 ),
-                color: Colors.deepOrange,
-                elevation: 0,
               ),
             ),
           ],

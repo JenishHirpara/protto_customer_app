@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:provider/provider.dart';
 
 import '../providers/orders.dart';
 import './shopping_cart_screen.dart';
 import '../utils/job_item.dart';
+import '../utils/additional_job_item.dart';
 
 class JobsCardScreen extends StatefulWidget {
   final OrderItem order;
@@ -17,14 +17,6 @@ class JobsCardScreen extends StatefulWidget {
 }
 
 class _JobsCardScreenState extends State<JobsCardScreen> {
-  bool checkedValue1 = false;
-  bool checkedValue2 = false;
-  bool checkedValue3 = false;
-  bool checkedValue4 = false;
-  bool checkedValue5 = false;
-
-  int bottomNavBarIndex = 0;
-
   String alertDialogText = "You have approved all of your \n" +
       "additional services. Your new total is ";
 
@@ -33,7 +25,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
       "you still want to move forward without \n" +
       "those services? ";
 
-  Future<dynamic> approveAllAlertDialog(BuildContext context) {
+  Future<dynamic> approveAllAlertDialog(
+      BuildContext context, List<String> data) {
     return showDialog(
         context: context,
         builder: (BuildContext dialogcontext) {
@@ -48,22 +41,24 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                   Padding(
                     child: RichText(
                       text: TextSpan(
-                          text: alertDialogText,
-                          style: TextStyle(
-                              color: Colors.black,
+                        text: alertDialogText,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: "₹ $_total",
+                            style: TextStyle(
+                              fontFamily: 'SourceSansPro',
                               fontSize: 16,
-                              fontWeight: FontWeight.normal),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: "₹ 3198",
-                              style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            )
-                          ]),
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                     padding: EdgeInsets.all(20),
                   ),
@@ -86,10 +81,11 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           child: Text(
                             'Jobs',
                             style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal),
+                              fontFamily: 'SourceSansPro',
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
                         ),
                         RaisedButton(
@@ -98,16 +94,25 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(3.0),
                           ),
-                          child: Text('Checkout',
-                              style: TextStyle(
-                                  fontFamily: 'SourceSansProSB',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white)),
-                          onPressed: () {
+                          child: Text(
+                            'Checkout',
+                            style: TextStyle(
+                              fontFamily: 'SourceSansProSB',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
+                            ),
+                          ),
+                          onPressed: () async {
                             Navigator.of(dialogcontext).pop();
-                            Navigator.of(context)
-                                .push(shoppingCartRouteBuilder());
+
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            await Provider.of<Orders>(context, listen: false)
+                                .jobapprove(widget.order.bookingId, data,
+                                    _total, _paid);
+                            Navigator.of(context).pop();
                           },
                         )
                       ],
@@ -120,7 +125,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
         });
   }
 
-  Future<dynamic> approveSelectedAlertDialog(BuildContext context) {
+  Future<dynamic> approveSelectedAlertDialog(
+      BuildContext context, List<String> data) {
     return showDialog(
         context: context,
         builder: (BuildContext dialogcontext) {
@@ -137,9 +143,10 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                       text: TextSpan(
                         text: alertDialogTwo,
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal),
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
                     ),
                     padding: EdgeInsets.all(15),
@@ -156,19 +163,26 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                             borderRadius: BorderRadius.circular(3.0),
                             side: BorderSide(color: Colors.deepOrange),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             Navigator.of(dialogcontext).pop();
-                            Navigator.of(context)
-                                .push(shoppingCartRouteBuilder());
+
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            await Provider.of<Orders>(context, listen: false)
+                                .jobapprove(widget.order.bookingId, data,
+                                    _total, _paid);
+                            Navigator.of(context).pop();
                           },
                           elevation: 5,
                           child: Text(
                             'Yes',
                             style: TextStyle(
-                                fontFamily: 'SourceSansProSB',
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal),
+                              fontFamily: 'SourceSansProSB',
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
                         ),
                         RaisedButton(
@@ -178,16 +192,17 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                             side: BorderSide(color: Colors.deepOrange),
                           ),
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            Navigator.of(dialogcontext).pop();
                           },
                           elevation: 5,
                           child: Text(
                             'No',
                             style: TextStyle(
-                                fontFamily: 'SourceSansProSB',
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal),
+                              fontFamily: 'SourceSansProSB',
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
                         ),
                       ],
@@ -227,18 +242,31 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
   }
 
   var _isInit = true;
-  var _isLoading = false;
+  var _isLoading = true;
+  List<Jobs> allJobs;
+  List<bool> _approval;
+  List<Jobs> approvedJobs;
+  List<String> approvedJobId = [];
+  var _total;
+  var _paid;
   @override
   void didChangeDependencies() async {
-    setState(() {
-      _isLoading = true;
-    });
     if (_isInit) {
+      _total = widget.order.total;
+      _paid = widget.order.paid;
       await Provider.of<Orders>(context, listen: false)
           .getservices(widget.order.bookingId);
+      await Provider.of<Orders>(context, listen: false)
+          .getjobs(widget.order.bookingId);
       setState(() {
         _isLoading = false;
       });
+      allJobs = Provider.of<Orders>(context, listen: false).jobs;
+      _approval = List.generate(allJobs.length, (job) => false);
+      approvedJobs = Provider.of<Orders>(context, listen: false)
+          .jobs
+          .where((job) => job.approved == '1')
+          .toList();
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -306,288 +334,250 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                         fontSize: 20,
                       ),
                     ),
-                    ListView(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      children: <Widget>[
-                        ListTile(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                          title: Text(
-                            'Job Number 1',
-                            style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              color: Color.fromRGBO(128, 128, 128, 1),
-                            ),
-                          ),
-                          trailing: Container(
-                            width: 100,
-                            height: 20,
-                            child: Row(
-                              children: <Widget>[
-                                Text(
-                                  '₹ 1599',
-                                  style: TextStyle(
-                                    fontFamily: 'SourceSansPro',
-                                    color: Color.fromRGBO(128, 128, 128, 1),
+                    widget.order.approveJobs == '0'
+                        ? allJobs == null
+                            ? Text(
+                                'Please wait for the service station to recommend additional jobs')
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemBuilder: (ctx, i) => ListTile(
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 0),
+                                  title: Text(
+                                    allJobs[i].name,
+                                    style: GoogleFonts.cantataOne(
+                                      color: Color.fromRGBO(128, 128, 128, 1),
+                                    ),
+                                  ),
+                                  trailing: Container(
+                                    width: 100,
+                                    height: 20,
+                                    child: Row(
+                                      children: <Widget>[
+                                        Text(
+                                          '₹ ${allJobs[i].cost}',
+                                          style: GoogleFonts.cantataOne(
+                                            color: Color.fromRGBO(
+                                                128, 128, 128, 1),
+                                          ),
+                                        ),
+                                        Checkbox(
+                                            value: _approval[i],
+                                            onChanged: (bool newValue) {
+                                              setState(() {
+                                                if (!_approval[i]) {
+                                                  approvedJobId
+                                                      .add(allJobs[i].id);
+                                                  _total =
+                                                      '${double.parse(_total) + double.parse(allJobs[i].cost)}';
+                                                } else {
+                                                  approvedJobId
+                                                      .remove(allJobs[i].id);
+                                                  _total =
+                                                      '${double.parse(_total) - double.parse(allJobs[i].cost)}';
+                                                }
+                                                _approval[i] = !_approval[i];
+                                              });
+                                            }),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                                Checkbox(
-                                    value: checkedValue1,
-                                    onChanged: (bool newValue) {
-                                      setState(() {
-                                        checkedValue1 = newValue;
-                                      });
-                                    }),
-                              ],
-                            ),
+                                itemCount: allJobs.length,
+                              )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (ctx, i) =>
+                                AdditionalJobItem(approvedJobs[i]),
+                            itemCount: approvedJobs.length,
+                          ),
+                    ListTile(
+                      contentPadding: EdgeInsets.fromLTRB(0, 0, 18, 0),
+                      title: Text(
+                        'Item Total',
+                        style: TextStyle(
+                          fontFamily: 'SourceSansPro',
+                        ),
+                      ),
+                      trailing: Container(
+                        width: 100,
+                        height: 20,
+                        child: Text(
+                          '₹ $_total',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansPro',
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        ListTile(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                          title: Text(
-                            'Job Number 2',
-                            style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              color: Color.fromRGBO(128, 128, 128, 1),
-                            ),
-                          ),
-                          trailing: Container(
-                            width: 100,
-                            height: 20,
-                            child: Row(
-                              children: <Widget>[
-                                Text(
-                                  '₹ 1599',
-                                  style: TextStyle(
-                                    fontFamily: 'SourceSansPro',
-                                    color: Color.fromRGBO(128, 128, 128, 1),
-                                  ),
-                                ),
-                                Checkbox(
-                                    value: checkedValue2,
-                                    onChanged: (bool newValue) {
-                                      setState(() {
-                                        checkedValue2 = newValue;
-                                      });
-                                    }),
-                              ],
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                          title: Text(
-                            'Job Number 3',
-                            style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              color: Color.fromRGBO(128, 128, 128, 1),
-                            ),
-                          ),
-                          trailing: Container(
-                            width: 100,
-                            height: 20,
-                            child: Row(
-                              children: <Widget>[
-                                Text(
-                                  '₹ 1599',
-                                  style: TextStyle(
-                                    fontFamily: 'SourceSansPro',
-                                    color: Color.fromRGBO(128, 128, 128, 1),
-                                  ),
-                                ),
-                                Checkbox(
-                                    value: checkedValue3,
-                                    onChanged: (bool newValue) {
-                                      setState(() {
-                                        checkedValue3 = newValue;
-                                      });
-                                    }),
-                              ],
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                          title: Text(
-                            'Job Number 4',
-                            style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              color: Color.fromRGBO(128, 128, 128, 1),
-                            ),
-                          ),
-                          trailing: Container(
-                            width: 100,
-                            height: 20,
-                            child: Row(
-                              children: <Widget>[
-                                Text(
-                                  '₹ 1599',
-                                  style: TextStyle(
-                                    fontFamily: 'SourceSansPro',
-                                    color: Color.fromRGBO(128, 128, 128, 1),
-                                  ),
-                                ),
-                                Checkbox(
-                                    value: checkedValue4,
-                                    onChanged: (bool newValue) {
-                                      setState(() {
-                                        checkedValue4 = newValue;
-                                      });
-                                    }),
-                              ],
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                          title: Text(
-                            'Job Number 5',
-                            style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              color: Color.fromRGBO(128, 128, 128, 1),
-                            ),
-                          ),
-                          trailing: Container(
-                            width: 100,
-                            height: 20,
-                            child: Row(
-                              children: <Widget>[
-                                Text(
-                                  '₹ 1599',
-                                  style: TextStyle(
-                                    fontFamily: 'SourceSansPro',
-                                    color: Color.fromRGBO(128, 128, 128, 1),
-                                  ),
-                                ),
-                                Checkbox(
-                                    value: checkedValue5,
-                                    onChanged: (bool newValue) {
-                                      setState(() {
-                                        checkedValue5 = newValue;
-                                      });
-                                    }),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                     ListTile(
                       contentPadding: EdgeInsets.fromLTRB(0, 0, 18, 0),
-                      title: Text('Item Total',
-                          style: TextStyle(
-                            fontFamily: 'SourceSansPro',
-                          )),
-                      trailing: Text(
-                        '₹ 3198',
+                      title: Text(
+                        'Paid',
                         style: TextStyle(
                           fontFamily: 'SourceSansPro',
-                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                    Center(
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 0),
-                        color: Theme.of(context).primaryColor,
-                        height: 50,
-                        width: double.infinity,
-                        child: RaisedButton(
-                          color: new Color(0xffF15D24),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          onPressed: () {
-                            approveAllAlertDialog(context);
-                          },
-                          child: Text(
-                            'Approve All',
-                            style: TextStyle(
-                                fontFamily: 'SourceSansProSB',
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400),
+                      trailing: Container(
+                        width: 100,
+                        height: 20,
+                        child: Text(
+                          '₹ $_paid',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansPro',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
                           ),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              borderRadius: BorderRadius.circular(3.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  spreadRadius: 0.0,
-                                  offset: Offset(2.0, 2.0), //(x,y)
-                                  blurRadius: 6.0,
-                                ),
-                              ],
-                            ),
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: RaisedButton(
-                              color: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(3.0),
-                                side: BorderSide(color: Colors.deepOrange),
-                              ),
-                              elevation: 0,
-                              child: Text(
-                                'Approve Selected',
-                                style: TextStyle(
-                                    fontFamily: 'SourceSansProSB',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey),
-                              ),
-                              onPressed: () {
-                                approveSelectedAlertDialog(context);
-                              },
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              borderRadius: BorderRadius.circular(3.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  spreadRadius: 0.0,
-                                  offset: Offset(2.0, 2.0), //(x,y)
-                                  blurRadius: 6.0,
-                                ),
-                              ],
-                            ),
-                            height: 50,
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: RaisedButton(
-                              color: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(3.0),
-                                side: BorderSide(color: Colors.deepOrange),
-                              ),
-                              elevation: 0,
-                              child: Text(
-                                'Contact Support',
-                                style: TextStyle(
-                                    fontFamily: 'SourceSansProSB',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey),
-                              ),
-                              onPressed: () {},
-                            ),
-                          ),
-                        ],
+                    ListTile(
+                      contentPadding: EdgeInsets.fromLTRB(0, 0, 18, 0),
+                      title: Text(
+                        'Due',
+                        style: TextStyle(
+                          fontFamily: 'SourceSansPro',
+                        ),
                       ),
-                    )
+                      trailing: Container(
+                        width: 100,
+                        height: 20,
+                        child: Text(
+                          '₹ ${double.parse(_total) - double.parse(_paid)}',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansPro',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                          ),
+                        ),
+                      ),
+                    ),
+                    widget.order.approveJobs == '0' && allJobs != null
+                        ? Center(
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 0),
+                              color: Theme.of(context).primaryColor,
+                              height: 50,
+                              width: double.infinity,
+                              child: RaisedButton(
+                                color: new Color(0xffF15D24),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4.0),
+                                ),
+                                onPressed: () {
+                                  for (int i = 0; i < _approval.length; i++) {
+                                    if (!_approval[i]) {
+                                      setState(() {
+                                        _approval[i] = true;
+                                        approvedJobId.add(allJobs[i].id);
+                                        _total =
+                                            '${double.parse(_total) + double.parse(allJobs[i].cost)}';
+                                      });
+                                    }
+                                  }
+                                  approveAllAlertDialog(context, approvedJobId);
+                                },
+                                child: Text(
+                                  'Approve All',
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansProSB',
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        : Container(),
+                    widget.order.approveJobs == '0' && allJobs != null
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                Container(
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    borderRadius: BorderRadius.circular(3.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey,
+                                        spreadRadius: 0.0,
+                                        offset: Offset(2.0, 2.0), //(x,y)
+                                        blurRadius: 6.0,
+                                      ),
+                                    ],
+                                  ),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: RaisedButton(
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(3.0),
+                                      side:
+                                          BorderSide(color: Colors.deepOrange),
+                                    ),
+                                    elevation: 0,
+                                    child: Text(
+                                      'Approve Selected',
+                                      style: TextStyle(
+                                        fontFamily: 'SourceSansProSB',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      approveSelectedAlertDialog(
+                                          context, approvedJobId);
+                                    },
+                                  ),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    borderRadius: BorderRadius.circular(3.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey,
+                                        spreadRadius: 0.0,
+                                        offset: Offset(2.0, 2.0), //(x,y)
+                                        blurRadius: 6.0,
+                                      ),
+                                    ],
+                                  ),
+                                  height: 50,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: RaisedButton(
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(3.0),
+                                      side:
+                                          BorderSide(color: Colors.deepOrange),
+                                    ),
+                                    elevation: 0,
+                                    child: Text(
+                                      'Contact Support',
+                                      style: TextStyle(
+                                          fontFamily: 'SourceSansProSB',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.grey),
+                                    ),
+                                    onPressed: () {},
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Container(),
                   ],
                 ),
               ),

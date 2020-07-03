@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/http_exception.dart';
+import './bikes.dart';
 
 class OrderItem with ChangeNotifier {
   final String id;
@@ -21,6 +22,10 @@ class OrderItem with ChangeNotifier {
   final String address;
   final String landmark;
   final String deliveryType;
+  final String approveJobs;
+  final String total;
+  final String paid;
+  final String ssName;
 
   OrderItem({
     @required this.id,
@@ -34,6 +39,10 @@ class OrderItem with ChangeNotifier {
     @required this.address,
     @required this.deliveryType,
     @required this.landmark,
+    @required this.approveJobs,
+    @required this.total,
+    @required this.paid,
+    @required this.ssName,
     this.make,
     this.model,
     this.bikeNumber,
@@ -42,10 +51,27 @@ class OrderItem with ChangeNotifier {
   });
 }
 
+class Jobs with ChangeNotifier {
+  final String id;
+  final String bookingId;
+  final String name;
+  final String cost;
+  final String approved;
+
+  Jobs({
+    @required this.id,
+    @required this.bookingId,
+    @required this.name,
+    @required this.cost,
+    @required this.approved,
+  });
+}
+
 class Orders with ChangeNotifier {
   List<OrderItem> _items = [];
 
   List<dynamic> _services;
+  List<Jobs> _jobs;
 
   final String userId;
 
@@ -53,6 +79,10 @@ class Orders with ChangeNotifier {
 
   List<OrderItem> get items {
     return [..._items];
+  }
+
+  List<Jobs> get jobs {
+    return [..._jobs];
   }
 
   List<OrderItem> get activeOrders {
@@ -97,6 +127,10 @@ class Orders with ChangeNotifier {
           address: extractedData1['data'][i]['address'],
           flat: extractedData1['data'][i]['flat'],
           landmark: extractedData1['data'][i]['landmark'],
+          ssName: extractedData1['data'][i]['ss_name'],
+          approveJobs: extractedData1['data'][i]['job_approve'],
+          total: extractedData1['data'][i]['total'],
+          paid: extractedData1['data'][i]['paid'],
           date: extractedData1['data'][i]['date'],
           time: extractedData1['data'][i]['timestamp'],
           bikeid: extractedData1['data'][i]['bike_id'],
@@ -112,7 +146,37 @@ class Orders with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addOrder(OrderItem order, double prottoBucks) async {
+  Future<OrderItem> fetchbooking(String bookingId, OrderItem order) async {
+    final url =
+        'http://stage.protto.in/api/shivangi/fetchbooking.php?booking_id=$bookingId';
+    final response = await http.get(url);
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    return OrderItem(
+      id: extractedData['data']['id'],
+      bookingId: extractedData['data']['booking_id'],
+      address: extractedData['data']['address'],
+      approveJobs: extractedData['data']['job_approve'],
+      bikeid: extractedData['data']['bike_id'],
+      date: extractedData['data']['date'],
+      deliveryType: extractedData['data']['delivery_type'],
+      flat: extractedData['data']['flat'],
+      landmark: extractedData['data']['landmark'],
+      paid: extractedData['data']['paid'],
+      rideable: extractedData['data']['rideable'],
+      serviceType: extractedData['data']['service_type'],
+      ssName: extractedData['data']['ss_name'],
+      time: extractedData['data']['timestamp'],
+      total: extractedData['data']['total'],
+      bikeNumber: order.bikeNumber,
+      bikeYear: order.bikeYear,
+      make: order.make,
+      model: order.model,
+      status: extractedData['data']['status'],
+    );
+  }
+
+  Future<void> addOrder(
+      OrderItem order, double prottoBucks, Bike activeBike) async {
     final url1 = 'http://stage.protto.in/api/hitesh/updatebucks.php';
     await http.patch(url1,
         body: json.encode({
@@ -130,9 +194,13 @@ class Orders with ChangeNotifier {
         'address': order.address,
         'flat': order.flat,
         'landmark': order.landmark,
+        'total': order.total,
+        'paid': '0',
         'date': order.date,
         'timestamp': order.time,
         'delivery_type': order.deliveryType,
+        'make': activeBike.brand,
+        'model': activeBike.model,
       }),
     );
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -154,8 +222,12 @@ class Orders with ChangeNotifier {
         landmark: order.landmark,
         time: order.time,
         serviceType: order.serviceType,
+        ssName: order.ssName,
         rideable: order.rideable,
-        status: '1',
+        status: order.status,
+        total: order.total,
+        paid: order.paid,
+        approveJobs: order.approveJobs,
         bikeNumber: extractedData2['data']['bike_reg'],
         bikeYear: extractedData2['data']['year'],
         make: extractedData2['data']['make'],
@@ -205,6 +277,10 @@ class Orders with ChangeNotifier {
         landmark: order.landmark,
         rideable: order.rideable,
         serviceType: order.serviceType,
+        ssName: order.ssName,
+        total: order.total,
+        paid: order.paid,
+        approveJobs: order.approveJobs,
         bikeNumber: order.bikeNumber,
         bikeYear: order.bikeYear,
         make: order.make,
@@ -215,5 +291,86 @@ class Orders with ChangeNotifier {
       ),
     );
     notifyListeners();
+  }
+
+  Future<void> getjobs(String bookingId) async {
+    final url =
+        'http://stage.protto.in/api/shivangi/getjobs.php?booking_id=$bookingId';
+    final response = await http.get(url);
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedData['count'] != '0') {
+      var data = [];
+      for (int i = 0; i < int.parse(extractedData['count']); i++) {
+        data.add(
+          Jobs(
+            id: extractedData['jobs'][i]['job_id'],
+            bookingId: bookingId,
+            name: extractedData['jobs'][i]['part_name'],
+            cost: extractedData['jobs'][i]['part_cost'],
+            approved: extractedData['jobs'][i]['approved'],
+          ),
+        );
+      }
+      _jobs = List<Jobs>.from(data);
+      notifyListeners();
+    }
+  }
+
+  Future<void> jobapprove(
+      String bookingId, List<String> data, String total, String paid) async {
+    const url1 = 'http://stage.protto.in/api/hitesh/setjobapprove.php';
+    await http.patch(url1,
+        body: json
+            .encode({'booking_id': bookingId, 'total': total, 'paid': paid}));
+    const url2 = 'http://stage.protto.in/api/shivangi/setapproved.php';
+    await http.patch(url2,
+        body: json.encode({
+          'data': data,
+        }));
+    var index = _items.indexWhere((order) => order.bookingId == bookingId);
+    var item = _items[index];
+    _items[index] = OrderItem(
+      id: item.id,
+      bikeid: item.bikeid,
+      address: item.address,
+      approveJobs: '1',
+      bookingId: item.bookingId,
+      date: item.date,
+      deliveryType: item.deliveryType,
+      flat: item.flat,
+      total: total,
+      paid: paid,
+      landmark: item.landmark,
+      rideable: item.rideable,
+      serviceType: item.serviceType,
+      ssName: item.ssName,
+      time: item.time,
+      bikeNumber: item.bikeNumber,
+      bikeYear: item.bikeYear,
+      make: item.make,
+      model: item.model,
+      status: item.status,
+    );
+    notifyListeners();
+  }
+
+  Future<String> verifyotp(String bookingId, String otp) async {
+    const url = 'http://stage.protto.in/api/hitesh/otpapprove.php';
+    final response = await http.patch(url,
+        body: json.encode({
+          'booking_id': bookingId,
+          'otp': otp,
+        }));
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedData['message'] == 'otp already approved') {
+      return 'You have already verified otp!';
+    }
+    if (extractedData['message'] == 'Invalid OTP') {
+      return 'Incorrect otp';
+    }
+    if (extractedData['message'] == 'otp approved') {
+      return 'Otp verification successful!';
+    }
+    return 'some error';
   }
 }
