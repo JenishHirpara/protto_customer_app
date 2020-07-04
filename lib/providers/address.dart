@@ -108,4 +108,9 @@ class Addresses with ChangeNotifier {
     _items.removeWhere((address) => address.id == id);
     notifyListeners();
   }
+
+  void logout() async {
+    _items.clear();
+    notifyListeners();
+  }
 }

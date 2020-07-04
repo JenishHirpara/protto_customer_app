@@ -40,6 +40,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
 
   var _isInit = true;
   var _isLoading = false;
+  var _isLoading1 = false;
 
   @override
   void didChangeDependencies() async {
@@ -137,56 +138,67 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                       );
                     },
                     onChanged: (value) async {
+                      setState(() {
+                        _isLoading1 = true;
+                      });
                       await Provider.of<Bikes>(context, listen: false)
                           .fetchAllModels(value);
+                      setState(() {
+                        _isLoading1 = false;
+                      });
                       resetModel();
                     },
                   ),
                   SizedBox(height: 10),
-                  DropdownButtonFormField(
-                    value: _selectedModel,
-                    decoration: InputDecoration(
-                      filled: true,
-                      border: InputBorder.none,
-                      hintText: 'Model',
-                      hintStyle: TextStyle(
-                        fontFamily: 'SourceSansPro',
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                        fontSize: 14,
-                      ),
-                    ),
-                    items: Provider.of<Bikes>(context)
-                        .models
-                        .map<DropdownMenuItem>((value) {
-                      return DropdownMenuItem<String>(
-                          child: Text(value,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                              )),
-                          value: value);
-                    }).toList(),
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Please provide model name';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _bike = Bike(
-                        id: _bike.id,
-                        brand: _bike.brand,
-                        model: value,
-                        number: _bike.number,
-                        year: _bike.year,
-                      );
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedModel = value;
-                      });
-                    },
-                  ),
+                  _isLoading1
+                      ? Center(
+                          child: CircularProgressIndicator(
+                          backgroundColor: Colors.deepOrange,
+                        ))
+                      : DropdownButtonFormField(
+                          value: _selectedModel,
+                          decoration: InputDecoration(
+                            filled: true,
+                            border: InputBorder.none,
+                            hintText: 'Model',
+                            hintStyle: TextStyle(
+                              fontFamily: 'SourceSansPro',
+                              color: Color.fromRGBO(128, 128, 128, 1),
+                              fontSize: 14,
+                            ),
+                          ),
+                          items: Provider.of<Bikes>(context)
+                              .models
+                              .map<DropdownMenuItem>((value) {
+                            return DropdownMenuItem<String>(
+                                child: Text(value,
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontFamily: 'SourceSansPro',
+                                    )),
+                                value: value);
+                          }).toList(),
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Please provide model name';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            _bike = Bike(
+                              id: _bike.id,
+                              brand: _bike.brand,
+                              model: value,
+                              number: _bike.number,
+                              year: _bike.year,
+                            );
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedModel = value;
+                            });
+                          },
+                        ),
                   SizedBox(height: 10),
                   DropdownButtonFormField(
                     decoration: InputDecoration(

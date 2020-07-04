@@ -15,14 +15,7 @@ class CartItem with ChangeNotifier {
 }
 
 class Cart with ChangeNotifier {
-  List<CartItem> _items = [
-    // CartItem(
-    //   id: DateTime.now().toString(),
-    //   service: 'Regular Service',
-    //   type: 'PRODRY',
-    //   price: 1599,
-    // ),
-  ];
+  List<CartItem> _items = [];
 
   List<CartItem> get items {
     return [..._items];
@@ -61,6 +54,11 @@ class Cart with ChangeNotifier {
   }
 
   void resetCart() {
+    _items.clear();
+    notifyListeners();
+  }
+
+  void logout() async {
     _items.clear();
     notifyListeners();
   }

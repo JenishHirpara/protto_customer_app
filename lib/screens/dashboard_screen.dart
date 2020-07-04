@@ -143,13 +143,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 children: <Widget>[
                                   InkWell(
                                     child: Container(
-                                        width:
-                                            SizeConfig.blockSizeHorizontal * 25,
-                                        height:
-                                            SizeConfig.blockSizeVertical * 10,
-                                        child: Image(
-                                            image: AssetImage(
-                                                'assets/images/gear_with_car.png'))),
+                                      width:
+                                          SizeConfig.blockSizeHorizontal * 25,
+                                      height: SizeConfig.blockSizeVertical * 10,
+                                      child: Image(
+                                        image: AssetImage(
+                                            'assets/images/gear_with_car.png'),
+                                      ),
+                                    ),
                                     onTap: () {
                                       Navigator.of(context)
                                           .push(pageRouteBuilder(0));
@@ -174,13 +175,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 children: <Widget>[
                                   InkWell(
                                     child: Container(
-                                        width:
-                                            SizeConfig.blockSizeHorizontal * 25,
-                                        height:
-                                            SizeConfig.blockSizeVertical * 10,
-                                        child: Image(
-                                            image: AssetImage(
-                                                'assets/images/tyres.png'))),
+                                      width:
+                                          SizeConfig.blockSizeHorizontal * 25,
+                                      height: SizeConfig.blockSizeVertical * 10,
+                                      child: Image(
+                                        image: AssetImage(
+                                            'assets/images/tyres.png'),
+                                      ),
+                                    ),
                                     onTap: () {
                                       Navigator.of(context)
                                           .push(pageRouteBuilder(1));
