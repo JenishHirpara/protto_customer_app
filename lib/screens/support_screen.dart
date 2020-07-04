@@ -64,149 +64,127 @@ class _SupportScreenState extends State<SupportScreen> {
                       ),
                       ExpansionTile(
                         title: Text(
-                          'Subtitle 1',
-                          style: TextStyle(
-                            fontFamily:'SourceSansPro'
-                          ),
+                          'Where will my bike be serviced?',
+                          style: TextStyle(fontFamily: 'Montserrat'),
                         ),
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.all(10),
                             child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              'Your bike will be serviced at Protto partnered service station. Protto partnered service station is selected based on reputation, turnaround time of service, quality of service delivered, and availability of genuine spares.',
                               style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                fontSize: 15),
+                                  fontFamily: 'SourceSansPro', fontSize: 15),
                             ),
                           ),
                         ],
                       ),
                       ExpansionTile(
                         title: Text(
-                          'Subtitle 2',
-                          style: TextStyle(
-                            fontFamily:'SourceSansPro'
-                          ),
+                          'How long does it take to service a motorcycle?',
+                          style: TextStyle(fontFamily: 'Montserrat'),
                         ),
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.all(10),
                             child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              'The service time for your motorcycle depends on the service package you opt for. A ProDRY service package takes 4-5 hours whereas, a ProWET service package takes at least 5-6 hours.',
                               style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                fontSize: 15),
+                                  fontFamily: 'SourceSansPro', fontSize: 15),
                             ),
                           ),
                         ],
                       ),
                       ExpansionTile(
                         title: Text(
-                          'Subtitle 3',
-                          style: TextStyle(
-                            fontFamily:'SourceSansPro'
-                          ),
+                          'Can I reschedule my booking appointment?',
+                          style: TextStyle(fontFamily: 'Montserrat'),
                         ),
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.all(10),
                             child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              'You can reschedule your booking by visiting My Bookings in the Protto App.',
+                              textAlign: TextAlign.justify,
                               style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                fontSize: 15),
+                                  fontFamily: 'SourceSansPro', fontSize: 15),
                             ),
                           ),
                         ],
                       ),
                       ExpansionTile(
                         title: Text(
-                          'Subtitle 4',
-                          style: TextStyle(
-                            fontFamily:'SourceSansPro'
-                          ),
+                          'What if my bike needs extra services or part replacements?',
+                          style: TextStyle(fontFamily: 'Montserrat'),
                         ),
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.all(10),
                             child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              'We will send you the request for additional jobs and associated costs. Upon your approval only, we will execute additional services.',
                               style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                fontSize: 15),
+                                  fontFamily: 'SourceSansPro', fontSize: 15),
                             ),
                           ),
                         ],
                       ),
                       ExpansionTile(
                         title: Text(
-                          'Subtitle 5',
-                          style: TextStyle(
-                            fontFamily:'SourceSansPro'
-                          ),
+                          'I was charged for service which I didn’t opt for. What do I do?',
+                          style: TextStyle(fontFamily: 'Montserrat'),
                         ),
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.all(10),
                             child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              'Kindly contact us on email or call. Upon verifying the claim we will make the refund the amount immediately. For more queries on Refund check out our Service Revision & Refund Policy.',
                               style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                fontSize: 15),
+                                  fontFamily: 'SourceSansPro', fontSize: 15),
                             ),
                           ),
                         ],
                       ),
                       ExpansionTile(
                         title: Text(
-                          'Subtitle 6',
-                          style: TextStyle(
-                            fontFamily:'SourceSansPro'
-                          ),
+                          'What Oil will be used during Bike Service?',
+                          style: TextStyle(fontFamily: 'Montserrat'),
                         ),
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.all(10),
                             child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              'The oil used will be Motul Premium Mineral Engine Oil. The Oil Grades will be based on the type of Bike. The Grading system that we follow is based on the Society of Automotive Engineers (SAE). For Mopeds, we use SAE 10W 30 graded oil. SAE 20W 40 is used for major bikes ranging from 150 to 250 cc and SAE 15W 50 is used for engines will displacement of more than 250 cc.',
                               style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                fontSize: 15),
+                                  fontFamily: 'SourceSansPro', fontSize: 15),
                             ),
                           ),
                         ],
                       ),
                       ExpansionTile(
                         title: Text(
-                          'Subtitle 7',
-                          style: TextStyle(
-                            fontFamily:'SourceSansPro'
-                          ),
+                          'What spare parts do you use during the service?',
+                          style: TextStyle(fontFamily: 'Montserrat'),
                         ),
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.all(10),
                             child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              'We use 100% Genuine OEM/OES Spares. All the parts are pre-approved by our Team to ensure whatever goes into your motorcycle is nothing but a quality genuine spare part.',
                               style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                fontSize: 15),
+                                  fontFamily: 'SourceSansPro', fontSize: 15),
                             ),
                           ),
                         ],
                       ),
                       ExpansionTile(
                         title: Text(
-                          'Subtitle 8',
-                          style: TextStyle(
-                            fontFamily:'SourceSansPro'
-                          ),
+                          'Do I have to drop my two-wheeler at the service station?',
+                          style: TextStyle(fontFamily: 'Montserrat'),
                         ),
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.all(10),
                             child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              'Not at all, we provide FREE doorstep collection & delivery to save you from the hassle of visiting service station.',
                               style: GoogleFonts.montserrat(fontSize: 15),
                             ),
                           ),
@@ -214,38 +192,16 @@ class _SupportScreenState extends State<SupportScreen> {
                       ),
                       ExpansionTile(
                         title: Text(
-                          'Subtitle 9',
-                          style: TextStyle(
-                            fontFamily:'SourceSansPro'
-                          ),
+                          'How does Protto ensure safety against Coronavirus for my Two-wheeler?',
+                          style: TextStyle(fontFamily: 'Montserrat'),
                         ),
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.all(10),
                             child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
+                              'At Protto, health & hygiene are of utmost importance. As a part of the safety measure against novel Coronavirus we have started sanitizing all the bikes before collection & before delivery to ensure utmost safety of the two-wheeler owner community. We would request you to maintain social distancing at the time of bike collection & delivery for your utmost safety.',
                               style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      ExpansionTile(
-                        title: Text(
-                          'Subtitle 10',
-                          style: TextStyle(
-                            fontFamily:'SourceSansPro'
-                          ),
-                        ),
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              'This is a paragraph. This is another paragraph. This paragraph contains a lot of spaces in the source code but the browser ignores it',
-                              style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                fontSize: 15),
+                                  fontFamily: 'SourceSansPro', fontSize: 15),
                             ),
                           ),
                         ],
