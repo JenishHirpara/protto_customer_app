@@ -100,6 +100,7 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> fetchAndSetOrders() async {
+    print(userId);
     final url1 =
         'http://stage.protto.in/api/hitesh/getbookings.php?cid=$userId';
     final response1 = await http.get(url1);
@@ -372,5 +373,12 @@ class Orders with ChangeNotifier {
       return 'Otp verification successful!';
     }
     return 'some error';
+  }
+
+  void logout() async {
+    _items.clear();
+    _services.clear();
+    _jobs.clear();
+    notifyListeners();
   }
 }

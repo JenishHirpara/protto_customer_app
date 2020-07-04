@@ -244,4 +244,14 @@ class Bikes with ChangeNotifier {
     _proWet = extractedData['data'][1]['offer'];
     notifyListeners();
   }
+
+  void logout() async {
+    _items.clear();
+    _brands.clear();
+    _models.clear();
+    _activeBike = null;
+    _proDry = null;
+    _proWet = null;
+    notifyListeners();
+  }
 }

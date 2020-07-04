@@ -65,12 +65,16 @@ class _RgServiceItemState extends State<RgServiceItem> {
             'No bike selected',
             style: TextStyle(fontFamily: 'Montserrat'),
           ),
-          content: Text('Please select a bike',
-              style: TextStyle(fontFamily: 'Montserrat')),
+          content: Text(
+            'Please select a bike',
+            style: TextStyle(fontFamily: 'Montserrat'),
+          ),
           actions: <Widget>[
             FlatButton(
-              child:
-                  Text('Okay', style: TextStyle(fontFamily: 'SourceSansProSB')),
+              child: Text(
+                'Okay',
+                style: TextStyle(fontFamily: 'SourceSansProSB'),
+              ),
               onPressed: () {
                 Navigator.of(ctx).pop();
               },

@@ -9,6 +9,10 @@ import './dashboard_screen.dart';
 import './saved_addresses_screen.dart';
 import './edit_profile_screen.dart';
 import '../providers/profile.dart';
+import '../providers/address.dart';
+import '../providers/bikes.dart';
+import '../providers/cart_item.dart';
+import '../providers/orders.dart';
 import './my_bikes_screen.dart';
 import './verify_phone_screen.dart';
 
@@ -224,6 +228,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ),
                 );
                 Provider.of<UserProfile>(context, listen: false).logout();
+                Provider.of<Bikes>(context, listen: false).logout();
+                Provider.of<Addresses>(context, listen: false).logout();
+                Provider.of<Orders>(context, listen: false).logout();
+                Provider.of<Cart>(context, listen: false).logout();
               },
             ),
             FlatButton(

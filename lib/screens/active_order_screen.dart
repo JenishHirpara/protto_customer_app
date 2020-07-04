@@ -31,6 +31,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
   var _order;
 
   Future showPopUp() {
+    FocusScope.of(context).requestFocus(_focusNode1);
     return showDialog(
       context: context,
       builder: (dialogcontext) => Dialog(
