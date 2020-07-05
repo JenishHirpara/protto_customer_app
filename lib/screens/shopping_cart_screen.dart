@@ -793,12 +793,12 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  //SizedBox(height: 10),
                   _addressSeen == null
                       ? Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: 20,
-                            vertical: 10,
+                            //vertical: 10,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

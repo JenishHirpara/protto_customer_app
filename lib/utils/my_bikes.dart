@@ -186,7 +186,10 @@ class _MyBikesState extends State<MyBikes> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
                                     Container(
+                                      width: 50,
                                       color: Colors.deepOrange,
+                                      child: Align(
+                                        alignment: Alignment.center,
                                       child: Text(
                                         'Active',
                                         style: TextStyle(
@@ -195,6 +198,7 @@ class _MyBikesState extends State<MyBikes> {
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
+                                    ),
                                     ),
                                     IconButton(
                                       icon: Icon(
