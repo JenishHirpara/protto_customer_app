@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:protto_customer_app/screens/verify_phone_screen.dart';
+
+import '../screens/verify_phone_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override

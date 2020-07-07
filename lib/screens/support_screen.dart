@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:protto_customer_app/utils/SizeConfig.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../utils/SizeConfig.dart';
 
 Color orangeColor = new Color(0xfff15d24);
 
@@ -10,6 +12,24 @@ class SupportScreen extends StatefulWidget {
 }
 
 class _SupportScreenState extends State<SupportScreen> {
+  void _launchWhatsApp(String phoneNumber) async {
+    String message = '';
+    var whatsappUrl = "whatsapp://send?phone=$phoneNumber&text=$message";
+    if (await canLaunch(whatsappUrl)) {
+      await launch(whatsappUrl);
+    } else {
+      throw 'Could not launch $whatsappUrl';
+    }
+  }
+
+  void _launchCaller(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -206,75 +226,193 @@ class _SupportScreenState extends State<SupportScreen> {
                           ),
                         ],
                       ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Container(
-                            color: Theme.of(context).primaryColor,
-                            height: 50,
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: FlatButton(
-                              onPressed: () {},
-                              color: orangeColor,
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.call,
-                                      color: Colors.white,
-                                    ),
-                                    Text(
-                                      'CALL',
-                                      style: TextStyle(
-                                          fontFamily: 'SourcsSansProSB',
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
+                      SizedBox(height: 14),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              Text(
+                                'Existing Booking',
+                                style: TextStyle(
+                                  fontFamily: 'SourceSansProSB',
+                                  color: Colors.deepOrange,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Container(
-                            color: Theme.of(context).primaryColor,
-                            height: 50,
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: FlatButton(
-                              onPressed: () {},
-                              color: orangeColor,
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.chat,
-                                      color: Colors.white,
+                              Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Container(
+                                    color: Theme.of(context).primaryColor,
+                                    height: 50,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    child: FlatButton(
+                                      onPressed: () =>
+                                          _launchCaller('tel:+919136863480'),
+                                      color: orangeColor,
+                                      child: Center(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.call,
+                                              color: Colors.white,
+                                            ),
+                                            Text(
+                                              'CALL',
+                                              style: TextStyle(
+                                                fontFamily: 'SourcsSansProSB',
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                    Text(
-                                      'CHAT',
-                                      style: TextStyle(
-                                          fontFamily: 'SourceSansProSB',
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ),
+                              Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Container(
+                                    color: Theme.of(context).primaryColor,
+                                    height: 50,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    child: FlatButton(
+                                      onPressed: () =>
+                                          _launchWhatsApp('+919136863480'),
+                                      color: orangeColor,
+                                      child: Center(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.chat,
+                                              color: Colors.white,
+                                            ),
+                                            Text(
+                                              'CHAT',
+                                              style: TextStyle(
+                                                fontFamily: 'SourceSansProSB',
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
+                          Column(
+                            children: <Widget>[
+                              Text(
+                                'New Booking',
+                                style: TextStyle(
+                                  fontFamily: 'SourceSansProSB',
+                                  color: Colors.deepOrange,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Container(
+                                    color: Theme.of(context).primaryColor,
+                                    height: 50,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    child: FlatButton(
+                                      onPressed: () =>
+                                          _launchCaller('tel:+919136231963'),
+                                      color: orangeColor,
+                                      child: Center(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.call,
+                                              color: Colors.white,
+                                            ),
+                                            Text(
+                                              'CALL',
+                                              style: TextStyle(
+                                                fontFamily: 'SourcsSansProSB',
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Container(
+                                    color: Theme.of(context).primaryColor,
+                                    height: 50,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    child: FlatButton(
+                                      onPressed: () =>
+                                          _launchWhatsApp('+919136231963'),
+                                      color: orangeColor,
+                                      child: Center(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.chat,
+                                              color: Colors.white,
+                                            ),
+                                            Text(
+                                              'CHAT',
+                                              style: TextStyle(
+                                                fontFamily: 'SourceSansProSB',
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ],
                   ),

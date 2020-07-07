@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../utils/user_profile_item.dart';
 import './support_screen.dart';
-import './referral_screen.dart';
 import './dashboard_screen.dart';
 import './saved_addresses_screen.dart';
 import './edit_profile_screen.dart';
@@ -55,32 +54,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
         return VerifyPhoneScreen();
-      },
-      transitionDuration: Duration(milliseconds: 500),
-      transitionsBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation, Widget child) {
-        return SlideTransition(
-          position: new Tween<Offset>(
-            begin: const Offset(1.0, 0.0),
-            end: Offset.zero,
-          ).animate(animation),
-          child: new SlideTransition(
-            position: new Tween<Offset>(
-              begin: Offset.zero,
-              end: const Offset(-1.0, 0.0),
-            ).animate(secondaryAnimation),
-            child: child,
-          ),
-        );
-      },
-    );
-  }
-
-  PageRouteBuilder referralPageRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation) {
-        return ReferralScreen();
       },
       transitionDuration: Duration(milliseconds: 500),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
@@ -325,7 +298,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         title: 'Edit Profile',
                         page: editProfileRouteBuilder(),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 30),
                       UserProfileItem(
                         icon: Icon(
                           MdiIcons.locationEnter,
@@ -334,7 +307,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         title: 'Saved Addresses',
                         page: savedAddressesRouteBuilder(),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 30),
                       UserProfileItem(
                         icon: Icon(
                           MdiIcons.heart,
@@ -343,16 +316,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         title: 'My Bikes',
                         page: myBikesRouteBuilder(),
                       ),
-                      SizedBox(height: 20),
-                      UserProfileItem(
-                        icon: Icon(
-                          MdiIcons.fileDocument,
-                          color: Color(0xffff7075),
-                        ),
-                        title: 'My Docs',
-                        page: pageRouteBuilder(),
-                      ),
-                      SizedBox(height: 20),
+                      // SizedBox(height: 20),
+                      // UserProfileItem(
+                      //   icon: Icon(
+                      //     MdiIcons.fileDocument,
+                      //     color: Color(0xffff7075),
+                      //   ),
+                      //   title: 'My Docs',
+                      //   page: pageRouteBuilder(),
+                      // ),
+                      SizedBox(height: 30),
                       UserProfileItem(
                         icon: Icon(
                           MdiIcons.cardAccountDetails,
@@ -361,16 +334,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         title: 'Support',
                         page: supportPageRoute(),
                       ),
-                      SizedBox(height: 20),
-                      UserProfileItem(
-                        icon: Icon(
-                          MdiIcons.bell,
-                          color: Color(0xffff7075),
-                        ),
-                        title: 'Referral',
-                        page: referralPageRoute(),
-                      ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 30),
                       InkWell(
                         child: Container(
                           width: double.infinity,
@@ -388,8 +352,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             title: Text(
                               'Log Out',
                               style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  color: Color.fromRGBO(112, 112, 112, 1)),
+                                fontFamily: 'SourceSansPro',
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                              ),
                             ),
                             trailing: Icon(
                               Icons.arrow_forward_ios,

@@ -399,7 +399,21 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
       },
       {
         'page': FlashScreen(),
-        'appbar': AppBar(),
+        'appbar': AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(
+            'Referral',
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              color: Color.fromRGBO(241, 93, 36, 1),
+              fontSize: 22,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          titleSpacing: 20,
+          backgroundColor: Color.fromRGBO(250, 250, 250, 1),
+          elevation: 0,
+        ),
       },
     ];
     return Scaffold(
