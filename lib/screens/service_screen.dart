@@ -126,7 +126,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                backgroundColor: Colors.white,
+                backgroundColor: Color.fromRGBO(250, 250, 250, 1),
                 elevation: 0,
                 actions: <Widget>[
                   IconButton(
@@ -196,12 +196,14 @@ class _ServiceScreenState extends State<ServiceScreen> {
               ? double.parse(Provider.of<Bikes>(context, listen: false).proDry)
               : 0.0,
           type: 'PRODRY',
+          image: 'assets/images/popular_service_1.png',
         ),
         RgServiceItem(
           price: activeBike != null
               ? double.parse(Provider.of<Bikes>(context, listen: false).proWet)
               : 0.0,
           type: 'PROWET',
+          image: 'assets/images/popular_service_2.png',
         ),
       ],
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

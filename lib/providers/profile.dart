@@ -129,15 +129,15 @@ class UserProfile with ChangeNotifier {
     final extractedUserData =
         json.decode(prefs.getString('userData')) as Map<String, Object>;
     var url =
-        'http://stage.protto.in/api/prina/data.php/${extractedUserData['number']}';
+        'http://stage.protto.in/api/hitesh/loginwithoutotp.php?mobile=${extractedUserData['number']}';
     final response = await http.get(url);
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     _item = Profile(
-      id: extractedData['Data']['cid'],
-      name: extractedData['Data']['name'],
-      email: extractedData['Data']['email'],
-      number: extractedData['Data']['mobile'],
-      prottoBucks: extractedData['Data']['protto_bucks'],
+      id: extractedData['data']['cid'],
+      name: extractedData['data']['name'],
+      email: extractedData['data']['email'],
+      number: extractedData['data']['mobile'],
+      prottoBucks: extractedData['data']['protto_bucks'],
     );
     _token = extractedUserData['token'];
     notifyListeners();

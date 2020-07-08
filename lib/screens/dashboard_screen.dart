@@ -341,9 +341,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   Widget swiperWidget() {
     List imagesList = [
-      'assets/images/bike_one.jpg',
-      'assets/images/bike_two.jpg',
-      'assets/images/bike_three.jpg',
+      'assets/images/popular_service_1.png',
+      'assets/images/popular_service_2.png',
     ];
 
     return Container(
@@ -356,11 +355,21 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             fit: BoxFit.cover,
           );
         },
+        autoplay: true,
+        autoplayDisableOnInteraction: true,
+        autoplayDelay: 5000,
+        duration: 1000,
+        fade: 0.5,
+        outer: true,
         itemCount: imagesList.length,
         viewportFraction: 1,
-        control: new SwiperControl(color: Colors.grey),
         controller: new SwiperController(),
-        pagination: SwiperPagination(),
+        pagination: SwiperPagination(
+          builder: DotSwiperPaginationBuilder(
+            color: Colors.grey,
+            activeColor: Colors.deepOrange,
+          ),
+        ),
         scale: 1,
       ),
     );
