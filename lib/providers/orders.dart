@@ -70,8 +70,14 @@ class Jobs with ChangeNotifier {
 class Orders with ChangeNotifier {
   List<OrderItem> _items = [];
 
-  List<dynamic> _services;
-  List<Jobs> _jobs;
+  List<dynamic> _services = [];
+  List<Jobs> _jobs = [];
+  List<String> _preImages = [];
+  List<String> _postImages = [];
+  String _preOdometerReading;
+  String _postOdometerReading;
+  String _preFuelLevel;
+  String _postFuelLevel;
 
   final String userId;
 
@@ -79,6 +85,30 @@ class Orders with ChangeNotifier {
 
   List<OrderItem> get items {
     return [..._items];
+  }
+
+  String get preOdometerReading {
+    return _preOdometerReading;
+  }
+
+  String get postOdometerReading {
+    return _postOdometerReading;
+  }
+
+  String get preFuelLevel {
+    return _preFuelLevel;
+  }
+
+  String get postFuelLevel {
+    return _postFuelLevel;
+  }
+
+  List<String> get preImages {
+    return [..._preImages];
+  }
+
+  List<String> get postImages {
+    return [..._postImages];
   }
 
   List<Jobs> get jobs {
@@ -196,7 +226,7 @@ class Orders with ChangeNotifier {
         'flat': order.flat,
         'landmark': order.landmark,
         'total': order.total,
-        'paid': '0',
+        'paid': '0.0',
         'date': order.date,
         'timestamp': order.time,
         'delivery_type': order.deliveryType,
@@ -373,6 +403,52 @@ class Orders with ChangeNotifier {
       return 'Otp verification successful!';
     }
     return 'some error';
+  }
+
+  Future<void> getpreimages(String bookingId) async {
+    final url =
+        'http://stage.protto.in/api/shivangi/getpreserviceinspection.php?booking_id=$bookingId';
+    final response = await http.get(url);
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedData['data'] == null) {
+      _preImages.clear();
+      _preOdometerReading = null;
+      _preFuelLevel = null;
+      return;
+    }
+    _preImages.clear();
+    _preImages.add(extractedData['data']['front_pic']);
+    _preImages.add(extractedData['data']['left_pic']);
+    _preImages.add(extractedData['data']['rear_pic']);
+    _preImages.add(extractedData['data']['right_pic']);
+    _preImages.add(extractedData['data']['dashboard_pic']);
+    _preImages.add(extractedData['data']['number_pic']);
+    _preOdometerReading = extractedData['data']['odometer_reading'];
+    _preFuelLevel = extractedData['data']['fuel_level'];
+    notifyListeners();
+  }
+
+  Future<void> getpostimages(String bookingId) async {
+    final url =
+        'http://stage.protto.in/api/hitesh/getdeliveryinspection.php?booking_id=$bookingId';
+    final response = await http.get(url);
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedData['data'] == null) {
+      _postImages.clear();
+      _postOdometerReading = null;
+      _postFuelLevel = null;
+      return;
+    }
+    _postImages.clear();
+    _postImages.add(extractedData['data']['front_pic']);
+    _postImages.add(extractedData['data']['left_pic']);
+    _postImages.add(extractedData['data']['rear_pic']);
+    _postImages.add(extractedData['data']['right_pic']);
+    _postImages.add(extractedData['data']['dashboard_pic']);
+    _postImages.add(extractedData['data']['number_pic']);
+    _postOdometerReading = extractedData['data']['odometer_reading'];
+    _postFuelLevel = extractedData['data']['fuel_level'];
+    notifyListeners();
   }
 
   void logout() async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../providers/orders.dart';
 import './shopping_cart_screen.dart';
@@ -24,6 +25,14 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
       "suggested in the job card. Are you sure \n" +
       "you still want to move forward without \n" +
       "those services? ";
+
+  void _launchCaller(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   Future<dynamic> approveAllAlertDialog(
       BuildContext context, List<String> data) {
@@ -247,8 +256,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
   List<bool> _approval;
   List<Jobs> approvedJobs;
   List<String> approvedJobId = [];
-  var _total;
-  var _paid;
+  var _total = '0.0';
+  var _paid = '0.0';
   @override
   void didChangeDependencies() async {
     if (_isInit) {
@@ -571,7 +580,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                           fontWeight: FontWeight.w400,
                                           color: Colors.grey),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () =>
+                                        _launchCaller('tel:+919136863480'),
                                   ),
                                 ),
                               ],

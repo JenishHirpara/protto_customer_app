@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:protto_customer_app/providers/profile.dart';
 import 'package:provider/provider.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../utils/shopping_cart_item.dart';
 import '../providers/cart_item.dart';
@@ -30,6 +32,134 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     );
   }
 
+  void handlerPaymentSuccess(PaymentSuccessResponse response) async {
+    print("Payment success");
+    FlutterToast.showToast(msg: 'SUCCESS: ' + response.paymentId);
+    await Provider.of<Orders>(context, listen: false).addOrder(_orderItem,
+        _prottoBucks, Provider.of<Bikes>(context, listen: false).activeBike);
+    Provider.of<Cart>(context, listen: false).resetCart();
+    Navigator.of(context).pop();
+  }
+
+  void handlerErrorFailure(PaymentFailureResponse response) {
+    print("Payment error");
+    FlutterToast.showToast(
+        msg: 'ERROR: ' + response.code.toString() + ' - ' + response.message);
+  }
+
+  void handlerExternalWallet(ExternalWalletResponse response) async {
+    print("External Wallet");
+    FlutterToast.showToast(msg: 'EXTERNAL WALLET: ' + response.walletName);
+    await Provider.of<Orders>(context, listen: false).addOrder(_orderItem,
+        _prottoBucks, Provider.of<Bikes>(context, listen: false).activeBike);
+    Provider.of<Cart>(context, listen: false).resetCart();
+    Navigator.of(context).pop();
+  }
+
+  void _razorPay(Cart cart) {
+    final isValid = _form.currentState.validate();
+    if (!isValid) {
+      return;
+    }
+    _form.currentState.save();
+    if (_orderItem.date == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text(
+              'No date added',
+              style: TextStyle(fontFamily: 'Montserrat'),
+            ),
+            content: Text(
+              'Please add a date to your current order',
+              style: TextStyle(fontFamily: 'SourceSansPro'),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                  'Okay',
+                  style: TextStyle(fontFamily: 'SourceSansProSB'),
+                ),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else if (_orderItem.serviceType == '') {
+      showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text(
+              'No service added',
+              style: TextStyle(fontFamily: 'Montserrat'),
+            ),
+            content: Text(
+              'Please add atleast one service to your current order',
+              style: TextStyle(fontFamily: 'SourceSansPro'),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                  'Okay',
+                  style: TextStyle(fontFamily: 'SourceSansProSB'),
+                ),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      var profile = Provider.of<UserProfile>(context, listen: false).item;
+      _orderItem = OrderItem(
+        id: _orderItem.id,
+        bookingId: _orderItem.bookingId,
+        address: _addressSeen.address,
+        bikeid: Provider.of<Bikes>(context, listen: false).activeBike.id,
+        bikeNumber:
+            Provider.of<Bikes>(context, listen: false).activeBike.number,
+        bikeYear: Provider.of<Bikes>(context, listen: false).activeBike.year,
+        flat: _addressSeen.flat,
+        landmark: _addressSeen.landmark,
+        total: _orderItem.total,
+        paid: _orderItem.paid,
+        ssName: _orderItem.ssName,
+        make: Provider.of<Bikes>(context, listen: false).activeBike.brand,
+        model: Provider.of<Bikes>(context, listen: false).activeBike.model,
+        status: _orderItem.status,
+        approveJobs: _orderItem.approveJobs,
+        rideable: _orderItem.rideable,
+        serviceType: _orderItem.serviceType,
+        date: _orderItem.date,
+        time: _orderItem.time,
+        deliveryType: _orderItem.deliveryType,
+      );
+      var options = {
+        'key': 'rzp_test_9mTvPPISOwAVYa',
+        'amount': double.parse(_getNewTotal(cart)) *
+            100, //in the smallest currency sub-unit.
+        'name': 'Protto',
+        'description': _orderItem.serviceType,
+        'prefill': {'contact': profile.number, 'email': profile.email},
+        'external': {
+          'wallets': ['paytm']
+        }
+      };
+      try {
+        _razorpay.open(options);
+      } catch (e) {
+        print(e.toString());
+      }
+    }
+  }
+
   PageRouteBuilder addAddressScreenPageRoute() {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
@@ -57,8 +187,13 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   }
 
   var _orderItem;
+  var _razorpay;
   @override
   void initState() {
+    _razorpay = new Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlerPaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlerErrorFailure);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
     final cart = Provider.of<Cart>(context, listen: false).items;
     var services = '';
     for (int i = 0; i < cart.length; i++) {
@@ -87,6 +222,12 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       time: '',
     );
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _razorpay.clear();
+    super.dispose();
   }
 
   void _presentDatePicker() {
@@ -892,7 +1033,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                         fontFamily: 'SourceSansProSB',
                                         color: Colors.white),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () => _razorPay(cart),
                                 ),
                               ),
                             ],
