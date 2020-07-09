@@ -29,6 +29,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         number: '',
         prottoBucks:
             Provider.of<UserProfile>(context, listen: false).item.prottoBucks,
+        otp: Provider.of<UserProfile>(context, listen: false).item.otp,
       );
     }
     _isInit = false;
@@ -63,7 +64,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         leading: InkWell(
           child: Icon(
             Icons.arrow_back_ios,
-            color: Colors.black,
+            color: Color.fromRGBO(112, 112, 112, 1),
           ),
           onTap: () {
             Navigator.of(context).pop();
@@ -112,6 +113,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         number: newProfile.number,
                         email: newProfile.email,
                         prottoBucks: newProfile.prottoBucks,
+                        otp: newProfile.otp,
                       );
                     },
                   ),
@@ -146,6 +148,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         number: newProfile.number,
                         email: value,
                         prottoBucks: newProfile.prottoBucks,
+                        otp: newProfile.otp,
                       );
                     },
                   ),
@@ -179,6 +182,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         number: value,
                         email: newProfile.email,
                         prottoBucks: newProfile.prottoBucks,
+                        otp: newProfile.otp,
                       );
                     },
                   ),

@@ -409,7 +409,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: false,
         title: Text(
           'Shopping Cart',
           textAlign: TextAlign.start,
@@ -423,7 +422,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         leading: InkWell(
           child: Icon(
             Icons.arrow_back_ios,
-            color: Colors.black,
+            color: Color.fromRGBO(112, 112, 112, 1),
           ),
           onTap: () {
             Navigator.of(context).pop();

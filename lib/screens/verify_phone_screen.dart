@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import './navigationBarScreen.dart';
+import './otp_screen.dart';
 import '../providers/profile.dart';
 import './signup_screen.dart';
 import '../models/http_exception.dart';
@@ -154,7 +154,7 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return NavigationBarScreen();
+        return OtpScreen();
       },
       transitionDuration: Duration(milliseconds: 500),
       transitionsBuilder: (BuildContext context, Animation<double> animation,

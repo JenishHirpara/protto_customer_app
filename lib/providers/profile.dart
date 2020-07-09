@@ -14,6 +14,7 @@ class Profile with ChangeNotifier {
   final String email;
   final String number;
   final String prottoBucks;
+  final String otp;
 
   Profile({
     @required this.id,
@@ -21,15 +22,21 @@ class Profile with ChangeNotifier {
     @required this.email,
     @required this.number,
     @required this.prottoBucks,
+    @required this.otp,
   });
 }
 
 class UserProfile with ChangeNotifier {
   Profile _item;
   String _token;
+  Profile _dummyItem;
 
   Profile get item {
     return _item;
+  }
+
+  Profile get dummyItem {
+    return _dummyItem;
   }
 
   bool get isAuth {
@@ -50,23 +57,29 @@ class UserProfile with ChangeNotifier {
     if (extractedData['message'] == 'User does not exist') {
       throw HttpException('User does not exist!');
     }
-    _item = Profile(
+    _dummyItem = Profile(
       id: extractedData['Data']['cid'],
       name: extractedData['Data']['name'],
       email: extractedData['Data']['email'],
       number: extractedData['Data']['mobile'],
       prottoBucks: extractedData['Data']['protto_bucks'],
+      otp: extractedData['Data']['otp'],
     );
+    notifyListeners();
+    DashBoardScreen.isSignUp = false;
+  }
+
+  Future<void> setProfile() async {
+    _item = _dummyItem;
     var rng = new Random();
     _token = '${rng.nextInt(90000000) + 10000000}';
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     final user = json.encode({
       'token': _token,
-      'number': number,
+      'number': _dummyItem.number,
     });
     prefs.setString('userData', user);
-    DashBoardScreen.isSignUp = false;
   }
 
   Future<void> newProfile(
@@ -94,25 +107,17 @@ class UserProfile with ChangeNotifier {
       throw HttpException('User already exists!');
     }
     if (extractedData['message'] == 'Invalid referal') {
-      print('Hello');
       throw HttpException('Invalid referal');
     }
-    _item = Profile(
+    _dummyItem = Profile(
       id: extractedData['Data']['cid'],
       name: extractedData['Data']['name'],
       email: extractedData['Data']['email'],
       number: extractedData['Data']['mobile'],
       prottoBucks: extractedData['Data']['protto_bucks'],
+      otp: extractedData['Data']['otp'],
     );
-    var rng = new Random();
-    _token = '${rng.nextInt(90000000) + 10000000}';
     notifyListeners();
-    final prefs = await SharedPreferences.getInstance();
-    final user = json.encode({
-      'token': _token,
-      'number': number,
-    });
-    prefs.setString('userData', user);
     DashBoardScreen.isSignUp = true;
   }
 
@@ -138,6 +143,7 @@ class UserProfile with ChangeNotifier {
       email: extractedData['data']['email'],
       number: extractedData['data']['mobile'],
       prottoBucks: extractedData['data']['protto_bucks'],
+      otp: extractedData['data']['otp'],
     );
     _token = extractedUserData['token'];
     notifyListeners();
@@ -146,6 +152,7 @@ class UserProfile with ChangeNotifier {
 
   Future<void> logout() async {
     _item = null;
+    _dummyItem = null;
     _token = null;
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();

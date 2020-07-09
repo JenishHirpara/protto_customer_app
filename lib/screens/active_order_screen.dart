@@ -609,7 +609,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         leading: InkWell(
           child: Icon(
             Icons.arrow_back_ios,
-            color: Colors.black,
+            color: Color.fromRGBO(112, 112, 112, 1),
           ),
           onTap: () {
             Navigator.of(context).pop();
@@ -625,7 +625,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             children: <Widget>[
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.symmetric(vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
@@ -633,11 +633,19 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          '${widget.order.make} ${widget.order.model}',
+                          '${widget.order.make}',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             color: Color.fromRGBO(241, 93, 36, 1),
-                            fontSize: 20,
+                            fontSize: 10,
+                          ),
+                        ),
+                        Text(
+                          '${widget.order.model}',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Color.fromRGBO(241, 93, 36, 1),
+                            fontSize: 18,
                           ),
                         ),
                         Text(

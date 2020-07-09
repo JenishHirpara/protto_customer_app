@@ -22,15 +22,15 @@ String text = 'Part replacements & additional repairs cost not included';
 
 Color backGroundColor = new Color(0xffE9E9E9);
 
-class ServiceDetailsScreen extends StatefulWidget {
+class ProdryDetailsScreen extends StatefulWidget {
   final CartItem cartitem;
-  ServiceDetailsScreen(this.cartitem);
+  ProdryDetailsScreen(this.cartitem);
 
   @override
-  _ServiceDetailsScreenState createState() => _ServiceDetailsScreenState();
+  ProdryDetailsScreenState createState() => ProdryDetailsScreenState();
 }
 
-class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
+class ProdryDetailsScreenState extends State<ProdryDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,15 +40,18 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
         titleSpacing: 0,
         backgroundColor: backGroundColor,
         leading: InkWell(
-          child: Icon(Icons.arrow_back_ios, color: Colors.black),
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Color.fromRGBO(112, 112, 112, 1),
+          ),
           onTap: () {
             Navigator.of(context).pop(true);
           },
         ),
         title: Image(
           image: AssetImage('assets/images/ProDry.png'),
-          width: 250,
-          height: 100,
+          width: 150,
+          height: 50,
         ),
       ),
       body: Container(
@@ -144,7 +147,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                       textOne,
                                       style: TextStyle(
                                         fontFamily: 'SourceSansPro',
-                                        color: Colors.black,
+                                        color: Color(0xff707070),
                                         fontSize: 14,
                                       ),
                                     )
@@ -165,7 +168,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                       textTwo,
                                       style: TextStyle(
                                         fontFamily: 'SourceSansPro',
-                                        color: Colors.black,
+                                        color: Color(0xff707070),
                                         fontSize: 14,
                                       ),
                                     )
@@ -186,7 +189,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                       textThree,
                                       style: TextStyle(
                                         fontFamily: 'SourceSansPro',
-                                        color: Colors.black,
+                                        color: Color(0xff707070),
                                         fontSize: 14,
                                       ),
                                     )
@@ -207,7 +210,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                       textFour,
                                       style: TextStyle(
                                         fontFamily: 'SourceSansPro',
-                                        color: Colors.black,
+                                        color: Color(0xff707070),
                                         fontSize: 14,
                                       ),
                                     )
@@ -228,7 +231,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                       textFive,
                                       style: TextStyle(
                                         fontFamily: 'SourceSansPro',
-                                        color: Colors.black,
+                                        color: Color(0xff707070),
                                         fontSize: 14,
                                       ),
                                     )
@@ -249,7 +252,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                       textSix,
                                       style: TextStyle(
                                         fontFamily: 'SourceSansPro',
-                                        color: Colors.black,
+                                        color: Color(0xff707070),
                                         fontSize: 14,
                                       ),
                                     )
@@ -270,7 +273,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                       textSeven,
                                       style: TextStyle(
                                         fontFamily: 'SourceSansPro',
-                                        color: Colors.black,
+                                        color: Color(0xff707070),
                                         fontSize: 14,
                                       ),
                                     )
@@ -291,7 +294,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                       textEight,
                                       style: TextStyle(
                                         fontFamily: 'SourceSansPro',
-                                        color: Colors.black,
+                                        color: Color(0xff707070),
                                         fontSize: 14,
                                       ),
                                     )
@@ -312,7 +315,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                       textNine,
                                       style: TextStyle(
                                         fontFamily: 'SourceSansPro',
-                                        color: Colors.black,
+                                        color: Color(0xff707070),
                                         fontSize: 14,
                                       ),
                                     )
@@ -333,7 +336,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                       textTen,
                                       style: TextStyle(
                                         fontFamily: 'SourceSansPro',
-                                        color: Colors.black,
+                                        color: Color(0xff707070),
                                         fontSize: 14,
                                       ),
                                     )
@@ -354,7 +357,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                       textEleven,
                                       style: TextStyle(
                                         fontFamily: 'SourceSansPro',
-                                        color: Colors.black,
+                                        color: Color(0xff707070),
                                         fontSize: 14,
                                       ),
                                     )
@@ -371,10 +374,11 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                           child: Text(
                             text,
                             style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.blueGrey),
+                              fontFamily: 'SourceSansPro',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.blueGrey,
+                            ),
                           ),
                         ),
                       ),
@@ -461,7 +465,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                       Padding(
                         padding: EdgeInsets.all(20),
                         child: Container(
-                          color: Theme.of(context).primaryColor,
                           height: 50,
                           width: MediaQuery.of(context).size.width * 1,
                           child: RaisedButton(
@@ -479,10 +482,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                 Scaffold.of(context).hideCurrentSnackBar();
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text(
-                                      'Added item to cart!',
-                                      style: TextStyle(fontFamily: 'SourceSansPro',)
-                                    ),
+                                    content: Text('Added item to cart!',
+                                        style: TextStyle(
+                                          fontFamily: 'SourceSansPro',
+                                        )),
                                     duration: Duration(seconds: 2),
                                     action: SnackBarAction(
                                       label: 'UNDO',
@@ -502,11 +505,22 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                   context: context,
                                   builder: (ctx) {
                                     return AlertDialog(
-                                      title: Text('No bike selected',style: TextStyle(fontFamily: 'Montserrat',)),
-                                      content: Text('Please select a bike',style: TextStyle(fontFamily: 'Montserrat',)),
+                                      title: Text('No bike selected',
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                          )),
+                                      content: Text('Please select a bike',
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                          )),
                                       actions: <Widget>[
                                         FlatButton(
-                                          child: Text('Okay',style: TextStyle(fontFamily: 'SourceSansProSB',),),
+                                          child: Text(
+                                            'Okay',
+                                            style: TextStyle(
+                                              fontFamily: 'SourceSansProSB',
+                                            ),
+                                          ),
                                           onPressed: () {
                                             Navigator.of(ctx).pop();
                                           },
@@ -539,36 +553,25 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                                   child: Text(
                                     '₹ ${widget.cartitem.price}',
                                     style: TextStyle(
-                                        fontFamily: 'SourceSansProSB',
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
+                                      fontFamily: 'SourceSansProSB',
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(0, 5, 10, 5),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                        ' ADD TO CART',
-                                        style: TextStyle(
-                                          fontFamily: 'SourceSansProSB',
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Colors.white,
-                                      )
-                                    ],
+                                  child: Text(
+                                    ' ADD TO CART',
+                                    style: TextStyle(
+                                      fontFamily: 'SourceSansProSB',
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),
