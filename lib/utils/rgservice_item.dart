@@ -8,8 +8,9 @@ import '../screens/service_details_screen.dart';
 class RgServiceItem extends StatefulWidget {
   final String type;
   final double price;
+  final String image;
 
-  RgServiceItem({this.price, this.type});
+  RgServiceItem({this.price, this.type, this.image});
 
   @override
   _RgServiceItemState createState() => _RgServiceItemState();
@@ -96,32 +97,59 @@ class _RgServiceItemState extends State<RgServiceItem> {
     }
     return InkWell(
       child: GridTile(
-        child: Container(),
-        header: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              widget.type,
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              '₹ ${widget.price.toString()}',
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 16,
-                color: Colors.deepOrange,
-              ),
-            ),
-          ],
+        child: Image.asset(
+          widget.image,
+          fit: BoxFit.none,
+          scale: 3,
+          // fit: BoxFit.cover,
         ),
+        header: GridTileBar(
+          backgroundColor: Color.fromRGBO(230, 230, 230, 0.6),
+          title: Text(
+            widget.type,
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          subtitle: Text(
+            '₹ ${widget.price.toString()}',
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 16,
+              color: Colors.deepOrange,
+            ),
+          ),
+        ),
+        // header: Container(
+        //   color: Color.fromRGBO(230, 230, 230, 0.4),
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.center,
+        //     children: <Widget>[
+        //       Text(
+        //         widget.type,
+        //         style: TextStyle(
+        //           fontFamily: 'Montserrat',
+        //           fontSize: 18,
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //       ),
+        //       SizedBox(height: 10),
+        //       Text(
+        //         '₹ ${widget.price.toString()}',
+        //         style: TextStyle(
+        //           fontFamily: 'Montserrat',
+        //           fontSize: 16,
+        //           color: Colors.deepOrange,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
         footer: Container(
-          color: Color.fromRGBO(200, 200, 200, 1),
-          height: 75,
+          color: Color.fromRGBO(230, 230, 230, 1),
+          height: 85,
           padding: EdgeInsets.symmetric(horizontal: 30),
           child: Center(
             heightFactor: 0.5,

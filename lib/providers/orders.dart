@@ -26,6 +26,7 @@ class OrderItem with ChangeNotifier {
   final String total;
   final String paid;
   final String ssName;
+  final String specialRequest;
 
   OrderItem({
     @required this.id,
@@ -43,6 +44,7 @@ class OrderItem with ChangeNotifier {
     @required this.total,
     @required this.paid,
     @required this.ssName,
+    @required this.specialRequest,
     this.make,
     this.model,
     this.bikeNumber,
@@ -130,7 +132,6 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> fetchAndSetOrders() async {
-    print(userId);
     final url1 =
         'http://stage.protto.in/api/hitesh/getbookings.php?cid=$userId';
     final response1 = await http.get(url1);
@@ -161,6 +162,7 @@ class Orders with ChangeNotifier {
           ssName: extractedData1['data'][i]['ss_name'],
           approveJobs: extractedData1['data'][i]['job_approve'],
           total: extractedData1['data'][i]['total'],
+          specialRequest: extractedData1['data'][i]['special_request'],
           paid: extractedData1['data'][i]['paid'],
           date: extractedData1['data'][i]['date'],
           time: extractedData1['data'][i]['timestamp'],
@@ -192,6 +194,7 @@ class Orders with ChangeNotifier {
       deliveryType: extractedData['data']['delivery_type'],
       flat: extractedData['data']['flat'],
       landmark: extractedData['data']['landmark'],
+      specialRequest: extractedData['data']['special_request'],
       paid: extractedData['data']['paid'],
       rideable: extractedData['data']['rideable'],
       serviceType: extractedData['data']['service_type'],
@@ -229,6 +232,7 @@ class Orders with ChangeNotifier {
         'paid': '0.0',
         'date': order.date,
         'timestamp': order.time,
+        'special_request': order.specialRequest,
         'delivery_type': order.deliveryType,
         'make': activeBike.brand,
         'model': activeBike.model,
@@ -253,6 +257,7 @@ class Orders with ChangeNotifier {
         landmark: order.landmark,
         time: order.time,
         serviceType: order.serviceType,
+        specialRequest: order.specialRequest,
         ssName: order.ssName,
         rideable: order.rideable,
         status: order.status,
@@ -312,6 +317,7 @@ class Orders with ChangeNotifier {
         total: order.total,
         paid: order.paid,
         approveJobs: order.approveJobs,
+        specialRequest: order.specialRequest,
         bikeNumber: order.bikeNumber,
         bikeYear: order.bikeYear,
         make: order.make,
@@ -373,6 +379,7 @@ class Orders with ChangeNotifier {
       paid: paid,
       landmark: item.landmark,
       rideable: item.rideable,
+      specialRequest: item.specialRequest,
       serviceType: item.serviceType,
       ssName: item.ssName,
       time: item.time,

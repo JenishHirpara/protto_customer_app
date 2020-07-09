@@ -71,6 +71,8 @@ flutter:
     - assets/images/custom_repairs.png
     - assets/images/tyres.png
     - assets/images/denting_penting.png
+    - assets/images/popular_service_1.png
+    - assets/images/popular_service_2.png
 
   fonts:
     - family: SourceSansPro
