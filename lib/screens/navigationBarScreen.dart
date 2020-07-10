@@ -150,36 +150,62 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                 ),
               ),
               Container(
-                height: 150,
+                height: 160,
                 padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Row(
-                      children: [
-                        Text(
-                          activebike != null
-                              ? '${activebike.brand} ${activebike.model}'
-                              : 'My Bike',
-                          textAlign: TextAlign.center,
-                          softWrap: true,
-                          overflow: TextOverflow.fade,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Color.fromRGBO(241, 93, 36, 1),
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500,
+                    activebike != null
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                '${activebike.brand}',
+                                textAlign: TextAlign.center,
+                                softWrap: true,
+                                overflow: TextOverflow.fade,
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  color: Color.fromRGBO(241, 93, 36, 1),
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                '${activebike.model}',
+                                textAlign: TextAlign.center,
+                                softWrap: true,
+                                overflow: TextOverflow.fade,
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  color: Color.fromRGBO(241, 93, 36, 1),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Text(
+                            'My Bike',
+                            textAlign: TextAlign.center,
+                            softWrap: true,
+                            overflow: TextOverflow.fade,
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromRGBO(241, 93, 36, 1),
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
                     SizedBox(height: 8),
                     Row(
                       children: [
                         Text(
                           'Year: ',
                           style: TextStyle(
-                            fontFamily: 'Montserrat',
+                            fontFamily: 'SourceSansPro',
                             color: Color.fromRGBO(100, 100, 100, 0.9),
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
@@ -198,8 +224,9 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                         Text(
                           'Registration Number: ',
                           style: TextStyle(
-                            fontFamily: 'Montserrat',
+                            fontFamily: 'SourceSansPro',
                             color: Color.fromRGBO(100, 100, 100, 0.9),
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
@@ -213,38 +240,40 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                       ],
                     ),
                     SizedBox(height: 12),
-                    Container(
-                      width: 150,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(4.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            spreadRadius: 0.0,
-                            offset: Offset(2.0, 2.0), //(x,y)
-                            blurRadius: 6.0,
+                    Center(
+                      child: Container(
+                        width: 150,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Theme.of(context).primaryColor,
+                            width: 1,
                           ),
-                        ],
-                      ),
-                      child: RaisedButton(
-                        color: Colors.white,
-                        child: Text(
-                          'Manage',
-                          style: TextStyle(
-                            fontFamily: 'SourceSansProSB',
-                            color: Color.fromRGBO(100, 100, 100, 1),
-                          ),
+                          borderRadius: BorderRadius.circular(4.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              spreadRadius: 0.0,
+                              offset: Offset(2.0, 2.0),
+                              blurRadius: 6.0,
+                            ),
+                          ],
                         ),
-                        elevation: 0,
-                        onPressed: () {
-                          Navigator.of(ctx).pop();
-                          Navigator.of(context).push(myBikesRouteBuilder());
-                        },
+                        child: RaisedButton(
+                          color: Colors.white,
+                          child: Text(
+                            'Manage',
+                            style: TextStyle(
+                              fontFamily: 'SourceSansProSB',
+                              color: Color.fromRGBO(100, 100, 100, 1),
+                            ),
+                          ),
+                          elevation: 0,
+                          onPressed: () {
+                            Navigator.of(ctx).pop();
+                            Navigator.of(context).push(myBikesRouteBuilder());
+                          },
+                        ),
                       ),
                     ),
                     SizedBox(height: 12),
@@ -318,18 +347,42 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
           automaticallyImplyLeading: false,
           title: GestureDetector(
             onTap: () => showPopup(activebike),
-            child: Text(
-              activebike != null
-                  ? '${activebike.brand} ${activebike.model}'
-                  : '+ Add a Bike',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                color: Color.fromRGBO(241, 93, 36, 1),
-                fontSize: 22,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            child: activebike != null
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        '${activebike.brand}',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          color: Color.fromRGBO(241, 93, 36, 1),
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        '${activebike.model}',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          color: Color.fromRGBO(241, 93, 36, 1),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  )
+                : Text(
+                    '+ Add a Bike',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Color.fromRGBO(241, 93, 36, 1),
+                      fontSize: 22,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
           ),
           titleSpacing: 20,
           elevation: 0,

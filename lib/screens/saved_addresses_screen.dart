@@ -69,7 +69,6 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
     final addresses = Provider.of<Addresses>(context);
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: Text(
           'Saved Addresses',
           style: TextStyle(
@@ -82,7 +81,7 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
         leading: InkWell(
           child: Icon(
             Icons.arrow_back_ios,
-            color: Colors.black,
+            color: Color.fromRGBO(112, 112, 112, 1),
           ),
           onTap: () {
             Navigator.of(context).pop();

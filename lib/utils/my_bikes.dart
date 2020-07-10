@@ -92,7 +92,7 @@ class _MyBikesState extends State<MyBikes> {
               child: Container(
                 decoration: BoxDecoration(border: getBorder(context, bike)),
                 width: double.infinity,
-                height: 140,
+                height: 135,
                 child: Row(
                   children: <Widget>[
                     Expanded(
@@ -116,7 +116,7 @@ class _MyBikesState extends State<MyBikes> {
                                 Text(
                                   'Year: ',
                                   style: TextStyle(
-                                    fontFamily: 'Montserrat',
+                                    fontFamily: 'SourceSansPro',
                                     color: Color.fromRGBO(100, 100, 100, 1),
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
@@ -138,7 +138,7 @@ class _MyBikesState extends State<MyBikes> {
                                   TextSpan(
                                     text: 'Registration Number: ',
                                     style: TextStyle(
-                                      fontFamily: 'Montserrat',
+                                      fontFamily: 'SourceSansPro',
                                       color: Color.fromRGBO(100, 100, 100, 1),
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
@@ -190,15 +190,15 @@ class _MyBikesState extends State<MyBikes> {
                                       color: Colors.deepOrange,
                                       child: Align(
                                         alignment: Alignment.center,
-                                      child: Text(
-                                        'Active',
-                                        style: TextStyle(
-                                          fontFamily: 'SourceSansProSB',
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500,
+                                        child: Text(
+                                          'Active',
+                                          style: TextStyle(
+                                            fontFamily: 'SourceSansProSB',
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
                                       ),
-                                    ),
                                     ),
                                     IconButton(
                                       icon: Icon(

@@ -42,7 +42,6 @@ class _MyBikesScreenState extends State<MyBikesScreen> {
     final bikes = Provider.of<Bikes>(context);
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: Text(
           'My Bikes',
           style: TextStyle(
@@ -55,7 +54,7 @@ class _MyBikesScreenState extends State<MyBikesScreen> {
         leading: InkWell(
           child: Icon(
             Icons.arrow_back_ios,
-            color: Colors.black,
+            color: Color.fromRGBO(112, 112, 112, 1),
           ),
           onTap: () {
             Navigator.of(context).pop();

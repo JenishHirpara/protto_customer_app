@@ -75,18 +75,19 @@ class _ServiceScreenState extends State<ServiceScreen> {
   }
 
   var _isInit = true;
-  var _isLoading = false;
+  var _isLoading = true;
 
   @override
   void didChangeDependencies() async {
     if (_isInit) {
       final activeBike = Provider.of<Bikes>(context).activeBike;
       if (activeBike != null) {
-        setState(() {
-          _isLoading = true;
-        });
         await Provider.of<Bikes>(context, listen: false)
             .getRgPrice(activeBike.brand, activeBike.model);
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
         setState(() {
           _isLoading = false;
         });
@@ -106,6 +107,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
             length: 5,
             child: Scaffold(
               appBar: AppBar(
+                titleSpacing: 0,
                 leading: InkWell(
                   child: Icon(
                     Icons.arrow_back_ios,
@@ -115,17 +117,39 @@ class _ServiceScreenState extends State<ServiceScreen> {
                     Navigator.of(context).pop();
                   },
                 ),
-                title: Text(
-                  bike == null
-                      ? 'Choose a bike'
-                      : '${bike.brand} ${bike.model}',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: Colors.deepOrange,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                title: bike != null
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            '${bike.brand}',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Colors.deepOrange,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            '${bike.model}',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Colors.deepOrange,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      )
+                    : Text(
+                        'Choose a bike',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          color: Colors.deepOrange,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                 backgroundColor: Color.fromRGBO(250, 250, 250, 1),
                 elevation: 0,
                 actions: <Widget>[

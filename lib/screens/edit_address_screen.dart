@@ -204,7 +204,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       leading: InkWell(
         child: Icon(
           Icons.arrow_back_ios,
-          color: Colors.black,
+          color: Color.fromRGBO(112, 112, 112, 1),
         ),
         onTap: () {
           Navigator.of(context).pop();

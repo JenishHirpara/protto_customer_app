@@ -10,12 +10,11 @@ import '../providers/orders.dart';
 Color orangeColor = new Color(0xFFF69C7A);
 Color greyColor = new Color(0xFFC2C2C2);
 
-String scheduleService = "Schedule \n" + "Service";
-String regularServices = "Regular \n" + "Service";
-String tyres = "Tyres \n" + " ";
-String washPlusCoat = "Wash + \nCoat";
-String customRepairs = "Custom \n" + "Repairs";
-String dentingPainting = "Denting &\n" + "Painting";
+String regularServices = "Regular Service";
+String tyres = "Tyres";
+String washPlusCoat = "Wash + Coat";
+String customRepairs = "Custom Repairs";
+String dentingPainting = "Denting & Painting";
 
 var bottomNavBarIndex = 0;
 
@@ -32,7 +31,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       builder: (ctx) {
         return Dialog(
           child: Container(
-            height: 220,
+            height: 270,
             child: Column(
               children: <Widget>[
                 SizedBox(height: 20),
@@ -110,7 +109,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             width: SizeConfig.blockSizeHorizontal * 100,
             height: SizeConfig.blockSizeVertical * 36,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 2),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -124,7 +123,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         style: TextStyle(
                           fontFamily: 'Montserrat',
                           color: Color.fromRGBO(112, 112, 112, 1),
-                          fontSize: 22,
+                          fontSize: 20,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -319,13 +318,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(30, 0, 0, 5),
+                  padding: EdgeInsets.fromLTRB(26, 0, 0, 5),
                   child: Text(
                     'Popular Services',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       color: Color.fromRGBO(112, 112, 112, 1),
-                      fontSize: 22,
+                      fontSize: 20,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -368,6 +367,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           builder: DotSwiperPaginationBuilder(
             color: Colors.grey,
             activeColor: Colors.deepOrange,
+            size: 7,
+            activeSize: 8,
           ),
         ),
         scale: 1,
