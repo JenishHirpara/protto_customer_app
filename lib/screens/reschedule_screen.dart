@@ -62,6 +62,25 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
     if (!isValid) {
       return;
     }
+    if (_date == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text('Please provide a date for reschedule'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Okay'),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
     _form.currentState.save();
     try {
       await Provider.of<Orders>(context, listen: false)

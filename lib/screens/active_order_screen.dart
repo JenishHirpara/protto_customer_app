@@ -601,7 +601,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
           textAlign: TextAlign.left,
           style: TextStyle(
             fontFamily: 'Montserrat',
-            color: Color.fromRGBO(241, 93, 36, 1),
+            color: Theme.of(context).primaryColor,
             fontSize: 24,
             fontWeight: FontWeight.w500,
           ),
@@ -625,9 +625,9 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             children: <Widget>[
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: EdgeInsets.all(20),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -636,7 +636,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                           '${widget.order.make}',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
-                            color: Color.fromRGBO(241, 93, 36, 1),
+                            color: Theme.of(context).primaryColor,
                             fontSize: 10,
                           ),
                         ),
@@ -644,7 +644,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                           '${widget.order.model}',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
-                            color: Color.fromRGBO(241, 93, 36, 1),
+                            color: Theme.of(context).primaryColor,
                             fontSize: 18,
                           ),
                         ),
@@ -672,8 +672,9 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                         child: Text(
                           'Jobs',
                           style: TextStyle(
-                              fontFamily: 'SourceSansProSB',
-                              color: Colors.white),
+                            fontFamily: 'SourceSansProSB',
+                            color: Colors.white,
+                          ),
                         ),
                         onPressed: () async {
                           Navigator.of(context).push(jobsRoute(
@@ -693,7 +694,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                 'Track the progress',
                 style: TextStyle(
                   fontFamily: 'Montserrat',
-                  //color: Color.fromRGBO(112, 112, 112, 1),
                   color: Color(0xff707070),
                   fontSize: 20,
                   fontWeight: FontWeight.w500,

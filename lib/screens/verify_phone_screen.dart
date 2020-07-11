@@ -52,7 +52,6 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
               'Welcome',
               style: TextStyle(
                 fontFamily: 'Montserrat',
-                //fontWeight: FontWeight.bold,
                 fontSize: 45,
               ),
             ),

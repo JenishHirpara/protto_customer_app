@@ -86,7 +86,7 @@ class _ProwetDetailsScreenState extends State<ProwetDetailsScreen> {
                               width: 10,
                             ),
                             Text(
-                              '5 Hours',
+                              '7 Hours',
                               style: TextStyle(
                                   fontFamily: 'SourceSansPro',
                                   color: Colors.blueGrey,
@@ -571,10 +571,12 @@ class _ProwetDetailsScreenState extends State<ProwetDetailsScreen> {
                                   context: context,
                                   builder: (ctx) {
                                     return AlertDialog(
-                                      title: Text('No bike selected',
-                                          style: TextStyle(
-                                            fontFamily: 'Montserrat',
-                                          )),
+                                      title: Text(
+                                        'No bike selected',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                        ),
+                                      ),
                                       content: Text('Please select a bike',
                                           style: TextStyle(
                                             fontFamily: 'Montserrat',
@@ -628,7 +630,7 @@ class _ProwetDetailsScreenState extends State<ProwetDetailsScreen> {
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(0, 5, 10, 5),
                                   child: Text(
-                                    ' ADD TO CART',
+                                    ' Add To Cart',
                                     style: TextStyle(
                                       fontFamily: 'SourceSansProSB',
                                       fontSize: 18,

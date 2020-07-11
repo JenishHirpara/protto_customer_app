@@ -84,17 +84,17 @@ class _RgServiceItemState extends State<RgServiceItem> {
     );
   }
 
-  Future<void> _showPopup() {
+  Future<void> _showPopup(String title, String content) {
     return showDialog(
       context: context,
       builder: (ctx) {
         return AlertDialog(
           title: Text(
-            'No bike selected',
+            title,
             style: TextStyle(fontFamily: 'Montserrat'),
           ),
           content: Text(
-            'Please select a bike',
+            content,
             style: TextStyle(fontFamily: 'Montserrat'),
           ),
           actions: <Widget>[
@@ -194,20 +194,23 @@ class _RgServiceItemState extends State<RgServiceItem> {
                         ? Icon(
                             Icons.check,
                             color: Colors.white,
+                            size: 16,
                           )
                         : Icon(
                             Icons.add,
                             color: Colors.white,
+                            size: 16,
                           ),
                     swap
                         ? Text(
-                            'ADDED',
+                            'Added',
                             style: TextStyle(
-                                fontFamily: 'SourceSansProSB',
-                                color: Colors.white),
+                              fontFamily: 'SourceSansProSB',
+                              color: Colors.white,
+                            ),
                           )
                         : Text(
-                            'ADD',
+                            'Add',
                             style: TextStyle(
                                 fontFamily: 'SourceSansProSB',
                                 color: Colors.white),
@@ -217,7 +220,8 @@ class _RgServiceItemState extends State<RgServiceItem> {
                 color: swap ? Colors.green : Colors.deepOrange,
                 onPressed: () {
                   if (activebike != null) {
-                    if (cart.findByType(widget.type) == -1) {
+                    if (cart.findByType('PRODRY') == -1 &&
+                        cart.findByType('PROWET') == -1) {
                       setState(() {
                         swap = !swap;
                       });
@@ -229,7 +233,7 @@ class _RgServiceItemState extends State<RgServiceItem> {
                       });
                     }
                   } else {
-                    _showPopup();
+                    _showPopup('No bike selected', 'Please select a bike');
                   }
                 },
               ),
