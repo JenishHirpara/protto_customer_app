@@ -34,7 +34,6 @@ class _SupportScreenState extends State<SupportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: Text(
           'Support',
           style: TextStyle(

@@ -64,9 +64,10 @@ class HomeScreen extends StatelessWidget {
                 child: const Text(
                   'Continue',
                   style: TextStyle(
-                      fontFamily: 'SourceSansProSB',
-                      color: Colors.white,
-                      fontSize: 15),
+                    fontFamily: 'SourceSansProSB',
+                    color: Colors.white,
+                    fontSize: 15,
+                  ),
                 ),
                 onPressed: () {
                   Navigator.of(context)

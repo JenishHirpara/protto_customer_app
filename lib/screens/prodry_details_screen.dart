@@ -107,7 +107,7 @@ class ProdryDetailsScreenState extends State<ProdryDetailsScreen> {
                               width: 10,
                             ),
                             Text(
-                              'Every 4000 KMs or 3 Months',
+                              'Every 2500 KMs or 2 Months',
                               style: TextStyle(
                                   fontFamily: 'SourceSansPro',
                                   color: Colors.blueGrey,
@@ -412,10 +412,11 @@ class ProdryDetailsScreenState extends State<ProdryDetailsScreen> {
                                       Text(
                                         'FAQs',
                                         style: TextStyle(
-                                            fontFamily: 'SourceSansProSB',
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.blueGrey),
+                                          fontFamily: 'SourceSansProSB',
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.blueGrey,
+                                        ),
                                       )
                                     ],
                                   ),
@@ -563,7 +564,7 @@ class ProdryDetailsScreenState extends State<ProdryDetailsScreen> {
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(0, 5, 10, 5),
                                   child: Text(
-                                    ' ADD TO CART',
+                                    'Add To Cart',
                                     style: TextStyle(
                                       fontFamily: 'SourceSansProSB',
                                       fontSize: 18,

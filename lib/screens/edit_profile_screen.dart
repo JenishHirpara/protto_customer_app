@@ -51,7 +51,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final oldProfile = Provider.of<UserProfile>(context).item;
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: Text(
           'Edit Profile',
           style: TextStyle(
