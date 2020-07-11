@@ -69,7 +69,7 @@ class ActiveOrderDetail extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(
-            color: Colors.deepOrange,
+            color: Theme.of(context).primaryColor,
             width: 1,
           ),
           boxShadow: [
@@ -94,7 +94,7 @@ class ActiveOrderDetail extends StatelessWidget {
                       '${order.make}',
                       style: TextStyle(
                         fontFamily: 'Montserrat',
-                        color: Color.fromRGBO(241, 93, 36, 1),
+                        color: Theme.of(context).primaryColor,
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
                       ),
@@ -103,7 +103,7 @@ class ActiveOrderDetail extends StatelessWidget {
                       '${order.model}',
                       style: TextStyle(
                         fontFamily: 'Montserrat',
-                        color: Color.fromRGBO(241, 93, 36, 1),
+                        color: Theme.of(context).primaryColor,
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
                       ),
@@ -210,7 +210,7 @@ class ActiveOrderDetail extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     width: 50,
-                    color: Colors.deepOrange,
+                    color: Theme.of(context).primaryColor,
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(

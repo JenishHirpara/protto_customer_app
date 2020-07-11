@@ -469,7 +469,7 @@ class ProdryDetailsScreenState extends State<ProdryDetailsScreen> {
                           height: 50,
                           width: MediaQuery.of(context).size.width * 1,
                           child: RaisedButton(
-                            color: new Color(0xffF15D24),
+                            color: Theme.of(context).primaryColor,
                             onPressed: () {
                               if (Provider.of<Cart>(context, listen: false)
                                           .findByType('PRODRY') ==

@@ -16,17 +16,17 @@ class PastOrderDetail extends StatelessWidget {
       height: 140,
       decoration: BoxDecoration(
         border: Border.all(
-          color: Colors.deepOrange,
+          color: Theme.of(context).primaryColor,
           width: 1,
         ),
         color: Colors.white,
         boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(1.0, 1.0), //(x,y)
-                    blurRadius: 3.0,
-                  ),
-                ],
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(1.0, 1.0), //(x,y)
+            blurRadius: 3.0,
+          ),
+        ],
       ),
       padding: EdgeInsets.all(8),
       child: Row(
@@ -42,7 +42,7 @@ class PastOrderDetail extends StatelessWidget {
                     '${order.make} ${order.model}',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
-                      color: Color.fromRGBO(241, 93, 36, 1),
+                      color: Theme.of(context).primaryColor,
                       fontSize: 19,
                       fontWeight: FontWeight.w500,
                     ),

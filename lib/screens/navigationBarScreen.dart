@@ -166,7 +166,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                                 overflow: TextOverflow.fade,
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
-                                  color: Color.fromRGBO(241, 93, 36, 1),
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 10,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -178,7 +178,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                                 overflow: TextOverflow.fade,
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
-                                  color: Color.fromRGBO(241, 93, 36, 1),
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -192,7 +192,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                             overflow: TextOverflow.fade,
                             style: TextStyle(
                               fontFamily: 'Montserrat',
-                              color: Color.fromRGBO(241, 93, 36, 1),
+                              color: Theme.of(context).primaryColor,
                               fontSize: 22,
                               fontWeight: FontWeight.w500,
                             ),
@@ -356,7 +356,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontFamily: 'Montserrat',
-                          color: Color.fromRGBO(241, 93, 36, 1),
+                          color: Theme.of(context).primaryColor,
                           fontSize: 10,
                           fontWeight: FontWeight.w500,
                         ),
@@ -366,7 +366,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontFamily: 'Montserrat',
-                          color: Color.fromRGBO(241, 93, 36, 1),
+                          color: Theme.of(context).primaryColor,
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                         ),
@@ -378,7 +378,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontFamily: 'Montserrat',
-                      color: Color.fromRGBO(241, 93, 36, 1),
+                      color: Theme.of(context).primaryColor,
                       fontSize: 22,
                       fontWeight: FontWeight.w500,
                     ),
@@ -422,7 +422,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
             'Search Services',
             style: TextStyle(
               fontFamily: 'Montserrat',
-              color: Color.fromRGBO(241, 93, 36, 1),
+              color: Theme.of(context).primaryColor,
               fontSize: 22,
               fontWeight: FontWeight.w500,
             ),
@@ -440,7 +440,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
             'Order Details',
             style: TextStyle(
               fontFamily: 'Montserrat',
-              color: Color.fromRGBO(241, 93, 36, 1),
+              color: Theme.of(context).primaryColor,
               fontSize: 22,
               fontWeight: FontWeight.w500,
             ),
@@ -458,7 +458,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
             'Referral',
             style: TextStyle(
               fontFamily: 'Montserrat',
-              color: Color.fromRGBO(241, 93, 36, 1),
+              color: Theme.of(context).primaryColor,
               fontSize: 22,
               fontWeight: FontWeight.w500,
             ),
@@ -479,7 +479,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
           border: Border(
             top: BorderSide(
               width: 3.0,
-              color: Color.fromRGBO(241, 93, 36, 1),
+              color: Theme.of(context).primaryColor,
             ),
           ),
         ),
@@ -489,7 +489,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
           type: BottomNavigationBarType.shifting,
           elevation: 5,
           iconSize: 30,
-          selectedItemColor: Colors.deepOrange,
+          selectedItemColor: Theme.of(context).primaryColor,
           unselectedItemColor: Colors.grey,
           currentIndex: _currentIndex,
           items: <BottomNavigationBarItem>[

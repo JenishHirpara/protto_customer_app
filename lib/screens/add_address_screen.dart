@@ -174,7 +174,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         'Add Address',
         style: TextStyle(
           fontFamily: 'Montserrat',
-          color: Color.fromRGBO(241, 93, 36, 1),
+          color: Theme.of(context).primaryColor,
           fontSize: 24,
         ),
       ),
@@ -182,7 +182,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         IconButton(
           icon: Icon(
             Icons.search,
-            color: Colors.deepOrange,
+            color: Theme.of(context).primaryColor,
           ),
           onPressed: () async {
             web.Prediction p = await PlacesAutocomplete.show(
@@ -307,8 +307,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                     child: Text(
                                       'CHANGE',
                                       style: TextStyle(
-                                          fontFamily: 'SourceSansProSB',
-                                          color: Colors.deepOrange),
+                                        fontFamily: 'SourceSansProSB',
+                                        color: Theme.of(context).primaryColor,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -337,7 +338,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   fontFamily: 'SourceSansProSB',
                                   color: Colors.white),
                             ),
-                            color: Colors.deepOrange,
+                            color: Theme.of(context).primaryColor,
                             elevation: 5,
                           ),
                         ),
@@ -449,7 +450,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 height: 45,
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.deepOrange),
+                                  border: Border.all(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
                                   borderRadius: BorderRadius.circular(3.0),
                                 ),
                                 child: RaisedButton(
@@ -479,7 +482,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                           fontFamily: 'SourceSansProSB',
                                           color: Colors.white),
                                     ),
-                                    color: Colors.deepOrange,
+                                    color: Theme.of(context).primaryColor,
                                     elevation: 5,
                                     onPressed: () => _saveForm(),
                                   )),

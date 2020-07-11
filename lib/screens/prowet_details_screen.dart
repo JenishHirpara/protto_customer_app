@@ -534,7 +534,7 @@ class _ProwetDetailsScreenState extends State<ProwetDetailsScreen> {
                           child: RaisedButton(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(3)),
-                            color: new Color(0xffF15D24),
+                            color: Theme.of(context).primaryColor,
                             onPressed: () {
                               if (Provider.of<Cart>(context, listen: false)
                                           .findByType('PROWET') ==

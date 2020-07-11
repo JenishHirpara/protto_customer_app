@@ -71,7 +71,9 @@ class _MyBikesState extends State<MyBikes> {
   Border getBorder(BuildContext context, Bike bike) {
     if (Provider.of<Bikes>(context).activeBike != null) {
       return bike.id == Provider.of<Bikes>(context).activeBike.id
-          ? Border.all(color: Colors.deepOrange)
+          ? Border.all(
+              color: Theme.of(context).primaryColor,
+            )
           : Border.all(color: Colors.white);
     } else {
       return Border.all(color: Colors.white);
@@ -106,7 +108,7 @@ class _MyBikesState extends State<MyBikes> {
                               '${bike.brand} ${bike.model}',
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
-                                color: Colors.deepOrange,
+                                color: Theme.of(context).primaryColor,
                                 fontSize: 20,
                               ),
                             ),
@@ -187,7 +189,7 @@ class _MyBikesState extends State<MyBikes> {
                                   children: <Widget>[
                                     Container(
                                       width: 50,
-                                      color: Colors.deepOrange,
+                                      color: Theme.of(context).primaryColor,
                                       child: Align(
                                         alignment: Alignment.center,
                                         child: Text(

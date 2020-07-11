@@ -45,7 +45,7 @@ class ShoppingCartItem extends StatelessWidget {
               IconButton(
                 icon: Icon(
                   Icons.delete_outline,
-                  color: Colors.deepOrange,
+                  color: Theme.of(context).primaryColor,
                 ),
                 onPressed: () {
                   cart.deleteItem(cartitem.id);

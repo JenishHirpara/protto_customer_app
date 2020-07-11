@@ -98,7 +98,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                             '${bike.brand}',
                             style: TextStyle(
                               fontFamily: 'Montserrat',
-                              color: Colors.deepOrange,
+                              color: Theme.of(context).primaryColor,
                               fontSize: 10,
                               fontWeight: FontWeight.w500,
                             ),
@@ -107,7 +107,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                             '${bike.model}',
                             style: TextStyle(
                               fontFamily: 'Montserrat',
-                              color: Colors.deepOrange,
+                              color: Theme.of(context).primaryColor,
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
                             ),
@@ -118,7 +118,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                         'Choose a bike',
                         style: TextStyle(
                           fontFamily: 'Montserrat',
-                          color: Colors.deepOrange,
+                          color: Theme.of(context).primaryColor,
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                         ),
@@ -144,7 +144,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                   isScrollable: true,
                   labelPadding: EdgeInsets.symmetric(horizontal: 40),
                   unselectedLabelColor: Colors.grey,
-                  labelColor: Colors.deepOrange,
+                  labelColor: Theme.of(context).primaryColor,
                   labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
                   tabs: [
                     Tab(
