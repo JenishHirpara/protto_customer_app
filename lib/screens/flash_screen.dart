@@ -181,7 +181,7 @@ class FlashScreen extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            color: Colors.deepOrange,
+            color: Theme.of(context).primaryColor,
             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: Container(
               height: 250,
@@ -324,7 +324,7 @@ class FlashScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              color: Colors.deepOrange,
+              color: Theme.of(context).primaryColor,
               onPressed: () {
                 Share.share('Referral Code: $referal',
                     subject: 'Referral Code for Protto');

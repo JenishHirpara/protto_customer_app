@@ -80,7 +80,7 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
           'Inspection Images',
           style: TextStyle(
             fontFamily: 'Montserrat',
-            color: Color.fromRGBO(241, 93, 36, 1),
+            color: Theme.of(context).primaryColor,
             fontSize: 24,
             fontWeight: FontWeight.w500,
           ),
@@ -113,7 +113,7 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                           '${widget.order.make} ${widget.order.model}',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
-                            color: Color.fromRGBO(241, 93, 36, 1),
+                            color: Theme.of(context).primaryColor,
                             fontSize: 20,
                           ),
                         ),
@@ -200,7 +200,7 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                             ? Text(
                                 'not set',
                                 style: TextStyle(
-                                  color: Colors.deepOrange,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 15,
                                 ),
                               )
@@ -233,7 +233,7 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                             ? Text(
                                 'not set',
                                 style: TextStyle(
-                                  color: Colors.deepOrange,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 15,
                                 ),
                               )
@@ -316,7 +316,7 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                             ? Text(
                                 'not set',
                                 style: TextStyle(
-                                  color: Colors.deepOrange,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 15,
                                 ),
                               )
@@ -349,7 +349,7 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                             ? Text(
                                 'not set',
                                 style: TextStyle(
-                                  color: Colors.deepOrange,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 15,
                                 ),
                               )

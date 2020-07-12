@@ -122,7 +122,7 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
           'Reschedule',
           style: TextStyle(
             fontFamily: 'Montserrat',
-            color: Color.fromRGBO(241, 93, 36, 1),
+            color: Theme.of(context).primaryColor,
             fontSize: 24,
             fontWeight: FontWeight.w500,
           ),
@@ -225,7 +225,7 @@ class _RescheduleScreenState extends State<RescheduleScreen> {
                     style: TextStyle(
                         fontFamily: 'SourceSansProSB', color: Colors.white),
                   ),
-                  color: Colors.deepOrange,
+                  color: Theme.of(context).primaryColor,
                   elevation: 5,
                 ),
               ),

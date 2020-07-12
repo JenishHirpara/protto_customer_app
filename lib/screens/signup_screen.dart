@@ -261,7 +261,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   fontSize: 15),
                             ),
                       onPressed: _saveForm,
-                      color: Colors.deepOrange,
+                      color: Theme.of(context).primaryColor,
                       elevation: 0,
                     ),
                   ),

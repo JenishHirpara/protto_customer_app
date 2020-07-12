@@ -81,7 +81,9 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           color: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(3.0),
-                            side: BorderSide(color: Colors.deepOrange),
+                            side: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                           onPressed: () {
                             Navigator.of(dialogcontext).pop();
@@ -99,7 +101,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                         ),
                         RaisedButton(
                           elevation: 5,
-                          color: Colors.deepOrange,
+                          color: Theme.of(context).primaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(3.0),
                           ),
@@ -170,7 +172,9 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           color: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(3.0),
-                            side: BorderSide(color: Colors.deepOrange),
+                            side: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                           onPressed: () async {
                             Navigator.of(dialogcontext).pop();
@@ -198,7 +202,9 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           color: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(3.0),
-                            side: BorderSide(color: Colors.deepOrange),
+                            side: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                           onPressed: () {
                             Navigator.of(dialogcontext).pop();
@@ -288,7 +294,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
         title: Text(
           '${widget.order.make} ${widget.order.model}',
           style: GoogleFonts.montserrat(
-            color: Color.fromRGBO(241, 93, 36, 1),
+            color: Theme.of(context).primaryColor,
             fontSize: 24,
             fontWeight: FontWeight.w500,
           ),
@@ -472,7 +478,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                               height: 50,
                               width: double.infinity,
                               child: RaisedButton(
-                                color: new Color(0xffF15D24),
+                                color: Theme.of(context).primaryColor,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4.0),
                                 ),
@@ -529,8 +535,9 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                     color: Colors.white,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(3.0),
-                                      side:
-                                          BorderSide(color: Colors.deepOrange),
+                                      side: BorderSide(
+                                        color: Theme.of(context).primaryColor,
+                                      ),
                                     ),
                                     elevation: 0,
                                     child: Text(
@@ -568,8 +575,9 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                     color: Colors.white,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(3.0),
-                                      side:
-                                          BorderSide(color: Colors.deepOrange),
+                                      side: BorderSide(
+                                        color: Theme.of(context).primaryColor,
+                                      ),
                                     ),
                                     elevation: 0,
                                     child: Text(

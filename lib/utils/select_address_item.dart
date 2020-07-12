@@ -21,11 +21,11 @@ class SelectAddressItem extends StatelessWidget {
                 child: addressSeen == address
                     ? Icon(
                         Icons.radio_button_checked,
-                        color: Colors.deepOrange,
+                        color: Theme.of(context).primaryColor,
                       )
                     : Icon(
                         Icons.radio_button_unchecked,
-                        color: Colors.deepOrange,
+                        color: Theme.of(context).primaryColor,
                       ),
               ),
               title: Text(address.saveas),

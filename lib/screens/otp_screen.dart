@@ -274,7 +274,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   width: double.infinity,
                   height: 45,
                   child: RaisedButton(
-                    color: Colors.deepOrange,
+                    color: Theme.of(context).primaryColor,
                     child: Text(
                       'Continue',
                       style: TextStyle(color: Colors.white),

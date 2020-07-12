@@ -414,7 +414,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
           textAlign: TextAlign.start,
           style: TextStyle(
             fontFamily: 'Montserrrat',
-            color: Color.fromRGBO(241, 93, 36, 1),
+            color: Theme.of(context).primaryColor,
             fontSize: 24,
             fontWeight: FontWeight.w500,
           ),
@@ -537,13 +537,17 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     borderRadius: BorderRadius.all(
                       Radius.circular(4),
                     ),
-                    borderSide: BorderSide(color: Colors.deepOrange),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(0),
                     ),
-                    borderSide: BorderSide(color: Colors.deepOrange),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
                   suffixIcon: Container(
                     margin: EdgeInsets.symmetric(horizontal: 26),
@@ -553,7 +557,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                         'APPLY',
                         style: TextStyle(
                           fontFamily: 'SourceSansProSB',
-                          color: Colors.deepOrange,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                       onTap: () {},
@@ -963,7 +967,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                               'Change Address',
                                               style: TextStyle(
                                                 fontFamily: 'SourceSansPro',
-                                                color: Colors.deepOrange,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
@@ -1029,7 +1034,9 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                     });
                                   },
                                   shape: RoundedRectangleBorder(
-                                    side: BorderSide(color: Colors.deepOrange),
+                                    side: BorderSide(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1037,7 +1044,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 height: 40,
                                 child: RaisedButton(
-                                  color: Colors.deepOrange,
+                                  color: Theme.of(context).primaryColor,
                                   child: Text(
                                     'Select Address',
                                     style: TextStyle(
@@ -1079,7 +1086,9 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                   elevation: 2,
                                   onPressed: _saveForm,
                                   shape: RoundedRectangleBorder(
-                                    side: BorderSide(color: Colors.deepOrange),
+                                    side: BorderSide(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1087,7 +1096,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 height: 40,
                                 child: RaisedButton(
-                                  color: Colors.deepOrange,
+                                  color: Theme.of(context).primaryColor,
                                   child: Text(
                                     'Pay Now',
                                     style: TextStyle(

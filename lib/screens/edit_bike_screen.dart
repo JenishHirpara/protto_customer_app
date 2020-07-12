@@ -89,7 +89,7 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
           '${widget.bike.brand} ${widget.bike.model}',
           style: TextStyle(
             fontFamily: 'Montserrat',
-            color: Color.fromRGBO(241, 93, 36, 1),
+            color: Theme.of(context).primaryColor,
             fontSize: 22,
             fontWeight: FontWeight.w500,
           ),
@@ -161,7 +161,7 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                   _isLoading1
                       ? Center(
                           child: CircularProgressIndicator(
-                          backgroundColor: Colors.deepOrange,
+                          backgroundColor: Theme.of(context).primaryColor,
                         ))
                       : DropdownButtonFormField(
                           value: _selectedModel,
@@ -262,7 +262,7 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                   Container(
                     height: 40,
                     child: RaisedButton(
-                      color: Colors.deepOrange,
+                      color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
                       child: Text('Edit',
                           style: TextStyle(

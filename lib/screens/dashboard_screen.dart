@@ -41,7 +41,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     'Thank You for Signing up!!',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        color: Colors.deepOrange,
+                        color: Theme.of(context).primaryColor,
                         fontSize: 22,
                         fontWeight: FontWeight.w400),
                   ),
@@ -61,7 +61,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 Container(
                   width: 120,
                   child: RaisedButton(
-                    color: Colors.deepOrange,
+                    color: Theme.of(context).primaryColor,
                     elevation: 0,
                     child: Text(
                       'Okay',
@@ -366,7 +366,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         pagination: SwiperPagination(
           builder: DotSwiperPaginationBuilder(
             color: Colors.grey,
-            activeColor: Colors.deepOrange,
+            activeColor: Theme.of(context).primaryColor,
             size: 7,
             activeSize: 8,
           ),

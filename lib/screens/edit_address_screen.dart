@@ -178,7 +178,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
         'Edit Address',
         style: TextStyle(
           fontFamily: 'Montserrat',
-          color: Color.fromRGBO(241, 93, 36, 1),
+          color: Theme.of(context).primaryColor,
           fontSize: 24,
           fontWeight: FontWeight.w500,
         ),
@@ -187,7 +187,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
         IconButton(
           icon: Icon(
             Icons.search,
-            color: Colors.deepOrange,
+            color: Theme.of(context).primaryColor,
           ),
           onPressed: () async {
             web.Prediction p = await PlacesAutocomplete.show(
@@ -312,8 +312,9 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                     child: Text(
                                       'CHANGE',
                                       style: TextStyle(
-                                          fontFamily: 'SourceSansProSB',
-                                          color: Colors.deepOrange),
+                                        fontFamily: 'SourceSansProSB',
+                                        color: Theme.of(context).primaryColor,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -340,7 +341,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                               'Next',
                               style: TextStyle(color: Colors.white),
                             ),
-                            color: Colors.deepOrange,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ],
@@ -454,7 +455,9 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 height: 45,
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.deepOrange),
+                                  border: Border.all(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
                                 ),
                                 child: RaisedButton(
                                   color: Colors.white,
@@ -474,7 +477,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                       'SAVE',
                                       style: TextStyle(color: Colors.white),
                                     ),
-                                    color: Colors.deepOrange,
+                                    color: Theme.of(context).primaryColor,
                                     onPressed: () => _saveForm(),
                                   )),
                             ],

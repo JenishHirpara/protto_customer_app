@@ -75,7 +75,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
           'Add New Bike',
           style: TextStyle(
             fontFamily: 'Montserrat',
-            color: Color.fromRGBO(241, 93, 36, 1),
+            color: Theme.of(context).primaryColor,
             fontSize: 24,
             fontWeight: FontWeight.w300,
           ),
@@ -152,7 +152,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                   _isLoading1
                       ? Center(
                           child: CircularProgressIndicator(
-                          backgroundColor: Colors.deepOrange,
+                          backgroundColor: Theme.of(context).primaryColor,
                         ))
                       : DropdownButtonFormField(
                           value: _selectedModel,
@@ -280,7 +280,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                       ],
                     ),
                     child: RaisedButton(
-                      color: Colors.deepOrange,
+                      color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
                       child: Text(
                         'Add',

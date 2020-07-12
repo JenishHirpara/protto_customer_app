@@ -228,7 +228,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           'Profile',
           style: TextStyle(
             fontFamily: 'Montserrat',
-            color: Color.fromRGBO(241, 93, 36, 1),
+            color: Theme.of(context).primaryColor,
             fontSize: 22,
             fontWeight: FontWeight.w500,
           ),

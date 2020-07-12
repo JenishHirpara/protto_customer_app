@@ -73,7 +73,7 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
           'Saved Addresses',
           style: TextStyle(
             fontFamily: 'Montserrat',
-            color: Color.fromRGBO(241, 93, 36, 1),
+            color: Theme.of(context).primaryColor,
             fontSize: 24,
             fontWeight: FontWeight.w500,
           ),
@@ -112,7 +112,9 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
             width: MediaQuery.of(context).size.width * 0.4,
             height: 40,
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.deepOrange),
+              border: Border.all(
+                color: Theme.of(context).primaryColor,
+              ),
             ),
             child: RaisedButton(
               elevation: 0,

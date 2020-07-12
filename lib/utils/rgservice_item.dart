@@ -149,7 +149,7 @@ class _RgServiceItemState extends State<RgServiceItem> {
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 16,
-                  color: Colors.deepOrange,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
@@ -217,7 +217,7 @@ class _RgServiceItemState extends State<RgServiceItem> {
                           ),
                   ],
                 ),
-                color: swap ? Colors.green : Colors.deepOrange,
+                color: swap ? Colors.green : Theme.of(context).primaryColor,
                 onPressed: () {
                   if (activebike != null) {
                     if (cart.findByType('PRODRY') == -1 &&
