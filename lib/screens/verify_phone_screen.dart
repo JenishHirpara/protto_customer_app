@@ -53,6 +53,7 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontSize: 45,
+                color: Color(0xff403A35),
               ),
             ),
             SizedBox(
@@ -63,6 +64,7 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontSize: 15,
+                color: Color(0xff403A35),
               ),
             ),
             SizedBox(

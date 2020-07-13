@@ -120,6 +120,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   'Verification',
                   style: TextStyle(
                     fontFamily: 'Montserrat',
+                    color: Color(0xff403A35),
                     //fontWeight: FontWeight.bold,
                     fontSize: 30,
                   ),
@@ -133,6 +134,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     'A 4-Digit PIN has been sent to your mobile. Enter it below to continue',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
+                      color: Color(0xff403A35),
                       fontSize: 10,
                       color: Color.fromRGBO(50, 50, 50, 1),
                     ),
