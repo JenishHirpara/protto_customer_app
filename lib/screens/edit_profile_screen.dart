@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import './user_profile_screen.dart';
 import '../utils/SizeConfig.dart';
 import '../providers/profile.dart';
 
@@ -191,6 +192,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   Container(
                     width: MediaQuery.of(context).size.width * 0.1,
                     height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          spreadRadius: 0.0,
+                          offset: Offset(2.0, 2.0), //(x,y)
+                          blurRadius: 6.0,
+                        ),
+                      ],
+                    ),
                     child: FlatButton(
                       color: orangeColor,
                       onPressed: _saveForm,
