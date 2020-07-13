@@ -7,6 +7,7 @@ import './shopping_cart_screen.dart';
 import '../providers/bikes.dart';
 import '../providers/cart_item.dart';
 import '../utils/badge.dart';
+import '../utils/custom_repairs_item.dart';
 
 Color orangeColor = new Color(0xFFF69C7A);
 Color greyColor = new Color(0xFFC2C2C2);
@@ -164,7 +165,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                     regularServicesPage(),
                     regularServicesPage(),
                     regularServicesPage(),
-                    regularServicesPage(),
+                    customRepairsPage(),
                     regularServicesPage(),
                   ],
                 ),
@@ -199,6 +200,49 @@ class _ServiceScreenState extends State<ServiceScreen> {
         childAspectRatio: 2 / 3,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
+      ),
+    );
+  }
+
+  Widget customRepairsPage() {
+    final activeBike = Provider.of<Bikes>(context).activeBike;
+    return SingleChildScrollView(
+      child: GridView(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        children: <Widget>[
+          CustomRepairsItem(
+            price: activeBike != null ? 149 : 0.0,
+            type: 'Insurance Claim',
+            image: 'assets/images/insurance_claim.png',
+          ),
+          CustomRepairsItem(
+            price: activeBike != null ? 149 : 0.0,
+            type: 'Brake Inspection',
+            image: 'assets/images/brake_inspection.png',
+          ),
+          CustomRepairsItem(
+            price: activeBike != null ? 149 : 0.0,
+            type: 'Electrical Inspection',
+            image: 'assets/images/electrical_inspection.png',
+          ),
+          CustomRepairsItem(
+            price: activeBike != null ? 149 : 0.0,
+            type: 'Clutch Inspection',
+            image: 'assets/images/clutch_inspection.png',
+          ),
+          CustomRepairsItem(
+            price: activeBike != null ? 149 : 0.0,
+            type: 'Other',
+            image: 'assets/images/other.png',
+          ),
+        ],
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 2 / 3,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+        ),
       ),
     );
   }

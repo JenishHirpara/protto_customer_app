@@ -51,39 +51,41 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               ],
             ),
           ),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  '  Past Bookings',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (ctx, i) => Column(
+          pastorders.isEmpty
+              ? Container()
+              : Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      ChangeNotifierProvider.value(
-                        value: pastorders[i],
-                        child: PastOrderDetail(i),
+                      Text(
+                        '  Past Bookings',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      SizedBox(
-                        height: 10,
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (ctx, i) => Column(
+                          children: <Widget>[
+                            ChangeNotifierProvider.value(
+                              value: pastorders[i],
+                              child: PastOrderDetail(i),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
+                        itemCount: pastorders.length,
                       ),
                     ],
                   ),
-                  itemCount: pastorders.length,
                 ),
-              ],
-            ),
-          ),
         ],
       ),
     );
