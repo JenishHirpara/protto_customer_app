@@ -392,21 +392,44 @@ class Orders with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String> verifyotp(String bookingId, String otp) async {
+  Future<String> verifyotp(String bookingId, String otp, String status) async {
     const url = 'http://stage.protto.in/api/hitesh/otpapprove.php';
     final response = await http.patch(url,
         body: json.encode({
           'booking_id': bookingId,
           'otp': otp,
+          'status': status,
         }));
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
-    if (extractedData['message'] == 'otp already approved') {
-      return 'You have already verified otp!';
+    if (extractedData['message'] == 'otp cannot be approved right now') {
+      return extractedData['message'];
     }
     if (extractedData['message'] == 'Invalid OTP') {
       return 'Incorrect otp';
     }
     if (extractedData['message'] == 'otp approved') {
+      var index = _items.indexWhere((order) => order.bookingId == bookingId);
+      var item = _items.firstWhere((order) => order.bookingId == bookingId);
+      _items[index] = OrderItem(
+        id: item.id,
+        bookingId: bookingId,
+        rideable: item.rideable,
+        serviceType: item.serviceType,
+        time: item.time,
+        date: item.date,
+        bikeid: item.bikeid,
+        flat: item.flat,
+        address: item.address,
+        deliveryType: item.deliveryType,
+        landmark: item.landmark,
+        approveJobs: item.approveJobs,
+        total: item.total,
+        paid: item.paid,
+        ssName: item.ssName,
+        specialRequest: item.specialRequest,
+        status: '${int.parse(status) + 1}',
+      );
+      notifyListeners();
       return 'Otp verification successful!';
     }
     return 'some error';
