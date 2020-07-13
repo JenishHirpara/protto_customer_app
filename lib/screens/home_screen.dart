@@ -29,6 +29,7 @@ class HomeScreen extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontSize: 45,
+                color: Color(0xff403A35),
               ),
             ),
             SizedBox(
@@ -39,6 +40,7 @@ class HomeScreen extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontSize: 15,
+                color: Color(0xff403A35),
               ),
             ),
             SizedBox(
