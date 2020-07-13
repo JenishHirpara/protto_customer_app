@@ -3,20 +3,20 @@ import 'package:provider/provider.dart';
 
 import '../providers/cart_item.dart';
 import '../providers/bikes.dart';
-import '../screens/rg_details_screen.dart';
+import '../screens/custom_repairs_detail_screen.dart';
 
-class RgServiceItem extends StatefulWidget {
+class CustomRepairsItem extends StatefulWidget {
   final String type;
   final double price;
   final String image;
 
-  RgServiceItem({this.price, this.type, this.image});
+  CustomRepairsItem({this.price, this.type, this.image});
 
   @override
-  _RgServiceItemState createState() => _RgServiceItemState();
+  CustomRepairsItemState createState() => CustomRepairsItemState();
 }
 
-class _RgServiceItemState extends State<RgServiceItem> {
+class CustomRepairsItemState extends State<CustomRepairsItem> {
   var swap;
   var item;
 
@@ -25,17 +25,17 @@ class _RgServiceItemState extends State<RgServiceItem> {
     item = CartItem(
       id: DateTime.now().toString(),
       price: widget.price,
-      service: 'Regular Service',
+      service: 'Custom Repairs',
       type: widget.type,
     );
     super.initState();
   }
 
-  PageRouteBuilder rgDetailsPageRoute(CartItem cart) {
+  PageRouteBuilder customRepairsDetailPageRoute(CartItem cart) {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return RgDetailsScreen(cart);
+        return CustomRepairsDetailScreen(cart);
       },
       transitionDuration: Duration(milliseconds: 500),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
@@ -101,19 +101,19 @@ class _RgServiceItemState extends State<RgServiceItem> {
         child: GridTile(
           child: Image.asset(
             widget.image,
-            fit: BoxFit.none,
-            scale: 3,
-            // fit: BoxFit.cover,
+            fit: BoxFit.cover,
           ),
           header: GridTileBar(
             backgroundColor: Color.fromRGBO(220, 220, 220, 0.9),
             title: Center(
-              child: Image(
-                image: widget.type == 'PRODRY'
-                    ? AssetImage('assets/images/ProDry.png')
-                    : AssetImage('assets/images/ProWet.png'),
-                width: 100,
-                height: 30,
+              child: Text(
+                widget.type,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'SourceSansPro',
+                  color: Color.fromRGBO(112, 112, 112, 1),
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
             subtitle: Center(
@@ -168,8 +168,7 @@ class _RgServiceItemState extends State<RgServiceItem> {
                 color: swap ? Colors.green : Theme.of(context).primaryColor,
                 onPressed: () {
                   if (activebike != null) {
-                    if (cart.findByType('PRODRY') == -1 &&
-                        cart.findByType('PROWET') == -1) {
+                    if (cart.findByType(widget.type) == -1) {
                       setState(() {
                         swap = !swap;
                       });
@@ -189,7 +188,7 @@ class _RgServiceItemState extends State<RgServiceItem> {
           ),
         ),
         onTap: () {
-          Navigator.of(context).push(rgDetailsPageRoute(item));
+          Navigator.of(context).push(customRepairsDetailPageRoute(item));
         },
       ),
     );

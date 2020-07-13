@@ -49,6 +49,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.7.5
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/appIcon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -66,6 +72,11 @@ flutter:
     - assets/images/protto-logo.png
     - assets/images/ProDry.png
     - assets/images/ProWet.png
+    - assets/images/brake_inspection.png
+    - assets/images/clutch_inspection.png
+    - assets/images/electrical_inspection.png
+    - assets/images/insurance_claim.png
+    - assets/images/other.png
     - assets/images/ic_bike.png
     - assets/images/gear_with_car.png
     - assets/images/wash_plus_coat.png

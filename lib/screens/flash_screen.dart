@@ -181,73 +181,95 @@ class FlashScreen extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            color: Theme.of(context).primaryColor,
             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: Container(
-              height: 250,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromRGBO(50, 50, 50, 1),
+                    Theme.of(context).primaryColor,
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+              height: 220,
               width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    'PROTTO BUCKS',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
+                  Container(
+                    height: 30,
+                    width: 100,
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
                       color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w500,
+                    ),
+                    child: Image.asset(
+                      'assets/images/protto-logo.png',
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(height: 60),
-                  Text(
-                    'Total Balance',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  ),
-                  Text(
-                    '₹ ' + prottoBucks,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'Protto Bucks',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                      Text(
+                        '₹ ' + prottoBucks,
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(24),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             child: Text(
-              'Description of using the referral code',
+              'Refer your Friends & Earn',
               style: TextStyle(
-                //fontFamily: 'Montserrat',
                 color: Color.fromRGBO(112, 112, 112, 1),
-                fontSize: 16,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(24),
-            child: Text(
-              '(Copy link or press share button)',
-              style: TextStyle(
-                //fontFamily: 'Montserrat',
-                color: Color.fromRGBO(112, 112, 112, 1),
-                fontSize: 16,
-              ),
-            ),
-          ),
-          Container(
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: Text(
+              'More Friends you bring in to use Protto, more you earn. Your friend gets Rs. 100 on Sign Up, you get Rs. 100 once your friend completes a booking with Protto',
+              style: TextStyle(
+                color: Color.fromRGBO(112, 112, 112, 1),
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            child: Text(
               'Your Referral Code',
-              style: TextStyle(fontFamily: 'Montserrat'),
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                color: Color.fromRGBO(112, 112, 112, 1),
+              ),
             ),
           ),
           Container(
@@ -311,7 +333,9 @@ class FlashScreen extends StatelessWidget {
                     child: Text(
                       'Share',
                       style: TextStyle(
-                          fontFamily: 'SourceSansProSB', color: Colors.white),
+                        fontFamily: 'SourceSansProSB',
+                        color: Colors.white,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ),
