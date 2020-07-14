@@ -233,8 +233,10 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                       });
                       var message =
                           await Provider.of<Orders>(context, listen: false)
-                              .verifyotp(widget.order.bookingId,
-                                  '$_digit1$_digit2$_digit3$_digit4');
+                              .verifyotp(
+                                  widget.order.bookingId,
+                                  '$_digit1$_digit2$_digit3$_digit4',
+                                  widget.order.status);
                       setState(() {
                         _isLoading = false;
                       });
@@ -578,13 +580,48 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         time: widget.order.time,
       ),
       SampleStepTile(
-        title: Text(
-          'Delivered',
-          textAlign: TextAlign.left,
-          style: TextStyle(
-            fontFamily: 'SourceSansPro',
-            color: Color(0xff707070),
-          ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'Delivered',
+              style: TextStyle(
+                color: Color(0xff707070),
+                fontFamily: 'SourceSansPro',
+              ),
+            ),
+            SizedBox(height: 10),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.35,
+              height: 30,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Theme.of(context).primaryColor,
+                  width: 1.2,
+                ),
+                borderRadius: BorderRadius.circular(4.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey[400],
+                    spreadRadius: 0.0,
+                    offset: Offset(2.0, 2.0), //(x,y)
+                    blurRadius: 4.0,
+                  ),
+                ],
+              ),
+              child: FlatButton(
+                color: Color.fromRGBO(250, 250, 250, 1),
+                child: Text(
+                  'OTP',
+                  style: TextStyle(
+                    fontFamily: 'SourcsSansProSB',
+                    color: Color.fromRGBO(112, 112, 112, 0.7),
+                  ),
+                ),
+                onPressed: showPopUp,
+              ),
+            ),
+          ],
         ),
         date: _order == null ? widget.order.date : _order.date,
         time: _order == null ? widget.order.time : _order.time,

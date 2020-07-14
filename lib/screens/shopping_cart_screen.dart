@@ -198,7 +198,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     final cart = Provider.of<Cart>(context, listen: false).items;
     var services = '';
     for (int i = 0; i < cart.length; i++) {
-      services = services + '${cart[i].type},';
+      services = services + '${cart[i].type}(${cart[i].service}),';
     }
     _orderItem = OrderItem(
       id: null,
@@ -406,7 +406,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
