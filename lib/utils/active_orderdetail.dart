@@ -59,136 +59,72 @@ class ActiveOrderDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final order = Provider.of<Orders>(context).activeOrders[i];
-    return InkWell(
-      onTap: () {
-        Navigator.of(context).push(pageRouteBuilder(order));
-      },
-      child: Container(
-        width: double.infinity,
-        height: order.landmark != '' ? 225 : 205,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            color: Theme.of(context).primaryColor,
-            width: 1,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(pageRouteBuilder(order));
+        },
+        child: Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              offset: Offset(1.0, 1.0), //(x,y)
-              blurRadius: 3.0,
+          child: Container(
+            width: double.infinity,
+            height: order.landmark != '' ? 225 : 205,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.15),
+                  offset: Offset(0.0, 5.0), //(x,y)
+                  blurRadius: 7.0,
+                ),
+              ],
             ),
-          ],
-        ),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 8,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      '${order.make}',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      '${order.model}',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Row(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 8,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          'Booking ID:',
+                          '${order.make}',
                           style: TextStyle(
-                            fontFamily: 'SourceSansPro',
-                            color: Color.fromRGBO(128, 128, 128, 1),
-                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                        SizedBox(width: 8),
                         Text(
-                          order.bookingId,
+                          '${order.model}',
                           style: TextStyle(
-                            fontFamily: 'SourceSansPro',
-                            color: Colors.grey,
+                            fontFamily: 'Montserrat',
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                      ],
-                    ),
-                    SizedBox(height: 4),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          'Pickup Date:',
-                          style: TextStyle(
-                            fontFamily: 'SourceSansPro',
-                            color: Color.fromRGBO(128, 128, 128, 1),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Text(
-                          DateFormat('dd/MM/yy')
-                              .format(DateTime.parse(order.date)),
-                          style: TextStyle(
-                            fontFamily: 'SourceSansPro',
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 4),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          'Pickup Time:',
-                          style: TextStyle(
-                            fontFamily: 'SourceSansPro',
-                            color: Color.fromRGBO(128, 128, 128, 1),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Text(
-                          order.time,
-                          style: TextStyle(
-                            fontFamily: 'SourceSansPro',
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 4),
-                    Container(
-                      width: double.infinity,
-                      child: RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Pickup Address: ',
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              'Booking ID:',
                               style: TextStyle(
                                 fontFamily: 'SourceSansPro',
                                 color: Color.fromRGBO(128, 128, 128, 1),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            TextSpan(
-                              text: order.landmark == ''
-                                  ? '${order.flat}, ${order.address}'
-                                  : '${order.flat},${order.landmark}, ${order.address}',
+                            SizedBox(width: 8),
+                            Text(
+                              order.bookingId,
                               style: TextStyle(
                                 fontFamily: 'SourceSansPro',
                                 color: Colors.grey,
@@ -196,61 +132,139 @@ class ActiveOrderDetail extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
+                        SizedBox(height: 4),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              'Pickup Date:',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                color: Color.fromRGBO(128, 128, 128, 1),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              DateFormat('dd/MM/yy')
+                                  .format(DateTime.parse(order.date)),
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 4),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              'Pickup Time:',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                color: Color.fromRGBO(128, 128, 128, 1),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              order.time,
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 4),
+                        Container(
+                          width: double.infinity,
+                          child: RichText(
+                            text: TextSpan(
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'Pickup Address: ',
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                    color: Color.fromRGBO(128, 128, 128, 1),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: order.landmark == ''
+                                      ? '${order.flat}, ${order.address}'
+                                      : '${order.flat},${order.landmark}, ${order.address}',
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    width: 50,
-                    color: Theme.of(context).primaryColor,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Active',
-                        style: TextStyle(
-                          fontFamily: 'SourceSansProSB',
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Container(
+                        width: 55,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                          ),
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Active',
+                            style: TextStyle(
+                              fontFamily: 'SourceSansProSB',
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 20,
-                    color: Color.fromRGBO(112, 112, 112, 1),
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        'Status:',
-                        style: TextStyle(
-                            fontFamily: 'SourceSansPro',
-                            color: Color.fromRGBO(128, 128, 128, 1),
-                            fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Color.fromRGBO(112, 112, 112, 1),
                       ),
-                      Text(
-                        _getStatus(order),
-                        style: TextStyle(
-                            fontFamily: 'SourceSansPro',
-                            color: Theme.of(context).primaryColor),
-                        textAlign: TextAlign.center,
+                      Column(
+                        children: <Widget>[
+                          Text(
+                            'Status:',
+                            style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                color: Color.fromRGBO(128, 128, 128, 1),
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            _getStatus(order),
+                            style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                color: Theme.of(context).primaryColor),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

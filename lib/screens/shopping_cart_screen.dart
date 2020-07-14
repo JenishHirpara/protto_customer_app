@@ -21,8 +21,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   Address _addressSeen;
   var _date;
   var _prottoBucks;
-  // var _pressedOne = false;
-  // var _pressedTwo = false;
   final _form = GlobalKey<FormState>();
 
   Future selectAddress(BuildContext context) {
@@ -126,6 +124,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         bikeNumber:
             Provider.of<Bikes>(context, listen: false).activeBike.number,
         bikeYear: Provider.of<Bikes>(context, listen: false).activeBike.year,
+        addressId: _addressSeen.id,
         flat: _addressSeen.flat,
         landmark: _addressSeen.landmark,
         total: _orderItem.total,
@@ -207,6 +206,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       bikeid: '',
       bikeNumber: '',
       bikeYear: '',
+      addressId: _addressSeen == null ? null : _addressSeen.id,
       flat: _addressSeen == null ? null : _addressSeen.flat,
       landmark: _addressSeen == null ? null : _addressSeen.landmark,
       approveJobs: '0',
@@ -262,6 +262,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         bikeid: _orderItem.bikeid,
         bikeNumber: _orderItem.bikeNumber,
         bikeYear: _orderItem.bikeYear,
+        addressId: _orderItem.addressId,
         flat: _orderItem.flat,
         landmark: _orderItem.landmark,
         total: _orderItem.total,
@@ -362,6 +363,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         bikeNumber:
             Provider.of<Bikes>(context, listen: false).activeBike.number,
         bikeYear: Provider.of<Bikes>(context, listen: false).activeBike.year,
+        addressId: _addressSeen.id,
         flat: _addressSeen.flat,
         landmark: _addressSeen.landmark,
         total: _orderItem.total,
@@ -605,11 +607,12 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                       items: <String>['Pick & Drop', 'Self Delivery']
                           .map<DropdownMenuItem>((value) {
                         return DropdownMenuItem<String>(
-                            child: Text(
-                              value,
-                              style: TextStyle(fontFamily: 'SourceSansPro'),
-                            ),
-                            value: value);
+                          child: Text(
+                            value,
+                            style: TextStyle(fontFamily: 'SourceSansPro'),
+                          ),
+                          value: value,
+                        );
                       }).toList(),
                       validator: (value) {
                         if (value == null) {
@@ -627,6 +630,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                           bikeYear: _orderItem.bikeYear,
                           flat: _orderItem.flat,
                           landmark: _orderItem.landmark,
+                          addressId: _orderItem.addressId,
                           total: _orderItem.total,
                           paid: _orderItem.paid,
                           make: _orderItem.make,
@@ -644,128 +648,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                       },
                     ),
                   ),
-                  // SizedBox(height: 20),
-                  // Padding(
-                  //   padding: EdgeInsets.symmetric(horizontal: 20),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: <Widget>[
-                  //       Text(
-                  //         'Is Bike rideable?',
-                  //         style: TextStyle(
-                  //           fontFamily: 'SourceSansPro',
-                  //           fontSize: 16,
-                  //         ),
-                  //       ),
-                  //       Container(
-                  //         height: 30,
-                  //         width: MediaQuery.of(context).size.width * 0.25,
-                  //         child: RaisedButton(
-                  //           shape: RoundedRectangleBorder(
-                  //             borderRadius: BorderRadius.circular(8),
-                  //             side: _pressedOne
-                  //                 ? BorderSide()
-                  //                 : BorderSide(color: Colors.deepOrange),
-                  //           ),
-                  //           elevation: 2,
-                  //           color:
-                  //               _pressedOne ? Colors.deepOrange : Colors.white,
-                  //           child: Text(
-                  //             'Yes',
-                  //             style: TextStyle(
-                  //               fontFamily: 'SourceSansProSB',
-                  //               fontSize: 15,
-                  //               color:
-                  //                   _pressedOne ? Colors.white : Colors.black,
-                  //             ),
-                  //           ),
-                  //           onPressed: () {
-                  //             if (_pressedOne) {
-                  //               return;
-                  //             }
-                  //             setState(() {
-                  //               _pressedOne = !_pressedOne;
-                  //               if (_pressedTwo) {
-                  //                 _pressedTwo = !_pressedTwo;
-                  //               }
-                  //             });
-                  //             _orderItem = OrderItem(
-                  //               id: _orderItem.id,
-                  //               bookingId: _orderItem.bookingId,
-                  //               address: _orderItem.address,
-                  //               bikeid: _orderItem.bikeid,
-                  //               bikeNumber: _orderItem.bikeNumber,
-                  //               bikeYear: _orderItem.bikeYear,
-                  //               flat: _orderItem.flat,
-                  //               landmark: _orderItem.landmark,
-                  //               make: _orderItem.make,
-                  //               model: _orderItem.model,
-                  //               status: _orderItem.status,
-                  //               rideable: 'Yes',
-                  //               serviceType: _orderItem.serviceType,
-                  //               date: _orderItem.date,
-                  //               time: _orderItem.time,
-                  //               deliveryType: _orderItem.deliveryType,
-                  //             );
-                  //           },
-                  //         ),
-                  //       ),
-                  //       Container(
-                  //         height: 30,
-                  //         width: MediaQuery.of(context).size.width * 0.25,
-                  //         child: RaisedButton(
-                  //           shape: RoundedRectangleBorder(
-                  //             borderRadius: BorderRadius.circular(8),
-                  //             side: _pressedTwo
-                  //                 ? BorderSide()
-                  //                 : BorderSide(color: Colors.deepOrange),
-                  //           ),
-                  //           elevation: 2,
-                  //           color:
-                  //               _pressedTwo ? Colors.deepOrange : Colors.white,
-                  //           child: Text(
-                  //             'No',
-                  //             style: TextStyle(
-                  //               fontFamily: 'SourceSansProSB',
-                  //               fontSize: 15,
-                  //               color:
-                  //                   _pressedTwo ? Colors.white : Colors.black,
-                  //             ),
-                  //           ),
-                  //           onPressed: () {
-                  //             if (_pressedTwo) {
-                  //               return;
-                  //             }
-                  //             setState(() {
-                  //               _pressedTwo = !_pressedTwo;
-                  //               if (_pressedOne) {
-                  //                 _pressedOne = !_pressedOne;
-                  //               }
-                  //             });
-                  //             _orderItem = OrderItem(
-                  //               id: _orderItem.id,
-                  //               bookingId: _orderItem.bookingId,
-                  //               address: _orderItem.address,
-                  //               bikeid: _orderItem.bikeid,
-                  //               bikeNumber: _orderItem.bikeNumber,
-                  //               bikeYear: _orderItem.bikeYear,
-                  //               flat: _orderItem.flat,
-                  //               landmark: _orderItem.landmark,
-                  //               make: _orderItem.make,
-                  //               model: _orderItem.model,
-                  //               status: _orderItem.status,
-                  //               rideable: 'No',
-                  //               serviceType: _orderItem.serviceType,
-                  //               date: _orderItem.date,
-                  //               time: _orderItem.time,
-                  //               deliveryType: _orderItem.deliveryType,
-                  //             );
-                  //           },
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                   SizedBox(height: 20),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
@@ -839,6 +721,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                           bikeid: _orderItem.bikeid,
                           bikeNumber: _orderItem.bikeNumber,
                           bikeYear: _orderItem.bikeYear,
+                          addressId: _orderItem.addressId,
                           flat: _orderItem.flat,
                           landmark: _orderItem.landmark,
                           total: _orderItem.total,
@@ -897,6 +780,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                           bikeid: _orderItem.bikeid,
                           bikeNumber: _orderItem.bikeNumber,
                           bikeYear: _orderItem.bikeYear,
+                          addressId: _orderItem.addressId,
                           flat: _orderItem.flat,
                           landmark: _orderItem.landmark,
                           total: _orderItem.total,

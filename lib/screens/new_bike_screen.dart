@@ -93,7 +93,14 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
         elevation: 0,
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: Image.asset(
+                'assets/images/loader.gif',
+                fit: BoxFit.cover,
+                height: 85,
+                width: 85,
+              ),
+            )
           : Form(
               key: _form,
               child: ListView(

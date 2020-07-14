@@ -85,6 +85,7 @@ flutter:
     - assets/images/denting_penting.png
     - assets/images/popular_service_1.png
     - assets/images/popular_service_2.png
+    - assets/images/loader.gif
 
   fonts:
     - family: SourceSansPro

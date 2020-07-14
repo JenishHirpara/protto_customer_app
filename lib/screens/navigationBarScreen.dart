@@ -472,7 +472,14 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
     return Scaffold(
       appBar: _isLoading ? null : _pages[_currentIndex]['appbar'],
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: Image.asset(
+                'assets/images/loader.gif',
+                fit: BoxFit.cover,
+                height: 85,
+                width: 85,
+              ),
+            )
           : _pages[_currentIndex]['page'],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(

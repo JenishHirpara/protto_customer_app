@@ -126,30 +126,33 @@ class _SearchScreenState extends State<SearchScreen> {
               filterSearchResults(value);
             },
             decoration: new InputDecoration(
-                suffixIcon: GestureDetector(
-                    child: Icon(
-                      Icons.clear,
-                      color: new Color(0xff626262),
-                    ),
-                    onTap: () {
-                      _editingController.clear();
-                    }),
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: new Color(0xff626262),
-                ),
-                border: new OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    const Radius.circular(10.0),
+              suffixIcon: GestureDetector(
+                  child: Icon(
+                    Icons.clear,
+                    color: new Color(0xff626262),
                   ),
+                  onTap: () {
+                    _editingController.clear();
+                  }),
+              prefixIcon: Icon(
+                Icons.search,
+                color: new Color(0xff626262),
+              ),
+              border: new OutlineInputBorder(
+                borderRadius: const BorderRadius.all(
+                  const Radius.circular(10.0),
                 ),
-                labelText: "Search Service",
-                hintText: "Search Service",
-                labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
-                filled: true,
-                hintStyle: new TextStyle(
-                    fontFamily: 'SourceSansPro', color: new Color(0xff1D1D1)),
-                fillColor: Colors.white),
+              ),
+              labelText: "Search Service",
+              hintText: "Search Service",
+              labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
+              filled: true,
+              hintStyle: new TextStyle(
+                fontFamily: 'SourceSansPro',
+                color: new Color(0xff1D1D1),
+              ),
+              fillColor: Colors.white,
+            ),
           ),
         ),
         ListView.builder(

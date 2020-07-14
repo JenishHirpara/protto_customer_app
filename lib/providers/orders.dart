@@ -18,6 +18,7 @@ class OrderItem with ChangeNotifier {
   final String date;
   final String time;
   final String bikeNumber;
+  final String addressId;
   final String flat;
   final String address;
   final String landmark;
@@ -37,6 +38,7 @@ class OrderItem with ChangeNotifier {
     @required this.date,
     @required this.bikeid,
     @required this.flat,
+    @required this.addressId,
     @required this.address,
     @required this.deliveryType,
     @required this.landmark,
@@ -156,6 +158,7 @@ class Orders with ChangeNotifier {
           rideable: extractedData1['data'][i]['rideable'],
           serviceType: extractedData1['data'][i]['service_type'],
           status: extractedData1['data'][i]['status'],
+          addressId: extractedData1['data'][i]['address_id'],
           address: extractedData1['data'][i]['address'],
           flat: extractedData1['data'][i]['flat'],
           landmark: extractedData1['data'][i]['landmark'],
@@ -192,6 +195,7 @@ class Orders with ChangeNotifier {
       bikeid: extractedData['data']['bike_id'],
       date: extractedData['data']['date'],
       deliveryType: extractedData['data']['delivery_type'],
+      addressId: extractedData['data']['address_id'],
       flat: extractedData['data']['flat'],
       landmark: extractedData['data']['landmark'],
       specialRequest: extractedData['data']['special_request'],
@@ -225,9 +229,7 @@ class Orders with ChangeNotifier {
         'bike_id': order.bikeid,
         'rideable': order.rideable,
         'service_type': order.serviceType,
-        'address': order.address,
-        'flat': order.flat,
-        'landmark': order.landmark,
+        'address_id': order.addressId,
         'total': order.total,
         'paid': '0.0',
         'date': order.date,
@@ -249,6 +251,7 @@ class Orders with ChangeNotifier {
       OrderItem(
         id: extractedData['id'],
         bookingId: extractedData['booking_id'],
+        addressId: order.addressId,
         address: order.address,
         bikeid: order.bikeid,
         date: order.date,
@@ -309,6 +312,7 @@ class Orders with ChangeNotifier {
         address: order.address,
         bikeid: order.bikeid,
         deliveryType: order.deliveryType,
+        addressId: order.addressId,
         flat: order.flat,
         landmark: order.landmark,
         rideable: order.rideable,
@@ -374,6 +378,7 @@ class Orders with ChangeNotifier {
       bookingId: item.bookingId,
       date: item.date,
       deliveryType: item.deliveryType,
+      addressId: item.addressId,
       flat: item.flat,
       total: total,
       paid: paid,
@@ -418,6 +423,7 @@ class Orders with ChangeNotifier {
         time: item.time,
         date: item.date,
         bikeid: item.bikeid,
+        addressId: item.addressId,
         flat: item.flat,
         address: item.address,
         deliveryType: item.deliveryType,
