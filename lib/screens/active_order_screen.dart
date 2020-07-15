@@ -666,61 +666,67 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          '${widget.order.make}',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 10,
+                    Expanded(
+                      flex: 6,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            '${widget.order.make}',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 10,
+                            ),
                           ),
-                        ),
-                        Text(
-                          '${widget.order.model}',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 18,
+                          Text(
+                            '${widget.order.model}',
+                            softWrap: true,
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 18,
+                            ),
                           ),
-                        ),
-                        Text(
-                          widget.order.bikeYear,
-                          style: TextStyle(
-                            color: Color.fromRGBO(112, 112, 112, 0.7),
+                          Text(
+                            widget.order.bikeYear,
+                            style: TextStyle(
+                              color: Color.fromRGBO(112, 112, 112, 0.7),
+                            ),
                           ),
-                        ),
-                        Text(
-                          widget.order.bikeNumber,
-                          style: TextStyle(
-                            color: Color.fromRGBO(112, 112, 112, 0.7),
+                          Text(
+                            widget.order.bikeNumber,
+                            style: TextStyle(
+                              color: Color.fromRGBO(112, 112, 112, 0.7),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.33,
-                      margin: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4.0),
+                        ],
                       ),
-                      child: RaisedButton(
-                        child: Text(
-                          'Jobs',
-                          style: TextStyle(
-                            fontFamily: 'SourceSansProSB',
-                            color: Colors.white,
-                          ),
+                    ),
+                    Expanded(
+                      flex: 5,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.33,
+                        margin: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.0),
                         ),
-                        onPressed: () async {
-                          Navigator.of(context).push(jobsRoute(
-                              _order == null ? widget.order : _order));
-
-                          _refreshPage();
-                        },
-                        color: Theme.of(context).primaryColor,
-                        elevation: 6,
+                        child: RaisedButton(
+                          child: Text(
+                            'Jobs',
+                            style: TextStyle(
+                              fontFamily: 'SourceSansProSB',
+                              color: Colors.white,
+                            ),
+                          ),
+                          onPressed: () async {
+                            Navigator.of(context).push(jobsRoute(
+                                _order == null ? widget.order : _order));
+                            _refreshPage();
+                          },
+                          color: Theme.of(context).primaryColor,
+                          elevation: 6,
+                        ),
                       ),
                     ),
                   ],
@@ -857,7 +863,7 @@ PageRouteBuilder jobsRoute(OrderItem order) {
         Animation<double> secondaryAnimation) {
       return JobsCardScreen(order);
     },
-    transitionDuration: Duration(milliseconds: 500),
+    transitionDuration: Duration(milliseconds: 300),
     transitionsBuilder: (BuildContext context, Animation<double> animation,
         Animation<double> secondaryAnimation, Widget child) {
       return SlideTransition(
@@ -883,7 +889,7 @@ PageRouteBuilder rescheduleRoute(OrderItem order) {
         Animation<double> secondaryAnimation) {
       return RescheduleScreen(order);
     },
-    transitionDuration: Duration(milliseconds: 500),
+    transitionDuration: Duration(milliseconds: 300),
     transitionsBuilder: (BuildContext context, Animation<double> animation,
         Animation<double> secondaryAnimation, Widget child) {
       return SlideTransition(
@@ -909,7 +915,7 @@ PageRouteBuilder inspectionRoute(OrderItem order) {
         Animation<double> secondaryAnimation) {
       return InspectionImagesScreen(order);
     },
-    transitionDuration: Duration(milliseconds: 500),
+    transitionDuration: Duration(milliseconds: 300),
     transitionsBuilder: (BuildContext context, Animation<double> animation,
         Animation<double> secondaryAnimation, Widget child) {
       return SlideTransition(

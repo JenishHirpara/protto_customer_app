@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:protto_customer_app/screens/dashboard_screen.dart';
-import 'package:protto_customer_app/screens/flash_screen.dart';
-import 'package:protto_customer_app/screens/order_details_screen.dart';
-import 'package:protto_customer_app/screens/search_screen.dart';
+import './dashboard_screen.dart';
+import './flash_screen.dart';
+import './order_details_screen.dart';
+import './search_screen.dart';
 
 import '../providers/bikes.dart';
 import '../providers/address.dart';
@@ -28,7 +28,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
           Animation<double> secondaryAnimation) {
         return UserProfileScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -54,7 +54,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
           Animation<double> secondaryAnimation) {
         return ShoppingCartScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -80,7 +80,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
           Animation<double> secondaryAnimation) {
         return MyBikesScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -106,7 +106,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
           Animation<double> secondaryAnimation) {
         return NewBikeScreen();
       },
-      transitionDuration: Duration(milliseconds: 200),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -151,7 +151,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
               ),
               Container(
                 height: 160,
-                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -161,7 +161,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                             children: <Widget>[
                               Text(
                                 '${activebike.brand}',
-                                textAlign: TextAlign.center,
+                                textAlign: TextAlign.start,
                                 softWrap: true,
                                 overflow: TextOverflow.fade,
                                 style: TextStyle(
@@ -173,13 +173,13 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                               ),
                               Text(
                                 '${activebike.model}',
-                                textAlign: TextAlign.center,
+                                textAlign: TextAlign.start,
                                 softWrap: true,
                                 overflow: TextOverflow.fade,
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   color: Theme.of(context).primaryColor,
-                                  fontSize: 20,
+                                  fontSize: 17,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -302,7 +302,6 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                     ),
                     onPressed: () {
                       Navigator.of(ctx).pop();
-                      Navigator.of(context).push(myBikesRouteBuilder());
                       Navigator.of(context).push(newBikeRouteBuilder());
                     },
                   ),
@@ -367,7 +366,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                         style: TextStyle(
                           fontFamily: 'Montserrat',
                           color: Theme.of(context).primaryColor,
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

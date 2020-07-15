@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../providers/orders.dart';
-import './shopping_cart_screen.dart';
 import '../utils/job_item.dart';
 import '../utils/additional_job_item.dart';
 
@@ -230,32 +229,6 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
         });
   }
 
-  PageRouteBuilder shoppingCartRouteBuilder() {
-    return PageRouteBuilder(
-      pageBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation) {
-        return ShoppingCartScreen();
-      },
-      transitionDuration: Duration(milliseconds: 500),
-      transitionsBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation, Widget child) {
-        return SlideTransition(
-          position: new Tween<Offset>(
-            begin: const Offset(1.0, 0.0),
-            end: Offset.zero,
-          ).animate(animation),
-          child: new SlideTransition(
-            position: new Tween<Offset>(
-              begin: Offset.zero,
-              end: const Offset(-1.0, 0.0),
-            ).animate(secondaryAnimation),
-            child: child,
-          ),
-        );
-      },
-    );
-  }
-
   var _isInit = true;
   var _isLoading = true;
   List<Jobs> allJobs;
@@ -291,13 +264,30 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          '${widget.order.make} ${widget.order.model}',
-          style: GoogleFonts.montserrat(
-            color: Theme.of(context).primaryColor,
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
-          ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              '${widget.order.make}',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                color: Theme.of(context).primaryColor,
+                fontSize: 10,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              '${widget.order.model}',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                color: Theme.of(context).primaryColor,
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
         leading: InkWell(
           child: Icon(
@@ -357,7 +347,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                       ),
                     ),
                     widget.order.approveJobs == '0'
-                        ? allJobs == null
+                        ? allJobs.isEmpty
                             ? Text(
                                 'Please wait for the service station to recommend additional jobs')
                             : ListView.builder(

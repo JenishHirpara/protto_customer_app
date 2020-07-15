@@ -262,6 +262,7 @@ class FlashScreen extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: 75),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             child: Text(

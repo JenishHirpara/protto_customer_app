@@ -7,6 +7,7 @@ import '../providers/cart_item.dart';
 import '../providers/bikes.dart';
 import 'support_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../screens/new_bike_screen.dart';
 
 List<String> proDry = [
   'Brake Inspection & Service',
@@ -58,7 +59,33 @@ class RgDetailsScreenState extends State<RgDetailsScreen> {
           Animation<double> secondaryAnimation) {
         return SupportScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  PageRouteBuilder addBikePageRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return NewBikeScreen();
+      },
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -413,13 +440,16 @@ class RgDetailsScreenState extends State<RgDetailsScreen> {
                                 actions: <Widget>[
                                   FlatButton(
                                     child: Text(
-                                      'Okay',
+                                      '+ Add Bike',
                                       style: TextStyle(
                                         fontFamily: 'SourceSansProSB',
+                                        fontSize: 18,
                                       ),
                                     ),
                                     onPressed: () {
                                       Navigator.of(ctx).pop();
+                                      Navigator.of(context)
+                                          .push(addBikePageRoute());
                                     },
                                   ),
                                 ],

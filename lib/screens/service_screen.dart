@@ -28,7 +28,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
           Animation<double> secondaryAnimation) {
         return ShoppingCartScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(

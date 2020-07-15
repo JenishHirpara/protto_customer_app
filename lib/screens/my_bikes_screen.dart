@@ -17,7 +17,7 @@ class _MyBikesScreenState extends State<MyBikesScreen> {
           Animation<double> secondaryAnimation) {
         return NewBikeScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
