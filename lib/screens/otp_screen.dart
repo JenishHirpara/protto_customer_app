@@ -136,7 +136,6 @@ class _OtpScreenState extends State<OtpScreen> {
                       fontFamily: 'Montserrat',
                       color: Color(0xff403A35),
                       fontSize: 10,
-                      color: Color.fromRGBO(50, 50, 50, 1),
                     ),
                     textAlign: TextAlign.center,
                   ),

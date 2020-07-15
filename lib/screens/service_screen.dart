@@ -75,7 +75,14 @@ class _ServiceScreenState extends State<ServiceScreen> {
   Widget build(BuildContext context) {
     var bike = Provider.of<Bikes>(context, listen: false).activeBike;
     return _isLoading
-        ? Center(child: CircularProgressIndicator())
+        ? Center(
+            child: Image.asset(
+              'assets/images/loader.gif',
+              fit: BoxFit.cover,
+              height: 85,
+              width: 85,
+            ),
+          )
         : DefaultTabController(
             initialIndex: widget.i,
             length: 5,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../utils/user_profile_item.dart';
 import './support_screen.dart';
 import './dashboard_screen.dart';
 import './saved_addresses_screen.dart';
@@ -246,7 +245,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         elevation: 0,
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: Image.asset(
+                'assets/images/loader.gif',
+                fit: BoxFit.cover,
+                height: 85,
+                width: 85,
+              ),
+            )
           : SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -260,25 +266,28 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         Text(
                           '${userProfile.name}',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Color.fromRGBO(112, 112, 112, 1),
-                              fontSize: 20),
+                            fontFamily: 'Montserrat',
+                            color: Color.fromRGBO(112, 112, 112, 1),
+                            fontSize: 20,
+                          ),
                         ),
                         SizedBox(height: 10),
                         Text(
                           userProfile.number,
                           style: TextStyle(
-                              //fontFamily: 'Montserrat',
-                              color: Color.fromRGBO(112, 112, 112, 1),
-                              fontSize: 16),
+                            //fontFamily: 'Montserrat',
+                            color: Color.fromRGBO(112, 112, 112, 1),
+                            fontSize: 16,
+                          ),
                         ),
                         SizedBox(height: 5),
                         Text(
                           userProfile.email,
                           style: TextStyle(
-                              //fontFamily: 'Montserrat',
-                              color: Color.fromRGBO(112, 112, 112, 1),
-                              fontSize: 16),
+                            //fontFamily: 'Montserrat',
+                            color: Color.fromRGBO(112, 112, 112, 1),
+                            fontSize: 16,
+                          ),
                         ),
                       ],
                     ),
@@ -288,63 +297,177 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     physics: NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                     children: <Widget>[
-                      UserProfileItem(
-                        icon: Icon(
-                          MdiIcons.fileEdit,
-                          color: Color(0xffff7075),
+                      InkWell(
+                        child: Container(
+                          width: double.infinity,
+                          child: ListTile(
+                            contentPadding: EdgeInsets.only(
+                              left: 0,
+                              bottom: 0,
+                              right: 16,
+                              top: 0,
+                            ),
+                            leading: Container(
+                              height: 75,
+                              width: 50,
+                              color: new Color(0xffffacaf),
+                              child: Icon(
+                                MdiIcons.fileEdit,
+                                color: Color(0xffff7075),
+                                size: 40,
+                              ),
+                            ),
+                            title: Text(
+                              'Edit Profile',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                              ),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 14,
+                            ),
+                          ),
                         ),
-                        title: 'Edit Profile',
-                        page: editProfileRouteBuilder(),
-                      ),
-                      SizedBox(height: 30),
-                      UserProfileItem(
-                        icon: Icon(
-                          MdiIcons.locationEnter,
-                          color: Color(0xffff7075),
-                        ),
-                        title: 'Saved Addresses',
-                        page: savedAddressesRouteBuilder(),
-                      ),
-                      SizedBox(height: 30),
-                      UserProfileItem(
-                        icon: Icon(
-                          MdiIcons.heart,
-                          color: Color(0xffff7075),
-                        ),
-                        title: 'My Bikes',
-                        page: myBikesRouteBuilder(),
-                      ),
-                      // SizedBox(height: 20),
-                      // UserProfileItem(
-                      //   icon: Icon(
-                      //     MdiIcons.fileDocument,
-                      //     color: Color(0xffff7075),
-                      //   ),
-                      //   title: 'My Docs',
-                      //   page: pageRouteBuilder(),
-                      // ),
-                      SizedBox(height: 30),
-                      UserProfileItem(
-                        icon: Icon(
-                          MdiIcons.cardAccountDetails,
-                          color: Color(0xffff7075),
-                        ),
-                        title: 'Support',
-                        page: supportPageRoute(),
+                        onTap: () {
+                          Navigator.of(context).push(editProfileRouteBuilder());
+                        },
                       ),
                       SizedBox(height: 30),
                       InkWell(
                         child: Container(
                           width: double.infinity,
-                          height: 50,
                           child: ListTile(
+                            contentPadding: EdgeInsets.only(
+                              left: 0,
+                              bottom: 0,
+                              right: 16,
+                              top: 0,
+                            ),
                             leading: Container(
-                              height: 50,
+                              height: 75,
+                              width: 50,
+                              color: new Color(0xffffacaf),
+                              child: Icon(
+                                MdiIcons.locationEnter,
+                                color: Color(0xffff7075),
+                                size: 40,
+                              ),
+                            ),
+                            title: Text(
+                              'Saved Addresses',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                              ),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 14,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.of(context)
+                              .push(savedAddressesRouteBuilder());
+                        },
+                      ),
+                      SizedBox(height: 30),
+                      InkWell(
+                        child: Container(
+                          width: double.infinity,
+                          child: ListTile(
+                            contentPadding: EdgeInsets.only(
+                              left: 0,
+                              bottom: 0,
+                              right: 16,
+                              top: 0,
+                            ),
+                            leading: Container(
+                              height: 75,
+                              width: 50,
+                              color: new Color(0xffffacaf),
+                              child: Icon(
+                                MdiIcons.heart,
+                                color: Color(0xffff7075),
+                                size: 40,
+                              ),
+                            ),
+                            title: Text(
+                              'My Bikes',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                              ),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 14,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.of(context).push(myBikesRouteBuilder());
+                        },
+                      ),
+                      SizedBox(height: 30),
+                      InkWell(
+                        child: Container(
+                          width: double.infinity,
+                          child: ListTile(
+                            contentPadding: EdgeInsets.only(
+                              left: 0,
+                              bottom: 0,
+                              right: 16,
+                              top: 0,
+                            ),
+                            leading: Container(
+                              height: 75,
+                              width: 50,
+                              color: new Color(0xffffacaf),
+                              child: Icon(
+                                MdiIcons.cardAccountDetails,
+                                color: Color(0xffff7075),
+                                size: 40,
+                              ),
+                            ),
+                            title: Text(
+                              'Support',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                              ),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 14,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.of(context).push(supportPageRoute());
+                        },
+                      ),
+                      SizedBox(height: 30),
+                      InkWell(
+                        child: Container(
+                          width: double.infinity,
+                          child: ListTile(
+                            contentPadding: EdgeInsets.only(
+                              left: 0,
+                              bottom: 0,
+                              right: 16,
+                              top: 0,
+                            ),
+                            leading: Container(
+                              height: 75,
                               width: 50,
                               color: new Color(0xffffacaf),
                               child: Icon(
                                 MdiIcons.logout,
                                 color: Color(0xffff7075),
+                                size: 40,
                               ),
                             ),
                             title: Text(

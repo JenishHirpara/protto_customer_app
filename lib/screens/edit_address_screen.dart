@@ -469,17 +469,17 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                 ),
                               ),
                               Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  height: 45,
-                                  child: RaisedButton(
-                                    child: Text(
-                                      'SAVE',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    color: Theme.of(context).primaryColor,
-                                    onPressed: () => _saveForm(),
-                                  )),
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                height: 45,
+                                child: RaisedButton(
+                                  child: Text(
+                                    'SAVE',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  color: Theme.of(context).primaryColor,
+                                  onPressed: () => _saveForm(),
+                                ),
+                              ),
                             ],
                           ),
                         ],
@@ -489,185 +489,6 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
           ],
         ),
       ),
-      // body: Stack(
-      //   children: <Widget>[
-      //     Container(
-      //       width: double.infinity,
-      //       decoration: BoxDecoration(
-      //         border: Border.all(color: Colors.grey),
-      //       ),
-      //       child: GoogleMap(
-      //         onMapCreated: (GoogleMapController controller) {
-      //           _mapController = controller;
-      //         },
-      //         myLocationEnabled: true,
-      //         initialCameraPosition: CameraPosition(
-      //           target: LatLng(19.0760, 72.8777),
-      //           zoom: 12.0,
-      //           bearing: 15,
-      //           tilt: 75,
-      //         ),
-      //         onCameraMove: ((position) => _currentLocation(position)),
-      //         onCameraIdle: _updatePosition,
-      //       ),
-      //     ),
-      //     Positioned(
-      //       top: (MediaQuery.of(context).size.height -
-      //               _appBar.preferredSize.height -
-      //               MediaQuery.of(context).padding.top -
-      //               kToolbarHeight -
-      //               40) /
-      //           2,
-      //       right: (MediaQuery.of(context).size.width - 40) / 2,
-      //       child: Tooltip(
-      //         message: 'Move to adjust',
-      //         child: new Icon(
-      //           Icons.person_pin_circle,
-      //           size: 40,
-      //         ),
-      //       ),
-      //     ),
-      //     DraggableScrollableSheet(
-      //       initialChildSize: 0.2,
-      //       maxChildSize: 0.5,
-      //       minChildSize: 0.1,
-      //       builder: (context, scrollController) {
-      //         return SingleChildScrollView(
-      //           controller: scrollController,
-      //           child: Container(
-      //             color: Colors.white,
-      //             padding: EdgeInsets.all(20),
-      //             child: Form(
-      //               key: _form,
-      //               child: ListView(
-      //                 shrinkWrap: true,
-      //                 physics: NeverScrollableScrollPhysics(),
-      //                 children: <Widget>[
-      //                   Text(
-      //                     'FLAT, FLOOR, BUILDING NAME',
-      //                     style: TextStyle(
-      //                       color: Color.fromRGBO(112, 112, 112, 1),
-      //                     ),
-      //                   ),
-      //                   TextFormField(
-      //                     initialValue: widget.passedAddress.flat,
-      //                     textInputAction: TextInputAction.next,
-      //                     validator: (value) {
-      //                       if (value.isEmpty) {
-      //                         return 'Please provide flat, floor and building name';
-      //                       }
-      //                       return null;
-      //                     },
-      //                     onFieldSubmitted: (_) =>
-      //                         FocusScope.of(context).requestFocus(focusNode2),
-      //                     onSaved: (value) {
-      //                       _address = Address(
-      //                         id: _address.id,
-      //                         address: _first.addressLine,
-      //                         flat: value,
-      //                         landmark: _address.landmark,
-      //                         saveas: _address.saveas,
-      //                         latitude: _locationData.latitude.toString(),
-      //                         longitude: _locationData.longitude.toString(),
-      //                       );
-      //                     },
-      //                   ),
-      //                   SizedBox(height: 20),
-      //                   Text(
-      //                     'LANDMARK',
-      //                     style: TextStyle(
-      //                       color: Color.fromRGBO(112, 112, 112, 1),
-      //                     ),
-      //                   ),
-      //                   TextFormField(
-      //                     initialValue: widget.passedAddress.landmark,
-      //                     textInputAction: TextInputAction.next,
-      //                     focusNode: focusNode2,
-      //                     onFieldSubmitted: (_) =>
-      //                         FocusScope.of(context).requestFocus(focusNode3),
-      //                     onSaved: (value) {
-      //                       _address = Address(
-      //                         id: _address.id,
-      //                         address: _address.address,
-      //                         landmark: value,
-      //                         saveas: _address.saveas,
-      //                         flat: _address.flat,
-      //                         latitude: _locationData.latitude.toString(),
-      //                         longitude: _locationData.longitude.toString(),
-      //                       );
-      //                     },
-      //                   ),
-      //                   SizedBox(height: 20),
-      //                   Text(
-      //                     'SAVE AS',
-      //                     style: TextStyle(
-      //                       color: Color.fromRGBO(112, 112, 112, 1),
-      //                     ),
-      //                   ),
-      //                   TextFormField(
-      //                     initialValue: widget.passedAddress.saveas,
-      //                     textInputAction: TextInputAction.done,
-      //                     focusNode: focusNode3,
-      //                     onFieldSubmitted: (_) => _saveForm(),
-      //                     validator: (value) {
-      //                       if (value.isEmpty) {
-      //                         return 'Please provide a title to this address';
-      //                       }
-      //                       return null;
-      //                     },
-      //                     onSaved: (value) {
-      //                       _address = Address(
-      //                         id: _address.id,
-      //                         address: _address.address,
-      //                         landmark: _address.landmark,
-      //                         saveas: value,
-      //                         flat: _address.flat,
-      //                         latitude: _locationData.latitude.toString(),
-      //                         longitude: _locationData.longitude.toString(),
-      //                       );
-      //                     },
-      //                   ),
-      //                   SizedBox(height: 10),
-      //                   Row(
-      //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                     children: <Widget>[
-      //                       Container(
-      //                         width: MediaQuery.of(context).size.width * 0.4,
-      //                         height: 45,
-      //                         decoration: BoxDecoration(
-      //                           border: Border.all(color: Colors.deepOrange),
-      //                         ),
-      //                         child: RaisedButton(
-      //                           color: Colors.white,
-      //                           elevation: 0,
-      //                           child: Text('BACK'),
-      //                           onPressed: () {
-      //                             Navigator.of(context).pop();
-      //                           },
-      //                         ),
-      //                       ),
-      //                       Container(
-      //                           width: MediaQuery.of(context).size.width * 0.4,
-      //                           height: 45,
-      //                           child: RaisedButton(
-      //                             child: Text(
-      //                               'SAVE',
-      //                               style: TextStyle(color: Colors.white),
-      //                             ),
-      //                             color: Colors.deepOrange,
-      //                             onPressed: () => _saveForm(),
-      //                           )),
-      //                     ],
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //           ),
-      //         );
-      //       },
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

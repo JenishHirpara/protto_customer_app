@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import './user_profile_screen.dart';
 import '../utils/SizeConfig.dart';
 import '../providers/profile.dart';
 

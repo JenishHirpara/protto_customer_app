@@ -24,14 +24,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  '  Active',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
                 Container(
                   child: ListView.builder(
                     shrinkWrap: true,
