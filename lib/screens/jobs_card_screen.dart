@@ -349,7 +349,11 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                     widget.order.approveJobs == '0'
                         ? allJobs.isEmpty
                             ? Text(
-                                'Please wait for the service station to recommend additional jobs')
+                                'Please wait for the service station to recommend additional jobs',
+                                style: TextStyle(
+                                  fontFamily: 'SourceSansPro',
+                                ),
+                              )
                             : ListView.builder(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
@@ -369,7 +373,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                       children: <Widget>[
                                         Text(
                                           '₹ ${allJobs[i].cost}',
-                                          style: GoogleFonts.cantataOne(
+                                          style: TextStyle(
+                                            fontFamily: 'SourceSansPro',
                                             color: Color.fromRGBO(
                                                 128, 128, 128, 1),
                                           ),
@@ -410,7 +415,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                       title: Text(
                         'Item Total',
                         style: TextStyle(
-                          fontFamily: 'SourceSansPro',
+                          fontFamily: 'SourceSansProB',
+                          //fontWeight: FontWeight.bold,
                         ),
                       ),
                       trailing: Container(
@@ -419,8 +425,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                         child: Text(
                           '₹ $_total',
                           style: TextStyle(
-                            fontFamily: 'SourceSansPro',
-                            fontWeight: FontWeight.bold,
+                            fontFamily: 'SourceSansProB',
+                            //fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -430,7 +436,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                       title: Text(
                         'Paid',
                         style: TextStyle(
-                          fontFamily: 'SourceSansPro',
+                          fontFamily: 'SourceSansProB',
+                          //fontWeight: FontWeight.bold,
                         ),
                       ),
                       trailing: Container(
@@ -439,8 +446,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                         child: Text(
                           '₹ $_paid',
                           style: TextStyle(
-                            fontFamily: 'SourceSansPro',
-                            fontWeight: FontWeight.bold,
+                            fontFamily: 'SourceSansProB',
+                            //fontWeight: FontWeight.bold,
                             color: Colors.green,
                           ),
                         ),
@@ -451,7 +458,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                       title: Text(
                         'Due',
                         style: TextStyle(
-                          fontFamily: 'SourceSansPro',
+                          fontFamily: 'SourceSansProB',
+                          //fontWeight: FontWeight.bold,
                         ),
                       ),
                       trailing: Container(
@@ -460,9 +468,9 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                         child: Text(
                           '₹ ${double.parse(_total) - double.parse(_paid)}',
                           style: TextStyle(
-                            fontFamily: 'SourceSansPro',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green,
+                            fontFamily: 'SourceSansProB',
+                            //fontWeight: FontWeight.bold,
+                            color: Colors.red,
                           ),
                         ),
                       ),
@@ -471,10 +479,10 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                         ? Center(
                             child: Container(
                               margin: const EdgeInsets.symmetric(horizontal: 0),
-                              color: Theme.of(context).primaryColor,
                               height: 50,
                               width: double.infinity,
                               child: RaisedButton(
+                                elevation: 3,
                                 color: Theme.of(context).primaryColor,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4.0),
