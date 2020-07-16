@@ -49,7 +49,7 @@ class SavedAddressesItem extends StatelessWidget {
           Animation<double> secondaryAnimation) {
         return EditAddressScreen(address);
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(

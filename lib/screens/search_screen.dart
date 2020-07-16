@@ -30,6 +30,36 @@ class Services {
       type: 'prowet',
       price: 1599,
     ),
+    Service(
+      id: DateTime.now().toString(),
+      service: 'custom repairs',
+      type: 'insurance claim',
+      price: 1599,
+    ),
+    Service(
+      id: DateTime.now().toString(),
+      service: 'custom repairs',
+      type: 'brake inspection',
+      price: 1599,
+    ),
+    Service(
+      id: DateTime.now().toString(),
+      service: 'custom repairs',
+      type: 'electrical inspection',
+      price: 1599,
+    ),
+    Service(
+      id: DateTime.now().toString(),
+      service: 'custom repairs',
+      type: 'clutch inspection',
+      price: 1599,
+    ),
+    Service(
+      id: DateTime.now().toString(),
+      service: 'custom repairs',
+      type: 'other',
+      price: 1599,
+    ),
   ];
 
   List<Service> get items {
@@ -94,7 +124,7 @@ class _SearchScreenState extends State<SearchScreen> {
           Animation<double> secondaryAnimation) {
         return ServiceScreen(i);
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -116,71 +146,76 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: TextField(
-            controller: _editingController,
-            onChanged: (value) {
-              filterSearchResults(value);
-            },
-            decoration: new InputDecoration(
-              suffixIcon: GestureDetector(
-                  child: Icon(
-                    Icons.clear,
-                    color: new Color(0xff626262),
-                  ),
-                  onTap: () {
-                    _editingController.clear();
-                  }),
-              prefixIcon: Icon(
-                Icons.search,
-                color: new Color(0xff626262),
-              ),
-              border: new OutlineInputBorder(
-                borderRadius: const BorderRadius.all(
-                  const Radius.circular(10.0),
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: TextField(
+              controller: _editingController,
+              onChanged: (value) {
+                filterSearchResults(value);
+              },
+              decoration: new InputDecoration(
+                suffixIcon: GestureDetector(
+                    child: Icon(
+                      Icons.clear,
+                      color: new Color(0xff626262),
+                    ),
+                    onTap: () {
+                      _editingController.clear();
+                    }),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: new Color(0xff626262),
                 ),
+                border: new OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(
+                    const Radius.circular(10.0),
+                  ),
+                ),
+                labelText: "Search Service",
+                hintText: "Search Service",
+                labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
+                filled: true,
+                hintStyle: new TextStyle(
+                  fontFamily: 'SourceSansPro',
+                  color: new Color(0xff1D1D1),
+                ),
+                fillColor: Colors.white,
               ),
-              labelText: "Search Service",
-              hintText: "Search Service",
-              labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
-              filled: true,
-              hintStyle: new TextStyle(
-                fontFamily: 'SourceSansPro',
-                color: new Color(0xff1D1D1),
-              ),
-              fillColor: Colors.white,
             ),
           ),
-        ),
-        ListView.builder(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (ctx, i) => InkWell(
-            child: ListTile(
-              title: Text(
-                display[i].type,
-                style: TextStyle(fontFamily: 'SourceSansPro'),
+          ListView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (ctx, i) => InkWell(
+              child: ListTile(
+                title: Text(
+                  display[i].type,
+                  style: TextStyle(fontFamily: 'SourceSansPro'),
+                ),
+                subtitle: Text(
+                  display[i].service,
+                  style: TextStyle(fontFamily: 'SourceSansPro'),
+                ),
+                trailing: Icon(Icons.arrow_forward_ios),
               ),
-              subtitle: Text(
-                display[i].service,
-                style: TextStyle(fontFamily: 'SourceSansPro'),
-              ),
-              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                if (display[i].service == 'regular service') {
+                  int i = 0;
+                  Navigator.of(context).push(pageRouteBuilder(i));
+                } else if (display[i].service == 'custom repairs') {
+                  int i = 3;
+                  Navigator.of(context).push(pageRouteBuilder(i));
+                }
+              },
             ),
-            onTap: () {
-              if (display[i].service == 'regular service') {
-                int i = 0;
-                Navigator.of(context).push(pageRouteBuilder(i));
-              }
-            },
+            itemCount: display.length,
           ),
-          itemCount: display.length,
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

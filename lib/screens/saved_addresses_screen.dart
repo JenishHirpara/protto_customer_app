@@ -18,7 +18,7 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
           Animation<double> secondaryAnimation) {
         return AddAddressScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -44,7 +44,7 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
           Animation<double> secondaryAnimation) {
         return EditAddressScreen(address);
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -114,14 +114,28 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
             decoration: BoxDecoration(
               border: Border.all(
                 color: Theme.of(context).primaryColor,
+                width: 1.2,
               ),
+              borderRadius: BorderRadius.circular(4.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey[400],
+                  spreadRadius: 0.0,
+                  offset: Offset(2.0, 2.0), //(x,y)
+                  blurRadius: 4.0,
+                ),
+              ],
             ),
             child: RaisedButton(
               elevation: 0,
               color: Color.fromRGBO(250, 250, 250, 1),
               child: Text(
                 'Add Address',
-                style: TextStyle(fontFamily: 'SourceSansProSB', fontSize: 15),
+                style: TextStyle(
+                  fontFamily: 'SourceSansProSB',
+                  fontSize: 15,
+                  color: Color.fromRGBO(112, 112, 112, 0.7),
+                ),
               ),
               onPressed: () {
                 Navigator.of(context).push(addAddressScreenPageRoute());

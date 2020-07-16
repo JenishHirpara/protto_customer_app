@@ -28,7 +28,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           Animation<double> secondaryAnimation) {
         return SupportScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -54,7 +54,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           Animation<double> secondaryAnimation) {
         return VerifyPhoneScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -80,7 +80,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           Animation<double> secondaryAnimation) {
         return DashBoardScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -106,7 +106,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           Animation<double> secondaryAnimation) {
         return SavedAddressesScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -132,7 +132,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           Animation<double> secondaryAnimation) {
         return EditProfileScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -158,7 +158,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           Animation<double> secondaryAnimation) {
         return MyBikesScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -312,7 +312,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               width: 50,
                               color: new Color(0xffffacaf),
                               child: Icon(
-                                MdiIcons.fileEdit,
+                                MdiIcons.accountEdit,
                                 color: Color(0xffff7075),
                                 size: 40,
                               ),
@@ -350,7 +350,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               width: 50,
                               color: new Color(0xffffacaf),
                               child: Icon(
-                                MdiIcons.locationEnter,
+                                Icons.location_on,
                                 color: Color(0xffff7075),
                                 size: 40,
                               ),
@@ -389,7 +389,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               width: 50,
                               color: new Color(0xffffacaf),
                               child: Icon(
-                                MdiIcons.heart,
+                                MdiIcons.heartOutline,
                                 color: Color(0xffff7075),
                                 size: 40,
                               ),

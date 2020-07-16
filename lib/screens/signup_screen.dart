@@ -30,7 +30,7 @@ class _SignupScreenState extends State<SignupScreen> {
           Animation<double> secondaryAnimation) {
         return OtpScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(

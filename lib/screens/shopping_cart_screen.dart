@@ -166,7 +166,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
           Animation<double> secondaryAnimation) {
         return AddAddressScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -886,16 +886,28 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                   //SizedBox(height: 10),
                   _addressSeen == null
                       ? Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 20,
-                            //vertical: 10,
-                          ),
+                          padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 height: 40,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Theme.of(context).primaryColor,
+                                    width: 1.2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(4.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey[400],
+                                      spreadRadius: 0.0,
+                                      offset: Offset(2.0, 2.0), //(x,y)
+                                      blurRadius: 4.0,
+                                    ),
+                                  ],
+                                ),
                                 child: RaisedButton(
                                   color: Colors.white,
                                   child: Text(
@@ -916,16 +928,22 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                       }
                                     });
                                   },
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
                                 ),
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey[400],
+                                      spreadRadius: 0.0,
+                                      offset: Offset(2.0, 2.0), //(x,y)
+                                      blurRadius: 4.0,
+                                    ),
+                                  ],
+                                ),
                                 child: RaisedButton(
                                   color: Theme.of(context).primaryColor,
                                   child: Text(

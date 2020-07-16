@@ -56,7 +56,7 @@ class _OtpScreenState extends State<OtpScreen> {
           Animation<double> secondaryAnimation) {
         return NavigationBarScreen();
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(

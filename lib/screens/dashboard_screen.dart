@@ -61,9 +61,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   child: Text(
                     'Use your mobile number to sign in next time. Before we get started, lets add a bike.',
                     style: TextStyle(
-                        fontFamily: 'SourceSansPro',
-                        color: Color.fromRGBO(100, 100, 100, 1),
-                        fontSize: 18),
+                      fontFamily: 'SourceSansPro',
+                      color: Color.fromRGBO(100, 100, 100, 1),
+                      fontSize: 18,
+                    ),
                   ),
                 ),
                 SizedBox(height: 40),
@@ -111,14 +112,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Container(
-      width: SizeConfig.blockSizeHorizontal * 100,
-      height: SizeConfig.blockSizeVertical * 100,
+    return SingleChildScrollView(
       child: Column(
         children: <Widget>[
           Container(
-            width: SizeConfig.blockSizeHorizontal * 100,
-            height: SizeConfig.blockSizeVertical * 37,
+            width: double.infinity,
+            height: 350,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 2),
               child: Column(
@@ -143,7 +142,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   Expanded(
                     flex: 10,
                     child: GridView.builder(
-                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                       itemBuilder: (ctx, i) {
                         return InkWell(
                           child: ClipRRect(
@@ -162,9 +161,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     child: Image(
                                       image: AssetImage(_images[i]),
                                       fit: BoxFit.contain,
-                                      height: SizeConfig.blockSizeVertical * 10,
-                                      width:
-                                          SizeConfig.blockSizeHorizontal * 25,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.10,
                                     ),
                                   ),
                                   SizedBox(height: 10),
@@ -175,6 +174,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     style: TextStyle(
                                       fontFamily: 'SourceSansSB',
                                       color: Color.fromRGBO(128, 128, 128, 1),
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12,
                                     ),
                                   ),
                                 ],
@@ -189,214 +190,21 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       itemCount: 5,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
-                        childAspectRatio: 10 / 11,
+                        childAspectRatio: 10 / 12,
                         crossAxisSpacing: 5,
+                        mainAxisSpacing: 5,
                       ),
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                     ),
-                    // child: Column(
-                    //   crossAxisAlignment: CrossAxisAlignment.center,
-                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //   children: <Widget>[
-                    //     Row(
-                    //       children: <Widget>[
-                    //         Expanded(
-                    //           child: InkWell(
-                    //             child: ClipRRect(
-                    //               borderRadius: BorderRadius.circular(10),
-                    //               child: Card(
-                    //                 elevation: 3,
-                    //                 shape: RoundedRectangleBorder(
-                    //                   borderRadius: BorderRadius.circular(10),
-                    //                 ),
-                    //                 child: Column(
-                    //                   crossAxisAlignment:
-                    //                       CrossAxisAlignment.center,
-                    //                   mainAxisAlignment:
-                    //                       MainAxisAlignment.spaceEvenly,
-                    //                   children: <Widget>[
-                    //                     Container(
-                    //                       // width:
-                    //                       //     SizeConfig.blockSizeHorizontal * 25,
-                    //                       // height: SizeConfig.blockSizeVertical * 10,
-                    //                       child: Image(
-                    //                         image: AssetImage(
-                    //                             'assets/images/gear_with_car.png'),
-                    //                         fit: BoxFit.contain,
-                    //                         height:
-                    //                             SizeConfig.blockSizeVertical *
-                    //                                 10,
-                    //                         width:
-                    //                             SizeConfig.blockSizeHorizontal *
-                    //                                 25,
-                    //                       ),
-                    //                     ),
-                    //                     SizedBox(height: 10),
-                    //                     Text(
-                    //                       regularServices,
-                    //                       textAlign: TextAlign.center,
-                    //                       softWrap: true,
-                    //                       style: TextStyle(
-                    //                         fontFamily: 'SourceSansSB',
-                    //                         color: Color.fromRGBO(
-                    //                             128, 128, 128, 1),
-                    //                       ),
-                    //                     ),
-                    //                   ],
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //             onTap: () {
-                    //               Navigator.of(context)
-                    //                   .push(pageRouteBuilder(0));
-                    //             },
-                    //           ),
-                    //         ),
-                    //         Expanded(
-                    //           child: Column(
-                    //             crossAxisAlignment: CrossAxisAlignment.center,
-                    //             mainAxisAlignment:
-                    //                 MainAxisAlignment.spaceEvenly,
-                    //             children: <Widget>[
-                    //               InkWell(
-                    //                 child: Container(
-                    //                   width:
-                    //                       SizeConfig.blockSizeHorizontal * 25,
-                    //                   height: SizeConfig.blockSizeVertical * 10,
-                    //                   child: Image(
-                    //                     image: AssetImage(
-                    //                         'assets/images/tyres.png'),
-                    //                   ),
-                    //                 ),
-                    //                 onTap: () {
-                    //                   Navigator.of(context)
-                    //                       .push(pageRouteBuilder(1));
-                    //                 },
-                    //               ),
-                    //               Text(
-                    //                 tyres,
-                    //                 textAlign: TextAlign.center,
-                    //                 style: TextStyle(
-                    //                   fontFamily: 'SourceSansSB',
-                    //                   color: Color.fromRGBO(128, 128, 128, 1),
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //         Expanded(
-                    //           child: Column(
-                    //             crossAxisAlignment: CrossAxisAlignment.center,
-                    //             mainAxisAlignment:
-                    //                 MainAxisAlignment.spaceEvenly,
-                    //             children: <Widget>[
-                    //               InkWell(
-                    //                 child: Container(
-                    //                     width:
-                    //                         SizeConfig.blockSizeHorizontal * 25,
-                    //                     height:
-                    //                         SizeConfig.blockSizeVertical * 10,
-                    //                     child: Image(
-                    //                         image: AssetImage(
-                    //                             'assets/images/wash_plus_coat.png'))),
-                    //                 onTap: () {
-                    //                   Navigator.of(context)
-                    //                       .push(pageRouteBuilder(2));
-                    //                 },
-                    //               ),
-                    //               Text(
-                    //                 washPlusCoat,
-                    //                 textAlign: TextAlign.center,
-                    //                 style: TextStyle(
-                    //                   fontFamily: 'SourceSansSB',
-                    //                   color: Color.fromRGBO(128, 128, 128, 1),
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     Row(
-                    //       children: <Widget>[
-                    //         Expanded(
-                    //           child: Column(
-                    //             crossAxisAlignment: CrossAxisAlignment.center,
-                    //             mainAxisAlignment:
-                    //                 MainAxisAlignment.spaceEvenly,
-                    //             children: <Widget>[
-                    //               InkWell(
-                    //                 child: Container(
-                    //                     width:
-                    //                         SizeConfig.blockSizeHorizontal * 25,
-                    //                     height:
-                    //                         SizeConfig.blockSizeVertical * 10,
-                    //                     child: Image(
-                    //                         image: AssetImage(
-                    //                             'assets/images/custom_repairs.png'))),
-                    //                 onTap: () {
-                    //                   Navigator.of(context)
-                    //                       .push(pageRouteBuilder(3));
-                    //                 },
-                    //               ),
-                    //               Text(
-                    //                 customRepairs,
-                    //                 textAlign: TextAlign.center,
-                    //                 style: TextStyle(
-                    //                   fontFamily: 'SourceSansSB',
-                    //                   color: Color.fromRGBO(128, 128, 128, 1),
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //         Expanded(
-                    //           child: Column(
-                    //             crossAxisAlignment: CrossAxisAlignment.center,
-                    //             mainAxisAlignment:
-                    //                 MainAxisAlignment.spaceEvenly,
-                    //             children: <Widget>[
-                    //               InkWell(
-                    //                 child: Container(
-                    //                     width:
-                    //                         SizeConfig.blockSizeHorizontal * 25,
-                    //                     height:
-                    //                         SizeConfig.blockSizeVertical * 10,
-                    //                     child: Image(
-                    //                         image: AssetImage(
-                    //                             'assets/images/denting_penting.png'))),
-                    //                 onTap: () {
-                    //                   Navigator.of(context)
-                    //                       .push(pageRouteBuilder(4));
-                    //                 },
-                    //               ),
-                    //               Text(
-                    //                 dentingPainting,
-                    //                 textAlign: TextAlign.center,
-                    //                 style: TextStyle(
-                    //                   fontFamily: 'SourceSansSB',
-                    //                   color: Color.fromRGBO(128, 128, 128, 1),
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //         Expanded(
-                    //           child: Container(),
-                    //         ),
-                    //       ],
-                    //     )
-                    //   ],
-                    // ),
                   ),
                 ],
               ),
             ),
           ),
           Container(
-            width: SizeConfig.blockSizeHorizontal * 100,
-            height: SizeConfig.blockSizeVertical * 44,
+            width: double.infinity,
+            height: 360,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -429,8 +237,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     ];
 
     return Container(
-      height: SizeConfig.blockSizeVertical * 39,
-      width: SizeConfig.blockSizeHorizontal * 100,
+      height: 320,
+      width: double.infinity,
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {
           return Image.asset(
@@ -467,7 +275,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           Animation<double> secondaryAnimation) {
         return ServiceScreen(i);
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
@@ -493,7 +301,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           Animation<double> secondaryAnimation) {
         return NewBikeScreen();
       },
-      transitionDuration: Duration(milliseconds: 200),
+      transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
         return SlideTransition(
