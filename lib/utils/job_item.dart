@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class JobItem extends StatelessWidget {
   final dynamic service;
@@ -11,13 +10,16 @@ class JobItem extends StatelessWidget {
       contentPadding: EdgeInsets.symmetric(horizontal: 0),
       title: Text(
         service['type'],
-        style: GoogleFonts.cantataOne(
+        style: TextStyle(
+          fontFamily: 'SourceSansProSB',
+          fontWeight: FontWeight.bold,
           color: Color.fromRGBO(128, 128, 128, 1),
         ),
       ),
       subtitle: Text(
         service['category'],
-        style: GoogleFonts.cantataOne(
+        style: TextStyle(
+          fontFamily: 'SourceSansPro',
           color: Color.fromRGBO(150, 150, 150, 1),
         ),
       ),
@@ -26,7 +28,9 @@ class JobItem extends StatelessWidget {
         height: 20,
         child: Text(
           '₹ ' + service['offer'],
-          style: GoogleFonts.cantataOne(
+          style: TextStyle(
+            fontFamily: 'SourceSansProSB',
+            fontWeight: FontWeight.bold,
             color: Color.fromRGBO(128, 128, 128, 1),
           ),
         ),
