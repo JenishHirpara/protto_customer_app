@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
@@ -310,10 +312,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             leading: Container(
                               height: 75,
                               width: 50,
-                              color: new Color(0xffffacaf),
+                              color: Color.fromRGBO(241, 93, 36, 0.3),
                               child: Icon(
                                 MdiIcons.accountEdit,
-                                color: Color(0xffff7075),
+                                color: Color.fromRGBO(241, 93, 36, 0.6),
                                 size: 40,
                               ),
                             ),
@@ -348,10 +350,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             leading: Container(
                               height: 75,
                               width: 50,
-                              color: new Color(0xffffacaf),
+                              color: Color.fromRGBO(241, 93, 36, 0.3),
                               child: Icon(
                                 Icons.location_on,
-                                color: Color(0xffff7075),
+                                color: Color.fromRGBO(241, 93, 36, 0.6),
                                 size: 40,
                               ),
                             ),
@@ -387,11 +389,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             leading: Container(
                               height: 75,
                               width: 50,
-                              color: new Color(0xffffacaf),
-                              child: Icon(
-                                MdiIcons.heartOutline,
-                                color: Color(0xffff7075),
-                                size: 40,
+                              color: Color.fromRGBO(241, 93, 36, 0.3),
+                              child: Image(
+                                image: AssetImage(
+                                    'assets/images/motorcycle_icon.png'),
+                                height: 40,
+                                //MdiIcons.heartoutline,
                               ),
                             ),
                             title: Text(
@@ -425,11 +428,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             leading: Container(
                               height: 75,
                               width: 50,
-                              color: new Color(0xffffacaf),
-                              child: Icon(
-                                MdiIcons.cardAccountDetails,
-                                color: Color(0xffff7075),
-                                size: 40,
+                              color: Color.fromRGBO(241, 93, 36, 0.3),
+                              child: Image(
+                                image: AssetImage(
+                                    'assets/images/customer_service_icon.png'),
+                                //color: Color.fromRGBO(241, 93, 36, 0.6),
+
+                                //MdiIcons.cardAccountDetails,
                               ),
                             ),
                             title: Text(
@@ -463,10 +468,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             leading: Container(
                               height: 75,
                               width: 50,
-                              color: new Color(0xffffacaf),
+                              color: Color.fromRGBO(241, 93, 36, 0.3),
                               child: Icon(
                                 MdiIcons.logout,
-                                color: Color(0xffff7075),
+                                color: Color.fromRGBO(241, 93, 36, 0.6),
                                 size: 40,
                               ),
                             ),
