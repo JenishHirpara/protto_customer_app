@@ -390,11 +390,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               height: 75,
                               width: 50,
                               color: Color.fromRGBO(241, 93, 36, 0.3),
-                              child: Image(
-                                image: AssetImage(
-                                    'assets/images/motorcycle_icon.png'),
-                                height: 40,
-                                //MdiIcons.heartoutline,
+                              child: Icon(
+                                Icons.motorcycle,
+                                color: Color.fromRGBO(241, 93, 36, 0.6),
+                                size: 40,
                               ),
                             ),
                             title: Text(
@@ -429,12 +428,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               height: 75,
                               width: 50,
                               color: Color.fromRGBO(241, 93, 36, 0.3),
-                              child: Image(
-                                image: AssetImage(
-                                    'assets/images/customer_service_icon.png'),
-                                //color: Color.fromRGBO(241, 93, 36, 0.6),
-
-                                //MdiIcons.cardAccountDetails,
+                              child: Icon(
+                                Icons.headset_mic,
+                                color: Color.fromRGBO(241, 93, 36, 0.6),
+                                size: 40,
                               ),
                             ),
                             title: Text(

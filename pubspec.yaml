@@ -86,9 +86,7 @@ flutter:
     - assets/images/popular_service_1.png
     - assets/images/popular_service_2.png
     - assets/images/loader.gif
-    - assets/images/motorcycle_icon.png
-    - assets/images/customer_service_icon.png
-
+    - assets/images/tick.png
 
   fonts:
     - family: SourceSansPro
@@ -102,7 +100,7 @@ flutter:
         - asset: assets/fonts/Montserrat-Bold.ttf
     - family: SourceSansProB
       fonts:
-        - asset: assets/fonts/SourceSansPro-Bold.ttf    
+        - asset: assets/fonts/SourceSansPro-Bold.ttf
   # To add assets to your application, add an assets section, like this:
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

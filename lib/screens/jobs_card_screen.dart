@@ -411,7 +411,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                             itemCount: approvedJobs.length,
                           ),
                     ListTile(
-                      contentPadding: EdgeInsets.fromLTRB(0, 0, 18, 0),
+                      contentPadding: EdgeInsets.all(0),
                       title: Text(
                         'Item Total',
                         style: TextStyle(
@@ -432,7 +432,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                       ),
                     ),
                     ListTile(
-                      contentPadding: EdgeInsets.fromLTRB(0, 0, 18, 0),
+                      contentPadding: EdgeInsets.all(0),
                       title: Text(
                         'Paid',
                         style: TextStyle(
@@ -454,7 +454,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                       ),
                     ),
                     ListTile(
-                      contentPadding: EdgeInsets.fromLTRB(0, 0, 18, 0),
+                      contentPadding: EdgeInsets.all(0),
                       title: Text(
                         'Due',
                         style: TextStyle(
