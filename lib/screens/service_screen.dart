@@ -74,98 +74,98 @@ class _ServiceScreenState extends State<ServiceScreen> {
   @override
   Widget build(BuildContext context) {
     var bike = Provider.of<Bikes>(context, listen: false).activeBike;
-    return _isLoading
-        ? Center(
-            child: Image.asset(
-              'assets/images/loader.gif',
-              fit: BoxFit.cover,
-              height: 85,
-              width: 85,
+    return DefaultTabController(
+      initialIndex: widget.i,
+      length: 5,
+      child: Scaffold(
+        appBar: AppBar(
+          titleSpacing: 0,
+          leading: InkWell(
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
             ),
-          )
-        : DefaultTabController(
-            initialIndex: widget.i,
-            length: 5,
-            child: Scaffold(
-              appBar: AppBar(
-                titleSpacing: 0,
-                leading: InkWell(
-                  child: Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.black,
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                title: bike != null
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            '${bike.brand}',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            '${bike.model}',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      )
-                    : Text(
-                        'Choose a bike',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          title: bike != null
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      '${bike.brand}',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500,
                       ),
-                backgroundColor: Color.fromRGBO(250, 250, 250, 1),
-                elevation: 0,
-                actions: <Widget>[
-                  Consumer<Cart>(
-                    builder: (_, cart, ch) =>
-                        Badge(child: ch, value: cart.itemCount.toString()),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.shopping_cart,
-                        color: Colors.grey,
+                    ),
+                    Text(
+                      '${bike.model}',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
                       ),
-                      onPressed: () {
-                        Navigator.of(context).push(shoppingCartRouteBuilder());
-                      },
                     ),
-                  ),
-                ],
-                bottom: TabBar(
-                  isScrollable: true,
-                  labelPadding: EdgeInsets.symmetric(horizontal: 40),
-                  unselectedLabelColor: Colors.grey,
-                  labelColor: Theme.of(context).primaryColor,
-                  labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
-                  tabs: [
-                    Tab(
-                      text: "Regular Service",
-                    ),
-                    Tab(text: "Tyre"),
-                    Tab(text: "Wash + Coat"),
-                    Tab(text: "Custom Repairs"),
-                    Tab(text: "Denting & Painting"),
                   ],
+                )
+              : Text(
+                  'Choose a bike',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
+          backgroundColor: Color.fromRGBO(250, 250, 250, 1),
+          elevation: 0,
+          actions: <Widget>[
+            Consumer<Cart>(
+              builder: (_, cart, ch) =>
+                  Badge(child: ch, value: cart.itemCount.toString()),
+              child: IconButton(
+                icon: Icon(
+                  Icons.shopping_cart,
+                  color: Colors.grey,
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(shoppingCartRouteBuilder());
+                },
               ),
-              body: Padding(
+            ),
+          ],
+          bottom: TabBar(
+            isScrollable: true,
+            labelPadding: EdgeInsets.symmetric(horizontal: 40),
+            unselectedLabelColor: Colors.grey,
+            labelColor: Theme.of(context).primaryColor,
+            labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
+            tabs: [
+              Tab(
+                text: "Regular Service",
+              ),
+              Tab(text: "Tyre"),
+              Tab(text: "Wash + Coat"),
+              Tab(text: "Custom Repairs"),
+              Tab(text: "Denting & Painting"),
+            ],
+          ),
+        ),
+        body: _isLoading
+            ? Center(
+                child: Image.asset(
+                  'assets/images/loader.gif',
+                  fit: BoxFit.cover,
+                  height: 85,
+                  width: 85,
+                ),
+              )
+            : Padding(
                 padding: EdgeInsets.all(10),
                 child: TabBarView(
                   children: <Widget>[
@@ -177,8 +177,8 @@ class _ServiceScreenState extends State<ServiceScreen> {
                   ],
                 ),
               ),
-            ),
-          );
+      ),
+    );
   }
 
   Widget regularServicesPage() {

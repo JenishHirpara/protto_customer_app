@@ -1,75 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/bikes.dart';
+import '../providers/cart_item.dart';
 import './service_screen.dart';
-
-class Service {
-  final String id;
-  final String service;
-  final String type;
-  final double price;
-
-  Service({
-    @required this.id,
-    @required this.service,
-    @required this.type,
-    @required this.price,
-  });
-}
-
-class Services {
-  List<Service> _items = [
-    Service(
-      id: DateTime.now().toString(),
-      service: 'regular service',
-      type: 'prodry',
-      price: 1599,
-    ),
-    Service(
-      id: DateTime.now().toString(),
-      service: 'regular service',
-      type: 'prowet',
-      price: 1599,
-    ),
-    Service(
-      id: DateTime.now().toString(),
-      service: 'custom repairs',
-      type: 'insurance claim',
-      price: 1599,
-    ),
-    Service(
-      id: DateTime.now().toString(),
-      service: 'custom repairs',
-      type: 'brake inspection',
-      price: 1599,
-    ),
-    Service(
-      id: DateTime.now().toString(),
-      service: 'custom repairs',
-      type: 'electrical inspection',
-      price: 1599,
-    ),
-    Service(
-      id: DateTime.now().toString(),
-      service: 'custom repairs',
-      type: 'clutch inspection',
-      price: 1599,
-    ),
-    Service(
-      id: DateTime.now().toString(),
-      service: 'custom repairs',
-      type: 'other',
-      price: 1599,
-    ),
-  ];
-
-  List<Service> get items {
-    return [..._items];
-  }
-
-  int findByType(String type) {
-    return _items.indexWhere((cartitem) => cartitem.type == type);
-  }
-}
+import './rg_details_screen.dart';
+import './custom_repairs_detail_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -79,25 +15,99 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController _editingController = TextEditingController();
 
-  List<Service> services = new Services().items;
-  var display = List<Service>();
+  List<CartItem> services = [];
+
+  int findByType(String type) {
+    return services.indexWhere((cartitem) => cartitem.type == type);
+  }
+
+  var display = List<CartItem>();
+  var _isInit = true;
+  var _isLoading = true;
 
   @override
-  void initState() {
-    display.addAll(services);
-    super.initState();
+  void didChangeDependencies() async {
+    if (_isInit) {
+      final activeBike = Provider.of<Bikes>(context).activeBike;
+      print(activeBike.brand);
+      print(activeBike.model);
+      if (activeBike != null) {
+        await Provider.of<Bikes>(context, listen: false)
+            .getRgPrice(activeBike.brand, activeBike.model);
+        setState(() {
+          _isLoading = false;
+        });
+        services = [
+          CartItem(
+            id: DateTime.now().toString(),
+            service: 'Regular Service',
+            type: 'PRODRY',
+            price: activeBike != null
+                ? double.parse(
+                    Provider.of<Bikes>(context, listen: false).proDry)
+                : 0.0,
+          ),
+          CartItem(
+            id: DateTime.now().toString(),
+            service: 'Regular Service',
+            type: 'PROWET',
+            price: activeBike != null
+                ? double.parse(
+                    Provider.of<Bikes>(context, listen: false).proWet)
+                : 0.0,
+          ),
+          CartItem(
+            id: DateTime.now().toString(),
+            service: 'Custom Repairs',
+            type: 'Insurance Claim',
+            price: activeBike != null ? 149 : 0.0,
+          ),
+          CartItem(
+            id: DateTime.now().toString(),
+            service: 'Custom Repairs',
+            type: 'Brake Inspection',
+            price: activeBike != null ? 149 : 0.0,
+          ),
+          CartItem(
+            id: DateTime.now().toString(),
+            service: 'Custom Repairs',
+            type: 'Electrical Inspection',
+            price: activeBike != null ? 149 : 0.0,
+          ),
+          CartItem(
+            id: DateTime.now().toString(),
+            service: 'Custom Repairs',
+            type: 'Clutch Inspection',
+            price: activeBike != null ? 149 : 0.0,
+          ),
+          CartItem(
+            id: DateTime.now().toString(),
+            service: 'Custom Repairs',
+            type: 'Other',
+            price: activeBike != null ? 149 : 0.0,
+          ),
+        ];
+        display.addAll(services);
+      } else {
+        services = [];
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   void filterSearchResults(String query) {
-    List<Service> dummySearchList = List<Service>();
+    List<CartItem> dummySearchList = List<CartItem>();
     dummySearchList.addAll(services);
     if (query.isNotEmpty) {
-      List<Service> dummyListData = List<Service>();
+      List<CartItem> dummyListData = List<CartItem>();
       dummySearchList.forEach((item) {
-        if (item.type.contains(query.toLowerCase()) ||
-            item.service.contains(query.toLowerCase()) ||
-            item.service.replaceAll(' ', '').contains(query.toLowerCase())) {
-          print(item.service);
+        if (item.type.toLowerCase().contains(query.toLowerCase()) ||
+            item.service.toLowerCase().contains(query.toLowerCase()) ||
+            item.service
+                .toLowerCase()
+                .replaceAll(' ', '')
+                .contains(query.toLowerCase())) {
           dummyListData.add(item);
         } else {
           setState(() {
@@ -146,76 +156,108 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: TextField(
-              controller: _editingController,
-              onChanged: (value) {
-                filterSearchResults(value);
-              },
-              decoration: new InputDecoration(
-                suffixIcon: GestureDetector(
-                    child: Icon(
-                      Icons.clear,
-                      color: new Color(0xff626262),
+    return _isLoading
+        ? Center(
+            child: Image.asset(
+              'assets/images/loader.gif',
+              fit: BoxFit.cover,
+              height: 85,
+              width: 85,
+            ),
+          )
+        : SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: TextField(
+                    controller: _editingController,
+                    onChanged: (value) {
+                      filterSearchResults(value);
+                    },
+                    decoration: new InputDecoration(
+                      suffixIcon: GestureDetector(
+                          child: Icon(
+                            Icons.clear,
+                            color: new Color(0xff626262),
+                          ),
+                          onTap: () {
+                            _editingController.clear();
+                          }),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: new Color(0xff626262),
+                      ),
+                      border: new OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(10.0),
+                        ),
+                      ),
+                      labelText: "Search Service",
+                      hintText: "Search Service",
+                      labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
+                      filled: true,
+                      hintStyle: new TextStyle(
+                        fontFamily: 'SourceSansPro',
+                        color: new Color(0xff1D1D1),
+                      ),
+                      fillColor: Colors.white,
                     ),
-                    onTap: () {
-                      _editingController.clear();
-                    }),
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: new Color(0xff626262),
-                ),
-                border: new OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    const Radius.circular(10.0),
                   ),
                 ),
-                labelText: "Search Service",
-                hintText: "Search Service",
-                labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
-                filled: true,
-                hintStyle: new TextStyle(
-                  fontFamily: 'SourceSansPro',
-                  color: new Color(0xff1D1D1),
+                ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (ctx, i) => InkWell(
+                    child: ListTile(
+                      title: Text(
+                        display[i].type,
+                        style: TextStyle(fontFamily: 'SourceSansPro'),
+                      ),
+                      subtitle: Text(
+                        display[i].service,
+                        style: TextStyle(fontFamily: 'SourceSansPro'),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                      ),
+                    ),
+                    onTap: () {
+                      if (display[i].type == 'PRODRY') {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) => RgDetailsScreen(display[0])));
+                      } else if (display[i].type == 'PROWET') {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) => RgDetailsScreen(display[1])));
+                      } else if (display[i].type == 'Insurance Claim') {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) =>
+                                CustomRepairsDetailScreen(display[2])));
+                      } else if (display[i].type == 'Brake Inspection') {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) =>
+                                CustomRepairsDetailScreen(display[3])));
+                      } else if (display[i].type == 'Electrical Inspection') {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) =>
+                                CustomRepairsDetailScreen(display[4])));
+                      } else if (display[i].type == 'Clutch Inspection') {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) =>
+                                CustomRepairsDetailScreen(display[5])));
+                      } else if (display[i].type == 'Other') {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) =>
+                                CustomRepairsDetailScreen(display[6])));
+                      }
+                    },
+                  ),
+                  itemCount: display.length,
                 ),
-                fillColor: Colors.white,
-              ),
+              ],
             ),
-          ),
-          ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (ctx, i) => InkWell(
-              child: ListTile(
-                title: Text(
-                  display[i].type,
-                  style: TextStyle(fontFamily: 'SourceSansPro'),
-                ),
-                subtitle: Text(
-                  display[i].service,
-                  style: TextStyle(fontFamily: 'SourceSansPro'),
-                ),
-                trailing: Icon(Icons.arrow_forward_ios),
-              ),
-              onTap: () {
-                if (display[i].service == 'regular service') {
-                  int i = 0;
-                  Navigator.of(context).push(pageRouteBuilder(i));
-                } else if (display[i].service == 'custom repairs') {
-                  int i = 3;
-                  Navigator.of(context).push(pageRouteBuilder(i));
-                }
-              },
-            ),
-            itemCount: display.length,
-          ),
-        ],
-      ),
-    );
+          );
   }
 }

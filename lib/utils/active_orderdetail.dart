@@ -72,7 +72,7 @@ class ActiveOrderDetail extends StatelessWidget {
           ),
           child: Container(
             width: double.infinity,
-            height: order.landmark != '' ? 225 : 205,
+            height: order.landmark != '' ? 240 : 220,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
@@ -84,115 +84,135 @@ class ActiveOrderDetail extends StatelessWidget {
                 ),
               ],
             ),
-            child: Row(
+            child: Column(
               children: <Widget>[
-                Expanded(
-                  flex: 8,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16.0, horizontal: 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          '${order.make}',
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 8,
+                        bottom: 0,
+                        top: 16,
+                        right: 0,
+                      ),
+                      child: Text(
+                        '${order.make}',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 55,
+                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                        ),
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Active',
                           style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 10,
+                            fontFamily: 'SourceSansProSB',
+                            color: Colors.white,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        Text(
-                          '${order.model}',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Row(
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 14,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            Text(
-                              'Booking ID:',
-                              style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                color: Color.fromRGBO(128, 128, 128, 1),
-                                fontWeight: FontWeight.bold,
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: Text(
+                                '${order.model}',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
-                            SizedBox(width: 8),
-                            Text(
-                              order.bookingId,
-                              style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 4),
-                        Row(
-                          children: <Widget>[
-                            Text(
-                              'Pickup Date:',
-                              style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                color: Color.fromRGBO(128, 128, 128, 1),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              DateFormat('dd/MM/yy')
-                                  .format(DateTime.parse(order.date)),
-                              style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 4),
-                        Row(
-                          children: <Widget>[
-                            Text(
-                              'Pickup Time:',
-                              style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                color: Color.fromRGBO(128, 128, 128, 1),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              order.time,
-                              style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 4),
-                        Container(
-                          width: double.infinity,
-                          child: RichText(
-                            text: TextSpan(
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: 'Pickup Address: ',
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  'Booking ID:',
                                   style: TextStyle(
                                     fontFamily: 'SourceSansPro',
                                     color: Color.fromRGBO(128, 128, 128, 1),
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                TextSpan(
-                                  text: order.landmark == ''
-                                      ? '${order.flat}, ${order.address}'
-                                      : '${order.flat},${order.landmark}, ${order.address}',
+                                SizedBox(width: 4),
+                                Text(
+                                  order.bookingId,
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Spacer(),
+                                RichText(
+                                  text: TextSpan(
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: 'Status: ',
+                                        style: TextStyle(
+                                          fontFamily: 'SourceSansPro',
+                                          color:
+                                              Color.fromRGBO(128, 128, 128, 1),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: _getStatus(order),
+                                        style: TextStyle(
+                                          fontFamily: 'SourceSansPro',
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 4),
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  'Pickup Date:',
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                    color: Color.fromRGBO(128, 128, 128, 1),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(width: 4),
+                                Text(
+                                  DateFormat('dd/MM/yy')
+                                      .format(DateTime.parse(order.date)),
                                   style: TextStyle(
                                     fontFamily: 'SourceSansPro',
                                     color: Colors.grey,
@@ -200,67 +220,72 @@ class ActiveOrderDetail extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Container(
-                        width: 55,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                          ),
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Active',
-                            style: TextStyle(
-                              fontFamily: 'SourceSansProSB',
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
+                            SizedBox(height: 4),
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  'Pickup Time:',
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                    color: Color.fromRGBO(128, 128, 128, 1),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(width: 4),
+                                Text(
+                                  order.time,
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
+                            SizedBox(height: 4),
+                            Container(
+                              width: double.infinity,
+                              child: RichText(
+                                text: TextSpan(
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: 'Pickup Address: ',
+                                      style: TextStyle(
+                                        fontFamily: 'SourceSansPro',
+                                        color: Color.fromRGBO(128, 128, 128, 1),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: order.landmark == ''
+                                          ? '${order.flat}, ${order.address}'
+                                          : '${order.flat},${order.landmark}, ${order.address}',
+                                      style: TextStyle(
+                                        fontFamily: 'SourceSansPro',
+                                        color: Colors.grey,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20,
-                        color: Color.fromRGBO(112, 112, 112, 1),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 20,
+                          color: Color.fromRGBO(112, 112, 112, 1),
+                        ),
                       ),
-                      Column(
-                        children: <Widget>[
-                          Text(
-                            'Status:',
-                            style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                color: Color.fromRGBO(128, 128, 128, 1),
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            _getStatus(order),
-                            style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                color: Theme.of(context).primaryColor),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
