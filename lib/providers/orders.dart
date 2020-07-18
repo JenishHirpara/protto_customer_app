@@ -213,7 +213,7 @@ class Orders with ChangeNotifier {
     );
   }
 
-  Future<void> addOrder(
+  Future<String> addOrder(
       OrderItem order, double prottoBucks, Bike activeBike) async {
     final url1 = 'http://stage.protto.in/api/hitesh/updatebucks.php';
     await http.patch(url1,
@@ -274,6 +274,12 @@ class Orders with ChangeNotifier {
       ),
     );
     notifyListeners();
+    return extractedData['id'];
+  }
+
+  OrderItem findById(String id) {
+    var order = _items.firstWhere((orders) => orders.id == id);
+    return order;
   }
 
   Future<void> getservices(String bookingId) async {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../providers/orders.dart';
 
@@ -14,7 +13,9 @@ class AdditionalJobItem extends StatelessWidget {
       contentPadding: EdgeInsets.symmetric(horizontal: 0),
       title: Text(
         job.name,
-        style: GoogleFonts.cantataOne(
+        style: TextStyle(
+          fontFamily: 'SourceSansProSB',
+          fontWeight: FontWeight.bold,
           color: Color.fromRGBO(128, 128, 128, 1),
         ),
       ),
@@ -23,7 +24,9 @@ class AdditionalJobItem extends StatelessWidget {
         height: 20,
         child: Text(
           '₹ ${job.cost}',
-          style: GoogleFonts.cantataOne(
+          style: TextStyle(
+            fontFamily: 'SourceSansProSB',
+            fontWeight: FontWeight.bold,
             color: Color.fromRGBO(128, 128, 128, 1),
           ),
         ),
