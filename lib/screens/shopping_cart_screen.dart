@@ -131,6 +131,100 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     print("Payment error");
     FlutterToast.showToast(
         msg: 'ERROR: ' + response.code.toString() + ' - ' + response.message);
+    // showDialog(
+    //   context: context,
+    //   builder: (ctx) {
+    //     return Dialog(
+    //       backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+    //       child: Container(
+    //         height: 250,
+    //         child: Column(
+    //           children: <Widget>[
+    //             SizedBox(height: 10),
+    //             Container(
+    //               height: 75,
+    //               width: 75,
+    //               padding: EdgeInsets.all(0),
+    //               child: Image.asset('assets/images/cancel.png'),
+    //             ),
+    //             SizedBox(height: 20),
+    //             Text(
+    //               'ORDER FAILURE',
+    //               style: TextStyle(
+    //                 fontFamily: 'SourceSansProSB',
+    //                 fontSize: 16,
+    //               ),
+    //             ),
+    //             Padding(
+    //               padding: const EdgeInsets.symmetric(horizontal: 14.0),
+    //               child: Text(
+    //                 'Looks like something went wrong while processing your request. Please try again.',
+    //                 textAlign: TextAlign.center,
+    //                 style: TextStyle(
+    //                   fontFamily: 'SourceSansPro',
+    //                   fontSize: 14,
+    //                   color: Color.fromRGBO(112, 112, 112, 1),
+    //                 ),
+    //               ),
+    //             ),
+    //             SizedBox(height: 24),
+    //             Container(
+    //               width: MediaQuery.of(context).size.width * 0.5,
+    //               height: 40,
+    //               decoration: BoxDecoration(
+    //                 border: Border.all(
+    //                   color: Theme.of(context).primaryColor,
+    //                   width: 1.2,
+    //                 ),
+    //                 borderRadius: BorderRadius.circular(4.0),
+    //                 boxShadow: [
+    //                   BoxShadow(
+    //                     color: Colors.grey[400],
+    //                     spreadRadius: 0.0,
+    //                     offset: Offset(2.0, 2.0), //(x,y)
+    //                     blurRadius: 4.0,
+    //                   ),
+    //                 ],
+    //               ),
+    //               child: RaisedButton(
+    //                 color: Colors.white,
+    //                 onPressed: () {
+    //                   Navigator.of(ctx).pop();
+    //                   var cart = Provider.of<Cart>(context, listen: false);
+    //                   var profile =
+    //                       Provider.of<UserProfile>(context, listen: false).item;
+    //                   var options = {
+    //                     'key': 'rzp_test_9mTvPPISOwAVYa',
+    //                     'amount': double.parse(_getNewTotal(cart)) * 100,
+    //                     'name': 'Protto',
+    //                     'description': _orderItem.serviceType,
+    //                     'prefill': {
+    //                       'contact': profile.number,
+    //                       'email': profile.email
+    //                     },
+    //                     'external': {
+    //                       'wallets': ['paytm']
+    //                     }
+    //                   };
+    //                   try {
+    //                     _razorpay.open(options);
+    //                   } catch (e) {
+    //                     print(e.toString());
+    //                   }
+    //                 },
+    //                 elevation: 2,
+    //                 child: Text(
+    //                   'Try Again',
+    //                   style: TextStyle(color: Theme.of(context).primaryColor),
+    //                 ),
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
   }
 
   void handlerExternalWallet(ExternalWalletResponse response) async {

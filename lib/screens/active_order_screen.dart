@@ -720,9 +720,10 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                             ),
                           ),
                           onPressed: () async {
-                            Navigator.of(context).push(jobsRoute(
-                                _order == null ? widget.order : _order));
-                            _refreshPage();
+                            await _refreshPage();
+                            Navigator.of(context).push(
+                              jobsRoute(_order == null ? widget.order : _order),
+                            );
                           },
                           color: Theme.of(context).primaryColor,
                           elevation: 6,

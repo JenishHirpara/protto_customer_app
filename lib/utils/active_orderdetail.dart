@@ -142,13 +142,13 @@ class ActiveOrderDetail extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.only(bottom: 12),
+                              padding: const EdgeInsets.only(bottom: 6),
                               child: Text(
                                 '${order.model}',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   color: Theme.of(context).primaryColor,
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

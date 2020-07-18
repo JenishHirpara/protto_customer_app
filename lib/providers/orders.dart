@@ -243,8 +243,6 @@ class Orders with ChangeNotifier {
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     final url2 =
         'http://stage.protto.in/api/shivangi/getbike.php/${order.bikeid}';
-    print(extractedData['id']);
-    print(extractedData['booking_id']);
     final response2 = await http.get(url2);
     final extractedData2 = json.decode(response2.body) as Map<String, dynamic>;
     _items.add(
@@ -421,7 +419,7 @@ class Orders with ChangeNotifier {
     if (extractedData['message'] == 'otp approved') {
       var index = _items.indexWhere((order) => order.bookingId == bookingId);
       var item = _items.firstWhere((order) => order.bookingId == bookingId);
-      _items[index] = OrderItem(
+      var data = OrderItem(
         id: item.id,
         bookingId: bookingId,
         rideable: item.rideable,
@@ -439,9 +437,15 @@ class Orders with ChangeNotifier {
         paid: item.paid,
         ssName: item.ssName,
         specialRequest: item.specialRequest,
+        make: item.make,
+        model: item.model,
+        bikeNumber: item.bikeNumber,
+        bikeYear: item.bikeYear,
         status: '${int.parse(status) + 1}',
       );
+      _items[index] = data;
       notifyListeners();
+      print(_items[index].status);
       return 'Otp verification successful!';
     }
     return 'some error';

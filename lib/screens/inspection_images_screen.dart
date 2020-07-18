@@ -310,12 +310,25 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                               (index) {
                                 return Container(
                                   child: InkWell(
-                                    child: Image.memory(
-                                      Base64Decoder()
-                                          .convert(postImgUrl[index]),
-                                      fit: BoxFit.cover,
-                                      height: 300,
-                                      width: 300,
+                                    child: GridTile(
+                                      footer: GridTileBar(
+                                        backgroundColor:
+                                            Color.fromRGBO(220, 220, 220, 0.4),
+                                        title: Text(
+                                          _names[index],
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Image.memory(
+                                        Base64Decoder()
+                                            .convert(postImgUrl[index]),
+                                        fit: BoxFit.cover,
+                                        height: 300,
+                                        width: 300,
+                                      ),
                                     ),
                                     onTap: () => _showDialog(index),
                                   ),
