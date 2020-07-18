@@ -517,6 +517,18 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         time: _order == null ? widget.order.time : _order.time,
       ),
       SampleStepTile(
+        title: Text(
+          'Bike Picked from the service station',
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            fontFamily: 'SourceSansPro',
+            color: Color(0xff707070),
+          ),
+        ),
+        date: widget.order.date,
+        time: widget.order.time,
+      ),
+      SampleStepTile(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -566,18 +578,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         ),
         date: _order == null ? widget.order.date : _order.date,
         time: _order == null ? widget.order.time : _order.time,
-      ),
-      SampleStepTile(
-        title: Text(
-          'Bike Picked from the service station',
-          textAlign: TextAlign.left,
-          style: TextStyle(
-            fontFamily: 'SourceSansPro',
-            color: Color(0xff707070),
-          ),
-        ),
-        date: widget.order.date,
-        time: widget.order.time,
       ),
       SampleStepTile(
         title: Column(
