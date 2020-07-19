@@ -250,6 +250,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
         _isLoading = false;
       });
       allJobs = Provider.of<Orders>(context, listen: false).jobs;
+      print(allJobs);
       _approval = List.generate(allJobs.length, (job) => false);
       approvedJobs = Provider.of<Orders>(context, listen: false)
           .jobs
@@ -475,7 +476,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                         ),
                       ),
                     ),
-                    widget.order.approveJobs == '0' && allJobs != null
+                    widget.order.approveJobs == '0' && allJobs.isNotEmpty
                         ? Center(
                             child: Container(
                               margin: const EdgeInsets.symmetric(horizontal: 0),
@@ -513,7 +514,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                             ),
                           )
                         : Container(),
-                    widget.order.approveJobs == '0' && allJobs != null
+                    widget.order.approveJobs == '0' && allJobs.isNotEmpty
                         ? Padding(
                             padding: EdgeInsets.symmetric(vertical: 15),
                             child: Row(
