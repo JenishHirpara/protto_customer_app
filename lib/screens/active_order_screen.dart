@@ -87,9 +87,11 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                           textInputAction: TextInputAction.next,
                           maxLength: 1,
                           focusNode: _focusNode1,
-                          onChanged: (_) {
-                            FocusScope.of(dialogcontext)
-                                .requestFocus(_focusNode2);
+                          onChanged: (value) {
+                            if (value.isNotEmpty) {
+                              FocusScope.of(dialogcontext)
+                                  .requestFocus(_focusNode2);
+                            }
                           },
                           onSaved: (value) {
                             _digit1 = value;
@@ -119,9 +121,14 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                           textInputAction: TextInputAction.next,
                           maxLength: 1,
                           focusNode: _focusNode2,
-                          onChanged: (_) {
-                            FocusScope.of(dialogcontext)
-                                .requestFocus(_focusNode3);
+                          onChanged: (value) {
+                            if (value.isNotEmpty) {
+                              FocusScope.of(dialogcontext)
+                                  .requestFocus(_focusNode3);
+                            } else {
+                              FocusScope.of(dialogcontext)
+                                  .requestFocus(_focusNode1);
+                            }
                           },
                           onSaved: (value) {
                             _digit2 = value;
@@ -150,9 +157,14 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                           textInputAction: TextInputAction.next,
                           maxLength: 1,
                           focusNode: _focusNode3,
-                          onChanged: (_) {
-                            FocusScope.of(dialogcontext)
-                                .requestFocus(_focusNode4);
+                          onChanged: (value) {
+                            if (value.isNotEmpty) {
+                              FocusScope.of(dialogcontext)
+                                  .requestFocus(_focusNode4);
+                            } else {
+                              FocusScope.of(dialogcontext)
+                                  .requestFocus(_focusNode2);
+                            }
                           },
                           onSaved: (value) {
                             _digit3 = value;
@@ -183,6 +195,12 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                           focusNode: _focusNode4,
                           onSaved: (value) {
                             _digit4 = value;
+                          },
+                          onChanged: (value) {
+                            if (value.isEmpty) {
+                              FocusScope.of(dialogcontext)
+                                  .requestFocus(_focusNode3);
+                            }
                           },
                           style: TextStyle(
                             fontSize: 30.0,
@@ -234,9 +252,13 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                       var message =
                           await Provider.of<Orders>(context, listen: false)
                               .verifyotp(
-                                  widget.order.bookingId,
-                                  '$_digit1$_digit2$_digit3$_digit4',
-                                  widget.order.status);
+                        widget.order.bookingId,
+                        '$_digit1$_digit2$_digit3$_digit4',
+                        _order == null ? widget.order.status : _order.status,
+                      );
+                      if (message == 'otp approved') {
+                        _refreshPage();
+                      }
                       setState(() {
                         _isLoading = false;
                       });
@@ -244,16 +266,60 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                       showDialog(
                         context: context,
                         builder: (ctx) {
-                          return AlertDialog(
-                            title: Text(message),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text('Okay'),
-                                onPressed: () {
-                                  Navigator.of(ctx).pop();
-                                },
+                          return Dialog(
+                            child: Container(
+                              height: 175,
+                              child: Column(
+                                children: <Widget>[
+                                  SizedBox(height: 30),
+                                  Text(
+                                    message,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  SizedBox(height: 40),
+                                  Container(
+                                    height: 40,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Theme.of(context).primaryColor,
+                                        width: 1.2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(4.0),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey[400],
+                                          spreadRadius: 0.0,
+                                          offset: Offset(2.0, 2.0), //(x,y)
+                                          blurRadius: 4.0,
+                                        ),
+                                      ],
+                                    ),
+                                    child: RaisedButton(
+                                      child: Text(
+                                        'Okay',
+                                        style: TextStyle(
+                                          fontFamily: 'SourceSansProSB',
+                                          fontSize: 15,
+                                          color:
+                                              Color.fromRGBO(112, 112, 112, 1),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(ctx).pop();
+                                      },
+                                      color: Colors.white,
+                                      elevation: 2,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           );
                         },
                       );
@@ -627,6 +693,15 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         time: _order == null ? widget.order.time : _order.time,
       ),
     ];
+  }
+
+  @override
+  void dispose() {
+    _focusNode1.dispose();
+    _focusNode2.dispose();
+    _focusNode3.dispose();
+    _focusNode4.dispose();
+    super.dispose();
   }
 
   @override

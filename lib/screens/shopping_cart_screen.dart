@@ -425,7 +425,10 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     }
     showDatePicker(
       context: context,
-      initialDate: date,
+      initialDate: _date == null
+          ? date
+          : DateTime(int.parse(_date.split('-')[0]),
+              int.parse(_date.split('-')[1]), int.parse(_date.split('-')[2])),
       firstDate: date,
       lastDate: DateTime(nextYear, month, day),
     ).then((pickedDate) {
@@ -902,7 +905,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                               hintText: 'Delivery Type',
                               hintStyle: TextStyle(
                                 fontFamily: 'SourceSansPro',
-                                color: Colors.black,
+                                color: Color.fromRGBO(128, 128, 128, 1),
                                 fontSize: 14,
                               ),
                             ),
@@ -980,6 +983,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 style: TextStyle(
                                   fontFamily: 'SourceSansPro',
                                   fontSize: 14,
+                                  color: Color.fromRGBO(128, 128, 128, 1),
                                 ),
                                 textAlign: TextAlign.left,
                               ),
@@ -1000,8 +1004,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                               hintText: 'Time Slot',
                               hintStyle: TextStyle(
                                 fontFamily: 'SourceSansPro',
-                                //color: Color.fromRGBO(128, 128, 128, 1),
-                                color: Colors.black,
+                                color: Color.fromRGBO(128, 128, 128, 1),
                                 fontSize: 14,
                               ),
                             ),
@@ -1069,8 +1072,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                               hintText: 'Any Special Request',
                               hintStyle: TextStyle(
                                 fontFamily: 'SourceSansPro',
-                                //color: Color.fromRGBO(128, 128, 128, 1),
-                                color: Colors.black,
+                                color: Color.fromRGBO(128, 128, 128, 1),
                                 fontSize: 14,
                               ),
                             ),
@@ -1165,15 +1167,16 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                             ),
                                             _addressSeen.landmark != null
                                                 ? Text(
-                                                    '${_addressSeen.landmark}, ${_addressSeen.address}',
+                                                    '${_addressSeen.flat}, ${_addressSeen.landmark}, ${_addressSeen.address}',
                                                     style: TextStyle(
-                                                      fontFamily: 'Montserrat',
+                                                      fontFamily:
+                                                          'SourceSansPro',
                                                       color: Color.fromRGBO(
                                                           112, 112, 112, 1),
                                                     ),
                                                   )
                                                 : Text(
-                                                    _addressSeen.address,
+                                                    '${_addressSeen.flat}, ${_addressSeen.address}',
                                                     style: TextStyle(
                                                       fontFamily:
                                                           'SourceSansPro',

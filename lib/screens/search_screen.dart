@@ -213,11 +213,17 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: ListTile(
                       title: Text(
                         display[i].type,
-                        style: TextStyle(fontFamily: 'SourceSansPro'),
+                        style: TextStyle(
+                          fontFamily: 'SourceSansPro',
+                          color: Color.fromRGBO(112, 112, 112, 1),
+                        ),
                       ),
                       subtitle: Text(
                         display[i].service,
-                        style: TextStyle(fontFamily: 'SourceSansPro'),
+                        style: TextStyle(
+                          fontFamily: 'SourceSansPro',
+                          color: Color.fromRGBO(128, 128, 128, 1),
+                        ),
                       ),
                       trailing: Icon(
                         Icons.arrow_forward_ios,

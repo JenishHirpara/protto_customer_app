@@ -84,20 +84,22 @@ class _SupportScreenState extends State<SupportScreen> {
                         child: Text(
                           'FAQs',
                           style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromRGBO(112, 112, 112, 1)),
+                            fontFamily: 'Montserrat',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(112, 112, 112, 1),
+                          ),
                         ),
                       ),
                       ExpansionTile(
                         title: Text(
                           'Where will my bike be serviced?',
                           style: TextStyle(
-                              fontFamily: 'SourceSansProSB',
-                              color: expanded1
-                                  ? Theme.of(context).primaryColor
-                                  : Color.fromRGBO(112, 112, 112, 1)),
+                            fontFamily: 'SourceSansProSB',
+                            color: expanded1
+                                ? Theme.of(context).primaryColor
+                                : Color.fromRGBO(112, 112, 112, 1),
+                          ),
                         ),
                         onExpansionChanged: ((newState) {
                           if (newState)
@@ -115,9 +117,10 @@ class _SupportScreenState extends State<SupportScreen> {
                             child: Text(
                               'Your bike will be serviced at Protto partnered service station. Protto partnered service station is selected based on reputation, turnaround time of service, quality of service delivered, and availability of genuine spares.',
                               style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  fontSize: 15,
-                                  color: Color.fromRGBO(112, 112, 112, 1)),
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15,
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                              ),
                             ),
                           ),
                         ],
@@ -126,10 +129,11 @@ class _SupportScreenState extends State<SupportScreen> {
                         title: Text(
                           'How long does it take to service a motorcycle?',
                           style: TextStyle(
-                              fontFamily: 'SourceSansProSB',
-                              color: expanded2
-                                  ? Theme.of(context).primaryColor
-                                  : Color.fromRGBO(112, 112, 112, 1)),
+                            fontFamily: 'SourceSansProSB',
+                            color: expanded2
+                                ? Theme.of(context).primaryColor
+                                : Color.fromRGBO(112, 112, 112, 1),
+                          ),
                         ),
                         onExpansionChanged: ((newState) {
                           if (newState)
@@ -147,9 +151,10 @@ class _SupportScreenState extends State<SupportScreen> {
                             child: Text(
                               'The service time for your motorcycle depends on the service package you opt for. A ProDRY service package takes 4-5 hours whereas, a ProWET service package takes at least 5-6 hours.',
                               style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  fontSize: 15,
-                                  color: Color.fromRGBO(112, 112, 112, 1)),
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15,
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                              ),
                             ),
                           ),
                         ],
@@ -158,10 +163,11 @@ class _SupportScreenState extends State<SupportScreen> {
                         title: Text(
                           'Can I reschedule my booking appointment?',
                           style: TextStyle(
-                              fontFamily: 'SourceSansProSB',
-                              color: expanded3
-                                  ? Theme.of(context).primaryColor
-                                  : Color.fromRGBO(112, 112, 112, 1)),
+                            fontFamily: 'SourceSansProSB',
+                            color: expanded3
+                                ? Theme.of(context).primaryColor
+                                : Color.fromRGBO(112, 112, 112, 1),
+                          ),
                         ),
                         onExpansionChanged: ((newState) {
                           if (newState)
@@ -180,9 +186,10 @@ class _SupportScreenState extends State<SupportScreen> {
                               'You can reschedule your booking by visiting My Bookings in the Protto App.',
                               textAlign: TextAlign.justify,
                               style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  fontSize: 15,
-                                  color: Color.fromRGBO(112, 112, 112, 1)),
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15,
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                              ),
                             ),
                           ),
                         ],
@@ -191,10 +198,11 @@ class _SupportScreenState extends State<SupportScreen> {
                         title: Text(
                           'What if my bike needs extra services or part replacements?',
                           style: TextStyle(
-                              fontFamily: 'SourceSansProSB',
-                              color: expanded4
-                                  ? Theme.of(context).primaryColor
-                                  : Color.fromRGBO(112, 112, 112, 1)),
+                            fontFamily: 'SourceSansProSB',
+                            color: expanded4
+                                ? Theme.of(context).primaryColor
+                                : Color.fromRGBO(112, 112, 112, 1),
+                          ),
                         ),
                         onExpansionChanged: ((newState) {
                           if (newState)
@@ -212,9 +220,10 @@ class _SupportScreenState extends State<SupportScreen> {
                             child: Text(
                               'We will send you the request for additional jobs and associated costs. Upon your approval only, we will execute additional services.',
                               style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  fontSize: 15,
-                                  color: Color.fromRGBO(112, 112, 112, 1)),
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15,
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                              ),
                             ),
                           ),
                         ],
@@ -223,10 +232,11 @@ class _SupportScreenState extends State<SupportScreen> {
                         title: Text(
                           'I was charged for service which I didn’t opt for. What do I do?',
                           style: TextStyle(
-                              fontFamily: 'SourceSansProSB',
-                              color: expanded5
-                                  ? Theme.of(context).primaryColor
-                                  : Color.fromRGBO(112, 112, 112, 1)),
+                            fontFamily: 'SourceSansProSB',
+                            color: expanded5
+                                ? Theme.of(context).primaryColor
+                                : Color.fromRGBO(112, 112, 112, 1),
+                          ),
                         ),
                         onExpansionChanged: ((newState) {
                           if (newState)
@@ -244,9 +254,10 @@ class _SupportScreenState extends State<SupportScreen> {
                             child: Text(
                               'Kindly contact us on email or call. Upon verifying the claim we will make the refund the amount immediately. For more queries on Refund check out our Service Revision & Refund Policy.',
                               style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  fontSize: 15,
-                                  color: Color.fromRGBO(112, 112, 112, 1)),
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15,
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                              ),
                             ),
                           ),
                         ],
@@ -255,10 +266,11 @@ class _SupportScreenState extends State<SupportScreen> {
                         title: Text(
                           'What Oil will be used during Bike Service?',
                           style: TextStyle(
-                              fontFamily: 'SourceSansProSB',
-                              color: expanded6
-                                  ? Theme.of(context).primaryColor
-                                  : Color.fromRGBO(112, 112, 112, 1)),
+                            fontFamily: 'SourceSansProSB',
+                            color: expanded6
+                                ? Theme.of(context).primaryColor
+                                : Color.fromRGBO(112, 112, 112, 1),
+                          ),
                         ),
                         onExpansionChanged: ((newState) {
                           if (newState)
@@ -276,9 +288,10 @@ class _SupportScreenState extends State<SupportScreen> {
                             child: Text(
                               'The oil used will be Motul Premium Mineral Engine Oil. The Oil Grades will be based on the type of Bike. The Grading system that we follow is based on the Society of Automotive Engineers (SAE). For Mopeds, we use SAE 10W 30 graded oil. SAE 20W 40 is used for major bikes ranging from 150 to 250 cc and SAE 15W 50 is used for engines will displacement of more than 250 cc.',
                               style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  fontSize: 15,
-                                  color: Color.fromRGBO(112, 112, 112, 1)),
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15,
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                              ),
                             ),
                           ),
                         ],
@@ -287,10 +300,11 @@ class _SupportScreenState extends State<SupportScreen> {
                         title: Text(
                           'What spare parts do you use during the service?',
                           style: TextStyle(
-                              fontFamily: 'SourceSansProSB',
-                              color: expanded7
-                                  ? Theme.of(context).primaryColor
-                                  : Color.fromRGBO(112, 112, 112, 1)),
+                            fontFamily: 'SourceSansProSB',
+                            color: expanded7
+                                ? Theme.of(context).primaryColor
+                                : Color.fromRGBO(112, 112, 112, 1),
+                          ),
                         ),
                         onExpansionChanged: ((newState) {
                           if (newState)
@@ -308,9 +322,10 @@ class _SupportScreenState extends State<SupportScreen> {
                             child: Text(
                               'We use 100% Genuine OEM/OES Spares. All the parts are pre-approved by our Team to ensure whatever goes into your motorcycle is nothing but a quality genuine spare part.',
                               style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  fontSize: 15,
-                                  color: Color.fromRGBO(112, 112, 112, 1)),
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15,
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                              ),
                             ),
                           ),
                         ],
@@ -319,10 +334,11 @@ class _SupportScreenState extends State<SupportScreen> {
                         title: Text(
                           'Do I have to drop my two-wheeler at the service station?',
                           style: TextStyle(
-                              fontFamily: 'SourceSansProSB',
-                              color: expanded8
-                                  ? Theme.of(context).primaryColor
-                                  : Color.fromRGBO(112, 112, 112, 1)),
+                            fontFamily: 'SourceSansProSB',
+                            color: expanded8
+                                ? Theme.of(context).primaryColor
+                                : Color.fromRGBO(112, 112, 112, 1),
+                          ),
                         ),
                         onExpansionChanged: ((newState) {
                           if (newState)
@@ -340,9 +356,10 @@ class _SupportScreenState extends State<SupportScreen> {
                             child: Text(
                               'Not at all, we provide FREE doorstep collection & delivery to save you from the hassle of visiting service station.',
                               style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  fontSize: 15,
-                                  color: Color.fromRGBO(112, 112, 112, 1)),
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15,
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                              ),
                             ),
                           ),
                         ],
@@ -351,10 +368,11 @@ class _SupportScreenState extends State<SupportScreen> {
                         title: Text(
                           'How does Protto ensure safety against Coronavirus for my Two-wheeler?',
                           style: TextStyle(
-                              fontFamily: 'SourceSansProSB',
-                              color: expanded9
-                                  ? Theme.of(context).primaryColor
-                                  : Color.fromRGBO(112, 112, 112, 1)),
+                            fontFamily: 'SourceSansProSB',
+                            color: expanded9
+                                ? Theme.of(context).primaryColor
+                                : Color.fromRGBO(112, 112, 112, 1),
+                          ),
                         ),
                         onExpansionChanged: ((newState) {
                           if (newState)
@@ -372,9 +390,10 @@ class _SupportScreenState extends State<SupportScreen> {
                             child: Text(
                               'At Protto, health & hygiene are of utmost importance. As a part of the safety measure against novel Coronavirus we have started sanitizing all the bikes before collection & before delivery to ensure utmost safety of the two-wheeler owner community. We would request you to maintain social distancing at the time of bike collection & delivery for your utmost safety.',
                               style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  fontSize: 15,
-                                  color: Color.fromRGBO(112, 112, 112, 1)),
+                                fontFamily: 'SourceSansPro',
+                                fontSize: 15,
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                              ),
                             ),
                           ),
                         ],
@@ -409,13 +428,14 @@ class _SupportScreenState extends State<SupportScreen> {
                                             context: context,
                                             builder: (ctx) {
                                               return AlertDialog(
-                                                title: Text('Call',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color: Theme.of(context)
-                                                            .primaryColor,
-                                                        fontFamily:
-                                                            'Montserrat')),
+                                                title: Text(
+                                                  'Call',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      fontFamily: 'Montserrat'),
+                                                ),
                                                 actions: <Widget>[
                                                   Column(
                                                     crossAxisAlignment:
@@ -704,13 +724,14 @@ class _SupportScreenState extends State<SupportScreen> {
                                             context: context,
                                             builder: (ctx) {
                                               return AlertDialog(
-                                                title: Text('Chat',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color: Theme.of(context)
-                                                            .primaryColor,
-                                                        fontFamily:
-                                                            'Montserrat')),
+                                                title: Text(
+                                                  'Chat',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      fontFamily: 'Montserrat'),
+                                                ),
                                                 actions: <Widget>[
                                                   Column(
                                                     crossAxisAlignment:

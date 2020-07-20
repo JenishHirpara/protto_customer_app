@@ -106,7 +106,11 @@ class PastOrderDetail extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
-                      Icon(Icons.arrow_forward_ios),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color.fromRGBO(112, 112, 112, 1),
+                        size: 20,
+                      ),
                       Column(
                         children: <Widget>[
                           Text(
