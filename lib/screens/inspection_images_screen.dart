@@ -137,12 +137,14 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                           widget.order.bikeYear,
                           style: TextStyle(
                             fontFamily: 'Montserrat',
+                            color: Color.fromRGBO(128, 128, 128, 1),
                           ),
                         ),
                         Text(
                           widget.order.bikeNumber,
                           style: TextStyle(
                             fontFamily: 'Montserrat',
+                            color: Color.fromRGBO(128, 128, 128, 1),
                           ),
                         ),
                       ],

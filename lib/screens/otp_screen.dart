@@ -76,6 +76,26 @@ class _OtpScreenState extends State<OtpScreen> {
     );
   }
 
+  var _isInit = true;
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      FocusScope.of(context).requestFocus(_focusNode1);
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _focusNode1.dispose();
+    _focusNode2.dispose();
+    _focusNode3.dispose();
+    _focusNode4.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -157,8 +177,11 @@ class _OtpScreenState extends State<OtpScreen> {
                             textInputAction: TextInputAction.next,
                             maxLength: 1,
                             focusNode: _focusNode1,
-                            onChanged: (_) {
-                              FocusScope.of(context).requestFocus(_focusNode2);
+                            onChanged: (value) {
+                              if (value.isNotEmpty) {
+                                FocusScope.of(context)
+                                    .requestFocus(_focusNode2);
+                              }
                             },
                             onSaved: (value) {
                               _digit1 = value;
@@ -188,8 +211,14 @@ class _OtpScreenState extends State<OtpScreen> {
                             textInputAction: TextInputAction.next,
                             maxLength: 1,
                             focusNode: _focusNode2,
-                            onChanged: (_) {
-                              FocusScope.of(context).requestFocus(_focusNode3);
+                            onChanged: (value) {
+                              if (value.isNotEmpty) {
+                                FocusScope.of(context)
+                                    .requestFocus(_focusNode3);
+                              } else {
+                                FocusScope.of(context)
+                                    .requestFocus(_focusNode1);
+                              }
                             },
                             onSaved: (value) {
                               _digit2 = value;
@@ -218,8 +247,14 @@ class _OtpScreenState extends State<OtpScreen> {
                             textInputAction: TextInputAction.next,
                             maxLength: 1,
                             focusNode: _focusNode3,
-                            onChanged: (_) {
-                              FocusScope.of(context).requestFocus(_focusNode4);
+                            onChanged: (value) {
+                              if (value.isNotEmpty) {
+                                FocusScope.of(context)
+                                    .requestFocus(_focusNode4);
+                              } else {
+                                FocusScope.of(context)
+                                    .requestFocus(_focusNode2);
+                              }
                             },
                             onSaved: (value) {
                               _digit3 = value;
@@ -251,6 +286,13 @@ class _OtpScreenState extends State<OtpScreen> {
                             onSaved: (value) {
                               _digit4 = value;
                             },
+                            onChanged: (value) {
+                              if (value.isEmpty) {
+                                FocusScope.of(context)
+                                    .requestFocus(_focusNode3);
+                              }
+                            },
+                            onFieldSubmitted: (_) => _saveForm(),
                             style: TextStyle(
                               fontSize: 30.0,
                               color: Colors.black,
