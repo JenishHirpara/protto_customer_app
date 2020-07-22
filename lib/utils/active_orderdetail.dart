@@ -72,7 +72,7 @@ class ActiveOrderDetail extends StatelessWidget {
           ),
           child: Container(
             width: double.infinity,
-            height: order.landmark != '' ? 240 : 220,
+            height: order.landmark != '' ? 260 : 240,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
@@ -156,6 +156,28 @@ class ActiveOrderDetail extends StatelessWidget {
                             Row(
                               children: <Widget>[
                                 Text(
+                                  'Status:',
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                    color: Color.fromRGBO(128, 128, 128, 1),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(width: 4),
+                                Text(
+                                  _getStatus(order),
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 3),
+                            Row(
+                              children: <Widget>[
+                                Text(
                                   'Booking ID:',
                                   style: TextStyle(
                                     fontFamily: 'SourceSansPro',
@@ -171,34 +193,9 @@ class ActiveOrderDetail extends StatelessWidget {
                                     color: Colors.grey,
                                   ),
                                 ),
-                                Spacer(),
-                                RichText(
-                                  text: TextSpan(
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: 'Status: ',
-                                        style: TextStyle(
-                                          fontFamily: 'SourceSansPro',
-                                          color:
-                                              Color.fromRGBO(128, 128, 128, 1),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: _getStatus(order),
-                                        style: TextStyle(
-                                          fontFamily: 'SourceSansPro',
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
                               ],
                             ),
-                            SizedBox(height: 4),
+                            SizedBox(height: 3),
                             Row(
                               children: <Widget>[
                                 Text(
@@ -220,7 +217,7 @@ class ActiveOrderDetail extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 4),
+                            SizedBox(height: 3),
                             Row(
                               children: <Widget>[
                                 Text(
@@ -241,7 +238,7 @@ class ActiveOrderDetail extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 4),
+                            SizedBox(height: 3),
                             Container(
                               width: double.infinity,
                               child: RichText(

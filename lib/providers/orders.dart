@@ -214,8 +214,16 @@ class Orders with ChangeNotifier {
   }
 
   Future<String> addOrder(
-      OrderItem order, double prottoBucks, Bike activeBike) async {
+      OrderItem order, double prottoBucks, Bike activeBike, String paid) async {
     final url1 = 'http://stage.protto.in/api/hitesh/updatebucks.php';
+    var date = DateTime.now();
+    var year = date.year;
+    var month = date.month;
+    var day = date.day;
+    var hour = date.hour;
+    var minute = date.minute;
+    var second = date.second;
+    var millisecond = date.millisecond;
     await http.patch(url1,
         body: json.encode({
           'cid': userId,
@@ -225,13 +233,14 @@ class Orders with ChangeNotifier {
     final response = await http.post(
       url,
       body: json.encode({
+        'booking_id': '$year$month$day$hour$minute$second$millisecond',
         'cid': userId,
         'bike_id': order.bikeid,
         'rideable': order.rideable,
         'service_type': order.serviceType,
         'address_id': order.addressId,
         'total': order.total,
-        'paid': '0.0',
+        'paid': paid,
         'date': order.date,
         'timestamp': order.time,
         'special_request': order.specialRequest,
@@ -410,6 +419,9 @@ class Orders with ChangeNotifier {
           'status': status,
         }));
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedData['message'] == 'please update status of your booking') {
+      return 'Please refresh the page to update status and then try again';
+    }
     if (extractedData['message'] == 'otp cannot be approved right now') {
       return extractedData['message'];
     }

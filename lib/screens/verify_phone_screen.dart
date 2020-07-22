@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import './otp_screen.dart';
 import '../providers/profile.dart';
-import './signup_screen.dart';
 import '../models/http_exception.dart';
 
 class VerifyPhoneScreen extends StatefulWidget {
@@ -77,10 +76,34 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
                 child: TextFormField(
                   controller: _mobileController,
                   decoration: InputDecoration(
-                      labelText: 'Mobile No.',
-                      labelStyle: TextStyle(
-                        fontFamily: 'SourceSansPro',
-                      )),
+                    labelText: 'Mobile No.',
+                    labelStyle: TextStyle(
+                      fontFamily: 'SourceSansPro',
+                    ),
+                  ),
+                  onFieldSubmitted: (_) async {
+                    final isValid = _form.currentState.validate();
+                    if (!isValid) {
+                      return;
+                    }
+                    try {
+                      setState(() {
+                        _isLoading = true;
+                      });
+                      await Provider.of<UserProfile>(context, listen: false)
+                          .getProfile(_mobileController.text);
+
+                      Navigator.of(context)
+                          .pushReplacement(pageRouteBuilder('login'));
+                    } on HttpException catch (_) {
+                      Navigator.of(context)
+                          .pushReplacement(pageRouteBuilder('signup'));
+                      // Navigator.of(context).pushReplacementNamed(
+                      //   SignupScreen.routeName,
+                      //   arguments: _mobileController.text,
+                      // );
+                    }
+                  },
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
                     WhitelistingTextInputFormatter.digitsOnly,
@@ -135,12 +158,15 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
                     await Provider.of<UserProfile>(context, listen: false)
                         .getProfile(_mobileController.text);
 
-                    Navigator.of(context).pushReplacement(pageRouteBuilder());
+                    Navigator.of(context)
+                        .pushReplacement(pageRouteBuilder('login'));
                   } on HttpException catch (_) {
-                    Navigator.of(context).pushReplacementNamed(
-                      SignupScreen.routeName,
-                      arguments: _mobileController.text,
-                    );
+                    Navigator.of(context)
+                        .pushReplacement(pageRouteBuilder('signup'));
+                    // Navigator.of(context).pushReplacementNamed(
+                    //   SignupScreen.routeName,
+                    //   arguments: _mobileController.text,
+                    // );
                   }
                 },
               ),
@@ -151,11 +177,11 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
     );
   }
 
-  PageRouteBuilder pageRouteBuilder() {
+  PageRouteBuilder pageRouteBuilder(String text) {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return OtpScreen();
+        return OtpScreen(text);
       },
       transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,

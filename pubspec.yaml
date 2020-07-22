@@ -88,6 +88,7 @@ flutter:
     - assets/images/loader.gif
     - assets/images/tick.png
     - assets/images/cancel.png
+    - assets/images/coming_soon.png
 
   fonts:
     - family: SourceSansPro

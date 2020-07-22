@@ -535,49 +535,13 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         time: _order == null ? widget.order.time : _order.time,
       ),
       SampleStepTile(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'Service Done',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontFamily: 'SourceSansPro',
-                color: Color(0xff707070),
-              ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.35,
-              height: 30,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Theme.of(context).primaryColor,
-                  width: 1.2,
-                ),
-                borderRadius: BorderRadius.circular(4.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey[400],
-                    spreadRadius: 0.0,
-                    offset: Offset(2.0, 2.0), //(x,y)
-                    blurRadius: 4.0,
-                  ),
-                ],
-              ),
-              child: FlatButton(
-                color: Color.fromRGBO(250, 250, 250, 1),
-                child: Text(
-                  'Invoice',
-                  style: TextStyle(
-                    fontFamily: 'SourceSansProSB',
-                    color: Color.fromRGBO(112, 112, 112, 0.7),
-                  ),
-                ),
-                onPressed: () {},
-              ),
-            ),
-          ],
+        title: Text(
+          'Service Done',
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            fontFamily: 'SourceSansPro',
+            color: Color(0xff707070),
+          ),
         ),
         date: _order == null ? widget.order.date : _order.date,
         time: _order == null ? widget.order.time : _order.time,
