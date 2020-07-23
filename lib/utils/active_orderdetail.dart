@@ -78,7 +78,7 @@ class ActiveOrderDetail extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, 0.15),
+                  color: Color.fromRGBO(0, 0, 0, 0.05),
                   offset: Offset(0.0, 5.0), //(x,y)
                   blurRadius: 7.0,
                 ),

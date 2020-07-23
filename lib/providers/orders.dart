@@ -420,7 +420,7 @@ class Orders with ChangeNotifier {
         }));
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     if (extractedData['message'] == 'please update status of your booking') {
-      return 'Please refresh the page to update status and then try again';
+      return 'Please swipe down and refresh the page to update status and then try again';
     }
     if (extractedData['message'] == 'otp cannot be approved right now') {
       return extractedData['message'];
@@ -429,35 +429,6 @@ class Orders with ChangeNotifier {
       return 'Incorrect otp';
     }
     if (extractedData['message'] == 'otp approved') {
-      var index = _items.indexWhere((order) => order.bookingId == bookingId);
-      var item = _items.firstWhere((order) => order.bookingId == bookingId);
-      var data = OrderItem(
-        id: item.id,
-        bookingId: bookingId,
-        rideable: item.rideable,
-        serviceType: item.serviceType,
-        time: item.time,
-        date: item.date,
-        bikeid: item.bikeid,
-        addressId: item.addressId,
-        flat: item.flat,
-        address: item.address,
-        deliveryType: item.deliveryType,
-        landmark: item.landmark,
-        approveJobs: item.approveJobs,
-        total: item.total,
-        paid: item.paid,
-        ssName: item.ssName,
-        specialRequest: item.specialRequest,
-        make: item.make,
-        model: item.model,
-        bikeNumber: item.bikeNumber,
-        bikeYear: item.bikeYear,
-        status: '${int.parse(status) + 1}',
-      );
-      _items[index] = data;
-      notifyListeners();
-      print(_items[index].status);
       return 'Otp verification successful!';
     }
     return 'some error';

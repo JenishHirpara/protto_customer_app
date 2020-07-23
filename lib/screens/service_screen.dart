@@ -8,6 +8,7 @@ import '../providers/bikes.dart';
 import '../providers/cart_item.dart';
 import '../utils/badge.dart';
 import '../utils/custom_repairs_item.dart';
+import './no_internet_screen.dart';
 
 Color orangeColor = new Color(0xFFF69C7A);
 Color greyColor = new Color(0xFFC2C2C2);
@@ -48,19 +49,50 @@ class _ServiceScreenState extends State<ServiceScreen> {
     );
   }
 
+  void retry() async {
+    try {
+      final activeBike = Provider.of<Bikes>(context, listen: false).activeBike;
+      await Provider.of<Bikes>(context, listen: false)
+          .getRgPrice(activeBike.brand, activeBike.model);
+      setState(() {
+        _isLoading = false;
+        _isInternet = true;
+      });
+    } catch (error) {
+      print(error.message);
+      setState(() {
+        _isLoading = false;
+        _isInternet = false;
+      });
+    }
+  }
+
   var _isInit = true;
-  var _isLoading = true;
+  var _isLoading = false;
+  var _isInternet = true;
 
   @override
   void didChangeDependencies() async {
     if (_isInit) {
       final activeBike = Provider.of<Bikes>(context).activeBike;
       if (activeBike != null) {
-        await Provider.of<Bikes>(context, listen: false)
-            .getRgPrice(activeBike.brand, activeBike.model);
         setState(() {
-          _isLoading = false;
+          _isLoading = true;
+          _isInternet = true;
         });
+        try {
+          await Provider.of<Bikes>(context, listen: false)
+              .getRgPrice(activeBike.brand, activeBike.model);
+          setState(() {
+            _isLoading = false;
+          });
+        } catch (error) {
+          print(error.message);
+          setState(() {
+            _isLoading = false;
+            _isInternet = false;
+          });
+        }
       } else {
         setState(() {
           _isLoading = false;
@@ -165,18 +197,20 @@ class _ServiceScreenState extends State<ServiceScreen> {
                   width: 85,
                 ),
               )
-            : Padding(
-                padding: EdgeInsets.all(10),
-                child: TabBarView(
-                  children: <Widget>[
-                    regularServicesPage(),
-                    comingSoonPage(),
-                    comingSoonPage(),
-                    customRepairsPage(),
-                    comingSoonPage(),
-                  ],
-                ),
-              ),
+            : _isInternet
+                ? Padding(
+                    padding: EdgeInsets.all(10),
+                    child: TabBarView(
+                      children: <Widget>[
+                        regularServicesPage(),
+                        comingSoonPage(),
+                        comingSoonPage(),
+                        customRepairsPage(),
+                        comingSoonPage(),
+                      ],
+                    ),
+                  )
+                : NoInternetScreen(retry),
       ),
     );
   }

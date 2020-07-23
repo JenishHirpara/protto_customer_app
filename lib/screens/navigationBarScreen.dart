@@ -13,8 +13,13 @@ import './user_profile_screen.dart';
 import './shopping_cart_screen.dart';
 import './my_bikes_screen.dart';
 import './new_bike_screen.dart';
+import './no_internet_screen.dart';
 
 class NavigationBarScreen extends StatefulWidget {
+  final Function retry;
+
+  NavigationBarScreen(this.retry);
+
   @override
   _NavigationBarScreenState createState() => _NavigationBarScreenState();
 }
@@ -320,11 +325,17 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
   @override
   void didChangeDependencies() async {
     if (_isInit) {
-      Provider.of<Addresses>(context, listen: false).fetchAndSetAddresses();
-      await Provider.of<Bikes>(context, listen: false).fetchAndSetBikes();
-      setState(() {
-        _isLoading = false;
-      });
+      try {
+        Provider.of<Addresses>(context, listen: false).fetchAndSetAddresses();
+        await Provider.of<Bikes>(context, listen: false).fetchAndSetBikes();
+        setState(() {
+          _isLoading = false;
+        });
+      } catch (error) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -469,7 +480,9 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
       },
     ];
     return Scaffold(
-      appBar: _isLoading ? null : _pages[_currentIndex]['appbar'],
+      appBar: _isLoading
+          ? null
+          : widget.retry == null ? _pages[_currentIndex]['appbar'] : null,
       body: _isLoading
           ? Center(
               child: Image.asset(
@@ -479,7 +492,9 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                 width: 85,
               ),
             )
-          : _pages[_currentIndex]['page'],
+          : widget.retry == null
+              ? _pages[_currentIndex]['page']
+              : NoInternetScreen(widget.retry),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           border: Border(

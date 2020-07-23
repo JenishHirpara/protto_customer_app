@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../providers/orders.dart';
 import '../utils/job_item.dart';
 import '../utils/additional_job_item.dart';
+import './no_internet_screen.dart';
 
 class JobsCardScreen extends StatefulWidget {
   final OrderItem order;
@@ -229,19 +230,12 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
         });
   }
 
-  var _isInit = true;
-  var _isLoading = true;
-  List<Jobs> allJobs;
-  List<bool> _approval;
-  List<Jobs> approvedJobs;
-  List<String> approvedJobId = [];
-  var _total = '0.0';
-  var _paid = '0.0';
-  @override
-  void didChangeDependencies() async {
-    if (_isInit) {
-      _total = widget.order.total;
-      _paid = widget.order.paid;
+  void retry() async {
+    try {
+      setState(() {
+        _isLoading = true;
+        _isInternet = true;
+      });
       await Provider.of<Orders>(context, listen: false)
           .getservices(widget.order.bookingId);
       await Provider.of<Orders>(context, listen: false)
@@ -250,12 +244,60 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
         _isLoading = false;
       });
       allJobs = Provider.of<Orders>(context, listen: false).jobs;
-      print(allJobs);
       _approval = List.generate(allJobs.length, (job) => false);
       approvedJobs = Provider.of<Orders>(context, listen: false)
           .jobs
           .where((job) => job.approved == '1')
           .toList();
+    } catch (error) {
+      print(error.message);
+      setState(() {
+        _isLoading = false;
+        _isInternet = false;
+      });
+    }
+  }
+
+  var _isInit = true;
+  var _isLoading = false;
+  var _isInternet = true;
+  List<Jobs> allJobs;
+  List<bool> _approval;
+  List<Jobs> approvedJobs;
+  List<String> approvedJobId = [];
+  var _total = '0.0';
+  var _paid = '0.0';
+
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      _total = widget.order.total;
+      _paid = widget.order.paid;
+      try {
+        setState(() {
+          _isLoading = true;
+          _isInternet = true;
+        });
+        await Provider.of<Orders>(context, listen: false)
+            .getservices(widget.order.bookingId);
+        await Provider.of<Orders>(context, listen: false)
+            .getjobs(widget.order.bookingId);
+        setState(() {
+          _isLoading = false;
+        });
+        allJobs = Provider.of<Orders>(context, listen: false).jobs;
+        _approval = List.generate(allJobs.length, (job) => false);
+        approvedJobs = Provider.of<Orders>(context, listen: false)
+            .jobs
+            .where((job) => job.approved == '1')
+            .toList();
+      } catch (error) {
+        print(error.message);
+        setState(() {
+          _isLoading = false;
+          _isInternet = false;
+        });
+      }
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -311,301 +353,316 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                 width: 85,
               ),
             )
-          : SingleChildScrollView(
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(28),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Pre - Booked Services',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        color: Color.fromRGBO(112, 112, 112, 1),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
-                    ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, i) => JobItem(
-                          Provider.of<Orders>(context, listen: false)
-                              .services[i]),
-                      itemCount: Provider.of<Orders>(context, listen: false)
-                          .services
-                          .length,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Additional Services',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        color: Color.fromRGBO(112, 112, 112, 1),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
-                    ),
-                    widget.order.approveJobs == '0'
-                        ? allJobs.isEmpty
-                            ? Text(
-                                'Please wait for the service station to recommend additional jobs',
-                                style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                ),
-                              )
+          : _isInternet
+              ? SingleChildScrollView(
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(28),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'Pre - Booked Services',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Color.fromRGBO(112, 112, 112, 1),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20,
+                          ),
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, i) => JobItem(
+                              Provider.of<Orders>(context, listen: false)
+                                  .services[i]),
+                          itemCount: Provider.of<Orders>(context, listen: false)
+                              .services
+                              .length,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Additional Services',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Color.fromRGBO(112, 112, 112, 1),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20,
+                          ),
+                        ),
+                        widget.order.approveJobs == '0'
+                            ? allJobs.isEmpty
+                                ? Text(
+                                    'Please wait for the service station to recommend additional jobs',
+                                    style: TextStyle(
+                                      fontFamily: 'SourceSansPro',
+                                    ),
+                                  )
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemBuilder: (ctx, i) => ListTile(
+                                      contentPadding:
+                                          EdgeInsets.symmetric(horizontal: 0),
+                                      title: Text(
+                                        allJobs[i].name,
+                                        style: GoogleFonts.cantataOne(
+                                          color:
+                                              Color.fromRGBO(128, 128, 128, 1),
+                                        ),
+                                      ),
+                                      trailing: Container(
+                                        width: 100,
+                                        height: 20,
+                                        child: Row(
+                                          children: <Widget>[
+                                            Text(
+                                              '₹ ${allJobs[i].cost}',
+                                              style: TextStyle(
+                                                fontFamily: 'SourceSansPro',
+                                                color: Color.fromRGBO(
+                                                    128, 128, 128, 1),
+                                              ),
+                                            ),
+                                            Checkbox(
+                                                value: _approval[i],
+                                                onChanged: (bool newValue) {
+                                                  setState(() {
+                                                    if (!_approval[i]) {
+                                                      approvedJobId
+                                                          .add(allJobs[i].id);
+                                                      _total =
+                                                          '${double.parse(_total) + double.parse(allJobs[i].cost)}';
+                                                    } else {
+                                                      approvedJobId.remove(
+                                                          allJobs[i].id);
+                                                      _total =
+                                                          '${double.parse(_total) - double.parse(allJobs[i].cost)}';
+                                                    }
+                                                    _approval[i] =
+                                                        !_approval[i];
+                                                  });
+                                                }),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    itemCount: allJobs.length,
+                                  )
                             : ListView.builder(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
-                                itemBuilder: (ctx, i) => ListTile(
-                                  contentPadding:
-                                      EdgeInsets.symmetric(horizontal: 0),
-                                  title: Text(
-                                    allJobs[i].name,
-                                    style: GoogleFonts.cantataOne(
-                                      color: Color.fromRGBO(128, 128, 128, 1),
-                                    ),
-                                  ),
-                                  trailing: Container(
-                                    width: 100,
-                                    height: 20,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Text(
-                                          '₹ ${allJobs[i].cost}',
-                                          style: TextStyle(
-                                            fontFamily: 'SourceSansPro',
-                                            color: Color.fromRGBO(
-                                                128, 128, 128, 1),
-                                          ),
-                                        ),
-                                        Checkbox(
-                                            value: _approval[i],
-                                            onChanged: (bool newValue) {
-                                              setState(() {
-                                                if (!_approval[i]) {
-                                                  approvedJobId
-                                                      .add(allJobs[i].id);
-                                                  _total =
-                                                      '${double.parse(_total) + double.parse(allJobs[i].cost)}';
-                                                } else {
-                                                  approvedJobId
-                                                      .remove(allJobs[i].id);
-                                                  _total =
-                                                      '${double.parse(_total) - double.parse(allJobs[i].cost)}';
-                                                }
-                                                _approval[i] = !_approval[i];
-                                              });
-                                            }),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                itemCount: allJobs.length,
-                              )
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (ctx, i) =>
-                                AdditionalJobItem(approvedJobs[i]),
-                            itemCount: approvedJobs.length,
+                                itemBuilder: (ctx, i) =>
+                                    AdditionalJobItem(approvedJobs[i]),
+                                itemCount: approvedJobs.length,
+                              ),
+                        ListTile(
+                          contentPadding: EdgeInsets.all(0),
+                          title: Text(
+                            'Item Total',
+                            style: TextStyle(
+                              fontFamily: 'SourceSansProB',
+                              //fontWeight: FontWeight.bold,
+                            ),
                           ),
-                    ListTile(
-                      contentPadding: EdgeInsets.all(0),
-                      title: Text(
-                        'Item Total',
-                        style: TextStyle(
-                          fontFamily: 'SourceSansProB',
-                          //fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      trailing: Container(
-                        width: 100,
-                        height: 20,
-                        child: Text(
-                          '₹ $_total',
-                          style: TextStyle(
-                            fontFamily: 'SourceSansProB',
-                            //fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    ListTile(
-                      contentPadding: EdgeInsets.all(0),
-                      title: Text(
-                        'Paid',
-                        style: TextStyle(
-                          fontFamily: 'SourceSansProB',
-                          //fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      trailing: Container(
-                        width: 100,
-                        height: 20,
-                        child: Text(
-                          '₹ $_paid',
-                          style: TextStyle(
-                            fontFamily: 'SourceSansProB',
-                            //fontWeight: FontWeight.bold,
-                            color: Colors.green,
-                          ),
-                        ),
-                      ),
-                    ),
-                    ListTile(
-                      contentPadding: EdgeInsets.all(0),
-                      title: Text(
-                        'Due',
-                        style: TextStyle(
-                          fontFamily: 'SourceSansProB',
-                          //fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      trailing: Container(
-                        width: 100,
-                        height: 20,
-                        child: Text(
-                          '₹ ${double.parse(_total) - double.parse(_paid)}',
-                          style: TextStyle(
-                            fontFamily: 'SourceSansProB',
-                            //fontWeight: FontWeight.bold,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ),
-                    ),
-                    widget.order.approveJobs == '0' && allJobs.isNotEmpty
-                        ? Center(
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 0),
-                              height: 50,
-                              width: double.infinity,
-                              child: RaisedButton(
-                                elevation: 3,
-                                color: Theme.of(context).primaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4.0),
-                                ),
-                                onPressed: () {
-                                  for (int i = 0; i < _approval.length; i++) {
-                                    if (!_approval[i]) {
-                                      setState(() {
-                                        _approval[i] = true;
-                                        approvedJobId.add(allJobs[i].id);
-                                        _total =
-                                            '${double.parse(_total) + double.parse(allJobs[i].cost)}';
-                                      });
-                                    }
-                                  }
-                                  approveAllAlertDialog(context, approvedJobId);
-                                },
-                                child: Text(
-                                  'Approve All',
-                                  style: TextStyle(
-                                    fontFamily: 'SourceSansProSB',
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
+                          trailing: Container(
+                            width: 100,
+                            height: 20,
+                            child: Text(
+                              '₹ $_total',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansProB',
+                                //fontWeight: FontWeight.bold,
                               ),
                             ),
-                          )
-                        : Container(),
-                    widget.order.approveJobs == '0' && allJobs.isNotEmpty
-                        ? Padding(
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Container(
+                          ),
+                        ),
+                        ListTile(
+                          contentPadding: EdgeInsets.all(0),
+                          title: Text(
+                            'Paid',
+                            style: TextStyle(
+                              fontFamily: 'SourceSansProB',
+                              //fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          trailing: Container(
+                            width: 100,
+                            height: 20,
+                            child: Text(
+                              '₹ $_paid',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansProB',
+                                //fontWeight: FontWeight.bold,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          contentPadding: EdgeInsets.all(0),
+                          title: Text(
+                            'Due',
+                            style: TextStyle(
+                              fontFamily: 'SourceSansProB',
+                              //fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          trailing: Container(
+                            width: 100,
+                            height: 20,
+                            child: Text(
+                              '₹ ${double.parse(_total) - double.parse(_paid)}',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansProB',
+                                //fontWeight: FontWeight.bold,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                        ),
+                        widget.order.approveJobs == '0' && allJobs.isNotEmpty
+                            ? Center(
+                                child: Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 0),
                                   height: 50,
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context).primaryColor,
-                                    borderRadius: BorderRadius.circular(3.0),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey,
-                                        spreadRadius: 0.0,
-                                        offset: Offset(2.0, 2.0), //(x,y)
-                                        blurRadius: 6.0,
-                                      ),
-                                    ],
-                                  ),
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
+                                  width: double.infinity,
                                   child: RaisedButton(
-                                    color: Colors.white,
+                                    elevation: 3,
+                                    color: Theme.of(context).primaryColor,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(3.0),
-                                      side: BorderSide(
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                    ),
-                                    elevation: 0,
-                                    child: Text(
-                                      'Approve Selected',
-                                      style: TextStyle(
-                                        fontFamily: 'SourceSansProSB',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.grey,
-                                      ),
+                                      borderRadius: BorderRadius.circular(4.0),
                                     ),
                                     onPressed: () {
-                                      approveSelectedAlertDialog(
+                                      for (int i = 0;
+                                          i < _approval.length;
+                                          i++) {
+                                        if (!_approval[i]) {
+                                          setState(() {
+                                            _approval[i] = true;
+                                            approvedJobId.add(allJobs[i].id);
+                                            _total =
+                                                '${double.parse(_total) + double.parse(allJobs[i].cost)}';
+                                          });
+                                        }
+                                      }
+                                      approveAllAlertDialog(
                                           context, approvedJobId);
                                     },
-                                  ),
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context).primaryColor,
-                                    borderRadius: BorderRadius.circular(3.0),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey,
-                                        spreadRadius: 0.0,
-                                        offset: Offset(2.0, 2.0), //(x,y)
-                                        blurRadius: 6.0,
-                                      ),
-                                    ],
-                                  ),
-                                  height: 50,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  child: RaisedButton(
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(3.0),
-                                      side: BorderSide(
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                    ),
-                                    elevation: 0,
                                     child: Text(
-                                      'Contact Support',
+                                      'Approve All',
                                       style: TextStyle(
-                                          fontFamily: 'SourceSansProSB',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.grey),
+                                        fontFamily: 'SourceSansProSB',
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                      ),
                                     ),
-                                    onPressed: () =>
-                                        _launchCaller('tel:+919136863480'),
                                   ),
                                 ),
-                              ],
-                            ),
-                          )
-                        : Container(),
-                  ],
-                ),
-              ),
-            ),
+                              )
+                            : Container(),
+                        widget.order.approveJobs == '0' && allJobs.isNotEmpty
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(vertical: 15),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    Container(
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).primaryColor,
+                                        borderRadius:
+                                            BorderRadius.circular(3.0),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey,
+                                            spreadRadius: 0.0,
+                                            offset: Offset(2.0, 2.0), //(x,y)
+                                            blurRadius: 6.0,
+                                          ),
+                                        ],
+                                      ),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      child: RaisedButton(
+                                        color: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(3.0),
+                                          side: BorderSide(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          ),
+                                        ),
+                                        elevation: 0,
+                                        child: Text(
+                                          'Approve Selected',
+                                          style: TextStyle(
+                                            fontFamily: 'SourceSansProSB',
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          approveSelectedAlertDialog(
+                                              context, approvedJobId);
+                                        },
+                                      ),
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).primaryColor,
+                                        borderRadius:
+                                            BorderRadius.circular(3.0),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey,
+                                            spreadRadius: 0.0,
+                                            offset: Offset(2.0, 2.0), //(x,y)
+                                            blurRadius: 6.0,
+                                          ),
+                                        ],
+                                      ),
+                                      height: 50,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      child: RaisedButton(
+                                        color: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(3.0),
+                                          side: BorderSide(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          ),
+                                        ),
+                                        elevation: 0,
+                                        child: Text(
+                                          'Contact Support',
+                                          style: TextStyle(
+                                              fontFamily: 'SourceSansProSB',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.grey),
+                                        ),
+                                        onPressed: () =>
+                                            _launchCaller('tel:+919136863480'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : Container(),
+                      ],
+                    ),
+                  ),
+                )
+              : NoInternetScreen(retry),
     );
   }
 }
