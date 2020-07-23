@@ -30,13 +30,23 @@ class UserProfile with ChangeNotifier {
   Profile _item;
   String _token;
   Profile _dummyItem;
+  String _signupOtp;
+  String _number;
 
   Profile get item {
     return _item;
   }
 
+  String get number {
+    return _number;
+  }
+
   Profile get dummyItem {
     return _dummyItem;
+  }
+
+  String get signupOtp {
+    return _signupOtp;
   }
 
   bool get isAuth {
@@ -55,6 +65,10 @@ class UserProfile with ChangeNotifier {
     final response = await http.get(url);
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     if (extractedData['message'] == 'User does not exist') {
+      _signupOtp = extractedData['otp'];
+      _number = number;
+      print(extractedData['otp']);
+      notifyListeners();
       throw HttpException('User does not exist!');
     }
     _dummyItem = Profile(
@@ -86,12 +100,13 @@ class UserProfile with ChangeNotifier {
       String name, String email, String number, String referal) async {
     const url = 'http://stage.protto.in/api/prina/register.php';
     var response;
-    if (referal == null) {
+    if (referal == '') {
       response = await http.post(url,
           body: json.encode({
             'name': name,
             'email': email,
             'mobile': number,
+            'otp': signupOtp,
           }));
     } else {
       response = await http.post(url,
@@ -100,10 +115,11 @@ class UserProfile with ChangeNotifier {
             'email': email,
             'mobile': number,
             'referal': referal,
+            'otp': signupOtp,
           }));
     }
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
-    if (extractedData['message'] == 'User already exists.') {
+    if (extractedData['message'] == 'User already Exists') {
       throw HttpException('User already exists!');
     }
     if (extractedData['message'] == 'Invalid referal') {

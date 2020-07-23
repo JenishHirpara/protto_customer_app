@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/profile.dart';
-import './otp_screen.dart';
 import '../models/http_exception.dart';
+import './navigationBarScreen.dart';
 
 class SignupScreen extends StatefulWidget {
   static const routeName = '/signup';
@@ -21,14 +21,14 @@ class _SignupScreenState extends State<SignupScreen> {
   var _name = '';
   var _email = '';
   var _number = '';
-  var _referal;
+  var _referal = '';
   var _isLoading = false;
 
   PageRouteBuilder pageRouteBuilder() {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return OtpScreen();
+        return NavigationBarScreen();
       },
       transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
@@ -63,8 +63,10 @@ class _SignupScreenState extends State<SignupScreen> {
           return AlertDialog(
             title: Text('Referal Error!',
                 style: TextStyle(fontFamily: 'Montserrat')),
-            content: Text('You cant refer yourself, please refer someone else.',
-                style: TextStyle(fontFamily: 'SourceSansPro')),
+            content: Text(
+              'You cant refer yourself, please refer someone else.',
+              style: TextStyle(fontFamily: 'SourceSansPro'),
+            ),
             actions: <Widget>[
               FlatButton(
                   onPressed: () {
@@ -84,6 +86,7 @@ class _SignupScreenState extends State<SignupScreen> {
       });
       await Provider.of<UserProfile>(context, listen: false)
           .newProfile(_name, _email, _number, _referal);
+      await Provider.of<UserProfile>(context, listen: false).setProfile();
       Navigator.of(context).pushReplacement(pageRouteBuilder());
     } on HttpException catch (error) {
       setState(() {
@@ -106,11 +109,10 @@ class _SignupScreenState extends State<SignupScreen> {
               'An error occurred!',
               style: TextStyle(fontFamily: 'Montserrat'),
             ),
-            content: error.message == 'User already exists.'
-                ? Text('User already exists!',
-                    style: TextStyle(fontFamily: 'SourceSansPro'))
-                : Text('Invalid referal',
-                    style: TextStyle(fontFamily: 'SourceSansPro')),
+            content: Text(
+              error.message,
+              style: TextStyle(fontFamily: 'SourceSansPro'),
+            ),
           );
         },
       );
@@ -120,7 +122,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final mobile = ModalRoute.of(context).settings.arguments as String;
+    final mobile = Provider.of<UserProfile>(context, listen: false).number;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -176,6 +178,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
                       initialValue: mobile,
+                      enabled: false,
                       decoration: InputDecoration(
                           labelText: 'Mobile No.',
                           labelStyle: TextStyle(fontFamily: 'SourceSansPro')),
@@ -223,10 +226,12 @@ class _SignupScreenState extends State<SignupScreen> {
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
                       decoration: InputDecoration(
-                          labelText: 'Referal code',
-                          labelStyle: TextStyle(fontFamily: 'SourceSansPro')),
+                        labelText: 'Referal code',
+                        labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
+                      ),
                       textInputAction: TextInputAction.done,
                       focusNode: _focus4,
+                      onFieldSubmitted: (_) => _saveForm(),
                       onSaved: (value) {
                         _referal = value;
                       },

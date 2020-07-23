@@ -170,10 +170,10 @@ class _ServiceScreenState extends State<ServiceScreen> {
                 child: TabBarView(
                   children: <Widget>[
                     regularServicesPage(),
-                    regularServicesPage(),
-                    regularServicesPage(),
+                    comingSoonPage(),
+                    comingSoonPage(),
                     customRepairsPage(),
-                    regularServicesPage(),
+                    comingSoonPage(),
                   ],
                 ),
               ),
@@ -250,6 +250,18 @@ class _ServiceScreenState extends State<ServiceScreen> {
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
         ),
+      ),
+    );
+  }
+
+  Widget comingSoonPage() {
+    return Center(
+      child: Container(
+        child: Image.asset(
+          'assets/images/coming_soon.png',
+          fit: BoxFit.cover,
+        ),
+        height: MediaQuery.of(context).size.height * 0.4,
       ),
     );
   }

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import './signup_screen.dart';
 import '../providers/profile.dart';
 import './navigationBarScreen.dart';
 
 class OtpScreen extends StatefulWidget {
+  final String text;
+
+  OtpScreen(this.text);
+
   @override
   _OtpScreenState createState() => _OtpScreenState();
 }
@@ -26,27 +31,51 @@ class _OtpScreenState extends State<OtpScreen> {
       return;
     }
     _form.currentState.save();
-    if ('$_digit1$_digit2$_digit3$_digit4' ==
-        Provider.of<UserProfile>(context, listen: false).dummyItem.otp) {
-      await Provider.of<UserProfile>(context, listen: false).setProfile();
-      Navigator.of(context).pushReplacement(pageRouteBuilder());
+    if (widget.text == 'login') {
+      if ('$_digit1$_digit2$_digit3$_digit4' ==
+          Provider.of<UserProfile>(context, listen: false).dummyItem.otp) {
+        await Provider.of<UserProfile>(context, listen: false).setProfile();
+        Navigator.of(context).pushReplacement(pageRouteBuilder());
+      } else {
+        showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: Text('Invalid OTP'),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                  child: Text('Okay'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     } else {
-      showDialog(
-        context: context,
-        builder: (ctx) {
-          return AlertDialog(
-            title: Text('Invalid OTP'),
-            actions: <Widget>[
-              FlatButton(
-                onPressed: () {
-                  Navigator.of(ctx).pop();
-                },
-                child: Text('Okay'),
-              ),
-            ],
-          );
-        },
-      );
+      if ('$_digit1$_digit2$_digit3$_digit4' ==
+          Provider.of<UserProfile>(context, listen: false).signupOtp) {
+        Navigator.of(context).pushReplacementNamed(SignupScreen.routeName);
+      } else {
+        showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: Text('Invalid OTP'),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                  child: Text('Okay'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
   }
 
