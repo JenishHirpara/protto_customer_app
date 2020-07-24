@@ -251,10 +251,12 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
           .toList();
     } catch (error) {
       print(error.message);
-      setState(() {
-        _isLoading = false;
-        _isInternet = false;
-      });
+      if (error.message.toString().contains('Failed host lookup')) {
+        setState(() {
+          _isLoading = false;
+          _isInternet = false;
+        });
+      }
     }
   }
 
@@ -293,10 +295,12 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
             .toList();
       } catch (error) {
         print(error.message);
-        setState(() {
-          _isLoading = false;
-          _isInternet = false;
-        });
+        if (error.message.toString().contains('Failed host lookup')) {
+          setState(() {
+            _isLoading = false;
+            _isInternet = false;
+          });
+        }
       }
     }
     _isInit = false;

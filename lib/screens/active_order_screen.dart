@@ -38,7 +38,14 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
       setState(() {
         _isInternet = true;
       });
-    } catch (error) {}
+    } catch (error) {
+      print(error.message);
+      if (error.message.toString().contains('Failed host lookup')) {
+        setState(() {
+          _isInternet = false;
+        });
+      }
+    }
     setState(() {});
   }
 
@@ -781,9 +788,13 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                                     );
                                   } catch (error) {
                                     print(error.message);
-                                    setState(() {
-                                      _isInternet = false;
-                                    });
+                                    if (error.message
+                                        .toString()
+                                        .contains('Failed host lookup')) {
+                                      setState(() {
+                                        _isInternet = false;
+                                      });
+                                    }
                                   }
                                 },
                                 color: Theme.of(context).primaryColor,

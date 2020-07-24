@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../providers/bikes.dart';
 import '../providers/cart_item.dart';
-import './service_screen.dart';
 import './rg_details_screen.dart';
 import './custom_repairs_detail_screen.dart';
 import './no_internet_screen.dart';
@@ -17,10 +16,6 @@ class _SearchScreenState extends State<SearchScreen> {
   TextEditingController _editingController = TextEditingController();
 
   List<CartItem> services = [];
-
-  int findByType(String type) {
-    return services.indexWhere((cartitem) => cartitem.type == type);
-  }
 
   void retry() async {
     try {
@@ -85,10 +80,12 @@ class _SearchScreenState extends State<SearchScreen> {
       display.addAll(services);
     } catch (error) {
       print(error.message);
-      setState(() {
-        _isLoading = false;
-        _isInternet = false;
-      });
+      if (error.message.toString().contains('Failed host lookup')) {
+        setState(() {
+          _isLoading = false;
+          _isInternet = false;
+        });
+      }
     }
   }
 
@@ -165,10 +162,12 @@ class _SearchScreenState extends State<SearchScreen> {
           display.addAll(services);
         } catch (error) {
           print(error.message);
-          setState(() {
-            _isLoading = false;
-            _isInternet = false;
-          });
+          if (error.message.toString().contains('Failed host lookup')) {
+            setState(() {
+              _isLoading = false;
+              _isInternet = false;
+            });
+          }
         }
       } else {
         services = [];
@@ -210,11 +209,37 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
-  PageRouteBuilder pageRouteBuilder(int i) {
+  PageRouteBuilder rgDetailRouteBuilder(int i) {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return ServiceScreen(i);
+        return RgDetailsScreen(display[i]);
+      },
+      transitionDuration: Duration(milliseconds: 300),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  PageRouteBuilder customRepairsRouteBuilder(int i) {
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return CustomRepairsDetailScreen(display[i]);
       },
       transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
@@ -316,32 +341,25 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                         onTap: () {
                           if (display[i].type == 'PRODRY') {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => RgDetailsScreen(display[0])));
+                            Navigator.of(context).push(rgDetailRouteBuilder(0));
                           } else if (display[i].type == 'PROWET') {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => RgDetailsScreen(display[1])));
+                            Navigator.of(context).push(rgDetailRouteBuilder(1));
                           } else if (display[i].type == 'Insurance Claim') {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) =>
-                                    CustomRepairsDetailScreen(display[2])));
+                            Navigator.of(context)
+                                .push(customRepairsRouteBuilder(2));
                           } else if (display[i].type == 'Brake Inspection') {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) =>
-                                    CustomRepairsDetailScreen(display[3])));
+                            Navigator.of(context)
+                                .push(customRepairsRouteBuilder(3));
                           } else if (display[i].type ==
                               'Electrical Inspection') {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) =>
-                                    CustomRepairsDetailScreen(display[4])));
+                            Navigator.of(context)
+                                .push(customRepairsRouteBuilder(4));
                           } else if (display[i].type == 'Clutch Inspection') {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) =>
-                                    CustomRepairsDetailScreen(display[5])));
+                            Navigator.of(context)
+                                .push(customRepairsRouteBuilder(5));
                           } else if (display[i].type == 'Other') {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) =>
-                                    CustomRepairsDetailScreen(display[6])));
+                            Navigator.of(context)
+                                .push(customRepairsRouteBuilder(6));
                           }
                         },
                       ),

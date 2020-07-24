@@ -16,10 +16,6 @@ import './new_bike_screen.dart';
 import './no_internet_screen.dart';
 
 class NavigationBarScreen extends StatefulWidget {
-  final Function retry;
-
-  NavigationBarScreen(this.retry);
-
   @override
   _NavigationBarScreenState createState() => _NavigationBarScreenState();
 }
@@ -319,8 +315,27 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
     );
   }
 
+  void retry() async {
+    try {
+      Provider.of<Addresses>(context, listen: false).fetchAndSetAddresses();
+      await Provider.of<Bikes>(context, listen: false).fetchAndSetBikes();
+      setState(() {
+        _isLoading = false;
+        _isInternet = true;
+      });
+    } catch (error) {
+      if (error.message.toString().contains('Failed host lookup')) {
+        setState(() {
+          _isLoading = false;
+          _isInternet = false;
+        });
+      }
+    }
+  }
+
   var _isInit = true;
   var _isLoading = true;
+  var _isInternet = true;
 
   @override
   void didChangeDependencies() async {
@@ -330,11 +345,15 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
         await Provider.of<Bikes>(context, listen: false).fetchAndSetBikes();
         setState(() {
           _isLoading = false;
+          _isInternet = true;
         });
       } catch (error) {
-        setState(() {
-          _isLoading = false;
-        });
+        if (error.message.toString().contains('Failed host lookup')) {
+          setState(() {
+            _isLoading = false;
+            _isInternet = false;
+          });
+        }
       }
     }
     _isInit = false;
@@ -482,7 +501,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
     return Scaffold(
       appBar: _isLoading
           ? null
-          : widget.retry == null ? _pages[_currentIndex]['appbar'] : null,
+          : _isInternet ? _pages[_currentIndex]['appbar'] : null,
       body: _isLoading
           ? Center(
               child: Image.asset(
@@ -492,9 +511,9 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                 width: 85,
               ),
             )
-          : widget.retry == null
+          : _isInternet
               ? _pages[_currentIndex]['page']
-              : NoInternetScreen(widget.retry),
+              : NoInternetScreen(retry),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           border: Border(

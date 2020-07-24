@@ -82,6 +82,7 @@ class Orders with ChangeNotifier {
   String _postOdometerReading;
   String _preFuelLevel;
   String _postFuelLevel;
+  bool _loadOrders = true;
 
   final String userId;
 
@@ -89,6 +90,10 @@ class Orders with ChangeNotifier {
 
   List<OrderItem> get items {
     return [..._items];
+  }
+
+  bool get loadOrders {
+    return _loadOrders;
   }
 
   String get preOdometerReading {
@@ -131,6 +136,11 @@ class Orders with ChangeNotifier {
 
   List<dynamic> get services {
     return [..._services];
+  }
+
+  void endLoad() {
+    _loadOrders = false;
+    notifyListeners();
   }
 
   Future<void> fetchAndSetOrders() async {
@@ -349,7 +359,7 @@ class Orders with ChangeNotifier {
 
   Future<void> getjobs(String bookingId) async {
     final url =
-        'http://stage.protto.in/api/shivangi/getjobs.php?booking_id=$bookingId';
+        'http://stage.protto.in/api/shivangi/getjobs.php?booking_id=$bookingId&approved=0';
     final response = await http.get(url);
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     if (extractedData['count'] != '0') {
