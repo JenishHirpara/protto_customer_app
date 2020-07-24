@@ -6,6 +6,7 @@ import '../providers/cart_item.dart';
 import './service_screen.dart';
 import './rg_details_screen.dart';
 import './custom_repairs_detail_screen.dart';
+import './no_internet_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -21,73 +22,154 @@ class _SearchScreenState extends State<SearchScreen> {
     return services.indexWhere((cartitem) => cartitem.type == type);
   }
 
+  void retry() async {
+    try {
+      final activeBike = Provider.of<Bikes>(context, listen: false).activeBike;
+      setState(() {
+        _isLoading = true;
+        _isInternet = true;
+      });
+      await Provider.of<Bikes>(context, listen: false)
+          .getRgPrice(activeBike.brand, activeBike.model);
+      setState(() {
+        _isLoading = false;
+      });
+      services = [
+        CartItem(
+          id: DateTime.now().toString(),
+          service: 'Regular Service',
+          type: 'PRODRY',
+          price: activeBike != null
+              ? double.parse(Provider.of<Bikes>(context, listen: false).proDry)
+              : 0.0,
+        ),
+        CartItem(
+          id: DateTime.now().toString(),
+          service: 'Regular Service',
+          type: 'PROWET',
+          price: activeBike != null
+              ? double.parse(Provider.of<Bikes>(context, listen: false).proWet)
+              : 0.0,
+        ),
+        CartItem(
+          id: DateTime.now().toString(),
+          service: 'Custom Repairs',
+          type: 'Insurance Claim',
+          price: activeBike != null ? 149 : 0.0,
+        ),
+        CartItem(
+          id: DateTime.now().toString(),
+          service: 'Custom Repairs',
+          type: 'Brake Inspection',
+          price: activeBike != null ? 149 : 0.0,
+        ),
+        CartItem(
+          id: DateTime.now().toString(),
+          service: 'Custom Repairs',
+          type: 'Electrical Inspection',
+          price: activeBike != null ? 149 : 0.0,
+        ),
+        CartItem(
+          id: DateTime.now().toString(),
+          service: 'Custom Repairs',
+          type: 'Clutch Inspection',
+          price: activeBike != null ? 149 : 0.0,
+        ),
+        CartItem(
+          id: DateTime.now().toString(),
+          service: 'Custom Repairs',
+          type: 'Other',
+          price: activeBike != null ? 149 : 0.0,
+        ),
+      ];
+      display.addAll(services);
+    } catch (error) {
+      print(error.message);
+      setState(() {
+        _isLoading = false;
+        _isInternet = false;
+      });
+    }
+  }
+
   var display = List<CartItem>();
   var _isInit = true;
-  var _isLoading = true;
+  var _isLoading = false;
+  var _isInternet = true;
 
   @override
   void didChangeDependencies() async {
     if (_isInit) {
       final activeBike = Provider.of<Bikes>(context).activeBike;
-      print(activeBike.brand);
-      print(activeBike.model);
       if (activeBike != null) {
-        await Provider.of<Bikes>(context, listen: false)
-            .getRgPrice(activeBike.brand, activeBike.model);
-        setState(() {
-          _isLoading = false;
-        });
-        services = [
-          CartItem(
-            id: DateTime.now().toString(),
-            service: 'Regular Service',
-            type: 'PRODRY',
-            price: activeBike != null
-                ? double.parse(
-                    Provider.of<Bikes>(context, listen: false).proDry)
-                : 0.0,
-          ),
-          CartItem(
-            id: DateTime.now().toString(),
-            service: 'Regular Service',
-            type: 'PROWET',
-            price: activeBike != null
-                ? double.parse(
-                    Provider.of<Bikes>(context, listen: false).proWet)
-                : 0.0,
-          ),
-          CartItem(
-            id: DateTime.now().toString(),
-            service: 'Custom Repairs',
-            type: 'Insurance Claim',
-            price: activeBike != null ? 149 : 0.0,
-          ),
-          CartItem(
-            id: DateTime.now().toString(),
-            service: 'Custom Repairs',
-            type: 'Brake Inspection',
-            price: activeBike != null ? 149 : 0.0,
-          ),
-          CartItem(
-            id: DateTime.now().toString(),
-            service: 'Custom Repairs',
-            type: 'Electrical Inspection',
-            price: activeBike != null ? 149 : 0.0,
-          ),
-          CartItem(
-            id: DateTime.now().toString(),
-            service: 'Custom Repairs',
-            type: 'Clutch Inspection',
-            price: activeBike != null ? 149 : 0.0,
-          ),
-          CartItem(
-            id: DateTime.now().toString(),
-            service: 'Custom Repairs',
-            type: 'Other',
-            price: activeBike != null ? 149 : 0.0,
-          ),
-        ];
-        display.addAll(services);
+        try {
+          setState(() {
+            _isLoading = true;
+            _isInternet = true;
+          });
+          await Provider.of<Bikes>(context, listen: false)
+              .getRgPrice(activeBike.brand, activeBike.model);
+          setState(() {
+            _isLoading = false;
+          });
+          services = [
+            CartItem(
+              id: DateTime.now().toString(),
+              service: 'Regular Service',
+              type: 'PRODRY',
+              price: activeBike != null
+                  ? double.parse(
+                      Provider.of<Bikes>(context, listen: false).proDry)
+                  : 0.0,
+            ),
+            CartItem(
+              id: DateTime.now().toString(),
+              service: 'Regular Service',
+              type: 'PROWET',
+              price: activeBike != null
+                  ? double.parse(
+                      Provider.of<Bikes>(context, listen: false).proWet)
+                  : 0.0,
+            ),
+            CartItem(
+              id: DateTime.now().toString(),
+              service: 'Custom Repairs',
+              type: 'Insurance Claim',
+              price: activeBike != null ? 149 : 0.0,
+            ),
+            CartItem(
+              id: DateTime.now().toString(),
+              service: 'Custom Repairs',
+              type: 'Brake Inspection',
+              price: activeBike != null ? 149 : 0.0,
+            ),
+            CartItem(
+              id: DateTime.now().toString(),
+              service: 'Custom Repairs',
+              type: 'Electrical Inspection',
+              price: activeBike != null ? 149 : 0.0,
+            ),
+            CartItem(
+              id: DateTime.now().toString(),
+              service: 'Custom Repairs',
+              type: 'Clutch Inspection',
+              price: activeBike != null ? 149 : 0.0,
+            ),
+            CartItem(
+              id: DateTime.now().toString(),
+              service: 'Custom Repairs',
+              type: 'Other',
+              price: activeBike != null ? 149 : 0.0,
+            ),
+          ];
+          display.addAll(services);
+        } catch (error) {
+          print(error.message);
+          setState(() {
+            _isLoading = false;
+            _isInternet = false;
+          });
+        }
       } else {
         services = [];
       }
@@ -165,105 +247,109 @@ class _SearchScreenState extends State<SearchScreen> {
               width: 85,
             ),
           )
-        : SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: TextField(
-                    controller: _editingController,
-                    onChanged: (value) {
-                      filterSearchResults(value);
-                    },
-                    decoration: new InputDecoration(
-                      suffixIcon: GestureDetector(
-                          child: Icon(
-                            Icons.clear,
+        : _isInternet
+            ? SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: TextField(
+                        controller: _editingController,
+                        onChanged: (value) {
+                          filterSearchResults(value);
+                        },
+                        decoration: new InputDecoration(
+                          suffixIcon: GestureDetector(
+                              child: Icon(
+                                Icons.clear,
+                                color: new Color(0xff626262),
+                              ),
+                              onTap: () {
+                                _editingController.clear();
+                              }),
+                          prefixIcon: Icon(
+                            Icons.search,
                             color: new Color(0xff626262),
                           ),
-                          onTap: () {
-                            _editingController.clear();
-                          }),
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: new Color(0xff626262),
-                      ),
-                      border: new OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(10.0),
+                          border: new OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(
+                              const Radius.circular(10.0),
+                            ),
+                          ),
+                          labelText: "Search Service",
+                          hintText: "Search Service",
+                          labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
+                          filled: true,
+                          hintStyle: new TextStyle(
+                            fontFamily: 'SourceSansPro',
+                            color: new Color(0xff1D1D1),
+                          ),
+                          fillColor: Colors.white,
                         ),
-                      ),
-                      labelText: "Search Service",
-                      hintText: "Search Service",
-                      labelStyle: TextStyle(fontFamily: 'SourceSansPro'),
-                      filled: true,
-                      hintStyle: new TextStyle(
-                        fontFamily: 'SourceSansPro',
-                        color: new Color(0xff1D1D1),
-                      ),
-                      fillColor: Colors.white,
-                    ),
-                  ),
-                ),
-                ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (ctx, i) => InkWell(
-                    child: ListTile(
-                      title: Text(
-                        display[i].type,
-                        style: TextStyle(
-                          fontFamily: 'SourceSansPro',
-                          color: Color.fromRGBO(112, 112, 112, 1),
-                        ),
-                      ),
-                      subtitle: Text(
-                        display[i].service,
-                        style: TextStyle(
-                          fontFamily: 'SourceSansPro',
-                          color: Color.fromRGBO(128, 128, 128, 1),
-                        ),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 16,
                       ),
                     ),
-                    onTap: () {
-                      if (display[i].type == 'PRODRY') {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (ctx) => RgDetailsScreen(display[0])));
-                      } else if (display[i].type == 'PROWET') {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (ctx) => RgDetailsScreen(display[1])));
-                      } else if (display[i].type == 'Insurance Claim') {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (ctx) =>
-                                CustomRepairsDetailScreen(display[2])));
-                      } else if (display[i].type == 'Brake Inspection') {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (ctx) =>
-                                CustomRepairsDetailScreen(display[3])));
-                      } else if (display[i].type == 'Electrical Inspection') {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (ctx) =>
-                                CustomRepairsDetailScreen(display[4])));
-                      } else if (display[i].type == 'Clutch Inspection') {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (ctx) =>
-                                CustomRepairsDetailScreen(display[5])));
-                      } else if (display[i].type == 'Other') {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (ctx) =>
-                                CustomRepairsDetailScreen(display[6])));
-                      }
-                    },
-                  ),
-                  itemCount: display.length,
+                    ListView.builder(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (ctx, i) => InkWell(
+                        child: ListTile(
+                          title: Text(
+                            display[i].type,
+                            style: TextStyle(
+                              fontFamily: 'SourceSansPro',
+                              color: Color.fromRGBO(112, 112, 112, 1),
+                            ),
+                          ),
+                          subtitle: Text(
+                            display[i].service,
+                            style: TextStyle(
+                              fontFamily: 'SourceSansPro',
+                              color: Color.fromRGBO(128, 128, 128, 1),
+                            ),
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 16,
+                          ),
+                        ),
+                        onTap: () {
+                          if (display[i].type == 'PRODRY') {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => RgDetailsScreen(display[0])));
+                          } else if (display[i].type == 'PROWET') {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => RgDetailsScreen(display[1])));
+                          } else if (display[i].type == 'Insurance Claim') {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) =>
+                                    CustomRepairsDetailScreen(display[2])));
+                          } else if (display[i].type == 'Brake Inspection') {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) =>
+                                    CustomRepairsDetailScreen(display[3])));
+                          } else if (display[i].type ==
+                              'Electrical Inspection') {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) =>
+                                    CustomRepairsDetailScreen(display[4])));
+                          } else if (display[i].type == 'Clutch Inspection') {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) =>
+                                    CustomRepairsDetailScreen(display[5])));
+                          } else if (display[i].type == 'Other') {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) =>
+                                    CustomRepairsDetailScreen(display[6])));
+                          }
+                        },
+                      ),
+                      itemCount: display.length,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          );
+              )
+            : NoInternetScreen(retry);
   }
 }

@@ -7,6 +7,7 @@ import '../providers/orders.dart';
 import './jobs_card_screen.dart';
 import './inspection_images_screen.dart';
 import './reschedule_screen.dart';
+import './no_internet_screen.dart';
 
 class ActiveOrderScreen extends StatefulWidget {
   final OrderItem order;
@@ -28,7 +29,18 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
   var _digit3;
   var _digit4;
   var _isLoading = false;
+  var _isInternet = true;
   var _order;
+
+  void retry() async {
+    try {
+      await _refreshPage();
+      setState(() {
+        _isInternet = true;
+      });
+    } catch (error) {}
+    setState(() {});
+  }
 
   Future showPopUp() {
     FocusScope.of(context).requestFocus(_focusNode1);
@@ -256,7 +268,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                         '$_digit1$_digit2$_digit3$_digit4',
                         _order == null ? widget.order.status : _order.status,
                       );
-                      if (message == 'otp approved') {
+                      if (message == 'Otp verification successful!') {
                         _refreshPage();
                       }
                       setState(() {
@@ -694,192 +706,207 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
         backgroundColor: Color.fromRGBO(250, 250, 250, 1),
         elevation: 0,
       ),
-      body: RefreshIndicator(
-        onRefresh: _refreshPage,
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: _isInternet
+          ? RefreshIndicator(
+              onRefresh: _refreshPage,
+              child: SingleChildScrollView(
+                child: Column(
                   children: <Widget>[
-                    Expanded(
-                      flex: 6,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(
-                            '${widget.order.make}',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 10,
+                          Expanded(
+                            flex: 6,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  '${widget.order.make}',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                                Text(
+                                  '${widget.order.model}',
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                Text(
+                                  widget.order.bikeYear,
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(112, 112, 112, 0.7),
+                                  ),
+                                ),
+                                Text(
+                                  widget.order.bikeNumber,
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(112, 112, 112, 0.7),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          Text(
-                            '${widget.order.model}',
-                            softWrap: true,
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 18,
-                            ),
-                          ),
-                          Text(
-                            widget.order.bikeYear,
-                            style: TextStyle(
-                              color: Color.fromRGBO(112, 112, 112, 0.7),
-                            ),
-                          ),
-                          Text(
-                            widget.order.bikeNumber,
-                            style: TextStyle(
-                              color: Color.fromRGBO(112, 112, 112, 0.7),
+                          Expanded(
+                            flex: 5,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.33,
+                              margin: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4.0),
+                              ),
+                              child: RaisedButton(
+                                child: Text(
+                                  'Jobs',
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansProSB',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  try {
+                                    await _refreshPage();
+                                    Navigator.of(context).push(
+                                      jobsRoute(_order == null
+                                          ? widget.order
+                                          : _order),
+                                    );
+                                  } catch (error) {
+                                    print(error.message);
+                                    setState(() {
+                                      _isInternet = false;
+                                    });
+                                  }
+                                },
+                                color: Theme.of(context).primaryColor,
+                                elevation: 6,
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Expanded(
-                      flex: 5,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.33,
-                        margin: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: RaisedButton(
-                          child: Text(
-                            'Jobs',
-                            style: TextStyle(
-                              fontFamily: 'SourceSansProSB',
-                              color: Colors.white,
-                            ),
-                          ),
-                          onPressed: () async {
-                            await _refreshPage();
-                            Navigator.of(context).push(
-                              jobsRoute(_order == null ? widget.order : _order),
+                    SizedBox(height: 20),
+                    Text(
+                      'Track the progress',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        color: Color(0xff707070),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(20),
+                      child: ListView(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: [
+                          ...steps.asMap().entries.map((entry) {
+                            int index = entry.key;
+                            SampleStepTile step = entry.value;
+                            return Container(
+                              height: 110,
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      Expanded(
+                                        flex: 3,
+                                        child: Container(
+                                          height: 110,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text(
+                                                DateFormat('dd/MM').format(
+                                                    DateTime.parse(step.date)),
+                                                style: TextStyle(
+                                                  fontFamily: 'SourceSansPro',
+                                                  color: Color.fromRGBO(
+                                                      128, 128, 128, 1),
+                                                ),
+                                              ),
+                                              Text(
+                                                step.time,
+                                                style: TextStyle(
+                                                  fontFamily: 'SourceSansPro',
+                                                  color: Color.fromRGBO(
+                                                      128, 128, 128, 1),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 3,
+                                        child: Container(
+                                          height: 110,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              Icon(
+                                                int.parse(_order == null
+                                                            ? widget
+                                                                .order.status
+                                                            : _order.status) >=
+                                                        index + 1
+                                                    ? Icons.radio_button_checked
+                                                    : Icons
+                                                        .radio_button_unchecked,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                size: 20,
+                                              ),
+                                              index == 8
+                                                  ? Container()
+                                                  : Container(
+                                                      height: 90,
+                                                      child: VerticalDivider(
+                                                        color: Theme.of(context)
+                                                            .primaryColor,
+                                                        thickness: 2,
+                                                      ),
+                                                    ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 4,
+                                        child: Container(
+                                          height: 110,
+                                          child: step.title,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             );
-                          },
-                          color: Theme.of(context).primaryColor,
-                          elevation: 6,
-                        ),
+                          }).toList(),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
-                'Track the progress',
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  color: Color(0xff707070),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(20),
-                child: ListView(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  children: [
-                    ...steps.asMap().entries.map((entry) {
-                      int index = entry.key;
-                      SampleStepTile step = entry.value;
-                      return Container(
-                        height: 110,
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 3,
-                                  child: Container(
-                                    height: 110,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          DateFormat('dd/MM').format(
-                                              DateTime.parse(step.date)),
-                                          style: TextStyle(
-                                            fontFamily: 'SourceSansPro',
-                                            color: Color.fromRGBO(
-                                                128, 128, 128, 1),
-                                          ),
-                                        ),
-                                        Text(
-                                          step.time,
-                                          style: TextStyle(
-                                            fontFamily: 'SourceSansPro',
-                                            color: Color.fromRGBO(
-                                                128, 128, 128, 1),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Container(
-                                    height: 110,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: <Widget>[
-                                        Icon(
-                                          int.parse(_order == null
-                                                      ? widget.order.status
-                                                      : _order.status) >=
-                                                  index + 1
-                                              ? Icons.radio_button_checked
-                                              : Icons.radio_button_unchecked,
-                                          color: Theme.of(context).primaryColor,
-                                          size: 20,
-                                        ),
-                                        index == 8
-                                            ? Container()
-                                            : Container(
-                                                height: 90,
-                                                child: VerticalDivider(
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                  thickness: 2,
-                                                ),
-                                              ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 4,
-                                  child: Container(
-                                    height: 110,
-                                    child: step.title,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+            )
+          : NoInternetScreen(retry),
     );
   }
 }

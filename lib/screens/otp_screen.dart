@@ -83,7 +83,7 @@ class _OtpScreenState extends State<OtpScreen> {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return NavigationBarScreen();
+        return NavigationBarScreen(null);
       },
       transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,

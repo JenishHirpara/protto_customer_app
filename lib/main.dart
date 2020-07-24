@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 import './screens/home_screen.dart';
 import './screens/verify_phone_screen.dart';
@@ -31,9 +32,22 @@ Map<int, Color> color = {
 
 MaterialColor colorCustom = MaterialColor(0xFFF15D24, color);
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  void retry() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
@@ -73,13 +87,18 @@ class MyApp extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           home: profile.isAuth
-              ? NavigationBarScreen()
+              ? NavigationBarScreen(null)
               : FutureBuilder(
                   future: profile.tryAutoLogin(),
-                  builder: (ctx, snapshot) =>
-                      snapshot.connectionState == ConnectionState.waiting
-                          ? SplashScreen()
-                          : HomeScreen(),
+                  builder: (ctx, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting)
+                      return SplashScreen();
+                    else if (snapshot.hasError) {
+                      return NavigationBarScreen(retry);
+                    } else {
+                      return HomeScreen();
+                    }
+                  },
                 ),
           routes: {
             VerifyPhoneScreen.routeName: (ctx) => VerifyPhoneScreen(),
