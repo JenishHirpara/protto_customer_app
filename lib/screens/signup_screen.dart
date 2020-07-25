@@ -28,7 +28,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return NavigationBarScreen(null);
+        return NavigationBarScreen();
       },
       transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,

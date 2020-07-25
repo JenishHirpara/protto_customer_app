@@ -12,6 +12,7 @@ import './providers/profile.dart';
 import './screens/signup_screen.dart';
 import './screens/navigationBarScreen.dart';
 import './screens/splash_screen.dart';
+import './screens/no_internet_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -87,14 +88,14 @@ class _MyAppState extends State<MyApp> {
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           home: profile.isAuth
-              ? NavigationBarScreen(null)
+              ? NavigationBarScreen()
               : FutureBuilder(
                   future: profile.tryAutoLogin(),
                   builder: (ctx, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting)
                       return SplashScreen();
                     else if (snapshot.hasError) {
-                      return NavigationBarScreen(retry);
+                      return Scaffold(body: NoInternetScreen(retry));
                     } else {
                       return HomeScreen();
                     }

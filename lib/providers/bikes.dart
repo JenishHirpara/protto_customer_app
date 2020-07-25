@@ -157,7 +157,6 @@ class Bikes with ChangeNotifier {
         ),
       );
     }
-
     notifyListeners();
   }
 

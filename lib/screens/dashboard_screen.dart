@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:provider/provider.dart';
 
 import './service_screen.dart';
 import '../utils/SizeConfig.dart';
 import './new_bike_screen.dart';
-import '../providers/orders.dart';
 
 Color orangeColor = new Color(0xFFF69C7A);
 Color greyColor = new Color(0xFFC2C2C2);
@@ -97,12 +95,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   var _isInit = true;
 
   @override
-  void didChangeDependencies() async {
+  void didChangeDependencies() {
     if (_isInit) {
       if (DashBoardScreen.isSignUp) {
         Future.delayed(Duration(milliseconds: 50), _showPopUp);
       }
-      await Provider.of<Orders>(context, listen: false).fetchAndSetOrders();
     }
     _isInit = false;
     DashBoardScreen.isSignUp = false;
