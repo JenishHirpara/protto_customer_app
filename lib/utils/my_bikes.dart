@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/bikes.dart';
 import '../screens/edit_bike_screen.dart';
+import './no_internet_dialog.dart';
 
 class MyBikes extends StatefulWidget {
   @override
@@ -250,11 +251,28 @@ class _MyBikesState extends State<MyBikes> {
                   setState(() {
                     _isLoading = true;
                   });
-                  await Provider.of<Bikes>(context, listen: false)
-                      .changeActive(bike);
-                  setState(() {
-                    _isLoading = false;
-                  });
+                  try {
+                    await Provider.of<Bikes>(context, listen: false)
+                        .changeActive(bike);
+                    setState(() {
+                      _isLoading = false;
+                    });
+                  } catch (error) {
+                    print(error.message);
+                    if (error.message
+                        .toString()
+                        .contains('Failed host lookup')) {
+                      setState(() {
+                        _isLoading = false;
+                      });
+                      showDialog(
+                        context: context,
+                        builder: (ctx) {
+                          return NoInternetDialog();
+                        },
+                      );
+                    }
+                  }
                 },
               ),
       ),

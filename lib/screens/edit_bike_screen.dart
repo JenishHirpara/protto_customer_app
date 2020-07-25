@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 import '../providers/bikes.dart';
+import './no_internet_screen.dart';
 
 class EditBikeScreen extends StatefulWidget {
   final Bike bike;
@@ -40,14 +41,45 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
     });
   }
 
+  void retry() async {
+    try {
+      await Provider.of<Bikes>(context, listen: false).fetchAllBrands();
+      setState(() {
+        _isInternet = true;
+      });
+    } catch (error) {
+      print(error.message);
+      if (error.message.toString().contains('Failed host lookup')) {
+        setState(() {
+          _isInternet = false;
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
   var _isInit = true;
   var _isLoading = false;
   var _isLoading1 = false;
+  var _isInternet = true;
 
   @override
   void didChangeDependencies() async {
     if (_isInit) {
-      await Provider.of<Bikes>(context, listen: false).fetchAllBrands();
+      try {
+        await Provider.of<Bikes>(context, listen: false).fetchAllBrands();
+        setState(() {
+          _isInternet = true;
+        });
+      } catch (error) {
+        print(error.message);
+        if (error.message.toString().contains('Failed host lookup')) {
+          setState(() {
+            _isInternet = false;
+            _isLoading = false;
+          });
+        }
+      }
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -72,12 +104,23 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
     setState(() {
       _isLoading = true;
     });
-    await Provider.of<Bikes>(context, listen: false).updateBike(
-        brand: _brand, id: _id, model: _model, number: _rgno, year: _year);
-    setState(() {
-      _isLoading = false;
-    });
-    Navigator.of(context).pop();
+    try {
+      await Provider.of<Bikes>(context, listen: false).updateBike(
+          brand: _brand, id: _id, model: _model, number: _rgno, year: _year);
+      setState(() {
+        _isLoading = false;
+        _isInternet = true;
+      });
+      Navigator.of(context).pop();
+    } catch (error) {
+      print(error.message);
+      if (error.message.toString().contains('Failed host lookup')) {
+        setState(() {
+          _isLoading = false;
+          _isInternet = false;
+        });
+      }
+    }
   }
 
   @override
@@ -115,172 +158,174 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                 width: 85,
               ),
             )
-          : Form(
-              key: _form,
-              child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 28, vertical: 10),
-                children: <Widget>[
-                  DropdownButtonFormField(
-                    value: _brand,
-                    decoration: InputDecoration(
-                      filled: true,
-                      border: InputBorder.none,
-                      hintText: 'Brand',
-                      hintStyle: TextStyle(
-                        fontFamily: 'SourceSansPro',
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                        fontSize: 14,
-                      ),
-                    ),
-                    items: Provider.of<Bikes>(context, listen: false)
-                        .brands
-                        .map<DropdownMenuItem>((value) {
-                      return DropdownMenuItem<String>(
-                          child: Text(value,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                              )),
-                          value: value);
-                    }).toList(),
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Please provide brand name';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _brand = value;
-                    },
-                    onChanged: (value) async {
-                      setState(() {
-                        _isLoading1 = true;
-                      });
-                      await Provider.of<Bikes>(context, listen: false)
-                          .fetchAllModels(value);
-                      setState(() {
-                        _isLoading1 = false;
-                      });
-                      resetModel();
-                    },
-                  ),
-                  SizedBox(height: 10),
-                  _isLoading1
-                      ? Center(
-                          child: CircularProgressIndicator(
-                          backgroundColor: Theme.of(context).primaryColor,
-                        ))
-                      : DropdownButtonFormField(
-                          value: _selectedModel,
-                          decoration: InputDecoration(
-                            filled: true,
-                            border: InputBorder.none,
-                            hintText: 'Model',
-                            hintStyle: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              color: Color.fromRGBO(128, 128, 128, 1),
-                              fontSize: 14,
-                            ),
+          : _isInternet
+              ? Form(
+                  key: _form,
+                  child: ListView(
+                    padding: EdgeInsets.symmetric(horizontal: 28, vertical: 10),
+                    children: <Widget>[
+                      DropdownButtonFormField(
+                        value: _brand,
+                        decoration: InputDecoration(
+                          filled: true,
+                          border: InputBorder.none,
+                          hintText: 'Brand',
+                          hintStyle: TextStyle(
+                            fontFamily: 'SourceSansPro',
+                            color: Color.fromRGBO(128, 128, 128, 1),
+                            fontSize: 14,
                           ),
-                          items: Provider.of<Bikes>(context)
-                              .models
-                              .map<DropdownMenuItem>((value) {
-                            return DropdownMenuItem<String>(
-                                child: Text(value,
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontFamily: 'SourceSansPro',
-                                    )),
-                                value: value);
-                          }).toList(),
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Please provide model name';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            _model = value;
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedModel = value;
-                            });
-                          },
                         ),
-                  SizedBox(height: 10),
-                  DropdownButtonFormField(
-                    value: _year,
-                    decoration: InputDecoration(
-                      filled: true,
-                      border: InputBorder.none,
-                      hintText: 'Year',
-                      hintStyle: TextStyle(
-                        fontFamily: 'SourceSansPro',
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                        fontSize: 14,
+                        items: Provider.of<Bikes>(context, listen: false)
+                            .brands
+                            .map<DropdownMenuItem>((value) {
+                          return DropdownMenuItem<String>(
+                              child: Text(value,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                  )),
+                              value: value);
+                        }).toList(),
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Please provide brand name';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _brand = value;
+                        },
+                        onChanged: (value) async {
+                          setState(() {
+                            _isLoading1 = true;
+                          });
+                          await Provider.of<Bikes>(context, listen: false)
+                              .fetchAllModels(value);
+                          setState(() {
+                            _isLoading1 = false;
+                          });
+                          resetModel();
+                        },
                       ),
-                    ),
-                    items: getYears().map<DropdownMenuItem>((value) {
-                      return DropdownMenuItem<String>(
-                          child: Text(value,
-                              textAlign: TextAlign.left,
+                      SizedBox(height: 10),
+                      _isLoading1
+                          ? Center(
+                              child: CircularProgressIndicator(
+                              backgroundColor: Theme.of(context).primaryColor,
+                            ))
+                          : DropdownButtonFormField(
+                              value: _selectedModel,
+                              decoration: InputDecoration(
+                                filled: true,
+                                border: InputBorder.none,
+                                hintText: 'Model',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'SourceSansPro',
+                                  color: Color.fromRGBO(128, 128, 128, 1),
+                                  fontSize: 14,
+                                ),
+                              ),
+                              items: Provider.of<Bikes>(context)
+                                  .models
+                                  .map<DropdownMenuItem>((value) {
+                                return DropdownMenuItem<String>(
+                                    child: Text(value,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontFamily: 'SourceSansPro',
+                                        )),
+                                    value: value);
+                              }).toList(),
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please provide model name';
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                _model = value;
+                              },
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedModel = value;
+                                });
+                              },
+                            ),
+                      SizedBox(height: 10),
+                      DropdownButtonFormField(
+                        value: _year,
+                        decoration: InputDecoration(
+                          filled: true,
+                          border: InputBorder.none,
+                          hintText: 'Year',
+                          hintStyle: TextStyle(
+                            fontFamily: 'SourceSansPro',
+                            color: Color.fromRGBO(128, 128, 128, 1),
+                            fontSize: 14,
+                          ),
+                        ),
+                        items: getYears().map<DropdownMenuItem>((value) {
+                          return DropdownMenuItem<String>(
+                              child: Text(value,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                  )),
+                              value: value);
+                        }).toList(),
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Please provide year of purchase';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _year = value;
+                        },
+                        onChanged: (_) {},
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        initialValue: _rgno,
+                        decoration: InputDecoration(
+                          hintText: 'Registration Number',
+                          hintStyle: TextStyle(
+                            fontFamily: 'SourceSansPro',
+                            color: Color.fromRGBO(128, 128, 128, 1),
+                            fontSize: 14,
+                          ),
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                          filled: true,
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please provide registration number';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _rgno = value;
+                        },
+                      ),
+                      SizedBox(height: 28),
+                      Container(
+                        height: 40,
+                        child: RaisedButton(
+                          color: Theme.of(context).primaryColor,
+                          textColor: Colors.white,
+                          child: Text('Edit',
                               style: TextStyle(
-                                fontFamily: 'SourceSansPro',
+                                fontFamily: 'SourceSansProSB',
                               )),
-                          value: value);
-                    }).toList(),
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Please provide year of purchase';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _year = value;
-                    },
-                    onChanged: (_) {},
-                  ),
-                  SizedBox(height: 10),
-                  TextFormField(
-                    initialValue: _rgno,
-                    decoration: InputDecoration(
-                      hintText: 'Registration Number',
-                      hintStyle: TextStyle(
-                        fontFamily: 'SourceSansPro',
-                        color: Color.fromRGBO(128, 128, 128, 1),
-                        fontSize: 14,
+                          onPressed: _saveForm,
+                        ),
                       ),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                      filled: true,
-                    ),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please provide registration number';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _rgno = value;
-                    },
+                    ],
                   ),
-                  SizedBox(height: 28),
-                  Container(
-                    height: 40,
-                    child: RaisedButton(
-                      color: Theme.of(context).primaryColor,
-                      textColor: Colors.white,
-                      child: Text('Edit',
-                          style: TextStyle(
-                            fontFamily: 'SourceSansProSB',
-                          )),
-                      onPressed: _saveForm,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                )
+              : NoInternetScreen(retry),
     );
   }
 }

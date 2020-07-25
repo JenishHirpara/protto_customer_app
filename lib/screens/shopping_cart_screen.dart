@@ -655,94 +655,178 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       setState(() {
         _isLoading = true;
       });
-      var _id = await Provider.of<Orders>(context, listen: false).addOrder(
-        _orderItem,
-        _prottoBucks,
-        Provider.of<Bikes>(context, listen: false).activeBike,
-        '0.0',
-      );
-      setState(() {
-        _isLoading = false;
-      });
-      Provider.of<Cart>(context, listen: false).resetCart();
-      var _order = Provider.of<Orders>(context, listen: false).findById(_id);
-      showDialog(
-        context: context,
-        builder: (ctx) {
-          return Dialog(
-            backgroundColor: Color.fromRGBO(253, 253, 253, 1),
-            child: Container(
-              height: 285,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: 10),
-                  Container(
-                    height: 75,
-                    width: 75,
-                    padding: EdgeInsets.all(0),
-                    child: Image.asset('assets/images/tick.png'),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'ORDER CONFIRMED',
-                    style: TextStyle(
-                      fontFamily: 'SourceSansProSB',
-                      fontSize: 16,
+      try {
+        var _id = await Provider.of<Orders>(context, listen: false).addOrder(
+          _orderItem,
+          _prottoBucks,
+          Provider.of<Bikes>(context, listen: false).activeBike,
+          '0.0',
+        );
+        setState(() {
+          _isLoading = false;
+        });
+        Provider.of<Cart>(context, listen: false).resetCart();
+        var _order = Provider.of<Orders>(context, listen: false).findById(_id);
+        showDialog(
+          context: context,
+          builder: (ctx) {
+            return Dialog(
+              backgroundColor: Color.fromRGBO(253, 253, 253, 1),
+              child: Container(
+                height: 285,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: 10),
+                    Container(
+                      height: 75,
+                      width: 75,
+                      padding: EdgeInsets.all(0),
+                      child: Image.asset('assets/images/tick.png'),
                     ),
-                  ),
-                  SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                    child: Text(
-                      'Thanks for using Protto. Your order has been successfully placed.',
-                      textAlign: TextAlign.center,
+                    SizedBox(height: 20),
+                    Text(
+                      'ORDER CONFIRMED',
                       style: TextStyle(
-                        fontFamily: 'SourceSansPro',
-                        fontSize: 14,
-                        color: Color.fromRGBO(112, 112, 112, 1),
+                        fontFamily: 'SourceSansProSB',
+                        fontSize: 16,
                       ),
                     ),
-                  ),
-                  SizedBox(height: 24),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Theme.of(context).primaryColor,
-                        width: 1.2,
-                      ),
-                      borderRadius: BorderRadius.circular(4.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey[400],
-                          spreadRadius: 0.0,
-                          offset: Offset(2.0, 2.0), //(x,y)
-                          blurRadius: 4.0,
-                        ),
-                      ],
-                    ),
-                    child: RaisedButton(
-                      color: Colors.white,
-                      onPressed: () {
-                        Navigator.of(ctx).pop();
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(pageRouteBuilder(_order));
-                      },
-                      elevation: 2,
+                    SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14.0),
                       child: Text(
-                        'Track Progress',
-                        style: TextStyle(color: Theme.of(context).primaryColor),
+                        'Thanks for using Protto. Your order has been successfully placed.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'SourceSansPro',
+                          fontSize: 14,
+                          color: Color.fromRGBO(112, 112, 112, 1),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 24),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Theme.of(context).primaryColor,
+                          width: 1.2,
+                        ),
+                        borderRadius: BorderRadius.circular(4.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey[400],
+                            spreadRadius: 0.0,
+                            offset: Offset(2.0, 2.0), //(x,y)
+                            blurRadius: 4.0,
+                          ),
+                        ],
+                      ),
+                      child: RaisedButton(
+                        color: Colors.white,
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                          Navigator.of(context).pop();
+                          Navigator.of(context).push(pageRouteBuilder(_order));
+                        },
+                        elevation: 2,
+                        child: Text(
+                          'Track Progress',
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+            );
+          },
+        );
+      } catch (error) {
+        print(error.message);
+        if (error.message.toString().contains('Failed host lookup')) {
+          setState(() {
+            _isLoading = false;
+          });
+          showDialog(
+            context: context,
+            builder: (ctx) {
+              return Dialog(
+                backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+                child: Container(
+                  height: 250,
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 10),
+                      Container(
+                        height: 75,
+                        width: 75,
+                        padding: EdgeInsets.all(0),
+                        child: Image.asset('assets/images/cancel.png'),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'ORDER FAILURE',
+                        style: TextStyle(
+                          fontFamily: 'SourceSansProSB',
+                          fontSize: 16,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                        child: Text(
+                          'Looks like something went wrong while processing your request. Please try again.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'SourceSansPro',
+                            fontSize: 14,
+                            color: Color.fromRGBO(112, 112, 112, 1),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 24),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Theme.of(context).primaryColor,
+                            width: 1.2,
+                          ),
+                          borderRadius: BorderRadius.circular(4.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey[400],
+                              spreadRadius: 0.0,
+                              offset: Offset(2.0, 2.0), //(x,y)
+                              blurRadius: 4.0,
+                            ),
+                          ],
+                        ),
+                        child: RaisedButton(
+                          color: Colors.white,
+                          onPressed: () {
+                            Navigator.of(ctx).pop();
+                          },
+                          elevation: 2,
+                          child: Text(
+                            'Okay',
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           );
-        },
-      );
+        }
+      }
     }
   }
 
@@ -864,7 +948,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                         ),
                       ),
                       trailing: Text(
-                        cart.getTotal().toString(),
+                        '₹ ${cart.getTotal().toString()}',
                         style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w500,
@@ -889,7 +973,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                               ),
                             ),
                             trailing: Text(
-                              _getDiscount(cart),
+                              '₹ ${_getDiscount(cart)}',
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.bold,
@@ -899,30 +983,32 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                             ),
                           ),
                         ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: ListTile(
-                      contentPadding: EdgeInsets.all(0),
-                      title: Text(
-                        'New Total',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          color: Colors.red,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                  _getDiscount(cart) == '0.0'
+                      ? Container()
+                      : Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: ListTile(
+                            contentPadding: EdgeInsets.all(0),
+                            title: Text(
+                              'New Total',
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                color: Colors.red,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            trailing: Text(
+                              '₹ ${_getNewTotal(cart)}',
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                      trailing: Text(
-                        _getNewTotal(cart),
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: TextField(

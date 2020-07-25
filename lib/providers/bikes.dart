@@ -137,6 +137,7 @@ class Bikes with ChangeNotifier {
           id: extractedData['Data']['bike_id'],
         ),
       );
+      notifyListeners();
     } else {
       final response = await http.post(url,
           body: json.encode({
@@ -156,8 +157,8 @@ class Bikes with ChangeNotifier {
           id: extractedData['Data']['bike_id'],
         ),
       );
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   Future<void> updateBike(

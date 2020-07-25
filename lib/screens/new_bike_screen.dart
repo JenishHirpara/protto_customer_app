@@ -92,11 +92,22 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
     setState(() {
       _isLoading = true;
     });
-    await Provider.of<Bikes>(context, listen: false).addBike(_bike);
-    setState(() {
-      _isLoading = false;
-    });
-    Navigator.of(context).pop();
+    try {
+      await Provider.of<Bikes>(context, listen: false).addBike(_bike);
+      setState(() {
+        _isLoading = false;
+        _isInternet = true;
+      });
+      Navigator.of(context).pop();
+    } catch (error) {
+      print(error.message);
+      if (error.message.toString().contains('Failed host lookup')) {
+        setState(() {
+          _isLoading = false;
+          _isInternet = false;
+        });
+      }
+    }
   }
 
   @override

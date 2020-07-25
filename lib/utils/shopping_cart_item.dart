@@ -31,7 +31,7 @@ class ShoppingCartItem extends StatelessWidget {
               ),
             ),
             trailing: Text(
-              '${cartitem.price} ',
+              '₹ ${cartitem.price}',
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 color: Color.fromRGBO(112, 112, 112, 1),

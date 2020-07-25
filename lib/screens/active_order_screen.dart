@@ -280,6 +280,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                       }
                       setState(() {
                         _isLoading = false;
+                        _isInternet = true;
                       });
                       Navigator.of(dialogcontext).pop();
                       showDialog(
@@ -344,6 +345,16 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                       );
                     } catch (error) {
                       print(error.message);
+                      if (error.message
+                          .toString()
+                          .contains('Failed host lookup')) {
+                        FocusScope.of(dialogcontext).unfocus();
+                        Navigator.of(dialogcontext).pop();
+                        setState(() {
+                          _isLoading = false;
+                          _isInternet = false;
+                        });
+                      }
                     }
                   },
                 ),
