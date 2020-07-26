@@ -116,14 +116,29 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           ),
                           onPressed: () async {
                             Navigator.of(dialogcontext).pop();
-
                             setState(() {
                               _isLoading = true;
                             });
-                            await Provider.of<Orders>(context, listen: false)
-                                .jobapprove(widget.order.bookingId, data,
-                                    _total, _paid);
-                            Navigator.of(context).pop();
+                            try {
+                              await Provider.of<Orders>(context, listen: false)
+                                  .jobapprove(widget.order.bookingId, data,
+                                      _total, _paid);
+                              setState(() {
+                                _isLoading = false;
+                                _isInternet = true;
+                              });
+                              Navigator.of(context).pop();
+                            } catch (error) {
+                              print(error.message);
+                              if (error.message
+                                  .toString()
+                                  .contains('Failed host lookup')) {
+                                setState(() {
+                                  _isLoading = false;
+                                  _isInternet = false;
+                                });
+                              }
+                            }
                           },
                         )
                       ],
@@ -178,14 +193,29 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           ),
                           onPressed: () async {
                             Navigator.of(dialogcontext).pop();
-
                             setState(() {
                               _isLoading = true;
                             });
-                            await Provider.of<Orders>(context, listen: false)
-                                .jobapprove(widget.order.bookingId, data,
-                                    _total, _paid);
-                            Navigator.of(context).pop();
+                            try {
+                              await Provider.of<Orders>(context, listen: false)
+                                  .jobapprove(widget.order.bookingId, data,
+                                      _total, _paid);
+                              setState(() {
+                                _isLoading = false;
+                                _isInternet = true;
+                              });
+                              Navigator.of(context).pop();
+                            } catch (error) {
+                              print(error.message);
+                              if (error.message
+                                  .toString()
+                                  .contains('Failed host lookup')) {
+                                setState(() {
+                                  _isLoading = false;
+                                  _isInternet = false;
+                                });
+                              }
+                            }
                           },
                           elevation: 5,
                           child: Text(

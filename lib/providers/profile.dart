@@ -67,7 +67,6 @@ class UserProfile with ChangeNotifier {
     if (extractedData['message'] == 'User does not exist') {
       _signupOtp = extractedData['otp'];
       _number = number;
-      print(extractedData['otp']);
       notifyListeners();
       throw HttpException('User does not exist!');
     }

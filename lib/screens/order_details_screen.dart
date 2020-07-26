@@ -51,7 +51,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           });
         }
       } catch (error) {
-        print(error.message);
+        print(error);
         if (error.message.toString().contains('Failed host lookup')) {
           Provider.of<Orders>(context, listen: false).endLoad();
           setState(() {

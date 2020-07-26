@@ -161,7 +161,7 @@ class Orders with ChangeNotifier {
       final extractedData2 =
           json.decode(response2.body) as Map<String, dynamic>;
       data.insert(
-        i,
+        0,
         OrderItem(
           id: extractedData1['data'][i]['id'],
           bookingId: extractedData1['data'][i]['booking_id'],
@@ -264,7 +264,8 @@ class Orders with ChangeNotifier {
         'http://stage.protto.in/api/shivangi/getbike.php/${order.bikeid}';
     final response2 = await http.get(url2);
     final extractedData2 = json.decode(response2.body) as Map<String, dynamic>;
-    _items.add(
+    _items.insert(
+      0,
       OrderItem(
         id: extractedData['id'],
         bookingId: extractedData['booking_id'],
