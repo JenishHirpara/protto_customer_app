@@ -288,56 +288,60 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                         builder: (ctx) {
                           return Dialog(
                             child: Container(
-                              height: 175,
-                              child: Column(
-                                children: <Widget>[
-                                  SizedBox(height: 30),
-                                  Text(
-                                    message,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  SizedBox(height: 40),
-                                  Container(
-                                    height: 40,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
+                              height: 220,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(30, 0, 30, 10),
+                                child: Column(
+                                  children: <Widget>[
+                                    SizedBox(height: 30),
+                                    Text(
+                                      message,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
                                         color: Theme.of(context).primaryColor,
-                                        width: 1.2,
+                                        fontFamily: 'SourceSansProSB',
+                                        fontSize: 22,
                                       ),
-                                      borderRadius: BorderRadius.circular(4.0),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey[400],
-                                          spreadRadius: 0.0,
-                                          offset: Offset(2.0, 2.0), //(x,y)
-                                          blurRadius: 4.0,
-                                        ),
-                                      ],
                                     ),
-                                    child: RaisedButton(
-                                      child: Text(
-                                        'Okay',
-                                        style: TextStyle(
-                                          fontFamily: 'SourceSansProSB',
-                                          fontSize: 15,
-                                          color:
-                                              Color.fromRGBO(112, 112, 112, 1),
+                                    SizedBox(height: 40),
+                                    Container(
+                                      height: 45,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Theme.of(context).primaryColor,
+                                          width: 1.2,
                                         ),
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey[400],
+                                            spreadRadius: 0.0,
+                                            offset: Offset(2.0, 2.0), //(x,y)
+                                            blurRadius: 4.0,
+                                          ),
+                                        ],
                                       ),
-                                      onPressed: () {
-                                        Navigator.of(ctx).pop();
-                                      },
-                                      color: Colors.white,
-                                      elevation: 2,
+                                      child: RaisedButton(
+                                        child: Text(
+                                          'Okay',
+                                          style: TextStyle(
+                                            fontFamily: 'SourceSansProSB',
+                                            fontSize: 15,
+                                            color: Color.fromRGBO(
+                                                112, 112, 112, 1),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.of(ctx).pop();
+                                        },
+                                        color: Colors.white,
+                                        elevation: 2,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           );
