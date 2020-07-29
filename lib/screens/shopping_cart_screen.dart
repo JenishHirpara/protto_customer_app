@@ -12,6 +12,8 @@ import './add_address_screen.dart';
 import '../providers/orders.dart';
 import '../providers/bikes.dart';
 import './active_order_screen.dart';
+import '../models/http_exception.dart';
+import './no_internet_screen.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
   @override
@@ -22,8 +24,14 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   Address _addressSeen;
   var _date;
   var _prottoBucks;
+  var minCartValue;
+  var percentDiscount;
+  var maxDiscount;
+  var couponDiscount;
   final _form = GlobalKey<FormState>();
+  var _textController = TextEditingController();
   var _isLoading = false;
+  var _isInternet = true;
 
   Future selectAddress(BuildContext context) {
     return showModalBottomSheet(
@@ -857,16 +865,62 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   }
 
   String _getDiscount(Cart cart) {
-    var prottoBucks = double.parse(
-        Provider.of<UserProfile>(context, listen: false).item.prottoBucks);
-    var totalBefore = cart.getTotal();
-    if (totalBefore >= prottoBucks) {
-      _prottoBucks = 0.0;
-      return prottoBucks.toString();
+    if (couponDiscount == null) {
+      var prottoBucks = double.parse(
+          Provider.of<UserProfile>(context, listen: false).item.prottoBucks);
+      var totalBefore = cart.getTotal();
+      if (totalBefore >= prottoBucks) {
+        _prottoBucks = 0.0;
+        return prottoBucks.toString();
+      } else {
+        _prottoBucks = prottoBucks - totalBefore;
+        return totalBefore.toString();
+      }
     } else {
-      _prottoBucks = prottoBucks - totalBefore;
-      return totalBefore.toString();
+      var totalBefore = cart.getTotal();
+      if (totalBefore >= minCartValue) {
+        if (totalBefore >= couponDiscount) {
+          return couponDiscount.toString();
+        } else {
+          return totalBefore.toString();
+        }
+      } else {
+        var prottoBucks = double.parse(
+            Provider.of<UserProfile>(context, listen: false).item.prottoBucks);
+        var totalBefore = cart.getTotal();
+        if (totalBefore >= prottoBucks) {
+          _prottoBucks = 0.0;
+          return prottoBucks.toString();
+        } else {
+          _prottoBucks = prottoBucks - totalBefore;
+          return totalBefore.toString();
+        }
+      }
     }
+  }
+
+  void retry() {
+    setState(() {});
+  }
+
+  void couponDialog(Cart cart) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: Text(
+              'Coupon code activated. Minimum cart value should should be ₹ $minCartValue to enable this coupon'),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+              child: Text('Okay'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   String _getNewTotal(Cart cart) {
@@ -910,609 +964,694 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 width: 85,
               ),
             )
-          : SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, i) => ChangeNotifierProvider.value(
-                      value: cart.items[i],
-                      child: ShoppingCartItem(),
-                    ),
-                    itemCount: cart.items.length,
-                  ),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      'Totals',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+          : _isInternet
+              ? SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, i) =>
+                            ChangeNotifierProvider.value(
+                          value: cart.items[i],
+                          child: ShoppingCartItem(couponDialog),
+                        ),
+                        itemCount: cart.items.length,
                       ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: ListTile(
-                      contentPadding: EdgeInsets.all(0),
-                      title: Text(
-                        'Item Total',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: 16,
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          'Totals',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
-                      trailing: Text(
-                        '₹ ${cart.getTotal().toString()}',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
+                      SizedBox(height: 10),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: ListTile(
+                          contentPadding: EdgeInsets.all(0),
+                          title: Text(
+                            'Item Total',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 16,
+                            ),
+                          ),
+                          trailing: Text(
+                            '₹ ${cart.getTotal().toString()}',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  _getDiscount(cart) == '0.0'
-                      ? Container()
-                      : Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: ListTile(
-                            contentPadding: EdgeInsets.all(0),
-                            title: Text(
-                              'Discount',
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green,
+                      _getDiscount(cart) == '0.0'
+                          ? Container()
+                          : Container(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: ListTile(
+                                contentPadding: EdgeInsets.all(0),
+                                title: Text(
+                                  'Discount',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                                trailing: Text(
+                                  '₹ ${_getDiscount(cart)}',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green,
+                                    fontSize: 16,
+                                  ),
+                                ),
                               ),
                             ),
-                            trailing: Text(
-                              '₹ ${_getDiscount(cart)}',
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green,
-                                fontSize: 16,
+                      _getDiscount(cart) == '0.0'
+                          ? Container()
+                          : Container(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: ListTile(
+                                contentPadding: EdgeInsets.all(0),
+                                title: Text(
+                                  'New Total',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.red,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                trailing: Text(
+                                  '₹ ${_getNewTotal(cart)}',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red,
+                                    fontSize: 16,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                  _getDiscount(cart) == '0.0'
-                      ? Container()
-                      : Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: ListTile(
-                            contentPadding: EdgeInsets.all(0),
-                            title: Text(
-                              'New Total',
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Colors.red,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: TextField(
+                          enabled: true,
+                          controller: _textController,
+                          decoration: InputDecoration(
+                            hintText: 'Enter Voucher Code',
+                            hintStyle: TextStyle(fontFamily: 'SourceSansPro'),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(4),
                               ),
-                            ),
-                            trailing: Text(
-                              '₹ ${_getNewTotal(cart)}',
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: TextField(
-                      enabled: true,
-                      decoration: InputDecoration(
-                        hintText: 'Enter Voucher Code',
-                        hintStyle: TextStyle(fontFamily: 'SourceSansPro'),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(4),
-                          ),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(0),
-                          ),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        suffixIcon: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 26),
-                          padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                          child: InkWell(
-                            child: Text(
-                              'APPLY',
-                              style: TextStyle(
-                                fontFamily: 'SourceSansProSB',
+                              borderSide: BorderSide(
                                 color: Theme.of(context).primaryColor,
                               ),
                             ),
-                            onTap: () {},
-                          ),
-                        ),
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 28),
-                  Form(
-                    key: _form,
-                    child: ListView(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Text(
-                            'Select Delivery Type',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 18,
-                              color: Color.fromRGBO(112, 112, 112, 1),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: DropdownButtonFormField(
-                            elevation: 1,
-                            decoration: InputDecoration(
-                              focusColor: Color.fromRGBO(240, 240, 240, 1),
-                              fillColor: Color.fromRGBO(240, 240, 240, 1),
-                              filled: true,
-                              border: InputBorder.none,
-                              hintText: 'Delivery Type',
-                              hintStyle: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                color: Color.fromRGBO(128, 128, 128, 1),
-                                fontSize: 14,
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(0),
+                              ),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
-                            items: <String>['Pick & Drop', 'Self Delivery']
-                                .map<DropdownMenuItem>((value) {
-                              return DropdownMenuItem<String>(
+                            suffixIcon: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 26),
+                              padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                              child: InkWell(
                                 child: Text(
-                                  value,
-                                  style: TextStyle(fontFamily: 'SourceSansPro'),
+                                  'APPLY',
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansProSB',
+                                    color: Theme.of(context).primaryColor,
+                                  ),
                                 ),
-                                value: value,
-                              );
-                            }).toList(),
-                            validator: (value) {
-                              if (value == null) {
-                                return 'Please provide delivery type';
-                              }
-                              return null;
-                            },
-                            onChanged: (value) {
-                              _orderItem = OrderItem(
-                                id: _orderItem.id,
-                                bookingId: _orderItem.bookingId,
-                                address: _orderItem.address,
-                                bikeid: _orderItem.bikeid,
-                                bikeNumber: _orderItem.bikeNumber,
-                                bikeYear: _orderItem.bikeYear,
-                                flat: _orderItem.flat,
-                                landmark: _orderItem.landmark,
-                                addressId: _orderItem.addressId,
-                                total: _orderItem.total,
-                                paid: _orderItem.paid,
-                                make: _orderItem.make,
-                                model: _orderItem.model,
-                                status: _orderItem.status,
-                                specialRequest: _orderItem.specialRequest,
-                                ssName: _orderItem.ssName,
-                                approveJobs: _orderItem.approveJobs,
-                                rideable: _orderItem.rideable,
-                                serviceType: _orderItem.serviceType,
-                                date: _orderItem.date,
-                                time: _orderItem.time,
-                                deliveryType: value,
-                              );
-                            },
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Text(
-                            'Select Date and Time',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 18,
-                              color: Color.fromRGBO(112, 112, 112, 1),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Container(
-                          height: 45,
-                          width: double.infinity,
-                          margin: EdgeInsets.symmetric(horizontal: 20),
-                          decoration: BoxDecoration(
-                              // color: Color.fromRGBO(255, 255, 255, 1),
-                              //borderRadius: BorderRadius.circular(4.0),
+                                onTap: () async {
+                                  FocusScope.of(context).unfocus();
+                                  var coupon;
+                                  try {
+                                    setState(() {
+                                      _isLoading = true;
+                                    });
+                                    coupon = await Provider.of<Orders>(context,
+                                            listen: false)
+                                        .couponcode(_textController.text);
+                                    couponDialog(cart);
+                                    minCartValue = double.parse(coupon[0]);
+                                    percentDiscount = double.parse(coupon[1]);
+                                    maxDiscount = double.parse(coupon[2]);
+                                    setState(() {
+                                      _isLoading = false;
+                                      _isInternet = true;
+                                    });
+                                    if (maxDiscount != -1) {
+                                      couponDiscount = maxDiscount;
+                                    } else {
+                                      couponDiscount = cart.getTotal() *
+                                          percentDiscount /
+                                          100;
+                                    }
+                                  } on HttpException catch (error) {
+                                    setState(() {
+                                      _isInternet = true;
+                                      _isLoading = false;
+                                    });
+                                    minCartValue = null;
+                                    maxDiscount = null;
+                                    percentDiscount = null;
+                                    couponDiscount = null;
+                                    showDialog(
+                                      context: context,
+                                      builder: (ctx) {
+                                        return AlertDialog(
+                                          title: Text(error.message),
+                                          actions: <Widget>[
+                                            FlatButton(
+                                              onPressed: () {
+                                                Navigator.of(ctx).pop();
+                                              },
+                                              child: Text('Okay'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  } catch (error) {
+                                    print(error.message);
+                                    if (error.message
+                                        .toString()
+                                        .contains('Failed host lookup')) {
+                                      setState(() {
+                                        _isInternet = false;
+                                        _isLoading = false;
+                                      });
+                                    }
+                                  }
+                                },
                               ),
-                          child: RaisedButton(
-                            color: Color.fromRGBO(240, 240, 240, 1),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 28),
+                      Form(
+                        key: _form,
+                        child: ListView(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
                               child: Text(
-                                _date == null ? 'Date' : _date,
+                                'Select Delivery Type',
                                 style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  fontSize: 14,
-                                  color: Color.fromRGBO(128, 128, 128, 1),
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 18,
+                                  color: Color.fromRGBO(112, 112, 112, 1),
                                 ),
-                                textAlign: TextAlign.left,
                               ),
                             ),
-                            elevation: 0,
-                            onPressed: _presentDatePicker,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: DropdownButtonFormField(
-                            elevation: 1,
-                            decoration: InputDecoration(
-                              fillColor: Color.fromRGBO(240, 240, 240, 1),
-                              filled: true,
-                              border: InputBorder.none,
-                              hintText: 'Time Slot',
-                              hintStyle: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                color: Color.fromRGBO(128, 128, 128, 1),
-                                fontSize: 14,
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: DropdownButtonFormField(
+                                elevation: 1,
+                                decoration: InputDecoration(
+                                  focusColor: Color.fromRGBO(240, 240, 240, 1),
+                                  fillColor: Color.fromRGBO(240, 240, 240, 1),
+                                  filled: true,
+                                  border: InputBorder.none,
+                                  hintText: 'Delivery Type',
+                                  hintStyle: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                    color: Color.fromRGBO(128, 128, 128, 1),
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                items: <String>['Pick & Drop', 'Self Delivery']
+                                    .map<DropdownMenuItem>((value) {
+                                  return DropdownMenuItem<String>(
+                                    child: Text(
+                                      value,
+                                      style: TextStyle(
+                                          fontFamily: 'SourceSansPro'),
+                                    ),
+                                    value: value,
+                                  );
+                                }).toList(),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Please provide delivery type';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (value) {
+                                  _orderItem = OrderItem(
+                                    id: _orderItem.id,
+                                    bookingId: _orderItem.bookingId,
+                                    address: _orderItem.address,
+                                    bikeid: _orderItem.bikeid,
+                                    bikeNumber: _orderItem.bikeNumber,
+                                    bikeYear: _orderItem.bikeYear,
+                                    flat: _orderItem.flat,
+                                    landmark: _orderItem.landmark,
+                                    addressId: _orderItem.addressId,
+                                    total: _orderItem.total,
+                                    paid: _orderItem.paid,
+                                    make: _orderItem.make,
+                                    model: _orderItem.model,
+                                    status: _orderItem.status,
+                                    specialRequest: _orderItem.specialRequest,
+                                    ssName: _orderItem.ssName,
+                                    approveJobs: _orderItem.approveJobs,
+                                    rideable: _orderItem.rideable,
+                                    serviceType: _orderItem.serviceType,
+                                    date: _orderItem.date,
+                                    time: _orderItem.time,
+                                    deliveryType: value,
+                                  );
+                                },
                               ),
                             ),
-                            items: _getTime().map<DropdownMenuItem>((value) {
-                              return DropdownMenuItem<String>(
-                                  child: Text(value), value: value);
-                            }).toList(),
-                            validator: (value) {
-                              if (value == null) {
-                                return 'Please provide time slot';
-                              }
-                              return null;
-                            },
-                            onChanged: (value) {
-                              _orderItem = OrderItem(
-                                id: _orderItem.id,
-                                bookingId: _orderItem.bookingId,
-                                address: _orderItem.address,
-                                bikeid: _orderItem.bikeid,
-                                bikeNumber: _orderItem.bikeNumber,
-                                bikeYear: _orderItem.bikeYear,
-                                addressId: _orderItem.addressId,
-                                flat: _orderItem.flat,
-                                landmark: _orderItem.landmark,
-                                total: _orderItem.total,
-                                paid: _orderItem.paid,
-                                ssName: _orderItem.ssName,
-                                make: _orderItem.make,
-                                model: _orderItem.model,
-                                status: _orderItem.status,
-                                specialRequest: _orderItem.specialRequest,
-                                approveJobs: _orderItem.approveJobs,
-                                rideable: _orderItem.rideable,
-                                serviceType: _orderItem.serviceType,
-                                date: _orderItem.date,
-                                time: value,
-                                deliveryType: _orderItem.deliveryType,
-                              );
-                            },
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Text(
-                            'Any Special Request',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 18,
-                              color: Color.fromRGBO(112, 112, 112, 1),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: TextFormField(
-                            keyboardType: TextInputType.multiline,
-                            maxLines: null,
-                            textInputAction: TextInputAction.done,
-                            decoration: InputDecoration(
-                              fillColor: Color.fromRGBO(240, 240, 240, 1),
-                              filled: true,
-                              border: InputBorder.none,
-                              hintText: 'Any Special Request',
-                              hintStyle: TextStyle(
-                                fontFamily: 'SourceSansPro',
-                                color: Color.fromRGBO(128, 128, 128, 1),
-                                fontSize: 14,
+                            SizedBox(height: 20),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Text(
+                                'Select Date and Time',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 18,
+                                  color: Color.fromRGBO(112, 112, 112, 1),
+                                ),
                               ),
                             ),
-                            onSaved: (value) {
-                              _orderItem = OrderItem(
-                                id: _orderItem.id,
-                                bookingId: _orderItem.bookingId,
-                                address: _orderItem.address,
-                                bikeid: _orderItem.bikeid,
-                                bikeNumber: _orderItem.bikeNumber,
-                                bikeYear: _orderItem.bikeYear,
-                                addressId: _orderItem.addressId,
-                                flat: _orderItem.flat,
-                                landmark: _orderItem.landmark,
-                                total: _orderItem.total,
-                                paid: _orderItem.paid,
-                                ssName: _orderItem.ssName,
-                                make: _orderItem.make,
-                                model: _orderItem.model,
-                                status: _orderItem.status,
-                                specialRequest: value,
-                                approveJobs: _orderItem.approveJobs,
-                                rideable: _orderItem.rideable,
-                                serviceType: _orderItem.serviceType,
-                                date: _orderItem.date,
-                                time: _orderItem.time,
-                                deliveryType: _orderItem.deliveryType,
-                              );
-                            },
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Text(
-                            'Select Address',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 18,
-                              color: Color.fromRGBO(112, 112, 112, 1),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 45,
+                              width: double.infinity,
+                              margin: EdgeInsets.symmetric(horizontal: 20),
+                              decoration: BoxDecoration(
+                                  // color: Color.fromRGBO(255, 255, 255, 1),
+                                  //borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                              child: RaisedButton(
+                                color: Color.fromRGBO(240, 240, 240, 1),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    _date == null ? 'Date' : _date,
+                                    style: TextStyle(
+                                      fontFamily: 'SourceSansPro',
+                                      fontSize: 14,
+                                      color: Color.fromRGBO(128, 128, 128, 1),
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                                elevation: 0,
+                                onPressed: _presentDatePicker,
+                              ),
                             ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Offstage(
-                            offstage: _addressSeen == null,
-                            child: ListView(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              children: <Widget>[
-                                _addressSeen != null
-                                    ? Container(
-                                        width: double.infinity,
-                                        child: Column(
-                                          children: <Widget>[
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: DropdownButtonFormField(
+                                elevation: 1,
+                                decoration: InputDecoration(
+                                  fillColor: Color.fromRGBO(240, 240, 240, 1),
+                                  filled: true,
+                                  border: InputBorder.none,
+                                  hintText: 'Time Slot',
+                                  hintStyle: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                    color: Color.fromRGBO(128, 128, 128, 1),
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                items:
+                                    _getTime().map<DropdownMenuItem>((value) {
+                                  return DropdownMenuItem<String>(
+                                      child: Text(value), value: value);
+                                }).toList(),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Please provide time slot';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (value) {
+                                  _orderItem = OrderItem(
+                                    id: _orderItem.id,
+                                    bookingId: _orderItem.bookingId,
+                                    address: _orderItem.address,
+                                    bikeid: _orderItem.bikeid,
+                                    bikeNumber: _orderItem.bikeNumber,
+                                    bikeYear: _orderItem.bikeYear,
+                                    addressId: _orderItem.addressId,
+                                    flat: _orderItem.flat,
+                                    landmark: _orderItem.landmark,
+                                    total: _orderItem.total,
+                                    paid: _orderItem.paid,
+                                    ssName: _orderItem.ssName,
+                                    make: _orderItem.make,
+                                    model: _orderItem.model,
+                                    status: _orderItem.status,
+                                    specialRequest: _orderItem.specialRequest,
+                                    approveJobs: _orderItem.approveJobs,
+                                    rideable: _orderItem.rideable,
+                                    serviceType: _orderItem.serviceType,
+                                    date: _orderItem.date,
+                                    time: value,
+                                    deliveryType: _orderItem.deliveryType,
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Text(
+                                'Any Special Request',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 18,
+                                  color: Color.fromRGBO(112, 112, 112, 1),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: TextFormField(
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null,
+                                textInputAction: TextInputAction.done,
+                                decoration: InputDecoration(
+                                  fillColor: Color.fromRGBO(240, 240, 240, 1),
+                                  filled: true,
+                                  border: InputBorder.none,
+                                  hintText: 'Any Special Request',
+                                  hintStyle: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                    color: Color.fromRGBO(128, 128, 128, 1),
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                onSaved: (value) {
+                                  _orderItem = OrderItem(
+                                    id: _orderItem.id,
+                                    bookingId: _orderItem.bookingId,
+                                    address: _orderItem.address,
+                                    bikeid: _orderItem.bikeid,
+                                    bikeNumber: _orderItem.bikeNumber,
+                                    bikeYear: _orderItem.bikeYear,
+                                    addressId: _orderItem.addressId,
+                                    flat: _orderItem.flat,
+                                    landmark: _orderItem.landmark,
+                                    total: _orderItem.total,
+                                    paid: _orderItem.paid,
+                                    ssName: _orderItem.ssName,
+                                    make: _orderItem.make,
+                                    model: _orderItem.model,
+                                    status: _orderItem.status,
+                                    specialRequest: value,
+                                    approveJobs: _orderItem.approveJobs,
+                                    rideable: _orderItem.rideable,
+                                    serviceType: _orderItem.serviceType,
+                                    date: _orderItem.date,
+                                    time: _orderItem.time,
+                                    deliveryType: _orderItem.deliveryType,
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Text(
+                                'Select Address',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 18,
+                                  color: Color.fromRGBO(112, 112, 112, 1),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Offstage(
+                                offstage: _addressSeen == null,
+                                child: ListView(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  children: <Widget>[
+                                    _addressSeen != null
+                                        ? Container(
+                                            width: double.infinity,
+                                            child: Column(
                                               children: <Widget>[
-                                                Text(
-                                                  _addressSeen.saveas,
-                                                  style: TextStyle(
-                                                    fontFamily: 'Montserrat',
-                                                    color: Color.fromRGBO(
-                                                        112, 112, 112, 1),
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                                FlatButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      _addressSeen = null;
-                                                    });
-                                                  },
-                                                  child: Text(
-                                                    'Change Address',
-                                                    style: TextStyle(
-                                                      fontFamily:
-                                                          'SourceSansPro',
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      _addressSeen.saveas,
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        color: Color.fromRGBO(
+                                                            112, 112, 112, 1),
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
                                                     ),
-                                                  ),
+                                                    FlatButton(
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          _addressSeen = null;
+                                                        });
+                                                      },
+                                                      child: Text(
+                                                        'Change Address',
+                                                        style: TextStyle(
+                                                          fontFamily:
+                                                              'SourceSansPro',
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
+                                                _addressSeen.landmark != null
+                                                    ? Text(
+                                                        '${_addressSeen.flat}, ${_addressSeen.landmark}, ${_addressSeen.address}',
+                                                        style: TextStyle(
+                                                          fontFamily:
+                                                              'SourceSansPro',
+                                                          color: Color.fromRGBO(
+                                                              112, 112, 112, 1),
+                                                        ),
+                                                      )
+                                                    : Text(
+                                                        '${_addressSeen.flat}, ${_addressSeen.address}',
+                                                        style: TextStyle(
+                                                          fontFamily:
+                                                              'SourceSansPro',
+                                                          color: Color.fromRGBO(
+                                                              112, 112, 112, 1),
+                                                        ),
+                                                      )
                                               ],
                                             ),
-                                            _addressSeen.landmark != null
-                                                ? Text(
-                                                    '${_addressSeen.flat}, ${_addressSeen.landmark}, ${_addressSeen.address}',
-                                                    style: TextStyle(
-                                                      fontFamily:
-                                                          'SourceSansPro',
-                                                      color: Color.fromRGBO(
-                                                          112, 112, 112, 1),
-                                                    ),
-                                                  )
-                                                : Text(
-                                                    '${_addressSeen.flat}, ${_addressSeen.address}',
-                                                    style: TextStyle(
-                                                      fontFamily:
-                                                          'SourceSansPro',
-                                                      color: Color.fromRGBO(
-                                                          112, 112, 112, 1),
-                                                    ),
-                                                  )
-                                          ],
-                                        ),
-                                      )
-                                    : Container(),
-                              ],
-                            ),
-                          ),
-                        ),
-                        //SizedBox(height: 10),
-                        _addressSeen == null
-                            ? Padding(
-                                padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.4,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Theme.of(context).primaryColor,
-                                          width: 1.2,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(4.0),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey[400],
-                                            spreadRadius: 0.0,
-                                            offset: Offset(2.0, 2.0), //(x,y)
-                                            blurRadius: 4.0,
-                                          ),
-                                        ],
-                                      ),
-                                      child: RaisedButton(
-                                        color: Colors.white,
-                                        child: Text(
-                                          'Add Address',
-                                          style: TextStyle(
-                                            fontFamily: 'SourceSansProSB',
-                                            fontSize: 15,
-                                            color: Color.fromRGBO(
-                                                112, 112, 112, 1),
-                                          ),
-                                        ),
-                                        elevation: 2,
-                                        onPressed: () async {
-                                          final result =
-                                              await Navigator.of(context).push(
-                                                  addAddressScreenPageRoute());
-                                          setState(() {
-                                            if (result != null) {
-                                              _addressSeen = result;
-                                            }
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.4,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(4.0),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey[400],
-                                            spreadRadius: 0.0,
-                                            offset: Offset(2.0, 2.0), //(x,y)
-                                            blurRadius: 4.0,
-                                          ),
-                                        ],
-                                      ),
-                                      child: RaisedButton(
-                                        color: Theme.of(context).primaryColor,
-                                        child: Text(
-                                          'Select Address',
-                                          style: TextStyle(
-                                              fontFamily: 'SourceSansProSB',
-                                              color: Colors.white),
-                                        ),
-                                        onPressed: () async {
-                                          final result1 =
-                                              await selectAddress(context);
-                                          setState(() {
-                                            if (result1 != null) {
-                                              _addressSeen = result1;
-                                            }
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 10,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.4,
-                                      height: 40,
-                                      child: RaisedButton(
-                                        color: Colors.white,
-                                        child: Text(
-                                          'Pay Later',
-                                          style: TextStyle(
-                                              fontFamily: 'SourceSansProSB'),
-                                        ),
-                                        elevation: 2,
-                                        onPressed: _saveForm,
-                                        shape: RoundedRectangleBorder(
-                                          side: BorderSide(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.4,
-                                      height: 40,
-                                      child: RaisedButton(
-                                        color: Theme.of(context).primaryColor,
-                                        child: Text(
-                                          'Pay Now',
-                                          style: TextStyle(
-                                              fontFamily: 'SourceSansProSB',
-                                              color: Colors.white),
-                                        ),
-                                        onPressed: () => _razorPay(cart),
-                                      ),
-                                    ),
+                                          )
+                                        : Container(),
                                   ],
                                 ),
                               ),
-                      ],
-                    ),
+                            ),
+                            //SizedBox(height: 10),
+                            _addressSeen == null
+                                ? Padding(
+                                    padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.4,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              width: 1.2,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey[400],
+                                                spreadRadius: 0.0,
+                                                offset:
+                                                    Offset(2.0, 2.0), //(x,y)
+                                                blurRadius: 4.0,
+                                              ),
+                                            ],
+                                          ),
+                                          child: RaisedButton(
+                                            color: Colors.white,
+                                            child: Text(
+                                              'Add Address',
+                                              style: TextStyle(
+                                                fontFamily: 'SourceSansProSB',
+                                                fontSize: 15,
+                                                color: Color.fromRGBO(
+                                                    112, 112, 112, 1),
+                                              ),
+                                            ),
+                                            elevation: 2,
+                                            onPressed: () async {
+                                              final result = await Navigator.of(
+                                                      context)
+                                                  .push(
+                                                      addAddressScreenPageRoute());
+                                              setState(() {
+                                                if (result != null) {
+                                                  _addressSeen = result;
+                                                }
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.4,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey[400],
+                                                spreadRadius: 0.0,
+                                                offset:
+                                                    Offset(2.0, 2.0), //(x,y)
+                                                blurRadius: 4.0,
+                                              ),
+                                            ],
+                                          ),
+                                          child: RaisedButton(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            child: Text(
+                                              'Select Address',
+                                              style: TextStyle(
+                                                  fontFamily: 'SourceSansProSB',
+                                                  color: Colors.white),
+                                            ),
+                                            onPressed: () async {
+                                              final result1 =
+                                                  await selectAddress(context);
+                                              setState(() {
+                                                if (result1 != null) {
+                                                  _addressSeen = result1;
+                                                }
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 20,
+                                      vertical: 10,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.4,
+                                          height: 40,
+                                          child: RaisedButton(
+                                            color: Colors.white,
+                                            child: Text(
+                                              'Pay Later',
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                      'SourceSansProSB'),
+                                            ),
+                                            elevation: 2,
+                                            onPressed: _saveForm,
+                                            shape: RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.4,
+                                          height: 40,
+                                          child: RaisedButton(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            child: Text(
+                                              'Pay Now',
+                                              style: TextStyle(
+                                                  fontFamily: 'SourceSansProSB',
+                                                  color: Colors.white),
+                                            ),
+                                            onPressed: () => _razorPay(cart),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                )
+              : NoInternetScreen(retry),
     );
   }
 }
