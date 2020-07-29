@@ -192,6 +192,21 @@ class Orders with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<List> couponcode(String input) async {
+    final url =
+        'http://stage.protto.in/api/prina/couponcode.php?coupon_code=$input';
+    final response = await http.get(url);
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedData['Data'] == null) {
+      throw HttpException('Invalid Voucher Code');
+    }
+    return [
+      extractedData['Data']['min_cart_value'],
+      extractedData['Data']['percent_discount'],
+      extractedData['Data']['max_discount'],
+    ];
+  }
+
   Future<OrderItem> fetchbooking(String bookingId, OrderItem order) async {
     final url =
         'http://stage.protto.in/api/shivangi/fetchbooking.php?booking_id=$bookingId';
@@ -234,6 +249,7 @@ class Orders with ChangeNotifier {
     var minute = date.minute;
     var second = date.second;
     var millisecond = date.millisecond;
+    var specialRequest = order.specialRequest.replaceAll("'", "\'");
     await http.patch(url1,
         body: json.encode({
           'cid': userId,
@@ -253,7 +269,7 @@ class Orders with ChangeNotifier {
         'paid': paid,
         'date': order.date,
         'timestamp': order.time,
-        'special_request': order.specialRequest,
+        'special_request': specialRequest,
         'delivery_type': order.deliveryType,
         'make': activeBike.brand,
         'model': activeBike.model,
@@ -391,6 +407,7 @@ class Orders with ChangeNotifier {
     await http.patch(url2,
         body: json.encode({
           'data': data,
+          'user': '1',
         }));
     var index = _items.indexWhere((order) => order.bookingId == bookingId);
     var item = _items[index];

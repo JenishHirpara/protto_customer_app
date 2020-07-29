@@ -90,59 +90,62 @@ class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
         backgroundColor: Color.fromRGBO(250, 250, 250, 1),
         elevation: 0,
       ),
-      body: Column(
-        children: <Widget>[
-          ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-              value: addresses.items[i],
-              child: Column(
-                children: <Widget>[
-                  SavedAddressesItem(),
-                  Divider(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+                value: addresses.items[i],
+                child: Column(
+                  children: <Widget>[
+                    SavedAddressesItem(),
+                    Divider(),
+                  ],
+                ),
+              ),
+              itemCount: addresses.items.length,
+            ),
+            SizedBox(height: 20),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.4,
+              height: 40,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Theme.of(context).primaryColor,
+                  width: 1.2,
+                ),
+                borderRadius: BorderRadius.circular(4.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey[400],
+                    spreadRadius: 0.0,
+                    offset: Offset(2.0, 2.0), //(x,y)
+                    blurRadius: 4.0,
+                  ),
                 ],
               ),
-            ),
-            itemCount: addresses.items.length,
-          ),
-          SizedBox(height: 20),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.4,
-            height: 40,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Theme.of(context).primaryColor,
-                width: 1.2,
-              ),
-              borderRadius: BorderRadius.circular(4.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey[400],
-                  spreadRadius: 0.0,
-                  offset: Offset(2.0, 2.0), //(x,y)
-                  blurRadius: 4.0,
+              child: RaisedButton(
+                elevation: 0,
+                color: Color.fromRGBO(250, 250, 250, 1),
+                child: Text(
+                  'Add Address',
+                  style: TextStyle(
+                    fontFamily: 'SourceSansProSB',
+                    fontSize: 15,
+                    color: Color.fromRGBO(112, 112, 112, 0.7),
+                  ),
                 ),
-              ],
-            ),
-            child: RaisedButton(
-              elevation: 0,
-              color: Color.fromRGBO(250, 250, 250, 1),
-              child: Text(
-                'Add Address',
-                style: TextStyle(
-                  fontFamily: 'SourceSansProSB',
-                  fontSize: 15,
-                  color: Color.fromRGBO(112, 112, 112, 0.7),
-                ),
+                onPressed: () {
+                  Navigator.of(context).push(addAddressScreenPageRoute());
+                },
               ),
-              onPressed: () {
-                Navigator.of(context).push(addAddressScreenPageRoute());
-              },
             ),
-          ),
-        ],
+            SizedBox(height: 15),
+          ],
+        ),
       ),
     );
   }

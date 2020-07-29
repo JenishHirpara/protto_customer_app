@@ -271,7 +271,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     child: Column(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          padding: EdgeInsets.symmetric(horizontal: 5),
                           child: Column(
                             children: <Widget>[
                               Row(
@@ -285,8 +285,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                               ? _first.thoroughfare
                                               : _first.locality,
                                           style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                   FlatButton(
