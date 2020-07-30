@@ -59,10 +59,15 @@ class Addresses with ChangeNotifier {
 
   Future<void> addAddress(Address newAddress) async {
     final url = 'http://stage.protto.in/api/shivangi/addresses.php/$userId';
-    var landmark = newAddress.landmark.replaceAll("'", "\'");
-    var saveas = newAddress.saveas.replaceAll("'", "\'");
-    var address = newAddress.address.replaceAll("'", "\'");
-    var flat = newAddress.flat.replaceAll("'", "\'");
+    var landmark = newAddress.landmark.replaceAll("'", "");
+    var saveas = newAddress.saveas.replaceAll("'", "");
+    var address = newAddress.address.replaceAll("'", "");
+    var flat = newAddress.flat.replaceAll("'", "");
+    print(userId);
+    print(landmark);
+    print(saveas);
+    print(address);
+    print(flat);
     final response = await http.post(url,
         body: json.encode({
           'category': saveas,
@@ -70,19 +75,20 @@ class Addresses with ChangeNotifier {
           'flat': flat,
           'lat': newAddress.latitude,
           'lon': newAddress.longitude,
-          'landmark': landmark,
+          'landmark': landmark
         }));
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    print(extractedData);
     _items.insert(
       0,
       Address(
-        saveas: newAddress.saveas,
-        flat: newAddress.flat,
-        address: newAddress.address,
+        saveas: saveas,
+        flat: flat,
+        address: address,
         latitude: newAddress.latitude,
         longitude: newAddress.longitude,
         id: extractedData['address_id'],
-        landmark: newAddress.landmark,
+        landmark: landmark,
       ),
     );
     notifyListeners();

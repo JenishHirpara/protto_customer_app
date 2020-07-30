@@ -249,7 +249,7 @@ class Orders with ChangeNotifier {
     var minute = date.minute;
     var second = date.second;
     var millisecond = date.millisecond;
-    var specialRequest = order.specialRequest.replaceAll("'", "\'");
+    var specialRequest = order.specialRequest.replaceAll("'", "");
     await http.patch(url1,
         body: json.encode({
           'cid': userId,
