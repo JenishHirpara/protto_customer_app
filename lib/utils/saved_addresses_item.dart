@@ -14,7 +14,7 @@ class SavedAddressesItem extends StatelessWidget {
           style: TextStyle(fontFamily: 'Montserrat'),
         ),
         content: Text(
-          'Are you sure you want to delete ${address.saveas}',
+          'Are you sure you want to delete ${address.saveas}?',
           style: TextStyle(fontFamily: 'SourceSansPro'),
         ),
         actions: <Widget>[

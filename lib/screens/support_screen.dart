@@ -437,123 +437,143 @@ class _SupportScreenState extends State<SupportScreen> {
                                                       fontFamily: 'Montserrat'),
                                                 ),
                                                 actions: <Widget>[
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: <Widget>[
-                                                      Center(
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Container(
-                                                            height: 40,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                1,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              border:
-                                                                  Border.all(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                width: 1,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          4.0),
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                  color: Colors
-                                                                      .grey,
-                                                                  spreadRadius:
-                                                                      0.0,
-                                                                  offset:
-                                                                      Offset(
-                                                                          2.0,
-                                                                          2.0),
-                                                                  blurRadius:
-                                                                      3.0,
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .fromLTRB(
+                                                        30, 0, 30, 20),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: <Widget>[
+                                                        Center(
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    8, 0, 8, 8),
+                                                            child: Container(
+                                                              height: 50,
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  1,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .primaryColor,
+                                                                  width: 1,
                                                                 ),
-                                                              ],
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            4.0),
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                    spreadRadius:
+                                                                        0.0,
+                                                                    offset:
+                                                                        Offset(
+                                                                            2.0,
+                                                                            2.0),
+                                                                    blurRadius:
+                                                                        3.0,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              child: FlatButton(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  onPressed: () =>
+                                                                      _launchCaller(
+                                                                          'tel:+919136231963'),
+                                                                  child: Text(
+                                                                      'About New Booking ',
+                                                                      style: TextStyle(
+                                                                          color: Color.fromRGBO(
+                                                                              128,
+                                                                              128,
+                                                                              128,
+                                                                              1),
+                                                                          fontFamily:
+                                                                              'SourceSansProSB'))),
                                                             ),
-                                                            child: FlatButton(
-                                                                color: Colors
-                                                                    .white,
-                                                                onPressed: () =>
-                                                                    _launchCaller(
-                                                                        'tel:+919136231963'),
-                                                                child: Text(
-                                                                    'About New Booking ',
-                                                                    style: TextStyle(
-                                                                        fontFamily:
-                                                                            'SourceSansProSB'))),
                                                           ),
                                                         ),
-                                                      ),
-                                                      Center(
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Container(
-                                                            height: 40,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                1,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              border:
-                                                                  Border.all(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                width: 1,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          4.0),
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                  color: Colors
-                                                                      .grey,
-                                                                  spreadRadius:
-                                                                      0.0,
-                                                                  offset:
-                                                                      Offset(
-                                                                          2.0,
-                                                                          2.0),
-                                                                  blurRadius:
-                                                                      3.0,
+                                                        Center(
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    8,
+                                                                    10,
+                                                                    8,
+                                                                    8),
+                                                            child: Container(
+                                                              height: 50,
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  1,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .primaryColor,
+                                                                  width: 1,
                                                                 ),
-                                                              ],
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            4.0),
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                    spreadRadius:
+                                                                        0.0,
+                                                                    offset:
+                                                                        Offset(
+                                                                            2.0,
+                                                                            2.0),
+                                                                    blurRadius:
+                                                                        3.0,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              child: FlatButton(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  onPressed: () =>
+                                                                      _launchCaller(
+                                                                          'tel:+919136863480'),
+                                                                  child: Text(
+                                                                      'About Current Booking ',
+                                                                      style: TextStyle(
+                                                                          color: Color.fromRGBO(
+                                                                              128,
+                                                                              128,
+                                                                              128,
+                                                                              1),
+                                                                          fontFamily:
+                                                                              'SourceSansProSB'))),
                                                             ),
-                                                            child: FlatButton(
-                                                                color: Colors
-                                                                    .white,
-                                                                onPressed: () =>
-                                                                    _launchCaller(
-                                                                        'tel:+919136863480'),
-                                                                child: Text(
-                                                                    'About Current Booking ',
-                                                                    style: TextStyle(
-                                                                        fontFamily:
-                                                                            'SourceSansProSB'))),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 ],
                                               );
@@ -587,119 +607,10 @@ class _SupportScreenState extends State<SupportScreen> {
                                   ),
                                 ),
                               ),
-                              /*Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4.0),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey,
-                                          spreadRadius: 0.0,
-                                          offset: Offset(2.0, 2.0),
-                                          blurRadius: 6.0,
-                                        ),
-                                      ],
-                                    ),
-                                    //color: Theme.of(context).primaryColor,
-                                    height: 50,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    child: FlatButton(
-                                      onPressed: () =>
-                                          _launchWhatsApp('+919136863480'),
-                                      color: orangeColor,
-                                      child: Center(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Icon(
-                                              Icons.chat,
-                                              color: Colors.white,
-                                            ),
-                                            Text(
-                                              'Chat',
-                                              style: TextStyle(
-                                                fontFamily: 'SourceSansProSB',
-                                                color: Colors.white,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),*/
                             ],
                           ),
                           Column(
                             children: <Widget>[
-                              /*Text(
-                                'New Booking',
-                                style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4.0),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey,
-                                          spreadRadius: 0.0,
-                                          offset: Offset(2.0, 2.0),
-                                          blurRadius: 6.0,
-                                        ),
-                                      ],
-                                    ),
-                                    //  color: Theme.of(context).primaryColor,
-                                    height: 50,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    child: FlatButton(
-                                      onPressed: () =>
-                                          _launchCaller('tel:+919136231963'),
-                                      color: orangeColor,
-                                      child: Center(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Icon(
-                                              Icons.call,
-                                              color: Colors.white,
-                                            ),
-                                            Text(
-                                              'Call',
-                                              style: TextStyle(
-                                                fontFamily: 'SourcsSansProSB',
-                                                color: Colors.white,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),*/
                               Center(
                                 child: Padding(
                                   padding: EdgeInsets.all(10),
@@ -733,123 +644,143 @@ class _SupportScreenState extends State<SupportScreen> {
                                                       fontFamily: 'Montserrat'),
                                                 ),
                                                 actions: <Widget>[
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: <Widget>[
-                                                      Center(
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Container(
-                                                            height: 40,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                1,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              border:
-                                                                  Border.all(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                width: 1,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          4.0),
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                  color: Colors
-                                                                      .grey,
-                                                                  spreadRadius:
-                                                                      0.0,
-                                                                  offset:
-                                                                      Offset(
-                                                                          2.0,
-                                                                          2.0),
-                                                                  blurRadius:
-                                                                      3.0,
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .fromLTRB(
+                                                        30, 0, 30, 20),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: <Widget>[
+                                                        Center(
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    8, 0, 8, 8),
+                                                            child: Container(
+                                                              height: 50,
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  1,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .primaryColor,
+                                                                  width: 1,
                                                                 ),
-                                                              ],
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            4.0),
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                    spreadRadius:
+                                                                        0.0,
+                                                                    offset:
+                                                                        Offset(
+                                                                            2.0,
+                                                                            2.0),
+                                                                    blurRadius:
+                                                                        3.0,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              child: FlatButton(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  onPressed: () =>
+                                                                      _launchWhatsApp(
+                                                                          '+919136231963'),
+                                                                  child: Text(
+                                                                      'About New Booking ',
+                                                                      style: TextStyle(
+                                                                          color: Color.fromRGBO(
+                                                                              128,
+                                                                              128,
+                                                                              128,
+                                                                              1),
+                                                                          fontFamily:
+                                                                              'SourceSansProSB'))),
                                                             ),
-                                                            child: FlatButton(
-                                                                color: Colors
-                                                                    .white,
-                                                                onPressed: () =>
-                                                                    _launchWhatsApp(
-                                                                        '+919136231963'),
-                                                                child: Text(
-                                                                    'About New Booking ',
-                                                                    style: TextStyle(
-                                                                        fontFamily:
-                                                                            'SourceSansProSB'))),
                                                           ),
                                                         ),
-                                                      ),
-                                                      Center(
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Container(
-                                                            height: 40,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                1,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              border:
-                                                                  Border.all(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                width: 1,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          4.0),
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                  color: Colors
-                                                                      .grey,
-                                                                  spreadRadius:
-                                                                      0.0,
-                                                                  offset:
-                                                                      Offset(
-                                                                          2.0,
-                                                                          2.0),
-                                                                  blurRadius:
-                                                                      6.0,
+                                                        Center(
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    8,
+                                                                    10,
+                                                                    8,
+                                                                    8),
+                                                            child: Container(
+                                                              height: 50,
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  1,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .primaryColor,
+                                                                  width: 1,
                                                                 ),
-                                                              ],
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            4.0),
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                    spreadRadius:
+                                                                        0.0,
+                                                                    offset:
+                                                                        Offset(
+                                                                            2.0,
+                                                                            2.0),
+                                                                    blurRadius:
+                                                                        6.0,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              child: FlatButton(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  onPressed: () =>
+                                                                      _launchWhatsApp(
+                                                                          '+919136863480'),
+                                                                  child: Text(
+                                                                      'About Current Booking ',
+                                                                      style: TextStyle(
+                                                                          color: Color.fromRGBO(
+                                                                              128,
+                                                                              128,
+                                                                              128,
+                                                                              1),
+                                                                          fontFamily:
+                                                                              'SourceSansProSB'))),
                                                             ),
-                                                            child: FlatButton(
-                                                                color: Colors
-                                                                    .white,
-                                                                onPressed: () =>
-                                                                    _launchWhatsApp(
-                                                                        '+919136863480'),
-                                                                child: Text(
-                                                                    'About Current Booking ',
-                                                                    style: TextStyle(
-                                                                        fontFamily:
-                                                                            'SourceSansProSB'))),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 ],
                                               );
