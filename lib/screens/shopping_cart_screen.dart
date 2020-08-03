@@ -349,7 +349,10 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
             ),
             content: Text(
               'Please add a date to your current order',
-              style: TextStyle(fontFamily: 'SourceSansPro'),
+              style: TextStyle(
+                fontFamily: 'SourceSansPro',
+                color: Color.fromRGBO(128, 128, 128, 1),
+              ),
             ),
             actions: <Widget>[
               FlatButton(
@@ -376,7 +379,10 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
             ),
             content: Text(
               'Please add atleast one service to your current order',
-              style: TextStyle(fontFamily: 'SourceSansPro'),
+              style: TextStyle(
+                fontFamily: 'SourceSansPro',
+                color: Color.fromRGBO(128, 128, 128, 1),
+              ),
             ),
             actions: <Widget>[
               FlatButton(
@@ -587,11 +593,17 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
           return AlertDialog(
             title: Text(
               'No date added',
-              style: TextStyle(fontFamily: 'Montserrat'),
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                color: Color.fromRGBO(128, 128, 128, 1),
+              ),
             ),
             content: Text(
               'Please add a date to your current order',
-              style: TextStyle(fontFamily: 'SourceSansPro'),
+              style: TextStyle(
+                fontFamily: 'SourceSansPro',
+                color: Color.fromRGBO(128, 128, 128, 1),
+              ),
             ),
             actions: <Widget>[
               FlatButton(
@@ -614,11 +626,17 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
           return AlertDialog(
             title: Text(
               'No service added',
-              style: TextStyle(fontFamily: 'Montserrat'),
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                color: Color.fromRGBO(128, 128, 128, 1),
+              ),
             ),
             content: Text(
               'Please add atleast one service to your current order',
-              style: TextStyle(fontFamily: 'SourceSansPro'),
+              style: TextStyle(
+                fontFamily: 'SourceSansPro',
+                color: Color.fromRGBO(128, 128, 128, 1),
+              ),
             ),
             actions: <Widget>[
               FlatButton(
@@ -909,7 +927,12 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       builder: (ctx) {
         return AlertDialog(
           title: Text(
-              'Coupon code activated. Minimum cart value should should be ₹ $minCartValue to enable this coupon'),
+            'Coupon code activated. Minimum cart value should should be ₹ $minCartValue to enable this coupon',
+            style: TextStyle(
+              color: Color.fromRGBO(128, 128, 128, 1),
+              fontFamily: 'SourceSansProSB',
+            ),
+          ),
           actions: <Widget>[
             FlatButton(
               onPressed: () {
@@ -1138,7 +1161,14 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                       context: context,
                                       builder: (ctx) {
                                         return AlertDialog(
-                                          title: Text(error.message),
+                                          title: Text(
+                                            error.message,
+                                            style: TextStyle(
+                                              fontFamily: 'SourceSansProSB',
+                                              color: Color.fromRGBO(
+                                                  128, 128, 128, 1),
+                                            ),
+                                          ),
                                           actions: <Widget>[
                                             FlatButton(
                                               onPressed: () {

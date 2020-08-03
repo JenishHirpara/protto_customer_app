@@ -132,13 +132,13 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
       context: context,
       builder: (ctx) => Dialog(
         child: Container(
-          height: 245,
+          height: 225,
           child: Column(
             children: <Widget>[
               Align(
                 alignment: Alignment.topRight,
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 10, 20, 0),
+                  margin: EdgeInsets.fromLTRB(0, 10, 10, 0),
                   child: InkWell(
                     child: Icon(
                       Icons.clear,
@@ -151,7 +151,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                 ),
               ),
               Container(
-                height: 160,
+                height: 120,
                 padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -241,43 +241,6 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                       ],
                     ),
                     SizedBox(height: 12),
-                    Center(
-                      child: Container(
-                        width: 150,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).primaryColor,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(4.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              spreadRadius: 0.0,
-                              offset: Offset(2.0, 2.0),
-                              blurRadius: 6.0,
-                            ),
-                          ],
-                        ),
-                        child: RaisedButton(
-                          color: Colors.white,
-                          child: Text(
-                            'Manage',
-                            style: TextStyle(
-                              fontFamily: 'SourceSansProSB',
-                              color: Color.fromRGBO(100, 100, 100, 1),
-                            ),
-                          ),
-                          elevation: 0,
-                          onPressed: () {
-                            Navigator.of(ctx).pop();
-                            Navigator.of(context).push(myBikesRouteBuilder());
-                          },
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 12),
                   ],
                 ),
               ),
@@ -288,25 +251,81 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                 thickness: 1,
                 height: 0,
               ),
-              Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                  child: FlatButton(
-                    child: Text(
-                      'Add New Bike',
-                      style: TextStyle(
-                        fontFamily: 'SourceSansProSB',
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 16,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    child: Container(
+                      width: 140,
+                      height: 35,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Theme.of(context).primaryColor,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(4.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            spreadRadius: 0.0,
+                            offset: Offset(2.0, 2.0),
+                            blurRadius: 6.0,
+                          ),
+                        ],
+                      ),
+                      child: FlatButton(
+                        color: Colors.white,
+                        child: Text(
+                          'Add New Bike',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansProSB',
+                            color: Color.fromRGBO(128, 128, 128, 1),
+                            fontSize: 14,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                          Navigator.of(context).push(newBikeRouteBuilder());
+                        },
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.of(ctx).pop();
-                      Navigator.of(context).push(newBikeRouteBuilder());
-                    },
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    child: Container(
+                      width: 140,
+                      height: 35,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            spreadRadius: 0.0,
+                            offset: Offset(2.0, 2.0),
+                            blurRadius: 6.0,
+                          ),
+                        ],
+                      ),
+                      child: RaisedButton(
+                        color: Theme.of(context).primaryColor,
+                        child: Text(
+                          'Manage',
+                          style: TextStyle(
+                            fontFamily: 'SourceSansProSB',
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                        elevation: 0,
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                          Navigator.of(context).push(myBikesRouteBuilder());
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
