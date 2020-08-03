@@ -59,7 +59,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             horizontal: 10,
           ),
           width: double.infinity,
-          height: 175,
+          height: 200,
           child: Column(
             children: <Widget>[
               Row(
@@ -239,10 +239,10 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 25),
               Container(
-                width: 120,
-                height: 40,
+                width: 150,
+                height: 50,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4.0),
                 ),

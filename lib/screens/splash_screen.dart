@@ -33,7 +33,7 @@ class SplashScreen extends StatelessWidget {
         height: (mediaQuery.size.height - mediaQuery.padding.top) * 0.45,
       ),
       Text(
-        'Loading...',
+        'Loading....',
         style: TextStyle(
           fontFamily: 'SourceSansProSB',
           fontSize: 25,

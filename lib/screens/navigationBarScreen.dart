@@ -138,7 +138,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
               Align(
                 alignment: Alignment.topRight,
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(0, 10, 10, 0),
+                  margin: EdgeInsets.fromLTRB(0, 10, 20, 0),
                   child: InkWell(
                     child: Icon(
                       Icons.clear,
@@ -152,7 +152,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
               ),
               Container(
                 height: 160,
-                padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
