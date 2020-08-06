@@ -37,36 +37,60 @@ class _MyBikesState extends State<MyBikes> {
     );
   }
 
-  Future _handleDelete(BuildContext originalcontext, Bike bike) {
-    return showDialog(
-      context: originalcontext,
-      builder: (context) => AlertDialog(
-        title: Text('Delete ${bike.brand} ${bike.model}?'),
-        content: Text('Are you sure you want to delete this bike?'),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('No'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+  Future<void> _handleDelete(BuildContext originalcontext, Bike bike) {
+    if (bike.active == '1') {
+      return showDialog(
+        context: originalcontext,
+        builder: (context) => AlertDialog(
+          title: Text(
+            'Request not possible',
+            style: TextStyle(fontFamily: 'Montserrat'),
           ),
-          FlatButton(
-            child: Text('Yes'),
-            onPressed: () async {
-              setState(() {
-                _isLoading = true;
-              });
-              await Provider.of<Bikes>(originalcontext, listen: false)
-                  .deleteBike(bike.id);
-              setState(() {
-                _isLoading = false;
-              });
-              Navigator.of(context).pop();
-            },
+          content: Text(
+            'This bike is associated with a booking therefore cannot be deleted',
+            style: TextStyle(fontFamily: 'SourceSansPro'),
           ),
-        ],
-      ),
-    );
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Okay'),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return showDialog(
+        context: originalcontext,
+        builder: (context) => AlertDialog(
+          title: Text('Delete ${bike.brand} ${bike.model}?'),
+          content: Text('Are you sure you want to delete this bike?'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('Yes'),
+              onPressed: () async {
+                setState(() {
+                  _isLoading = true;
+                });
+                await Provider.of<Bikes>(originalcontext, listen: false)
+                    .deleteBike(bike.id);
+                setState(() {
+                  _isLoading = false;
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   Border getBorder(BuildContext context, Bike bike) {
@@ -223,8 +247,35 @@ class _MyBikesState extends State<MyBikes> {
                                           color: Colors.grey,
                                         ),
                                         onPressed: () {
-                                          Navigator.of(context)
-                                              .push(editBikeRouteBuilder(bike));
+                                          if (bike.active == '1') {
+                                            showDialog(
+                                              context: context,
+                                              builder: (ctx) => AlertDialog(
+                                                title: Text(
+                                                  'Request not possible',
+                                                  style: TextStyle(
+                                                      fontFamily: 'Montserrat'),
+                                                ),
+                                                content: Text(
+                                                  'This bike is associated with a booking therefore cannot be edited',
+                                                  style: TextStyle(
+                                                      fontFamily:
+                                                          'SourceSansPro'),
+                                                ),
+                                                actions: <Widget>[
+                                                  FlatButton(
+                                                    onPressed: () {
+                                                      Navigator.of(ctx).pop();
+                                                    },
+                                                    child: Text('Okay'),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          } else {
+                                            Navigator.of(context).push(
+                                                editBikeRouteBuilder(bike));
+                                          }
                                         },
                                       ),
                                     ],

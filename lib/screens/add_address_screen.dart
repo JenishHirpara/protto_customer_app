@@ -24,7 +24,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   final focusNode2 = FocusNode();
   final focusNode3 = FocusNode();
   var _showFull = true;
+  var _isInit = true;
   var _isLoading = true;
+  var _isLoading1 = true;
+  List<String> _pin;
+  String pin;
 
   var _address = Address(
     id: DateTime.now().toString(),
@@ -34,6 +38,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     longitude: '',
     landmark: '',
     saveas: '',
+    active: '0',
   );
 
   void _saveForm() async {
@@ -42,8 +47,18 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       return;
     }
     _form.currentState.save();
-
-    await Provider.of<Addresses>(context, listen: false).addAddress(_address);
+    var id = await Provider.of<Addresses>(context, listen: false)
+        .addAddress(_address);
+    _address = Address(
+      address: _address.address,
+      flat: _address.flat,
+      id: id,
+      landmark: _address.landmark,
+      latitude: _address.latitude,
+      longitude: _address.longitude,
+      saveas: _address.landmark,
+      active: _address.active,
+    );
     Navigator.of(context).pop(_address);
   }
 
@@ -90,9 +105,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     _addresses =
         await geo.Geocoder.local.findAddressesFromCoordinates(_coordinates);
     _first = _addresses[0];
+    pin = _first.postalCode;
     setState(() {
       _textController.text = _first.addressLine.toString();
-      _isLoading = false;
+      _isLoading1 = false;
     });
   }
 
@@ -106,7 +122,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
   void _updatePosition() async {
     setState(() {
-      _isLoading = true;
+      _isLoading1 = true;
     });
     var latitude = _position.target.latitude == null
         ? _locationData.latitude
@@ -118,10 +134,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     _addresses =
         await geo.Geocoder.local.findAddressesFromCoordinates(_coordinates);
     _first = _addresses[0];
-
+    pin = _first.postalCode;
     setState(() {
       _textController.text = _first.addressLine.toString();
-      _isLoading = false;
+      _isLoading1 = false;
     });
   }
 
@@ -154,6 +170,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       _addresses =
           await geo.Geocoder.local.findAddressesFromCoordinates(_coordinates);
       _first = _addresses[0];
+      pin = _first.postalCode;
       setState(() {
         _textController.text = _first.addressLine.toString();
       });
@@ -164,6 +181,19 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     setState(() {
       _showFull = !_showFull;
     });
+  }
+
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      await Provider.of<Addresses>(context, listen: false).getpin();
+      _pin = Provider.of<Addresses>(context, listen: false).pincodes;
+      setState(() {
+        _isLoading = false;
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   @override
@@ -190,6 +220,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               apiKey: kGoogleApiKey,
               language: "en",
               components: [web.Component(web.Component.country, "in")],
+              types: ["establishment"],
               mode: Mode.overlay,
             );
             displayPrediction(p);
@@ -211,290 +242,344 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     );
     return Scaffold(
       appBar: _appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Stack(
-              children: <Widget>[
-                Container(
-                  width: double.infinity,
-                  height: (MediaQuery.of(context).size.height -
-                          _appBar.preferredSize.height -
-                          MediaQuery.of(context).padding.top) *
-                      (_showFull ? 0.75 : 0.5),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+      body: _isLoading
+          ? Center(
+              child: Image.asset(
+                'assets/images/loader.gif',
+                fit: BoxFit.cover,
+                height: 85,
+                width: 85,
+              ),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                        width: double.infinity,
+                        height: (MediaQuery.of(context).size.height -
+                                _appBar.preferredSize.height -
+                                MediaQuery.of(context).padding.top) *
+                            (_showFull ? 0.65 : 0.5),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                        ),
+                        child: GoogleMap(
+                          onMapCreated: (GoogleMapController controller) {
+                            _mapController = controller;
+                          },
+                          myLocationEnabled: true,
+                          initialCameraPosition: CameraPosition(
+                            target: LatLng(19.0760, 72.8777),
+                            zoom: 12.0,
+                            bearing: 15,
+                            tilt: 75,
+                          ),
+                          onCameraMoveStarted: _showFull ? () {} : _setFull,
+                          onTap: _showFull ? (_) {} : (_) => _setFull(),
+                          onCameraMove: ((position) =>
+                              _currentLocation(position)),
+                          onCameraIdle: _updatePosition,
+                        ),
+                      ),
+                      Positioned(
+                        top: (MediaQuery.of(context).size.height -
+                                _appBar.preferredSize.height -
+                                MediaQuery.of(context).padding.top -
+                                80) *
+                            (_showFull ? 0.65 : 0.5) /
+                            2,
+                        right: (MediaQuery.of(context).size.width - 40) / 2,
+                        child: Tooltip(
+                          message: 'Move to adjust',
+                          child: new Icon(
+                            Icons.person_pin_circle,
+                            size: 40,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  child: GoogleMap(
-                    onMapCreated: (GoogleMapController controller) {
-                      _mapController = controller;
-                    },
-                    myLocationEnabled: true,
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(19.0760, 72.8777),
-                      zoom: 12.0,
-                      bearing: 15,
-                      tilt: 75,
-                    ),
-                    onCameraMoveStarted: _showFull ? () {} : _setFull,
-                    onTap: _showFull ? (_) {} : (_) => _setFull(),
-                    onCameraMove: ((position) => _currentLocation(position)),
-                    onCameraIdle: _updatePosition,
-                  ),
-                ),
-                Positioned(
-                  top: (MediaQuery.of(context).size.height -
-                          _appBar.preferredSize.height -
-                          MediaQuery.of(context).padding.top -
-                          80) *
-                      (_showFull ? 0.75 : 0.5) /
-                      2,
-                  right: (MediaQuery.of(context).size.width - 40) / 2,
-                  child: Tooltip(
-                    message: 'Move to adjust',
-                    child: new Icon(
-                      Icons.person_pin_circle,
-                      size: 40,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            _showFull
-                ? Container(
-                    height: (MediaQuery.of(context).size.height -
-                            _appBar.preferredSize.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.25,
-                    width: double.infinity,
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
+                  _showFull
+                      ? Container(
+                          height: (MediaQuery.of(context).size.height -
+                                  _appBar.preferredSize.height -
+                                  MediaQuery.of(context).padding.top) *
+                              0.35,
+                          width: double.infinity,
+                          padding: EdgeInsets.all(10),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  _isLoading
-                                      ? CircularProgressIndicator()
-                                      : Text(
-                                          _first.thoroughfare != null
-                                              ? _first.thoroughfare
-                                              : _first.locality,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        _isLoading1
+                                            ? Expanded(
+                                                flex: 8,
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    CircularProgressIndicator(),
+                                                    Container(),
+                                                  ],
+                                                ),
+                                              )
+                                            : Expanded(
+                                                flex: 8,
+                                                child: Text(
+                                                  _first.thoroughfare != null
+                                                      ? _first.thoroughfare
+                                                      : _first.featureName,
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                  softWrap: true,
+                                                ),
+                                              ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: FlatButton(
+                                            onPressed: () async {
+                                              web.Prediction p =
+                                                  await PlacesAutocomplete.show(
+                                                context: context,
+                                                apiKey: kGoogleApiKey,
+                                                language: "en",
+                                                components: [
+                                                  web.Component(
+                                                    web.Component.country,
+                                                    "in",
+                                                  )
+                                                ],
+                                                mode: Mode.overlay,
+                                              );
+                                              displayPrediction(p);
+                                            },
+                                            child: Text(
+                                              'CHANGE',
+                                              style: TextStyle(
+                                                fontFamily: 'SourceSansProSB',
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                  FlatButton(
-                                    onPressed: () async {
-                                      web.Prediction p =
-                                          await PlacesAutocomplete.show(
-                                        context: context,
-                                        apiKey: kGoogleApiKey,
-                                        language: "en",
-                                        components: [
-                                          web.Component(
-                                              web.Component.country, "in")
-                                        ],
-                                        mode: Mode.overlay,
-                                      );
-                                      displayPrediction(p);
-                                    },
-                                    child: Text(
-                                      'CHANGE',
-                                      style: TextStyle(
-                                        fontFamily: 'SourceSansProSB',
-                                        color: Theme.of(context).primaryColor,
+                                      ],
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        _textController.text,
+                                        style: TextStyle(
+                                          fontFamily: 'SourceSansPro',
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                              Text(
-                                _textController.text,
-                                style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
+                              SizedBox(height: 14),
+                              Container(
+                                height: 40,
+                                width: double.infinity,
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(3.0),
+                                  ),
+                                  onPressed:
+                                      _pin.contains(pin) ? _setFull : () {},
+                                  child: Text(
+                                    _pin.contains(pin)
+                                        ? 'Next'
+                                        : 'Out Of Coverage',
+                                    style: TextStyle(
+                                        fontFamily: 'SourceSansProSB',
+                                        color: Colors.white),
+                                  ),
+                                  color: _pin.contains(pin)
+                                      ? Theme.of(context).primaryColor
+                                      : Colors.grey,
+                                  elevation: _pin.contains(pin) ? 5 : 0,
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                        SizedBox(height: 14),
-                        Container(
-                          height: 40,
-                          width: double.infinity,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(3.0),
-                            ),
-                            onPressed: _setFull,
-                            child: Text(
-                              'Next',
-                              style: TextStyle(
-                                  fontFamily: 'SourceSansProSB',
-                                  color: Colors.white),
-                            ),
-                            color: Theme.of(context).primaryColor,
-                            elevation: 5,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                : Container(
-                    color: Colors.white,
-                    padding: EdgeInsets.all(20),
-                    height: (MediaQuery.of(context).size.height -
-                            _appBar.preferredSize.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.5,
-                    child: Form(
-                      key: _form,
-                      child: ListView(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        children: <Widget>[
-                          Text(
-                            'FLAT, FLOOR, BUILDING NAME',
-                            style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              color: Color.fromRGBO(112, 112, 112, 1),
-                            ),
-                          ),
-                          TextFormField(
-                            textInputAction: TextInputAction.next,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please provide flat, floor and building name';
-                              }
-                              return null;
-                            },
-                            onFieldSubmitted: (_) =>
-                                FocusScope.of(context).requestFocus(focusNode2),
-                            onSaved: (value) {
-                              _address = Address(
-                                id: _address.id,
-                                address: _first.addressLine,
-                                flat: value,
-                                landmark: _address.landmark,
-                                saveas: _address.saveas,
-                                latitude: _locationData.latitude.toString(),
-                                longitude: _locationData.longitude.toString(),
-                              );
-                            },
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            'LANDMARK',
-                            style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              color: Color.fromRGBO(112, 112, 112, 1),
-                            ),
-                          ),
-                          TextFormField(
-                            textInputAction: TextInputAction.next,
-                            focusNode: focusNode2,
-                            onFieldSubmitted: (_) =>
-                                FocusScope.of(context).requestFocus(focusNode3),
-                            onSaved: (value) {
-                              _address = Address(
-                                id: _address.id,
-                                address: _address.address,
-                                landmark: value,
-                                saveas: _address.saveas,
-                                flat: _address.flat,
-                                latitude: _locationData.latitude.toString(),
-                                longitude: _locationData.longitude.toString(),
-                              );
-                            },
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            'SAVE AS',
-                            style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              color: Color.fromRGBO(112, 112, 112, 1),
-                            ),
-                          ),
-                          TextFormField(
-                            textInputAction: TextInputAction.done,
-                            focusNode: focusNode3,
-                            onFieldSubmitted: (_) => _saveForm(),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please provide a title to this address';
-                              }
-                              return null;
-                            },
-                            onSaved: (value) {
-                              _address = Address(
-                                id: _address.id,
-                                address: _address.address,
-                                landmark: _address.landmark,
-                                saveas: value,
-                                flat: _address.flat,
-                                latitude: _locationData.latitude.toString(),
-                                longitude: _locationData.longitude.toString(),
-                              );
-                            },
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                height: 45,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Theme.of(context).primaryColor,
+                        )
+                      : Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.all(20),
+                          height: (MediaQuery.of(context).size.height -
+                                  _appBar.preferredSize.height -
+                                  MediaQuery.of(context).padding.top) *
+                              0.5,
+                          child: Form(
+                            key: _form,
+                            child: ListView(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              children: <Widget>[
+                                Text(
+                                  'FLAT, FLOOR, BUILDING NAME',
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                    color: Color.fromRGBO(112, 112, 112, 1),
                                   ),
-                                  borderRadius: BorderRadius.circular(3.0),
                                 ),
-                                child: RaisedButton(
-                                  color: Colors.white,
-                                  elevation: 5,
-                                  child: Text(
-                                    'BACK',
-                                    style: TextStyle(
-                                        fontFamily: 'SourceSansProSB'),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
+                                TextFormField(
+                                  textInputAction: TextInputAction.next,
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Please provide flat, floor and building name';
+                                    }
+                                    return null;
+                                  },
+                                  onFieldSubmitted: (_) =>
+                                      FocusScope.of(context)
+                                          .requestFocus(focusNode2),
+                                  onSaved: (value) {
+                                    _address = Address(
+                                      id: _address.id,
+                                      address: _first.addressLine,
+                                      flat: value,
+                                      landmark: _address.landmark,
+                                      saveas: _address.saveas,
+                                      active: _address.active,
+                                      latitude:
+                                          _locationData.latitude.toString(),
+                                      longitude:
+                                          _locationData.longitude.toString(),
+                                    );
                                   },
                                 ),
-                              ),
-                              Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  height: 45,
-                                  child: RaisedButton(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(3.0),
+                                SizedBox(height: 10),
+                                Text(
+                                  'LANDMARK',
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                    color: Color.fromRGBO(112, 112, 112, 1),
+                                  ),
+                                ),
+                                TextFormField(
+                                  textInputAction: TextInputAction.next,
+                                  focusNode: focusNode2,
+                                  onFieldSubmitted: (_) =>
+                                      FocusScope.of(context)
+                                          .requestFocus(focusNode3),
+                                  onSaved: (value) {
+                                    _address = Address(
+                                      id: _address.id,
+                                      address: _address.address,
+                                      landmark: value,
+                                      saveas: _address.saveas,
+                                      active: _address.active,
+                                      flat: _address.flat,
+                                      latitude:
+                                          _locationData.latitude.toString(),
+                                      longitude:
+                                          _locationData.longitude.toString(),
+                                    );
+                                  },
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  'SAVE AS',
+                                  style: TextStyle(
+                                    fontFamily: 'SourceSansPro',
+                                    color: Color.fromRGBO(112, 112, 112, 1),
+                                  ),
+                                ),
+                                TextFormField(
+                                  textInputAction: TextInputAction.done,
+                                  focusNode: focusNode3,
+                                  onFieldSubmitted: (_) => _saveForm(),
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Please provide a title to this address';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    _address = Address(
+                                      id: _address.id,
+                                      address: _address.address,
+                                      landmark: _address.landmark,
+                                      saveas: value,
+                                      active: _address.active,
+                                      flat: _address.flat,
+                                      latitude:
+                                          _locationData.latitude.toString(),
+                                      longitude:
+                                          _locationData.longitude.toString(),
+                                    );
+                                  },
+                                ),
+                                SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      height: 45,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(3.0),
+                                      ),
+                                      child: RaisedButton(
+                                        color: Colors.white,
+                                        elevation: 5,
+                                        child: Text(
+                                          'BACK',
+                                          style: TextStyle(
+                                              fontFamily: 'SourceSansProSB'),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
                                     ),
-                                    child: Text(
-                                      'ADD',
-                                      style: TextStyle(
-                                          fontFamily: 'SourceSansProSB',
-                                          color: Colors.white),
-                                    ),
-                                    color: Theme.of(context).primaryColor,
-                                    elevation: 5,
-                                    onPressed: () => _saveForm(),
-                                  )),
-                            ],
+                                    Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.4,
+                                        height: 45,
+                                        child: RaisedButton(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(3.0),
+                                          ),
+                                          child: Text(
+                                            'ADD',
+                                            style: TextStyle(
+                                                fontFamily: 'SourceSansProSB',
+                                                color: Colors.white),
+                                          ),
+                                          color: Theme.of(context).primaryColor,
+                                          elevation: 5,
+                                          onPressed: () => _saveForm(),
+                                        )),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-          ],
-        ),
-      ),
+                        ),
+                ],
+              ),
+            ),
     );
   }
 }

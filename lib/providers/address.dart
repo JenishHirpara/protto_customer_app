@@ -11,6 +11,7 @@ class Address with ChangeNotifier {
   final String longitude;
   final String landmark;
   final String saveas;
+  final String active;
 
   Address({
     @required this.id,
@@ -20,11 +21,13 @@ class Address with ChangeNotifier {
     @required this.longitude,
     @required this.landmark,
     @required this.saveas,
+    @required this.active,
   });
 }
 
 class Addresses with ChangeNotifier {
   List<Address> _items = [];
+  List<String> _pincodes = [];
 
   final String userId;
 
@@ -32,6 +35,10 @@ class Addresses with ChangeNotifier {
 
   List<Address> get items {
     return [..._items];
+  }
+
+  List<String> get pincodes {
+    return [..._pincodes];
   }
 
   Future<void> fetchAndSetAddresses() async {
@@ -48,6 +55,7 @@ class Addresses with ChangeNotifier {
           address: extractedData['addresses'][i]['address'],
           landmark: extractedData['addresses'][i]['landmark'],
           saveas: extractedData['addresses'][i]['category'],
+          active: extractedData['addresses'][i]['active'],
           latitude: extractedData['addresses'][i]['lat'],
           longitude: extractedData['addresses'][i]['lon'],
         ),
@@ -57,17 +65,20 @@ class Addresses with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addAddress(Address newAddress) async {
+  Future<void> getpin() async {
+    const url = 'http://api.protto.in/targetpin.php';
+    final response = await http.get(url);
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    _pincodes = List<String>.from(extractedData['pincodes']);
+    notifyListeners();
+  }
+
+  Future<String> addAddress(Address newAddress) async {
     final url = 'http://stage.protto.in/api/shivangi/addresses.php/$userId';
     var landmark = newAddress.landmark.replaceAll("'", "");
     var saveas = newAddress.saveas.replaceAll("'", "");
     var address = newAddress.address.replaceAll("'", "");
     var flat = newAddress.flat.replaceAll("'", "");
-    print(userId);
-    print(landmark);
-    print(saveas);
-    print(address);
-    print(flat);
     final response = await http.post(url,
         body: json.encode({
           'category': saveas,
@@ -78,7 +89,6 @@ class Addresses with ChangeNotifier {
           'landmark': landmark
         }));
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
-    print(extractedData);
     _items.insert(
       0,
       Address(
@@ -89,9 +99,11 @@ class Addresses with ChangeNotifier {
         longitude: newAddress.longitude,
         id: extractedData['address_id'],
         landmark: landmark,
+        active: "0",
       ),
     );
     notifyListeners();
+    return extractedData['address_id'];
   }
 
   Future<void> editAddress(String id, Address newAddress) async {

@@ -21,6 +21,7 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
   var _model;
   var _rgno;
   var _year;
+  var _active;
   var _id;
   var _selectedModel;
 
@@ -91,6 +92,7 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
     _model = widget.bike.model;
     _rgno = widget.bike.number;
     _year = widget.bike.year;
+    _active = widget.bike.active;
     _id = widget.bike.id;
     super.initState();
   }
@@ -106,7 +108,12 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
     });
     try {
       await Provider.of<Bikes>(context, listen: false).updateBike(
-          brand: _brand, id: _id, model: _model, number: _rgno, year: _year);
+          brand: _brand,
+          id: _id,
+          model: _model,
+          number: _rgno,
+          year: _year,
+          active: _active);
       setState(() {
         _isLoading = false;
         _isInternet = true;

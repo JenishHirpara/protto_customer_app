@@ -37,6 +37,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     longitude: '',
     landmark: '',
     saveas: '',
+    active: '0',
   );
 
   void _saveForm() async {
@@ -122,7 +123,6 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     _addresses =
         await geo.Geocoder.local.findAddressesFromCoordinates(_coordinates);
     _first = _addresses[0];
-
     setState(() {
       _textController.text = _first.addressLine.toString();
       _isLoading = false;
@@ -195,6 +195,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
               apiKey: kGoogleApiKey,
               language: "en",
               components: [web.Component(web.Component.country, "in")],
+              types: ["establishment"],
               mode: Mode.overlay,
             );
             displayPrediction(p);
@@ -226,7 +227,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                   height: (MediaQuery.of(context).size.height -
                           _appBar.preferredSize.height -
                           MediaQuery.of(context).padding.top) *
-                      (_showFull ? 0.75 : 0.5),
+                      (_showFull ? 0.65 : 0.5),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
                   ),
@@ -252,7 +253,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                           _appBar.preferredSize.height -
                           MediaQuery.of(context).padding.top -
                           80) *
-                      (_showFull ? 0.75 : 0.5) /
+                      (_showFull ? 0.65 : 0.5) /
                       2,
                   right: (MediaQuery.of(context).size.width - 40) / 2,
                   child: Tooltip(
@@ -270,10 +271,12 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                     height: (MediaQuery.of(context).size.height -
                             _appBar.preferredSize.height -
                             MediaQuery.of(context).padding.top) *
-                        0.25,
+                        0.35,
                     width: double.infinity,
                     padding: EdgeInsets.all(10),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 10),
@@ -385,6 +388,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                 flat: value,
                                 landmark: _address.landmark,
                                 saveas: _address.saveas,
+                                active: _address.active,
                                 latitude: _locationData.latitude.toString(),
                                 longitude: _locationData.longitude.toString(),
                               );
@@ -410,6 +414,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                 address: _address.address,
                                 landmark: value,
                                 saveas: _address.saveas,
+                                active: _address.active,
                                 flat: _address.flat,
                                 latitude: _locationData.latitude.toString(),
                                 longitude: _locationData.longitude.toString(),
@@ -441,6 +446,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                 address: _address.address,
                                 landmark: _address.landmark,
                                 saveas: value,
+                                active: _address.active,
                                 flat: _address.flat,
                                 latitude: _locationData.latitude.toString(),
                                 longitude: _locationData.longitude.toString(),

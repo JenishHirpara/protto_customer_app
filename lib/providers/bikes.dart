@@ -9,6 +9,7 @@ class Bike with ChangeNotifier {
   final String model;
   final String year;
   final String number;
+  final String active;
 
   Bike({
     @required this.id,
@@ -16,6 +17,7 @@ class Bike with ChangeNotifier {
     @required this.model,
     @required this.year,
     @required this.number,
+    @required this.active,
   });
 }
 
@@ -73,6 +75,7 @@ class Bikes with ChangeNotifier {
           model: extractedData['bikes'][i]['model'],
           number: extractedData['bikes'][i]['bike_reg'],
           year: extractedData['bikes'][i]['year'],
+          active: extractedData['bikes'][i]['active'],
         ),
       );
       if (extractedData['bikes'][i]['status'].toString() == '1') {
@@ -82,6 +85,7 @@ class Bikes with ChangeNotifier {
           model: extractedData['bikes'][i]['model'],
           number: extractedData['bikes'][i]['bike_reg'],
           year: extractedData['bikes'][i]['year'],
+          active: extractedData['bikes'][i]['active'],
         );
         notifyListeners();
       }
@@ -126,6 +130,7 @@ class Bikes with ChangeNotifier {
         model: newBike.model,
         number: newBike.number,
         year: newBike.year,
+        active: "0",
         id: extractedData['Data']['bike_id'],
       );
       _items.add(
@@ -134,6 +139,7 @@ class Bikes with ChangeNotifier {
           model: newBike.model,
           number: newBike.number,
           year: newBike.year,
+          active: "0",
           id: extractedData['Data']['bike_id'],
         ),
       );
@@ -154,6 +160,7 @@ class Bikes with ChangeNotifier {
           model: newBike.model,
           number: newBike.number,
           year: newBike.year,
+          active: "0",
           id: extractedData['Data']['bike_id'],
         ),
       );
@@ -161,12 +168,14 @@ class Bikes with ChangeNotifier {
     }
   }
 
-  Future<void> updateBike(
-      {String id,
-      String brand,
-      String model,
-      String year,
-      String number}) async {
+  Future<void> updateBike({
+    String id,
+    String brand,
+    String model,
+    String year,
+    String number,
+    String active,
+  }) async {
     final url = 'http://stage.protto.in/api/shivangi/editbike.php/$id';
     await http.patch(url,
         body: json.encode({
@@ -176,8 +185,14 @@ class Bikes with ChangeNotifier {
           'model': model,
         }));
     final bikeIndex = _items.indexWhere((bike) => bike.id == id);
-    var bike =
-        Bike(brand: brand, id: id, model: model, number: number, year: year);
+    var bike = Bike(
+      brand: brand,
+      id: id,
+      model: model,
+      number: number,
+      year: year,
+      active: active,
+    );
     if (bikeIndex >= 0) {
       _items[bikeIndex] = bike;
     }
