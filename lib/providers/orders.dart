@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import '../models/http_exception.dart';
 import './bikes.dart';
 
@@ -243,12 +244,29 @@ class Orders with ChangeNotifier {
     final url1 = 'http://stage.protto.in/api/hitesh/updatebucks.php';
     var date = DateTime.now();
     var year = date.year;
-    var month = date.month;
-    var day = date.day;
-    var hour = date.hour;
-    var minute = date.minute;
-    var second = date.second;
-    var millisecond = date.millisecond;
+    //var month = date.month;
+    //var day = date.day;
+    //var hour = date.hour;
+    //var minute = date.minute;
+    //var second = date.second;
+    //var millisecond = date.millisecond;
+
+    var now = new DateTime.now();
+    var formonth = new DateFormat('MM');
+    String month = formonth.format(now);
+    var forday = new DateFormat('dd');
+    String day = forday.format(now);
+    var forhour = new DateFormat('HH');
+    String hour = forhour.format(now);
+    var forminute = new DateFormat('mm');
+    String minute = forminute.format(now);
+    var forsecond = new DateFormat('ss');
+    String second = forsecond.format(now);
+    var formiliseconds = new DateFormat('SSS');
+    String millisecond = formiliseconds.format(now);
+    int ms = ((int.parse(millisecond)) / 10).round();
+    millisecond = ms.toString();
+
     var specialRequest = order.specialRequest.replaceAll("'", "");
     await http.patch(url1,
         body: json.encode({

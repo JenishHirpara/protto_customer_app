@@ -348,7 +348,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
               style: TextStyle(fontFamily: 'Montserrat'),
             ),
             content: Text(
-              'Please add a date to your current order',
+              'Please add a date to your current order.',
               style: TextStyle(
                 fontFamily: 'SourceSansPro',
                 color: Color.fromRGBO(128, 128, 128, 1),
@@ -378,7 +378,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
               style: TextStyle(fontFamily: 'Montserrat'),
             ),
             content: Text(
-              'Please add atleast one service to your current order',
+              'Please add atleast one service to your current order.',
               style: TextStyle(
                 fontFamily: 'SourceSansPro',
                 color: Color.fromRGBO(128, 128, 128, 1),
