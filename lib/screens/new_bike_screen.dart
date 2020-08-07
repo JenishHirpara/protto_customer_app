@@ -20,6 +20,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
     model: '',
     number: '',
     year: '',
+    active: '0',
   );
 
   List<String> getYears() {
@@ -185,6 +186,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                             model: _bike.model,
                             number: _bike.number,
                             year: _bike.year,
+                            active: _bike.active,
                           );
                         },
                         onChanged: (value) async {
@@ -241,6 +243,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                                   model: value,
                                   number: _bike.number,
                                   year: _bike.year,
+                                  active: _bike.active,
                                 );
                               },
                               onChanged: (value) {
@@ -283,6 +286,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                             model: _bike.model,
                             number: _bike.number,
                             year: value,
+                            active: _bike.active,
                           );
                         },
                         onChanged: (_) {},
@@ -313,6 +317,7 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                             model: _bike.model,
                             number: value,
                             year: _bike.year,
+                            active: _bike.active,
                           );
                         },
                       ),

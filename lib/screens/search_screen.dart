@@ -132,31 +132,31 @@ class _SearchScreenState extends State<SearchScreen> {
               id: DateTime.now().toString(),
               service: 'Custom Repairs',
               type: 'Insurance Claim',
-              price: activeBike != null ? 149 : 0.0,
+              price: activeBike != null ? 149.0 : 0.0,
             ),
             CartItem(
               id: DateTime.now().toString(),
               service: 'Custom Repairs',
               type: 'Brake Inspection',
-              price: activeBike != null ? 149 : 0.0,
+              price: activeBike != null ? 149.0 : 0.0,
             ),
             CartItem(
               id: DateTime.now().toString(),
               service: 'Custom Repairs',
               type: 'Electrical Inspection',
-              price: activeBike != null ? 149 : 0.0,
+              price: activeBike != null ? 149.0 : 0.0,
             ),
             CartItem(
               id: DateTime.now().toString(),
               service: 'Custom Repairs',
               type: 'Clutch Inspection',
-              price: activeBike != null ? 149 : 0.0,
+              price: activeBike != null ? 149.0 : 0.0,
             ),
             CartItem(
               id: DateTime.now().toString(),
               service: 'Custom Repairs',
               type: 'Other',
-              price: activeBike != null ? 149 : 0.0,
+              price: activeBike != null ? 149.0 : 0.0,
             ),
           ];
           display.addAll(services);
@@ -213,7 +213,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return RgDetailsScreen(display[i]);
+        return RgDetailsScreen(services[i]);
       },
       transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
@@ -239,7 +239,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return CustomRepairsDetailScreen(display[i]);
+        return CustomRepairsDetailScreen(services[i]);
       },
       transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
