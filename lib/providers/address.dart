@@ -66,7 +66,7 @@ class Addresses with ChangeNotifier {
   }
 
   Future<void> getpin() async {
-    const url = 'http://api.protto.in/targetpin.php';
+    const url = 'http://stage.protto.in/api/shivangi/targetpin.php';
     final response = await http.get(url);
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     _pincodes = List<String>.from(extractedData['pincodes']);

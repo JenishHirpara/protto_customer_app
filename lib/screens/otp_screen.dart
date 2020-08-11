@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import './signup_screen.dart';
 import '../providers/profile.dart';
 import './navigationBarScreen.dart';
+import './no_internet_screen.dart';
 
 class OtpScreen extends StatefulWidget {
   final String text;
@@ -24,6 +25,8 @@ class _OtpScreenState extends State<OtpScreen> {
   var _digit2;
   var _digit3;
   var _digit4;
+  var _isLoading = false;
+  var _isInternet = true;
 
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
@@ -54,7 +57,7 @@ class _OtpScreenState extends State<OtpScreen> {
           },
         );
       }
-    } else {
+    } else if (widget.text == 'signup') {
       if ('$_digit1$_digit2$_digit3$_digit4' ==
           Provider.of<UserProfile>(context, listen: false).signupOtp) {
         Navigator.of(context).pushReplacementNamed(SignupScreen.routeName);
@@ -75,6 +78,61 @@ class _OtpScreenState extends State<OtpScreen> {
             );
           },
         );
+      }
+    } else {
+      if ('$_digit1$_digit2$_digit3$_digit4' ==
+          Provider.of<UserProfile>(context, listen: false).signupOtp) {
+        try {
+          await Provider.of<UserProfile>(context, listen: false).editProfile();
+          setState(() {
+            _isLoading = false;
+          });
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+        } catch (error) {
+          print(error.message);
+          if (error.message.toString().contains('Failed host lookup')) {
+            setState(() {
+              _isLoading = false;
+              _isInternet = false;
+            });
+          }
+        }
+      } else {
+        showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: Text('Invalid OTP'),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                  child: Text('Okay'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    }
+  }
+
+  void retry() async {
+    try {
+      await Provider.of<UserProfile>(context, listen: false).editProfile();
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.of(context).pop();
+    } catch (error) {
+      print(error.message);
+      if (error.message.toString().contains('Failed host lookup')) {
+        setState(() {
+          _isLoading = false;
+          _isInternet = false;
+        });
       }
     }
   }
@@ -137,229 +195,243 @@ class _OtpScreenState extends State<OtpScreen> {
     );
     return Scaffold(
       appBar: appBar,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: mediaQuery.size.height -
-                  appBar.preferredSize.height -
-                  mediaQuery.padding.top,
-              width: double.infinity,
-              color: Color.fromRGBO(230, 230, 230, 1),
-            ),
-            Column(
-              children: <Widget>[
-                SizedBox(
-                  height:
-                      (mediaQuery.size.height - mediaQuery.padding.top) * 0.05,
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 40),
-                  width: double.infinity,
-                  child: Image.asset(
-                    'assets/images/protto-logo.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(
-                  height:
-                      (mediaQuery.size.height - mediaQuery.padding.top) * 0.15,
-                ),
-                const Text(
-                  'Verification',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: Color(0xff403A35),
-                    //fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 60),
-                  child: const Text(
-                    'A 4-Digit PIN has been sent to your mobile. Enter it below to continue',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color: Color(0xff403A35),
-                      fontSize: 10,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                SizedBox(height: 20),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Form(
-                    key: _form,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Container(
-                          width: 45.0,
-                          height: 45.0,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.next,
-                            maxLength: 1,
-                            focusNode: _focusNode1,
-                            onChanged: (value) {
-                              if (value.isNotEmpty) {
-                                FocusScope.of(context)
-                                    .requestFocus(_focusNode2);
-                              }
-                            },
-                            onSaved: (value) {
-                              _digit1 = value;
-                            },
+      body: _isLoading
+          ? Center(
+              child: Image.asset(
+                'assets/images/loader.gif',
+                fit: BoxFit.cover,
+                height: 85,
+                width: 85,
+              ),
+            )
+          : _isInternet
+              ? SingleChildScrollView(
+                  child: Stack(
+                    children: <Widget>[
+                      Container(
+                        height: mediaQuery.size.height -
+                            appBar.preferredSize.height -
+                            mediaQuery.padding.top,
+                        width: double.infinity,
+                        color: Color.fromRGBO(230, 230, 230, 1),
+                      ),
+                      Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: (mediaQuery.size.height -
+                                    mediaQuery.padding.top) *
+                                0.05,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 40),
+                            width: double.infinity,
+                            child: Image.asset(
+                              'assets/images/protto-logo.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          SizedBox(
+                            height: (mediaQuery.size.height -
+                                    mediaQuery.padding.top) *
+                                0.15,
+                          ),
+                          const Text(
+                            'Verification',
                             style: TextStyle(
-                              fontFamily: 'SourceSansPro',
-                              fontSize: 30.0,
-                              color: Colors.black,
-                            ),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              counterText: '',
+                              fontFamily: 'Montserrat',
+                              color: Color(0xff403A35),
+                              //fontWeight: FontWeight.bold,
+                              fontSize: 30,
                             ),
                           ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
+                          SizedBox(
+                            height: 20,
                           ),
-                        ),
-                        Container(
-                          width: 45.0,
-                          height: 45.0,
-                          alignment: Alignment.center,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.next,
-                            maxLength: 1,
-                            focusNode: _focusNode2,
-                            onChanged: (value) {
-                              if (value.isNotEmpty) {
-                                FocusScope.of(context)
-                                    .requestFocus(_focusNode3);
-                              } else {
-                                FocusScope.of(context)
-                                    .requestFocus(_focusNode1);
-                              }
-                            },
-                            onSaved: (value) {
-                              _digit2 = value;
-                            },
-                            style: TextStyle(
-                              fontSize: 30.0,
-                              color: Colors.black,
-                            ),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              counterText: '',
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 60),
+                            child: const Text(
+                              'A 4-Digit PIN has been sent to your mobile. Enter it below to continue',
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                color: Color(0xff403A35),
+                                fontSize: 10,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        Container(
-                          width: 45.0,
-                          height: 45.0,
-                          alignment: Alignment.center,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.next,
-                            maxLength: 1,
-                            focusNode: _focusNode3,
-                            onChanged: (value) {
-                              if (value.isNotEmpty) {
-                                FocusScope.of(context)
-                                    .requestFocus(_focusNode4);
-                              } else {
-                                FocusScope.of(context)
-                                    .requestFocus(_focusNode2);
-                              }
-                            },
-                            onSaved: (value) {
-                              _digit3 = value;
-                            },
-                            style: TextStyle(
-                              fontSize: 30.0,
-                              color: Colors.black,
+                          SizedBox(height: 20),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Form(
+                              key: _form,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Container(
+                                    width: 45.0,
+                                    height: 45.0,
+                                    child: TextFormField(
+                                      textAlign: TextAlign.center,
+                                      keyboardType: TextInputType.number,
+                                      textInputAction: TextInputAction.next,
+                                      maxLength: 1,
+                                      focusNode: _focusNode1,
+                                      onChanged: (value) {
+                                        if (value.isNotEmpty) {
+                                          FocusScope.of(context)
+                                              .requestFocus(_focusNode2);
+                                        }
+                                      },
+                                      onSaved: (value) {
+                                        _digit1 = value;
+                                      },
+                                      style: TextStyle(
+                                        fontFamily: 'SourceSansPro',
+                                        fontSize: 30.0,
+                                        color: Colors.black,
+                                      ),
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        counterText: '',
+                                      ),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 45.0,
+                                    height: 45.0,
+                                    alignment: Alignment.center,
+                                    child: TextFormField(
+                                      textAlign: TextAlign.center,
+                                      keyboardType: TextInputType.number,
+                                      textInputAction: TextInputAction.next,
+                                      maxLength: 1,
+                                      focusNode: _focusNode2,
+                                      onChanged: (value) {
+                                        if (value.isNotEmpty) {
+                                          FocusScope.of(context)
+                                              .requestFocus(_focusNode3);
+                                        } else {
+                                          FocusScope.of(context)
+                                              .requestFocus(_focusNode1);
+                                        }
+                                      },
+                                      onSaved: (value) {
+                                        _digit2 = value;
+                                      },
+                                      style: TextStyle(
+                                        fontSize: 30.0,
+                                        color: Colors.black,
+                                      ),
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        counterText: '',
+                                      ),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 45.0,
+                                    height: 45.0,
+                                    alignment: Alignment.center,
+                                    child: TextFormField(
+                                      textAlign: TextAlign.center,
+                                      keyboardType: TextInputType.number,
+                                      textInputAction: TextInputAction.next,
+                                      maxLength: 1,
+                                      focusNode: _focusNode3,
+                                      onChanged: (value) {
+                                        if (value.isNotEmpty) {
+                                          FocusScope.of(context)
+                                              .requestFocus(_focusNode4);
+                                        } else {
+                                          FocusScope.of(context)
+                                              .requestFocus(_focusNode2);
+                                        }
+                                      },
+                                      onSaved: (value) {
+                                        _digit3 = value;
+                                      },
+                                      style: TextStyle(
+                                        fontSize: 30.0,
+                                        color: Colors.black,
+                                      ),
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        counterText: '',
+                                      ),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 45.0,
+                                    height: 45.0,
+                                    alignment: Alignment.center,
+                                    child: TextFormField(
+                                      textAlign: TextAlign.center,
+                                      keyboardType: TextInputType.number,
+                                      textInputAction: TextInputAction.done,
+                                      maxLength: 1,
+                                      focusNode: _focusNode4,
+                                      onSaved: (value) {
+                                        _digit4 = value;
+                                      },
+                                      onChanged: (value) {
+                                        if (value.isEmpty) {
+                                          FocusScope.of(context)
+                                              .requestFocus(_focusNode3);
+                                        }
+                                      },
+                                      onFieldSubmitted: (_) => _saveForm(),
+                                      style: TextStyle(
+                                        fontSize: 30.0,
+                                        color: Colors.black,
+                                      ),
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        counterText: '',
+                                      ),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              counterText: '',
+                          ),
+                          SizedBox(height: 50),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 60),
+                            width: double.infinity,
+                            height: 45,
+                            child: RaisedButton(
+                              color: Theme.of(context).primaryColor,
+                              child: Text(
+                                'Continue',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: _saveForm,
+                              elevation: 5,
                             ),
                           ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        Container(
-                          width: 45.0,
-                          height: 45.0,
-                          alignment: Alignment.center,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.done,
-                            maxLength: 1,
-                            focusNode: _focusNode4,
-                            onSaved: (value) {
-                              _digit4 = value;
-                            },
-                            onChanged: (value) {
-                              if (value.isEmpty) {
-                                FocusScope.of(context)
-                                    .requestFocus(_focusNode3);
-                              }
-                            },
-                            onFieldSubmitted: (_) => _saveForm(),
-                            style: TextStyle(
-                              fontSize: 30.0,
-                              color: Colors.black,
-                            ),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              counterText: '',
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(height: 50),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 60),
-                  width: double.infinity,
-                  height: 45,
-                  child: RaisedButton(
-                    color: Theme.of(context).primaryColor,
-                    child: Text(
-                      'Continue',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: _saveForm,
-                    elevation: 5,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+                )
+              : NoInternetScreen(retry),
     );
   }
 }

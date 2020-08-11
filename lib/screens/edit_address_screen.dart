@@ -8,7 +8,7 @@ import 'package:google_maps_webservice/places.dart' as web;
 
 import '../providers/address.dart';
 
-const kGoogleApiKey = "AIzaSyBPPwCzwRTHA89AOoWc9OrZ7ZGLQSVi1lc";
+const kGoogleApiKey = "AIzaSyAphGxn5W8zr_gOduftWlO8oHCSDIhkRlk";
 
 web.GoogleMapsPlaces _places = web.GoogleMapsPlaces(apiKey: kGoogleApiKey);
 
