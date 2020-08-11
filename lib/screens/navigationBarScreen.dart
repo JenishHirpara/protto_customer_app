@@ -210,7 +210,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                           ),
                         ),
                         Text(
-                          activebike != null ? activebike.year : 'My Bike',
+                          activebike != null ? activebike.year : '',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'SourceSansPro',
@@ -257,7 +257,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
                     child: Container(
-                      width: 140,
+                      width: MediaQuery.of(context).size.width * 0.33,
                       height: 35,
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -294,7 +294,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
                     child: Container(
-                      width: 140,
+                      width: MediaQuery.of(context).size.width * 0.33,
                       height: 35,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4.0),

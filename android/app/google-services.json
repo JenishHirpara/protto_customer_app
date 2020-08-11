@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "813139971959",
+    "firebase_url": "https://protto-app.firebaseio.com",
+    "project_id": "protto-app",
+    "storage_bucket": "protto-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813139971959:android:ed05cdfe3de73b3d8f5b72",
+        "android_client_info": {
+          "package_name": "com.protto.www"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "813139971959-55gtj6ei3ul82c11d9s9qfdmgv5hu151.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzdaomwvKEPvIqlJJwshp-B8EyIRlVqiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "813139971959-55gtj6ei3ul82c11d9s9qfdmgv5hu151.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

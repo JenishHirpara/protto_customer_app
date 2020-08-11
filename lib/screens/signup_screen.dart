@@ -280,9 +280,10 @@ class _SignupScreenState extends State<SignupScreen> {
                           margin: EdgeInsets.symmetric(horizontal: 20),
                           child: TextFormField(
                             decoration: InputDecoration(
-                                labelText: 'Email',
-                                labelStyle:
-                                    TextStyle(fontFamily: 'SourceSansPro')),
+                              labelText: 'Email',
+                              labelStyle:
+                                  TextStyle(fontFamily: 'SourceSansPro'),
+                            ),
                             textInputAction: TextInputAction.next,
                             focusNode: _focus3,
                             onFieldSubmitted: (_) {
@@ -291,6 +292,11 @@ class _SignupScreenState extends State<SignupScreen> {
                             validator: (value) {
                               if (value.isEmpty) {
                                 return 'Please provide an email';
+                              }
+                              RegExp regExp = new RegExp(
+                                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+                              if (!regExp.hasMatch(value)) {
+                                return 'Invalid email';
                               }
                               return null;
                             },

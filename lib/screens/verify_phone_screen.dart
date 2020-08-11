@@ -106,7 +106,7 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
                       child: TextFormField(
                         controller: _mobileController,
                         decoration: InputDecoration(
-                          labelText: 'Mobile No.',
+                          labelText: 'Mobile No. (10 - digit)',
                           labelStyle: TextStyle(
                             fontFamily: 'SourceSansPro',
                           ),
@@ -150,6 +150,9 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Please enter a mobile number';
+                          }
+                          if (value.length != 10) {
+                            return 'Invalid number';
                           }
                           return null;
                         },

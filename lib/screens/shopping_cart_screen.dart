@@ -471,6 +471,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
 
   var _orderItem;
   var _razorpay;
+
   @override
   void initState() {
     _razorpay = new Razorpay();
@@ -580,7 +581,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     }
   }
 
-  void _saveForm() async {
+  void _saveForm(Cart cart) async {
     final isValid = _form.currentState.validate();
     if (!isValid) {
       return;
@@ -664,7 +665,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         addressId: _addressSeen.id,
         flat: _addressSeen.flat,
         landmark: _addressSeen.landmark,
-        total: _orderItem.total,
+        total: _getNewTotal(cart),
         paid: _orderItem.paid,
         ssName: _orderItem.ssName,
         make: Provider.of<Bikes>(context, listen: false).activeBike.brand,
@@ -1308,8 +1309,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                     _date == null ? 'Date' : _date,
                                     style: TextStyle(
                                       fontFamily: 'SourceSansPro',
-                                      fontSize: 14,
-                                      color: Color.fromRGBO(128, 128, 128, 1),
+                                      fontSize: 16,
+                                      //color: Color.fromRGBO(128, 128, 128, 1),
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
@@ -1645,7 +1646,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                                       'SourceSansProSB'),
                                             ),
                                             elevation: 2,
-                                            onPressed: _saveForm,
+                                            onPressed: () => _saveForm(cart),
                                             shape: RoundedRectangleBorder(
                                               side: BorderSide(
                                                 color: Theme.of(context)

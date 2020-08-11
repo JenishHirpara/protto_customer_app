@@ -274,7 +274,11 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
         _isLoading = false;
       });
       allJobs = Provider.of<Orders>(context, listen: false).jobs;
-      _approval = List.generate(allJobs.length, (job) => false);
+      newJobs = Provider.of<Orders>(context, listen: false)
+          .jobs
+          .where((job) => job.approved == '0')
+          .toList();
+      _approval = List.generate(newJobs.length, (job) => false);
       approvedJobs = Provider.of<Orders>(context, listen: false)
           .jobs
           .where((job) => job.approved == '1')
@@ -296,6 +300,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
   List<Jobs> allJobs;
   List<bool> _approval;
   List<Jobs> approvedJobs;
+  List<Jobs> newJobs;
   List<String> approvedJobId = [];
   var _total = '0.0';
   var _paid = '0.0';
@@ -318,7 +323,11 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
           _isLoading = false;
         });
         allJobs = Provider.of<Orders>(context, listen: false).jobs;
-        _approval = List.generate(allJobs.length, (job) => false);
+        newJobs = Provider.of<Orders>(context, listen: false)
+            .jobs
+            .where((job) => job.approved == '0')
+            .toList();
+        _approval = List.generate(newJobs.length, (job) => false);
         approvedJobs = Provider.of<Orders>(context, listen: false)
             .jobs
             .where((job) => job.approved == '1')
@@ -424,13 +433,18 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                             fontSize: 20,
                           ),
                         ),
+                        SizedBox(height: 14),
                         widget.order.approveJobs == '0'
-                            ? allJobs.isEmpty
+                            ? newJobs.isEmpty
                                 ? Text(
                                     'Please wait for the service station to recommend additional jobs',
                                     style: TextStyle(
-                                      fontFamily: 'SourceSansPro',
+                                      fontFamily: 'SourceSansProSB',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Color.fromRGBO(128, 128, 128, 1),
                                     ),
+                                    textAlign: TextAlign.center,
                                   )
                                 : ListView.builder(
                                     shrinkWrap: true,
@@ -439,7 +453,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                       contentPadding:
                                           EdgeInsets.symmetric(horizontal: 0),
                                       title: Text(
-                                        allJobs[i].name,
+                                        newJobs[i].name,
                                         style: GoogleFonts.cantataOne(
                                           color:
                                               Color.fromRGBO(128, 128, 128, 1),
@@ -451,7 +465,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                         child: Row(
                                           children: <Widget>[
                                             Text(
-                                              '₹ ${allJobs[i].cost}',
+                                              '₹ ${newJobs[i].cost}',
                                               style: TextStyle(
                                                 fontFamily: 'SourceSansPro',
                                                 color: Color.fromRGBO(
@@ -464,12 +478,12 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                                   setState(() {
                                                     if (!_approval[i]) {
                                                       approvedJobId
-                                                          .add(allJobs[i].id);
+                                                          .add(newJobs[i].id);
                                                       _total =
                                                           '${double.parse(_total) + double.parse(allJobs[i].cost)}';
                                                     } else {
                                                       approvedJobId.remove(
-                                                          allJobs[i].id);
+                                                          newJobs[i].id);
                                                       _total =
                                                           '${double.parse(_total) - double.parse(allJobs[i].cost)}';
                                                     }
@@ -481,22 +495,29 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                         ),
                                       ),
                                     ),
-                                    itemCount: allJobs.length,
+                                    itemCount: newJobs.length,
                                   )
-                            : ListView.builder(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemBuilder: (ctx, i) =>
-                                    AdditionalJobItem(approvedJobs[i]),
-                                itemCount: approvedJobs.length,
-                              ),
+                            : approvedJobs.isEmpty
+                                ? Text(
+                                    'You did not select any additional service',
+                                    style: TextStyle(
+                                      fontFamily: 'SourceSansPro',
+                                    ),
+                                  )
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemBuilder: (ctx, i) =>
+                                        AdditionalJobItem(approvedJobs[i]),
+                                    itemCount: approvedJobs.length,
+                                  ),
                         ListTile(
                           contentPadding: EdgeInsets.all(0),
                           title: Text(
                             'Item Total',
                             style: TextStyle(
-                              fontFamily: 'SourceSansProB',
-                              //fontWeight: FontWeight.bold,
+                              fontFamily: 'SourceSansPro',
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           trailing: Container(
@@ -505,8 +526,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                             child: Text(
                               '₹ $_total',
                               style: TextStyle(
-                                fontFamily: 'SourceSansProB',
-                                //fontWeight: FontWeight.bold,
+                                fontFamily: 'SourceSansPro',
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -516,8 +537,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           title: Text(
                             'Paid',
                             style: TextStyle(
-                              fontFamily: 'SourceSansProB',
-                              //fontWeight: FontWeight.bold,
+                              fontFamily: 'SourceSansPro',
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           trailing: Container(
@@ -526,8 +547,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                             child: Text(
                               '₹ $_paid',
                               style: TextStyle(
-                                fontFamily: 'SourceSansProB',
-                                //fontWeight: FontWeight.bold,
+                                fontFamily: 'SourceSansPro',
+                                fontWeight: FontWeight.bold,
                                 color: Colors.green,
                               ),
                             ),
@@ -538,8 +559,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           title: Text(
                             'Due',
                             style: TextStyle(
-                              fontFamily: 'SourceSansProB',
-                              //fontWeight: FontWeight.bold,
+                              fontFamily: 'SourceSansPro',
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           trailing: Container(
@@ -548,14 +569,14 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                             child: Text(
                               '₹ ${double.parse(_total) - double.parse(_paid)}',
                               style: TextStyle(
-                                fontFamily: 'SourceSansProB',
-                                //fontWeight: FontWeight.bold,
+                                fontFamily: 'SourceSansPro',
+                                fontWeight: FontWeight.bold,
                                 color: Colors.red,
                               ),
                             ),
                           ),
                         ),
-                        widget.order.approveJobs == '0' && allJobs.isNotEmpty
+                        widget.order.approveJobs == '0' && newJobs.isNotEmpty
                             ? Center(
                                 child: Container(
                                   margin:
@@ -575,9 +596,9 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                         if (!_approval[i]) {
                                           setState(() {
                                             _approval[i] = true;
-                                            approvedJobId.add(allJobs[i].id);
+                                            approvedJobId.add(newJobs[i].id);
                                             _total =
-                                                '${double.parse(_total) + double.parse(allJobs[i].cost)}';
+                                                '${double.parse(_total) + double.parse(newJobs[i].cost)}';
                                           });
                                         }
                                       }
@@ -597,7 +618,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                 ),
                               )
                             : Container(),
-                        widget.order.approveJobs == '0' && allJobs.isNotEmpty
+                        widget.order.approveJobs == '0' && newJobs.isNotEmpty
                             ? Padding(
                                 padding: EdgeInsets.symmetric(vertical: 15),
                                 child: Row(

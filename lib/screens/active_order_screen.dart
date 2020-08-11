@@ -373,6 +373,8 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
   Future<void> _refreshPage() async {
     _order = await Provider.of<Orders>(context, listen: false)
         .fetchbooking(widget.order.bookingId, widget.order);
+    Provider.of<Orders>(context, listen: false)
+        .changeorderstatus(widget.order.id, _order);
     setState(() {});
   }
 

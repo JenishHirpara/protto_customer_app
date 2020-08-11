@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:math';
 
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/http_exception.dart';
 import '../screens/dashboard_screen.dart';
@@ -31,6 +33,8 @@ class UserProfile with ChangeNotifier {
   String _token;
   Profile _dummyItem;
   String _signupOtp;
+  String _name;
+  String _email;
   String _number;
 
   Profile get item {
@@ -39,6 +43,14 @@ class UserProfile with ChangeNotifier {
 
   String get number {
     return _number;
+  }
+
+  String get name {
+    return _name;
+  }
+
+  String get email {
+    return _email;
   }
 
   Profile get dummyItem {
@@ -58,6 +70,29 @@ class UserProfile with ChangeNotifier {
       return _token;
     }
     return null;
+  }
+
+  Future<void> getOtp(String name, String number, String email) async {
+    var url =
+        'http://stage.protto.in/api/shivangi/editotp.php?cid=${_item.id}&mobile=$number&email=$email';
+    final response = await http.get(url);
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedData['message'] ==
+        'User with that mobile number already exists') {
+      throw HttpException('Another user has the same mobile number');
+    } else if (extractedData['message'] ==
+        'User with that email already exists') {
+      throw HttpException('Another user has the same email');
+    }
+    if (extractedData['message'] == 'User already exists') {
+      throw HttpException(
+          'Provided email and mobile are already in use by another User');
+    }
+    _signupOtp = extractedData['otp'];
+    _name = name;
+    _number = number;
+    _email = email;
+    //notifyListeners();
   }
 
   Future<void> getProfile(String number) async {
@@ -136,12 +171,44 @@ class UserProfile with ChangeNotifier {
     DashBoardScreen.isSignUp = true;
   }
 
-  void editProfile(Profile profile) {
-    _item = profile;
-    notifyListeners();
+  Future<void> editProfile() async {
+    final url = 'http://stage.protto.in/api/prina/edit.php/${_item.id}';
+    await http.patch(url,
+        body: json.encode({
+          'name': _name,
+          'email': _email,
+          'mobile': _number,
+        }));
+    var id = _item.id;
+    var prottoBuck = _item.prottoBucks;
+    _item = Profile(
+      id: id,
+      email: _email,
+      name: _name,
+      number: _number,
+      otp: _signupOtp,
+      prottoBucks: prottoBuck,
+    );
+    //notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    final extractedUserData =
+        json.decode(prefs.getString('userData')) as Map<String, Object>;
+    final user = json.encode({
+      'token': extractedUserData['token'],
+      'number': _number,
+    });
+    prefs.setString('userData', user);
   }
 
-  Future<bool> tryAutoLogin() async {
+  String calcHmac(String key, String value) {
+    var key1 = utf8.encode(key);
+    var value1 = utf8.encode(value);
+    var hmacSha256 = new Hmac(sha256, key1);
+    var digest = hmacSha256.convert(value1);
+    return digest.toString();
+  }
+
+  Future<bool> tryAutoLogin(String deviceToken) async {
     final prefs = await SharedPreferences.getInstance();
     if (!prefs.containsKey('userData')) {
       return false;
@@ -162,7 +229,36 @@ class UserProfile with ChangeNotifier {
         otp: extractedData['data']['otp'],
       );
       _token = extractedUserData['token'];
+      _number = extractedUserData['number'];
       notifyListeners();
+      var url2 =
+          'https://sns.ap-south-1.amazonaws.com/?Action=CreatePlatformEndpoint&PlatformApplicationArn=arn:aws:sns:ap-south-1:212753112725:app/GCM/Protto&Token=$deviceToken';
+      var datetime = DateFormat('yyyyMMdd').format(DateTime.now());
+      var datetime2 = DateFormat('HHmmss').format(DateTime.now());
+      var canonicalRequest =
+          'GET\n/\nAction=CreatePlatformEndpoint&PlatformApplicationArn=arn%3Aaws%3Asns%3Aap-south-1%3A212753112725%3Aapp%2FGCM%2FProtto&Token=$deviceToken&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATDCIS32KUIQYQJI2%2F$datetime%2Fap-south-1%2Fsns%2Faws4_request&X-Amz-Date=${datetime}T${datetime2}Z&X-Amz-SignedHeaders=accept%3Bhost%3Bx-amz-content-sha256%3Bx-amz-date\naccept:application/json\nhost:sns.ap-south-1.amazonaws.com\nx-amz-content-sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nx-amz-date:${datetime}T${datetime2}Z\n\naccept;host;x-amz-content-sha256;x-amz-date\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
+      var canonicalString = sha256.convert(utf8.encode(canonicalRequest));
+      var stringtosign =
+          'AWS4-HMAC-SHA256\n${datetime}T${datetime2}Z\n$datetime/ap-south-1/sns/aws4_request\n$canonicalString';
+      var signature = calcHmac(
+          calcHmac(
+              calcHmac(
+                  calcHmac("AWS4" + "bizA5nlN7efa2qSy8/HxCocppPyh8VFngz2oUYVj",
+                      '$datetime'),
+                  "ap-south-1"),
+              "sns"),
+          "aws4_request");
+      var finalSignature = calcHmac(signature, stringtosign);
+      final response2 = await http.get(url2, headers: <String, String>{
+        'Accept': 'application/json',
+        'x-amz-content-sha256':
+            'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+        'Authorization':
+            'AWS4-HMAC-SHA256 Credential=AKIATDCIS32KUIQYQJI2/$datetime/ap-south-1/sns/aws4_request, SignedHeaders=accept;host;x-amz-content-sha256;x-amz-date, Signature=$finalSignature',
+        'x-amz-date': '${datetime}T${datetime2}Z',
+      });
+      final extractedData2 = json.decode(response2.body);
+      print(extractedData2);
       return true;
     } catch (error) {
       throw error;
@@ -172,6 +268,10 @@ class UserProfile with ChangeNotifier {
   Future<void> logout() async {
     _item = null;
     _dummyItem = null;
+    _email = null;
+    _name = null;
+    _number = null;
+    _signupOtp = null;
     _token = null;
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();

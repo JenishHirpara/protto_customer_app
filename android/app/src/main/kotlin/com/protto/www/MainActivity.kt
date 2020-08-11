@@ -1,4 +1,4 @@
-package com.example.protto_customer_app
+package com.protto.www
 
 import io.flutter.embedding.android.FlutterActivity
 

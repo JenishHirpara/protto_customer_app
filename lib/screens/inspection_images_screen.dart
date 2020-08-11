@@ -35,7 +35,7 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
     'No.Plate'
   ];
 
-  void _showDialog(int index) {
+  void _showDialog(int index, String number) {
     showDialog(
       context: context,
       builder: (ctx) {
@@ -43,10 +43,15 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
           onTapUp: (_, __, ___) {
             Navigator.of(ctx).pop();
           },
-          child: Image.memory(
-            Base64Decoder().convert(preImgUrl[index]),
-            fit: BoxFit.cover,
-          ),
+          child: number == '1'
+              ? Image.memory(
+                  Base64Decoder().convert(preImgUrl[index]),
+                  fit: BoxFit.cover,
+                )
+              : Image.memory(
+                  Base64Decoder().convert(postImgUrl[index]),
+                  fit: BoxFit.cover,
+                ),
           childSize: Size(MediaQuery.of(context).size.width,
               MediaQuery.of(context).size.height * 0.5),
           backgroundDecoration: BoxDecoration(),
@@ -203,7 +208,7 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                                         width: 300,
                                       ),
                                     ),
-                                    onTap: () => _showDialog(index),
+                                    onTap: () => _showDialog(index, '1'),
                                   ),
                                 );
                               },
@@ -332,7 +337,7 @@ class _InspectionImagesScreenState extends State<InspectionImagesScreen> {
                                         width: 300,
                                       ),
                                     ),
-                                    onTap: () => _showDialog(index),
+                                    onTap: () => _showDialog(index, '2'),
                                   ),
                                 );
                               },

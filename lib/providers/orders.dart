@@ -334,6 +334,12 @@ class Orders with ChangeNotifier {
     return order;
   }
 
+  void changeorderstatus(String id, OrderItem order) {
+    var index = _items.indexWhere((order) => order.id == id);
+    _items[index] = order;
+    notifyListeners();
+  }
+
   Future<void> getservices(String bookingId) async {
     final url =
         'http://stage.protto.in/api/shivangi/getservicetype.php/$bookingId';
@@ -394,7 +400,7 @@ class Orders with ChangeNotifier {
 
   Future<void> getjobs(String bookingId) async {
     final url =
-        'http://stage.protto.in/api/shivangi/getjobs.php?booking_id=$bookingId&approved=0';
+        'http://stage.protto.in/api/shivangi/getjobs.php?booking_id=$bookingId';
     final response = await http.get(url);
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     if (extractedData['count'] != '0') {
