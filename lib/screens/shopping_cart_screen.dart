@@ -571,13 +571,13 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
 
   List<String> _getTime() {
     if (DateTime.now().hour >= 15 || DateTime.now().hour < 9) {
-      return ['9-11', '11-1', '1-3', '3-5'];
+      return ['9 AM - 11 AM', '11 AM - 1 PM', '1 PM - 3 PM', '3 PM - 5 PM'];
     } else if (DateTime.now().hour >= 9 && DateTime.now().hour < 11) {
-      return ['11-1', '1-3', '3-5'];
+      return ['11 AM - 1 PM', '1 PM - 3 PM', '3 PM - 5 PM'];
     } else if (DateTime.now().hour >= 11 && DateTime.now().hour < 13) {
-      return ['1-3', '3-5'];
+      return ['1 PM - 3 PM', '3 PM - 5 PM'];
     } else {
-      return ['3-5'];
+      return ['3 PM - 5 PM'];
     }
   }
 
@@ -1309,10 +1309,10 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                     _date == null ? 'Date' : _date,
                                     style: TextStyle(
                                       fontFamily: 'SourceSansPro',
-                                      fontSize: 16,
-                                      //color: Color.fromRGBO(128, 128, 128, 1),
+                                      fontSize: 14,
+                                      color: Color.fromRGBO(128, 128, 128, 1),
                                     ),
-                                    textAlign: TextAlign.left,
+                                    //textAlign: TextAlign.left,
                                   ),
                                 ),
                                 elevation: 0,
