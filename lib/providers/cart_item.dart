@@ -29,12 +29,15 @@ class Cart with ChangeNotifier {
     return _items.indexWhere((cartitem) => cartitem.type == type);
   }
 
+  String getId(int index) {
+    return _items[index].id;
+  }
+
   double getTotal() {
     var total = 0.0;
     _items.forEach((item) {
       total = total + item.price;
     });
-
     return total;
   }
 
@@ -44,7 +47,14 @@ class Cart with ChangeNotifier {
   }
 
   void removeItem(CartItem item) {
-    _items.remove(item);
+    var index = _items.indexWhere((cart) => cart.id == item.id);
+    _items.removeAt(index);
+    notifyListeners();
+  }
+
+  void replaceItem(CartItem item) {
+    var index = _items.indexWhere((cart) => cart.service == 'Regular Service');
+    _items[index] = item;
     notifyListeners();
   }
 

@@ -52,17 +52,18 @@ class _ServiceScreenState extends State<ServiceScreen> {
   void retry() async {
     try {
       final activeBike = Provider.of<Bikes>(context, listen: false).activeBike;
+      Provider.of<Bikes>(context, listen: false).startLoad();
       await Provider.of<Bikes>(context, listen: false)
           .getRgPrice(activeBike.brand, activeBike.model);
+      Provider.of<Bikes>(context, listen: false).endLoad();
       setState(() {
-        _isLoading = false;
         _isInternet = true;
       });
     } catch (error) {
       print(error.message);
       if (error.message.toString().contains('Failed host lookup')) {
+        Provider.of<Bikes>(context, listen: false).endLoad();
         setState(() {
-          _isLoading = false;
           _isInternet = false;
         });
       }
@@ -70,37 +71,33 @@ class _ServiceScreenState extends State<ServiceScreen> {
   }
 
   var _isInit = true;
-  var _isLoading = false;
+  var _isLoading;
   var _isInternet = true;
 
   @override
   void didChangeDependencies() async {
+    _isLoading = Provider.of<Bikes>(context, listen: false).loadServices;
     if (_isInit) {
-      final activeBike = Provider.of<Bikes>(context).activeBike;
-      if (activeBike != null) {
-        setState(() {
-          _isLoading = true;
-          _isInternet = true;
-        });
-        try {
-          await Provider.of<Bikes>(context, listen: false)
-              .getRgPrice(activeBike.brand, activeBike.model);
+      if (_isLoading) {
+        final activeBike = Provider.of<Bikes>(context).activeBike;
+        if (activeBike != null) {
           setState(() {
-            _isLoading = false;
+            _isInternet = true;
           });
-        } catch (error) {
-          print(error.message);
-          if (error.message.toString().contains('Failed host lookup')) {
-            setState(() {
-              _isLoading = false;
-              _isInternet = false;
-            });
+          try {
+            await Provider.of<Bikes>(context, listen: false)
+                .getRgPrice(activeBike.brand, activeBike.model);
+            Provider.of<Bikes>(context, listen: false).endLoad();
+          } catch (error) {
+            print(error.message);
+            if (error.message.toString().contains('Failed host lookup')) {
+              Provider.of<Bikes>(context, listen: false).endLoad();
+              setState(() {
+                _isInternet = false;
+              });
+            }
           }
         }
-      } else {
-        setState(() {
-          _isLoading = false;
-        });
       }
     }
     _isInit = false;

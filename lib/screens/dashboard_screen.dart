@@ -207,7 +207,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(26, 0, 0, 5),
+                  padding: EdgeInsets.fromLTRB(22, 0, 0, 5),
                   child: Text(
                     'Popular Services',
                     style: TextStyle(

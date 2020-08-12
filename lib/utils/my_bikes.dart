@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/bikes.dart';
 import '../screens/edit_bike_screen.dart';
 import './no_internet_dialog.dart';
+import '../providers/cart_item.dart';
 
 class MyBikes extends StatefulWidget {
   @override
@@ -304,7 +305,8 @@ class _MyBikesState extends State<MyBikes> {
                   });
                   try {
                     await Provider.of<Bikes>(context, listen: false)
-                        .changeActive(bike);
+                        .changeActive(
+                            bike, Provider.of<Cart>(context, listen: false));
                     setState(() {
                       _isLoading = false;
                     });

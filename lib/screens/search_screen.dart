@@ -18,17 +18,15 @@ class _SearchScreenState extends State<SearchScreen> {
   List<CartItem> services = [];
 
   void retry() async {
+    Provider.of<Bikes>(context, listen: false).startLoad();
     try {
       final activeBike = Provider.of<Bikes>(context, listen: false).activeBike;
       setState(() {
-        _isLoading = true;
         _isInternet = true;
       });
       await Provider.of<Bikes>(context, listen: false)
           .getRgPrice(activeBike.brand, activeBike.model);
-      setState(() {
-        _isLoading = false;
-      });
+      Provider.of<Bikes>(context, listen: false).endLoad();
       services = [
         CartItem(
           id: DateTime.now().toString(),
@@ -81,8 +79,8 @@ class _SearchScreenState extends State<SearchScreen> {
     } catch (error) {
       print(error.message);
       if (error.message.toString().contains('Failed host lookup')) {
+        Provider.of<Bikes>(context, listen: false).endLoad();
         setState(() {
-          _isLoading = false;
           _isInternet = false;
         });
       }
@@ -91,86 +89,138 @@ class _SearchScreenState extends State<SearchScreen> {
 
   var display = List<CartItem>();
   var _isInit = true;
-  var _isLoading = false;
+  var _isLoading;
   var _isInternet = true;
 
   @override
   void didChangeDependencies() async {
+    _isLoading = Provider.of<Bikes>(context, listen: false).loadServices;
     if (_isInit) {
       final activeBike = Provider.of<Bikes>(context).activeBike;
-      if (activeBike != null) {
-        try {
-          setState(() {
-            _isLoading = true;
-            _isInternet = true;
-          });
-          await Provider.of<Bikes>(context, listen: false)
-              .getRgPrice(activeBike.brand, activeBike.model);
-          setState(() {
-            _isLoading = false;
-          });
-          services = [
-            CartItem(
-              id: DateTime.now().toString(),
-              service: 'Regular Service',
-              type: 'PRODRY',
-              price: activeBike != null
-                  ? double.parse(
-                      Provider.of<Bikes>(context, listen: false).proDry)
-                  : 0.0,
-            ),
-            CartItem(
-              id: DateTime.now().toString(),
-              service: 'Regular Service',
-              type: 'PROWET',
-              price: activeBike != null
-                  ? double.parse(
-                      Provider.of<Bikes>(context, listen: false).proWet)
-                  : 0.0,
-            ),
-            CartItem(
-              id: DateTime.now().toString(),
-              service: 'Custom Repairs',
-              type: 'Insurance Claim',
-              price: activeBike != null ? 149.0 : 0.0,
-            ),
-            CartItem(
-              id: DateTime.now().toString(),
-              service: 'Custom Repairs',
-              type: 'Brake Inspection',
-              price: activeBike != null ? 149.0 : 0.0,
-            ),
-            CartItem(
-              id: DateTime.now().toString(),
-              service: 'Custom Repairs',
-              type: 'Electrical Inspection',
-              price: activeBike != null ? 149.0 : 0.0,
-            ),
-            CartItem(
-              id: DateTime.now().toString(),
-              service: 'Custom Repairs',
-              type: 'Clutch Inspection',
-              price: activeBike != null ? 149.0 : 0.0,
-            ),
-            CartItem(
-              id: DateTime.now().toString(),
-              service: 'Custom Repairs',
-              type: 'Other',
-              price: activeBike != null ? 149.0 : 0.0,
-            ),
-          ];
-          display.addAll(services);
-        } catch (error) {
-          print(error.message);
-          if (error.message.toString().contains('Failed host lookup')) {
+      if (_isLoading) {
+        if (activeBike != null) {
+          try {
             setState(() {
-              _isLoading = false;
-              _isInternet = false;
+              _isInternet = true;
             });
+            await Provider.of<Bikes>(context, listen: false)
+                .getRgPrice(activeBike.brand, activeBike.model);
+            Provider.of<Bikes>(context, listen: false).endLoad();
+            services = [
+              CartItem(
+                id: DateTime.now().toString(),
+                service: 'Regular Service',
+                type: 'PRODRY',
+                price: activeBike != null
+                    ? double.parse(
+                        Provider.of<Bikes>(context, listen: false).proDry)
+                    : 0.0,
+              ),
+              CartItem(
+                id: DateTime.now().toString(),
+                service: 'Regular Service',
+                type: 'PROWET',
+                price: activeBike != null
+                    ? double.parse(
+                        Provider.of<Bikes>(context, listen: false).proWet)
+                    : 0.0,
+              ),
+              CartItem(
+                id: DateTime.now().toString(),
+                service: 'Custom Repairs',
+                type: 'Insurance Claim',
+                price: activeBike != null ? 149.0 : 0.0,
+              ),
+              CartItem(
+                id: DateTime.now().toString(),
+                service: 'Custom Repairs',
+                type: 'Brake Inspection',
+                price: activeBike != null ? 149.0 : 0.0,
+              ),
+              CartItem(
+                id: DateTime.now().toString(),
+                service: 'Custom Repairs',
+                type: 'Electrical Inspection',
+                price: activeBike != null ? 149.0 : 0.0,
+              ),
+              CartItem(
+                id: DateTime.now().toString(),
+                service: 'Custom Repairs',
+                type: 'Clutch Inspection',
+                price: activeBike != null ? 149.0 : 0.0,
+              ),
+              CartItem(
+                id: DateTime.now().toString(),
+                service: 'Custom Repairs',
+                type: 'Other',
+                price: activeBike != null ? 149.0 : 0.0,
+              ),
+            ];
+            display.addAll(services);
+          } catch (error) {
+            print(error.message);
+            if (error.message.toString().contains('Failed host lookup')) {
+              Provider.of<Bikes>(context, listen: false).endLoad();
+              setState(() {
+                _isInternet = false;
+              });
+            }
           }
+        } else {
+          services = [];
         }
       } else {
-        services = [];
+        services = [
+          CartItem(
+            id: DateTime.now().toString(),
+            service: 'Regular Service',
+            type: 'PRODRY',
+            price: activeBike != null
+                ? double.parse(
+                    Provider.of<Bikes>(context, listen: false).proDry)
+                : 0.0,
+          ),
+          CartItem(
+            id: DateTime.now().toString(),
+            service: 'Regular Service',
+            type: 'PROWET',
+            price: activeBike != null
+                ? double.parse(
+                    Provider.of<Bikes>(context, listen: false).proWet)
+                : 0.0,
+          ),
+          CartItem(
+            id: DateTime.now().toString(),
+            service: 'Custom Repairs',
+            type: 'Insurance Claim',
+            price: activeBike != null ? 149.0 : 0.0,
+          ),
+          CartItem(
+            id: DateTime.now().toString(),
+            service: 'Custom Repairs',
+            type: 'Brake Inspection',
+            price: activeBike != null ? 149.0 : 0.0,
+          ),
+          CartItem(
+            id: DateTime.now().toString(),
+            service: 'Custom Repairs',
+            type: 'Electrical Inspection',
+            price: activeBike != null ? 149.0 : 0.0,
+          ),
+          CartItem(
+            id: DateTime.now().toString(),
+            service: 'Custom Repairs',
+            type: 'Clutch Inspection',
+            price: activeBike != null ? 149.0 : 0.0,
+          ),
+          CartItem(
+            id: DateTime.now().toString(),
+            service: 'Custom Repairs',
+            type: 'Other',
+            price: activeBike != null ? 149.0 : 0.0,
+          ),
+        ];
+        display.addAll(services);
       }
     }
     _isInit = false;
