@@ -5,7 +5,7 @@ import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/http_exception.dart';
 import '../screens/dashboard_screen.dart';
@@ -208,7 +208,7 @@ class UserProfile with ChangeNotifier {
     return digest.toString();
   }
 
-  Future<bool> tryAutoLogin(String deviceToken) async {
+  Future<bool> tryAutoLogin() async {
     final prefs = await SharedPreferences.getInstance();
     if (!prefs.containsKey('userData')) {
       return false;
@@ -231,34 +231,37 @@ class UserProfile with ChangeNotifier {
       _token = extractedUserData['token'];
       _number = extractedUserData['number'];
       notifyListeners();
-      var url2 =
-          'https://sns.ap-south-1.amazonaws.com/?Action=CreatePlatformEndpoint&PlatformApplicationArn=arn:aws:sns:ap-south-1:212753112725:app/GCM/Protto&Token=$deviceToken';
-      var datetime = DateFormat('yyyyMMdd').format(DateTime.now());
-      var datetime2 = DateFormat('HHmmss').format(DateTime.now());
-      var canonicalRequest =
-          'GET\n/\nAction=CreatePlatformEndpoint&PlatformApplicationArn=arn%3Aaws%3Asns%3Aap-south-1%3A212753112725%3Aapp%2FGCM%2FProtto&Token=$deviceToken&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATDCIS32KUIQYQJI2%2F$datetime%2Fap-south-1%2Fsns%2Faws4_request&X-Amz-Date=${datetime}T${datetime2}Z&X-Amz-SignedHeaders=accept%3Bhost%3Bx-amz-content-sha256%3Bx-amz-date\naccept:application/json\nhost:sns.ap-south-1.amazonaws.com\nx-amz-content-sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nx-amz-date:${datetime}T${datetime2}Z\n\naccept;host;x-amz-content-sha256;x-amz-date\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
-      var canonicalString = sha256.convert(utf8.encode(canonicalRequest));
-      var stringtosign =
-          'AWS4-HMAC-SHA256\n${datetime}T${datetime2}Z\n$datetime/ap-south-1/sns/aws4_request\n$canonicalString';
-      var signature = calcHmac(
-          calcHmac(
-              calcHmac(
-                  calcHmac("AWS4" + "bizA5nlN7efa2qSy8/HxCocppPyh8VFngz2oUYVj",
-                      '$datetime'),
-                  "ap-south-1"),
-              "sns"),
-          "aws4_request");
-      var finalSignature = calcHmac(signature, stringtosign);
-      final response2 = await http.get(url2, headers: <String, String>{
-        'Accept': 'application/json',
-        'x-amz-content-sha256':
-            'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
-        'Authorization':
-            'AWS4-HMAC-SHA256 Credential=AKIATDCIS32KUIQYQJI2/$datetime/ap-south-1/sns/aws4_request, SignedHeaders=accept;host;x-amz-content-sha256;x-amz-date, Signature=$finalSignature',
-        'x-amz-date': '${datetime}T${datetime2}Z',
-      });
-      final extractedData2 = json.decode(response2.body);
-      print(extractedData2);
+      // print(deviceToken);
+      // var encodedToken = Uri.encodeComponent(deviceToken);
+      // var url2 =
+      //     'https://sns.ap-south-1.amazonaws.com/?Action=CreatePlatformEndpoint&PlatformApplicationArn=arn:aws:sns:ap-south-1:212753112725:app/GCM/Protto&Token=$deviceToken';
+      // var datetime = DateFormat('yyyyMMdd').format(DateTime.now().toUtc());
+      // var datetime2 = DateFormat('HHmmss').format(DateTime.now().toUtc());
+      // var canonicalRequest =
+      //     'GET\n/\nAction=CreatePlatformEndpoint&PlatformApplicationArn=arn%3Aaws%3Asns%3Aap-south-1%3A212753112725%3Aapp%2FGCM%2FProtto&Token=$encodedToken&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATDCIS32KUIQYQJI2%2F$datetime%2Fap-south-1%2Fsns%2Faws4_request&X-Amz-Date=${datetime}T${datetime2}Z&X-Amz-SignedHeaders=accept%3Bhost%3Bx-amz-content-sha256%3Bx-amz-date\naccept:application/json\nhost:sns.ap-south-1.amazonaws.com\nx-amz-content-sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nx-amz-date:${datetime}T${datetime2}Z\n\naccept;host;x-amz-content-sha256;x-amz-date\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
+      // var canonicalString = sha256.convert(utf8.encode(canonicalRequest));
+      // var stringtosign =
+      //     'AWS4-HMAC-SHA256\n${datetime}T${datetime2}Z\n$datetime/ap-south-1/sns/aws4_request\n$canonicalString';
+      // var signature = calcHmac(
+      //     calcHmac(
+      //         calcHmac(
+      //             calcHmac("AWS4" + "bizA5nlN7efa2qSy8/HxCocppPyh8VFngz2oUYVj",
+      //                 '$datetime'),
+      //             "ap-south-1"),
+      //         "sns"),
+      //     "aws4_request");
+      // var finalSignature = calcHmac(signature, stringtosign);
+      // final response2 = await http.get(url2, headers: <String, String>{
+      //   'Accept': 'application/json',
+      //   'x-amz-content-sha256':
+      //       'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+      //   'Authorization':
+      //       'AWS4-HMAC-SHA256 Credential=AKIATDCIS32KUIQYQJI2/$datetime/ap-south-1/sns/aws4_request, SignedHeaders=accept;host;x-amz-content-sha256;x-amz-date, Signature=$finalSignature',
+      //   'x-amz-date': '${datetime}T${datetime2}Z',
+      // });
+      // final extractedData2 = json.decode(response2.body);
+      // print(finalSignature);
+      // print(extractedData2);
       return true;
     } catch (error) {
       throw error;

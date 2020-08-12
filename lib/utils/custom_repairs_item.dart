@@ -20,16 +20,30 @@ class CustomRepairsItem extends StatefulWidget {
 class CustomRepairsItemState extends State<CustomRepairsItem> {
   var swap;
   var item;
+  var _isInit = true;
 
   @override
-  void initState() {
-    item = CartItem(
-      id: DateTime.now().toString(),
-      price: widget.price,
-      service: 'Custom Repairs',
-      type: widget.type,
-    );
-    super.initState();
+  void didChangeDependencies() {
+    var cart = Provider.of<Cart>(context, listen: false);
+    if (_isInit) {
+      if (cart.findByType(widget.type) != -1) {
+        item = CartItem(
+          id: cart.getId(cart.findByType(widget.type)),
+          price: widget.price,
+          service: 'Custom Repairs',
+          type: widget.type,
+        );
+      } else {
+        item = CartItem(
+          id: DateTime.now().toString(),
+          price: widget.price,
+          service: 'Regular Service',
+          type: widget.type,
+        );
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   PageRouteBuilder customRepairsDetailPageRoute(CartItem cart) {
@@ -119,7 +133,7 @@ class CustomRepairsItemState extends State<CustomRepairsItem> {
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<Cart>(context);
+    final cart = Provider.of<Cart>(context, listen: false);
     final activebike = Provider.of<Bikes>(context, listen: false).activeBike;
     if (cart.findByType(widget.type) != -1) {
       swap = true;

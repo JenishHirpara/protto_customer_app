@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import './cart_item.dart';
 
 class Bike with ChangeNotifier {
   final String id;
@@ -28,6 +29,7 @@ class Bikes with ChangeNotifier {
   Bike _activeBike;
   String _proDry;
   String _proWet;
+  bool _loadServices = true;
 
   final String userId;
 
@@ -39,6 +41,10 @@ class Bikes with ChangeNotifier {
 
   List<String> get brands {
     return [..._brands];
+  }
+
+  bool get loadServices {
+    return _loadServices;
   }
 
   Bike get activeBike {
@@ -91,6 +97,9 @@ class Bikes with ChangeNotifier {
       }
     }
     _items = data;
+    if (_activeBike == null) {
+      _loadServices = false;
+    }
     notifyListeners();
   }
 
@@ -133,6 +142,7 @@ class Bikes with ChangeNotifier {
         active: "0",
         id: extractedData['Data']['bike_id'],
       );
+      _loadServices = true;
       _items.add(
         Bike(
           brand: newBike.brand,
@@ -166,6 +176,16 @@ class Bikes with ChangeNotifier {
       );
       notifyListeners();
     }
+  }
+
+  void startLoad() {
+    _loadServices = true;
+    notifyListeners();
+  }
+
+  void endLoad() {
+    _loadServices = false;
+    notifyListeners();
   }
 
   Future<void> updateBike({
@@ -212,7 +232,7 @@ class Bikes with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> changeActive(Bike bike) async {
+  Future<void> changeActive(Bike bike, Cart cart) async {
     if (_activeBike != null && bike.id != _activeBike.id) {
       var id1 = bike.id;
       var id2 = activeBike.id;
@@ -222,8 +242,8 @@ class Bikes with ChangeNotifier {
             'bikeid': id1,
             'bikeid2': id2,
           }));
+      _loadServices = true;
       _activeBike = bike;
-      notifyListeners();
     } else if (_activeBike == null) {
       var id = bike.id;
       const url = 'http://stage.protto.in/api/shivangi/setstatus.php';
@@ -231,8 +251,8 @@ class Bikes with ChangeNotifier {
           body: json.encode({
             'bikeid': id,
           }));
+      _loadServices = true;
       _activeBike = bike;
-      notifyListeners();
     } else if (bike.id == _activeBike.id) {
       var id = bike.id;
       const url = 'http://stage.protto.in/api/shivangi/setstatus.php';
@@ -242,12 +262,15 @@ class Bikes with ChangeNotifier {
           }));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       if (extractedData['status'] == '0') {
+        _loadServices = false;
         _activeBike = null;
       } else {
+        _loadServices = true;
         _activeBike = bike;
       }
-      notifyListeners();
     }
+    cart.resetCart();
+    notifyListeners();
   }
 
   Future<void> getRgPrice(String brand, String model) async {
@@ -265,6 +288,7 @@ class Bikes with ChangeNotifier {
     _brands.clear();
     _models.clear();
     _activeBike = null;
+    _loadServices = true;
     _proDry = null;
     _proWet = null;
     notifyListeners();

@@ -42,36 +42,58 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
   var deviceToken;
+  var _isInit = true;
+
+  // @override
+  // void initState() {
+  //   // firebaseMessaging.configure(
+  //   //   onLaunch: (Map<String, dynamic> msg) {
+  //   //     print("onLaunch called");
+  //   //   },
+  //   //   onResume: (Map<String, dynamic> msg) {
+  //   //     print("onResume called");
+  //   //   },
+  //   //   onMessage: (Map<String, dynamic> msg) {
+  //   //     print("onMessage called");
+  //   //   },
+  //   // );
+  //   firebaseMessaging.requestNotificationPermissions(
+  //     const IosNotificationSettings(
+  //       sound: true,
+  //       alert: true,
+  //       badge: true,
+  //     ),
+  //   );
+  //   firebaseMessaging.onIosSettingsRegistered
+  //       .listen((IosNotificationSettings settings) {
+  //     print('IOS setting registered');
+  //   });
+  //   firebaseMessaging.getToken().then((token) {
+  //     print(token);
+  //     deviceToken = token;
+  //   });
+  //   super.initState();
+  // }
 
   @override
-  void initState() {
-    // firebaseMessaging.configure(
-    //   onLaunch: (Map<String, dynamic> msg) {
-    //     print("onLaunch called");
-    //   },
-    //   onResume: (Map<String, dynamic> msg) {
-    //     print("onResume called");
-    //   },
-    //   onMessage: (Map<String, dynamic> msg) {
-    //     print("onMessage called");
-    //   },
-    // );
-    firebaseMessaging.requestNotificationPermissions(
-      const IosNotificationSettings(
-        sound: true,
-        alert: true,
-        badge: true,
-      ),
-    );
-    firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print('IOS setting registered');
-    });
-    firebaseMessaging.getToken().then((token) {
-      //print(token);
-      deviceToken = token;
-    });
-    super.initState();
+  void didChangeDependencies() async {
+    if (_isInit) {
+      await firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(
+          sound: true,
+          alert: true,
+          badge: true,
+        ),
+      );
+      firebaseMessaging.onIosSettingsRegistered
+          .listen((IosNotificationSettings settings) {
+        print('IOS setting registered');
+      });
+      var _token = await firebaseMessaging.getToken();
+      print(_token);
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   void retry() {
@@ -125,7 +147,7 @@ class _MyAppState extends State<MyApp> {
           home: profile.isAuth
               ? NavigationBarScreen()
               : FutureBuilder(
-                  future: profile.tryAutoLogin(deviceToken),
+                  future: profile.tryAutoLogin(),
                   builder: (ctx, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting)
                       return SplashScreen();

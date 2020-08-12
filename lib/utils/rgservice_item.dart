@@ -18,18 +18,32 @@ class RgServiceItem extends StatefulWidget {
 }
 
 class _RgServiceItemState extends State<RgServiceItem> {
-  var swap;
   var item;
+  var _isInit = true;
+  var swap;
 
   @override
-  void initState() {
-    item = CartItem(
-      id: DateTime.now().toString(),
-      price: widget.price,
-      service: 'Regular Service',
-      type: widget.type,
-    );
-    super.initState();
+  void didChangeDependencies() {
+    var cart = Provider.of<Cart>(context, listen: false);
+    if (_isInit) {
+      if (cart.findByType(widget.type) != -1) {
+        item = CartItem(
+          id: cart.getId(cart.findByType(widget.type)),
+          price: widget.price,
+          service: 'Regular Service',
+          type: widget.type,
+        );
+      } else {
+        item = CartItem(
+          id: DateTime.now().toString(),
+          price: widget.price,
+          service: 'Regular Service',
+          type: widget.type,
+        );
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   PageRouteBuilder rgDetailsPageRoute(CartItem cart) {
@@ -120,7 +134,9 @@ class _RgServiceItemState extends State<RgServiceItem> {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
+
     final activebike = Provider.of<Bikes>(context, listen: false).activeBike;
+    //var swap = widget.type == 'PRODRY' ? cart.swap1 : cart.swap2;
     if (cart.findByType(widget.type) != -1) {
       swap = true;
     } else {
@@ -191,8 +207,9 @@ class _RgServiceItemState extends State<RgServiceItem> {
                         : Text(
                             'Add',
                             style: TextStyle(
-                                fontFamily: 'SourceSansProSB',
-                                color: Colors.white),
+                              fontFamily: 'SourceSansProSB',
+                              color: Colors.white,
+                            ),
                           ),
                   ],
                 ),
@@ -201,15 +218,11 @@ class _RgServiceItemState extends State<RgServiceItem> {
                   if (activebike != null) {
                     if (cart.findByType('PRODRY') == -1 &&
                         cart.findByType('PROWET') == -1) {
-                      setState(() {
-                        swap = !swap;
-                      });
                       cart.addItem(item);
+                    } else if (cart.findByType(widget.type) != -1) {
+                      cart.removeItem(item);
                     } else {
-                      setState(() {
-                        swap = !swap;
-                        cart.removeItem(item);
-                      });
+                      cart.replaceItem(item);
                     }
                   } else {
                     _showPopup('No bike selected', 'Please select a bike');
