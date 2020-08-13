@@ -37,7 +37,7 @@ class CustomRepairsItemState extends State<CustomRepairsItem> {
         item = CartItem(
           id: DateTime.now().toString(),
           price: widget.price,
-          service: 'Regular Service',
+          service: 'Custom Repairs',
           type: widget.type,
         );
       }

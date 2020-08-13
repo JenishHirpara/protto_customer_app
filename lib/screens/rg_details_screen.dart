@@ -117,6 +117,7 @@ class RgDetailsScreenState extends State<RgDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var cart = Provider.of<Cart>(context, listen: false);
     return Scaffold(
       backgroundColor: backGroundColor,
       appBar: AppBar(
@@ -387,7 +388,9 @@ class RgDetailsScreenState extends State<RgDetailsScreen> {
                     height: 50,
                     width: MediaQuery.of(context).size.width * 1,
                     child: RaisedButton(
-                      color: Theme.of(context).primaryColor,
+                      color: cart.findByType(widget.cartitem.type) != -1
+                          ? Colors.green
+                          : Theme.of(context).primaryColor,
                       onPressed: () {
                         if (Provider.of<Cart>(context, listen: false)
                                     .findByType('PRODRY') ==
@@ -400,26 +403,25 @@ class RgDetailsScreenState extends State<RgDetailsScreen> {
                                 null) {
                           Provider.of<Cart>(context, listen: false)
                               .addItem(widget.cartitem);
-
-                          Scaffold.of(context).hideCurrentSnackBar();
-                          Scaffold.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Added item to cart!',
-                                style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                ),
-                              ),
-                              duration: Duration(seconds: 2),
-                              action: SnackBarAction(
-                                label: 'UNDO',
-                                onPressed: () {
-                                  Provider.of<Cart>(context, listen: false)
-                                      .deleteItem(widget.cartitem.id);
-                                },
-                              ),
-                            ),
-                          );
+                          // Scaffold.of(context).hideCurrentSnackBar();
+                          // Scaffold.of(context).showSnackBar(
+                          //   SnackBar(
+                          //     content: Text(
+                          //       'Added item to cart!',
+                          //       style: TextStyle(
+                          //         fontFamily: 'SourceSansPro',
+                          //       ),
+                          //     ),
+                          //     duration: Duration(seconds: 3),
+                          //     action: SnackBarAction(
+                          //       label: 'UNDO',
+                          //       onPressed: () {
+                          //         Provider.of<Cart>(context, listen: false)
+                          //             .deleteItem(widget.cartitem.id);
+                          //       },
+                          //     ),
+                          //   ),
+                          // );
                         } else if (Provider.of<Bikes>(context, listen: false)
                                 .activeBike ==
                             null) {
@@ -456,20 +458,25 @@ class RgDetailsScreenState extends State<RgDetailsScreen> {
                               );
                             },
                           );
+                        } else if (cart.findByType(widget.cartitem.type) !=
+                            -1) {
+                          cart.removeItem(widget.cartitem);
                         } else {
-                          Scaffold.of(context).hideCurrentSnackBar();
-                          Scaffold.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Item cannot be added',
-                                style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                ),
-                              ),
-                              duration: Duration(seconds: 2),
-                            ),
-                          );
+                          cart.replaceItem(widget.cartitem);
+                          // Scaffold.of(context).hideCurrentSnackBar();
+                          // Scaffold.of(context).showSnackBar(
+                          //   SnackBar(
+                          //     content: Text(
+                          //       'Item cannot be added',
+                          //       style: TextStyle(
+                          //         fontFamily: 'SourceSansPro',
+                          //       ),
+                          //     ),
+                          //     duration: Duration(seconds: 2),
+                          //   ),
+                          // );
                         }
+                        setState(() {});
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -490,7 +497,9 @@ class RgDetailsScreenState extends State<RgDetailsScreen> {
                           Padding(
                             padding: EdgeInsets.fromLTRB(0, 5, 10, 5),
                             child: Text(
-                              'Add To Cart',
+                              cart.findByType(widget.cartitem.type) != -1
+                                  ? 'Added to Cart'
+                                  : 'Add To Cart',
                               style: TextStyle(
                                 fontFamily: 'SourceSansProSB',
                                 fontSize: 18,

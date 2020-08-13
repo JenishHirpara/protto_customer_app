@@ -4,10 +4,6 @@ import 'package:provider/provider.dart';
 import '../providers/cart_item.dart';
 
 class ShoppingCartItem extends StatelessWidget {
-  final Function couponDialog;
-
-  ShoppingCartItem(this.couponDialog);
-
   @override
   Widget build(BuildContext context) {
     final cartitem = Provider.of<CartItem>(context);

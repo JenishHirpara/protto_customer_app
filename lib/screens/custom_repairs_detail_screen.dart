@@ -141,6 +141,7 @@ class CustomRepairsDetailScreenState extends State<CustomRepairsDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var cart = Provider.of<Cart>(context, listen: false);
     return Scaffold(
       backgroundColor: backGroundColor,
       appBar: AppBar(
@@ -348,7 +349,9 @@ class CustomRepairsDetailScreenState extends State<CustomRepairsDetailScreen> {
                     height: 50,
                     width: double.infinity,
                     child: RaisedButton(
-                      color: Theme.of(context).primaryColor,
+                      color: cart.findByType(widget.cartitem.type) != -1
+                          ? Colors.green
+                          : Theme.of(context).primaryColor,
                       onPressed: () {
                         if (Provider.of<Cart>(context, listen: false)
                                     .findByType(widget.cartitem.type) ==
@@ -358,25 +361,25 @@ class CustomRepairsDetailScreenState extends State<CustomRepairsDetailScreen> {
                                 null) {
                           Provider.of<Cart>(context, listen: false)
                               .addItem(widget.cartitem);
-                          Scaffold.of(context).hideCurrentSnackBar();
-                          Scaffold.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Added item to cart!',
-                                style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                ),
-                              ),
-                              duration: Duration(seconds: 2),
-                              action: SnackBarAction(
-                                label: 'UNDO',
-                                onPressed: () {
-                                  Provider.of<Cart>(context, listen: false)
-                                      .deleteItem(widget.cartitem.id);
-                                },
-                              ),
-                            ),
-                          );
+                          // Scaffold.of(context).hideCurrentSnackBar();
+                          // Scaffold.of(context).showSnackBar(
+                          //   SnackBar(
+                          //     content: Text(
+                          //       'Added item to cart!',
+                          //       style: TextStyle(
+                          //         fontFamily: 'SourceSansPro',
+                          //       ),
+                          //     ),
+                          //     duration: Duration(seconds: 2),
+                          //     action: SnackBarAction(
+                          //       label: 'UNDO',
+                          //       onPressed: () {
+                          //         Provider.of<Cart>(context, listen: false)
+                          //             .deleteItem(widget.cartitem.id);
+                          //       },
+                          //     ),
+                          //   ),
+                          // );
                         } else if (Provider.of<Bikes>(context, listen: false)
                                 .activeBike ==
                             null) {
@@ -413,20 +416,25 @@ class CustomRepairsDetailScreenState extends State<CustomRepairsDetailScreen> {
                               );
                             },
                           );
+                        } else if (cart.findByType(widget.cartitem.type) !=
+                            -1) {
+                          cart.removeItem(widget.cartitem);
                         } else {
-                          Scaffold.of(context).hideCurrentSnackBar();
-                          Scaffold.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Item cannot be added',
-                                style: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                ),
-                              ),
-                              duration: Duration(seconds: 2),
-                            ),
-                          );
+                          cart.replaceItem(widget.cartitem);
+                          // Scaffold.of(context).hideCurrentSnackBar();
+                          // Scaffold.of(context).showSnackBar(
+                          //   SnackBar(
+                          //     content: Text(
+                          //       'Item cannot be added',
+                          //       style: TextStyle(
+                          //         fontFamily: 'SourceSansPro',
+                          //       ),
+                          //     ),
+                          //     duration: Duration(seconds: 2),
+                          //   ),
+                          // );
                         }
+                        setState(() {});
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -447,7 +455,9 @@ class CustomRepairsDetailScreenState extends State<CustomRepairsDetailScreen> {
                           Padding(
                             padding: EdgeInsets.fromLTRB(0, 5, 10, 5),
                             child: Text(
-                              'Add To Cart',
+                              cart.findByType(widget.cartitem.type) != -1
+                                  ? 'Added to Cart'
+                                  : 'Add To Cart',
                               style: TextStyle(
                                 fontFamily: 'SourceSansProSB',
                                 fontSize: 18,
