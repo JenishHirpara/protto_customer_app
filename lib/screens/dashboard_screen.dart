@@ -238,9 +238,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       width: double.infinity,
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {
-          return Image.asset(
-            imagesList[index],
-            fit: BoxFit.cover,
+          return InkWell(
+            child: Image.asset(
+              imagesList[index],
+              fit: BoxFit.cover,
+            ),
+            onTap: () {
+              Navigator.of(context).push(pageRouteBuilder(0));
+            },
           );
         },
         autoplay: true,

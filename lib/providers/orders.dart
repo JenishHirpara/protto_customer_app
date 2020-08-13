@@ -29,6 +29,7 @@ class OrderItem with ChangeNotifier {
   final String paid;
   final String ssName;
   final String specialRequest;
+  final String deId;
 
   OrderItem({
     @required this.id,
@@ -48,6 +49,7 @@ class OrderItem with ChangeNotifier {
     @required this.paid,
     @required this.ssName,
     @required this.specialRequest,
+    @required this.deId,
     this.make,
     this.model,
     this.bikeNumber,
@@ -174,6 +176,7 @@ class Orders with ChangeNotifier {
           flat: extractedData1['data'][i]['flat'],
           landmark: extractedData1['data'][i]['landmark'],
           ssName: extractedData1['data'][i]['ss_name'],
+          deId: extractedData1['data'][i]['de_id'],
           approveJobs: extractedData1['data'][i]['job_approve'],
           total: extractedData1['data'][i]['total'],
           specialRequest: extractedData1['data'][i]['special_request'],
@@ -229,6 +232,7 @@ class Orders with ChangeNotifier {
       rideable: extractedData['data']['rideable'],
       serviceType: extractedData['data']['service_type'],
       ssName: extractedData['data']['ss_name'],
+      deId: extractedData['data']['de_id'],
       time: extractedData['data']['timestamp'],
       total: extractedData['data']['total'],
       bikeNumber: order.bikeNumber,
@@ -314,6 +318,7 @@ class Orders with ChangeNotifier {
         serviceType: order.serviceType,
         specialRequest: order.specialRequest,
         ssName: order.ssName,
+        deId: '0',
         rideable: order.rideable,
         status: order.status,
         total: order.total,
@@ -382,6 +387,7 @@ class Orders with ChangeNotifier {
         rideable: order.rideable,
         serviceType: order.serviceType,
         ssName: order.ssName,
+        deId: order.deId,
         total: order.total,
         paid: order.paid,
         approveJobs: order.approveJobs,
@@ -452,6 +458,7 @@ class Orders with ChangeNotifier {
       specialRequest: item.specialRequest,
       serviceType: item.serviceType,
       ssName: item.ssName,
+      deId: item.deId,
       time: item.time,
       bikeNumber: item.bikeNumber,
       bikeYear: item.bikeYear,
@@ -472,16 +479,16 @@ class Orders with ChangeNotifier {
         }));
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     if (extractedData['message'] == 'please update status of your booking') {
-      return 'Please swipe down and refresh the page to update status and then try again';
+      return 'Please refresh the page and then try again';
     }
-    if (extractedData['message'] == 'otp cannot be approved right now') {
+    if (extractedData['message'] == 'OTP cannot be approved right now!') {
       return extractedData['message'];
     }
-    if (extractedData['message'] == 'Invalid OTP') {
-      return 'Incorrect otp';
+    if (extractedData['message'] == 'Invalid OTP!') {
+      return 'Incorrect OTP';
     }
     if (extractedData['message'] == 'otp approved') {
-      return 'Otp verification successful!';
+      return 'Otp approved!';
     }
     return 'some error';
   }

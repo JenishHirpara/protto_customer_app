@@ -288,7 +288,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                         builder: (ctx) {
                           return Dialog(
                             child: Container(
-                              height: 220,
+                              height: 190,
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(30, 0, 30, 10),
                                 child: Column(
@@ -303,7 +303,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                                         fontSize: 22,
                                       ),
                                     ),
-                                    SizedBox(height: 40),
+                                    SizedBox(height: 20),
                                     Container(
                                       height: 45,
                                       width: 100,
@@ -393,39 +393,41 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               ),
             ),
             SizedBox(height: 10),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.35,
-              height: 30,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Theme.of(context).primaryColor,
-                  width: 1.2,
-                ),
-                borderRadius: BorderRadius.circular(4.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey[400],
-                    spreadRadius: 0.0,
-                    offset: Offset(2.0, 2.0), //(x,y)
-                    blurRadius: 4.0,
-                  ),
-                ],
-              ),
-              child: FlatButton(
-                color: Color.fromRGBO(250, 250, 250, 1),
-                child: Text(
-                  'Reschedule',
-                  style: TextStyle(
-                    fontFamily: 'SourceSansProSB',
-                    color: Color.fromRGBO(112, 112, 112, 0.7),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      rescheduleRoute(_order == null ? widget.order : _order));
-                },
-              ),
-            ),
+            (_order == null ? widget.order.deId : _order.deId) == '0'
+                ? Container(
+                    width: MediaQuery.of(context).size.width * 0.35,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Theme.of(context).primaryColor,
+                        width: 1.2,
+                      ),
+                      borderRadius: BorderRadius.circular(4.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey[400],
+                          spreadRadius: 0.0,
+                          offset: Offset(2.0, 2.0), //(x,y)
+                          blurRadius: 4.0,
+                        ),
+                      ],
+                    ),
+                    child: FlatButton(
+                      color: Color.fromRGBO(250, 250, 250, 1),
+                      child: Text(
+                        'Reschedule',
+                        style: TextStyle(
+                          fontFamily: 'SourceSansProSB',
+                          color: Color.fromRGBO(112, 112, 112, 0.7),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(rescheduleRoute(
+                            _order == null ? widget.order : _order));
+                      },
+                    ),
+                  )
+                : Container(),
           ],
         ),
         date: _order == null ? widget.order.date : _order.date,
@@ -494,36 +496,38 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               ),
             ),
             SizedBox(height: 10),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.35,
-              height: 30,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Theme.of(context).primaryColor,
-                  width: 1.2,
-                ),
-                borderRadius: BorderRadius.circular(4.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey[400],
-                    spreadRadius: 0.0,
-                    offset: Offset(2.0, 2.0), //(x,y)
-                    blurRadius: 4.0,
+            int.parse(_order == null ? widget.order.status : _order.status) >= 3
+                ? Container()
+                : Container(
+                    width: MediaQuery.of(context).size.width * 0.35,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Theme.of(context).primaryColor,
+                        width: 1.2,
+                      ),
+                      borderRadius: BorderRadius.circular(4.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey[400],
+                          spreadRadius: 0.0,
+                          offset: Offset(2.0, 2.0), //(x,y)
+                          blurRadius: 4.0,
+                        ),
+                      ],
+                    ),
+                    child: FlatButton(
+                      color: Color.fromRGBO(250, 250, 250, 1),
+                      child: Text(
+                        'OTP',
+                        style: TextStyle(
+                          fontFamily: 'SourcsSansProSB',
+                          color: Color.fromRGBO(112, 112, 112, 0.7),
+                        ),
+                      ),
+                      onPressed: showPopUp,
+                    ),
                   ),
-                ],
-              ),
-              child: FlatButton(
-                color: Color.fromRGBO(250, 250, 250, 1),
-                child: Text(
-                  'OTP',
-                  style: TextStyle(
-                    fontFamily: 'SourcsSansProSB',
-                    color: Color.fromRGBO(112, 112, 112, 0.7),
-                  ),
-                ),
-                onPressed: showPopUp,
-              ),
-            ),
           ],
         ),
         date: _order == null ? widget.order.date : _order.date,
@@ -657,36 +661,38 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
               ),
             ),
             SizedBox(height: 10),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.35,
-              height: 30,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Theme.of(context).primaryColor,
-                  width: 1.2,
-                ),
-                borderRadius: BorderRadius.circular(4.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey[400],
-                    spreadRadius: 0.0,
-                    offset: Offset(2.0, 2.0), //(x,y)
-                    blurRadius: 4.0,
+            int.parse(_order == null ? widget.order.status : _order.status) == 9
+                ? Container()
+                : Container(
+                    width: MediaQuery.of(context).size.width * 0.35,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Theme.of(context).primaryColor,
+                        width: 1.2,
+                      ),
+                      borderRadius: BorderRadius.circular(4.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey[400],
+                          spreadRadius: 0.0,
+                          offset: Offset(2.0, 2.0), //(x,y)
+                          blurRadius: 4.0,
+                        ),
+                      ],
+                    ),
+                    child: FlatButton(
+                      color: Color.fromRGBO(250, 250, 250, 1),
+                      child: Text(
+                        'OTP',
+                        style: TextStyle(
+                          fontFamily: 'SourcsSansProSB',
+                          color: Color.fromRGBO(112, 112, 112, 0.7),
+                        ),
+                      ),
+                      onPressed: showPopUp,
+                    ),
                   ),
-                ],
-              ),
-              child: FlatButton(
-                color: Color.fromRGBO(250, 250, 250, 1),
-                child: Text(
-                  'OTP',
-                  style: TextStyle(
-                    fontFamily: 'SourcsSansProSB',
-                    color: Color.fromRGBO(112, 112, 112, 0.7),
-                  ),
-                ),
-                onPressed: showPopUp,
-              ),
-            ),
           ],
         ),
         date: _order == null ? widget.order.date : _order.date,

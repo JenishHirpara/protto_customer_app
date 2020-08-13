@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:protto_customer_app/providers/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -414,6 +415,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         total: _orderItem.total,
         paid: _orderItem.paid,
         ssName: _orderItem.ssName,
+        deId: _orderItem.deId,
         make: Provider.of<Bikes>(context, listen: false).activeBike.brand,
         model: Provider.of<Bikes>(context, listen: false).activeBike.model,
         status: _orderItem.status,
@@ -503,8 +505,9 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       paid: '',
       serviceType: services,
       ssName: null,
+      deId: null,
       date: null,
-      deliveryType: '',
+      deliveryType: 'Pick & Drop',
       time: '',
     );
     super.initState();
@@ -561,6 +564,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         approveJobs: _orderItem.approveJobs,
         rideable: _orderItem.rideable,
         ssName: _orderItem.ssName,
+        deId: _orderItem.deId,
         serviceType: _orderItem.serviceType,
         date: chosenDate,
         time: _orderItem.time,
@@ -570,14 +574,18 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   }
 
   List<String> _getTime() {
-    if (DateTime.now().hour >= 15 || DateTime.now().hour < 9) {
-      return ['9 AM - 11 AM', '11 AM - 1 PM', '1 PM - 3 PM', '3 PM - 5 PM'];
-    } else if (DateTime.now().hour >= 9 && DateTime.now().hour < 11) {
-      return ['11 AM - 1 PM', '1 PM - 3 PM', '3 PM - 5 PM'];
-    } else if (DateTime.now().hour >= 11 && DateTime.now().hour < 13) {
-      return ['1 PM - 3 PM', '3 PM - 5 PM'];
+    if (_date == DateFormat('yy-MM-dd').format(DateTime.now())) {
+      if (DateTime.now().hour >= 15 || DateTime.now().hour < 9) {
+        return ['9 AM - 11 AM', '11 AM - 1 PM', '1 PM - 3 PM', '3 PM - 5 PM'];
+      } else if (DateTime.now().hour >= 9 && DateTime.now().hour < 11) {
+        return ['11 AM - 1 PM', '1 PM - 3 PM', '3 PM - 5 PM'];
+      } else if (DateTime.now().hour >= 11 && DateTime.now().hour < 13) {
+        return ['1 PM - 3 PM', '3 PM - 5 PM'];
+      } else {
+        return ['3 PM - 5 PM'];
+      }
     } else {
-      return ['3 PM - 5 PM'];
+      return ['9 AM - 11 AM', '11 AM - 1 PM', '1 PM - 3 PM', '3 PM - 5 PM'];
     }
   }
 
@@ -668,6 +676,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         total: _getNewTotal(cart),
         paid: _orderItem.paid,
         ssName: _orderItem.ssName,
+        deId: _orderItem.deId,
         make: Provider.of<Bikes>(context, listen: false).activeBike.brand,
         model: Provider.of<Bikes>(context, listen: false).activeBike.model,
         status: _orderItem.status,
@@ -928,7 +937,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       builder: (ctx) {
         return AlertDialog(
           title: Text(
-            'Coupon code activated. Minimum cart value should should be ₹ $minCartValue to enable this coupon',
+            'Coupon code activated.',
             style: TextStyle(
               color: Color.fromRGBO(128, 128, 128, 1),
               fontFamily: 'SourceSansProSB',
@@ -999,7 +1008,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                         itemBuilder: (context, i) =>
                             ChangeNotifierProvider.value(
                           value: cart.items[i],
-                          child: ShoppingCartItem(couponDialog),
+                          child: ShoppingCartItem(),
                         ),
                         itemCount: cart.items.length,
                       ),
@@ -1102,7 +1111,9 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 Radius.circular(4),
                               ),
                               borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
+                                color: _getDiscount(cart) == '0.0'
+                                    ? Theme.of(context).primaryColor
+                                    : Colors.green,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
@@ -1110,7 +1121,9 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 Radius.circular(0),
                               ),
                               borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
+                                color: _getDiscount(cart) == '0.0'
+                                    ? Theme.of(context).primaryColor
+                                    : Colors.green,
                               ),
                             ),
                             suffixIcon: Container(
@@ -1118,10 +1131,14 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                               padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
                               child: InkWell(
                                 child: Text(
-                                  'APPLY',
+                                  _getDiscount(cart) == '0.0'
+                                      ? 'APPLY'
+                                      : 'APPLIED',
                                   style: TextStyle(
                                     fontFamily: 'SourceSansProSB',
-                                    color: Theme.of(context).primaryColor,
+                                    color: _getDiscount(cart) == '0.0'
+                                        ? Theme.of(context).primaryColor
+                                        : Colors.green,
                                   ),
                                 ),
                                 onTap: () async {
@@ -1222,6 +1239,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20),
                               child: DropdownButtonFormField(
+                                value: 'Pick & Drop',
                                 elevation: 1,
                                 decoration: InputDecoration(
                                   focusColor: Color.fromRGBO(240, 240, 240, 1),
@@ -1241,7 +1259,9 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                     child: Text(
                                       value,
                                       style: TextStyle(
-                                          fontFamily: 'SourceSansPro'),
+                                        fontFamily: 'SourceSansPro',
+                                        fontSize: 14,
+                                      ),
                                     ),
                                     value: value,
                                   );
@@ -1270,6 +1290,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                     status: _orderItem.status,
                                     specialRequest: _orderItem.specialRequest,
                                     ssName: _orderItem.ssName,
+                                    deId: _orderItem.deId,
                                     approveJobs: _orderItem.approveJobs,
                                     rideable: _orderItem.rideable,
                                     serviceType: _orderItem.serviceType,
@@ -1310,7 +1331,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                     style: TextStyle(
                                       fontFamily: 'SourceSansPro',
                                       fontSize: 14,
-                                      color: Color.fromRGBO(128, 128, 128, 1),
                                     ),
                                     //textAlign: TextAlign.left,
                                   ),
@@ -1326,6 +1346,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 elevation: 1,
                                 decoration: InputDecoration(
                                   fillColor: Color.fromRGBO(240, 240, 240, 1),
+                                  focusColor: Color.fromRGBO(240, 240, 240, 1),
                                   filled: true,
                                   border: InputBorder.none,
                                   hintText: 'Time Slot',
@@ -1338,7 +1359,15 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 items:
                                     _getTime().map<DropdownMenuItem>((value) {
                                   return DropdownMenuItem<String>(
-                                      child: Text(value), value: value);
+                                    child: Text(
+                                      value,
+                                      style: TextStyle(
+                                        fontFamily: 'SourceSansPro',
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    value: value,
+                                  );
                                 }).toList(),
                                 validator: (value) {
                                   if (value == null) {
@@ -1360,6 +1389,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                     total: _orderItem.total,
                                     paid: _orderItem.paid,
                                     ssName: _orderItem.ssName,
+                                    deId: _orderItem.deId,
                                     make: _orderItem.make,
                                     model: _orderItem.model,
                                     status: _orderItem.status,
@@ -1400,7 +1430,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                   hintText: 'Any Special Request',
                                   hintStyle: TextStyle(
                                     fontFamily: 'SourceSansPro',
-                                    color: Color.fromRGBO(128, 128, 128, 1),
                                     fontSize: 14,
                                   ),
                                 ),
@@ -1418,6 +1447,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                     total: _orderItem.total,
                                     paid: _orderItem.paid,
                                     ssName: _orderItem.ssName,
+                                    deId: _orderItem.deId,
                                     make: _orderItem.make,
                                     model: _orderItem.model,
                                     status: _orderItem.status,

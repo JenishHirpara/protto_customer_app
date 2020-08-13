@@ -218,30 +218,66 @@ class _ServiceScreenState extends State<ServiceScreen> {
 
   Widget regularServicesPage() {
     final activeBike = Provider.of<Bikes>(context).activeBike;
-    return GridView(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      children: <Widget>[
-        RgServiceItem(
-          price: activeBike != null
-              ? double.parse(Provider.of<Bikes>(context, listen: false).proDry)
-              : 0.0,
-          type: 'PRODRY',
-          image: 'assets/images/popular_service_1.png',
-        ),
-        RgServiceItem(
-          price: activeBike != null
-              ? double.parse(Provider.of<Bikes>(context, listen: false).proWet)
-              : 0.0,
-          type: 'PROWET',
-          image: 'assets/images/popular_service_2.png',
-        ),
-      ],
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 2 / 3,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          GridView(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              RgServiceItem(
+                price: activeBike != null
+                    ? double.parse(
+                        Provider.of<Bikes>(context, listen: false).proDry)
+                    : 0.0,
+                type: 'PRODRY',
+                image: 'assets/images/popular_service_1.png',
+              ),
+              RgServiceItem(
+                price: activeBike != null
+                    ? double.parse(
+                        Provider.of<Bikes>(context, listen: false).proWet)
+                    : 0.0,
+                type: 'PROWET',
+                image: 'assets/images/popular_service_2.png',
+              ),
+            ],
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 2 / 3,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
+          ),
+          SizedBox(height: 50),
+          Container(
+            height: 45,
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey[400],
+                  spreadRadius: 0.0,
+                  offset: Offset(2.0, 2.0), //(x,y)
+                  blurRadius: 4.0,
+                ),
+              ],
+            ),
+            child: RaisedButton(
+              color: Theme.of(context).primaryColor,
+              onPressed: () {
+                Navigator.of(context).push(shoppingCartRouteBuilder());
+              },
+              child: Text(
+                'Checkout',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+        ],
       ),
     );
   }
@@ -249,42 +285,74 @@ class _ServiceScreenState extends State<ServiceScreen> {
   Widget customRepairsPage() {
     final activeBike = Provider.of<Bikes>(context).activeBike;
     return SingleChildScrollView(
-      child: GridView(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        children: <Widget>[
-          CustomRepairsItem(
-            price: activeBike != null ? 149 : 0.0,
-            type: 'Insurance Claim',
-            image: 'assets/images/insurance_claim.png',
+      child: Column(
+        children: [
+          GridView(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              CustomRepairsItem(
+                price: activeBike != null ? 149 : 0.0,
+                type: 'Insurance Claim',
+                image: 'assets/images/insurance_claim.png',
+              ),
+              CustomRepairsItem(
+                price: activeBike != null ? 149 : 0.0,
+                type: 'Brake Inspection',
+                image: 'assets/images/brake_inspection.png',
+              ),
+              CustomRepairsItem(
+                price: activeBike != null ? 149 : 0.0,
+                type: 'Electrical Inspection',
+                image: 'assets/images/electrical_inspection.png',
+              ),
+              CustomRepairsItem(
+                price: activeBike != null ? 149 : 0.0,
+                type: 'Clutch Inspection',
+                image: 'assets/images/clutch_inspection.png',
+              ),
+              CustomRepairsItem(
+                price: activeBike != null ? 149 : 0.0,
+                type: 'Other',
+                image: 'assets/images/other.png',
+              ),
+            ],
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 2 / 3,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
           ),
-          CustomRepairsItem(
-            price: activeBike != null ? 149 : 0.0,
-            type: 'Brake Inspection',
-            image: 'assets/images/brake_inspection.png',
+          SizedBox(height: 50),
+          Container(
+            height: 45,
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey[400],
+                  spreadRadius: 0.0,
+                  offset: Offset(2.0, 2.0), //(x,y)
+                  blurRadius: 4.0,
+                ),
+              ],
+            ),
+            child: RaisedButton(
+              color: Theme.of(context).primaryColor,
+              onPressed: () {
+                Navigator.of(context).push(shoppingCartRouteBuilder());
+              },
+              child: Text(
+                'Checkout',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           ),
-          CustomRepairsItem(
-            price: activeBike != null ? 149 : 0.0,
-            type: 'Electrical Inspection',
-            image: 'assets/images/electrical_inspection.png',
-          ),
-          CustomRepairsItem(
-            price: activeBike != null ? 149 : 0.0,
-            type: 'Clutch Inspection',
-            image: 'assets/images/clutch_inspection.png',
-          ),
-          CustomRepairsItem(
-            price: activeBike != null ? 149 : 0.0,
-            type: 'Other',
-            image: 'assets/images/other.png',
-          ),
+          SizedBox(height: 10),
         ],
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 2 / 3,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-        ),
       ),
     );
   }
