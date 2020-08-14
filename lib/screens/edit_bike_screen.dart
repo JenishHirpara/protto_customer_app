@@ -306,12 +306,12 @@ class _EditBikeScreenState extends State<EditBikeScreen> {
                           contentPadding: EdgeInsets.symmetric(horizontal: 10),
                           filled: true,
                         ),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please provide registration number';
-                          }
-                          return null;
-                        },
+                        // validator: (value) {
+                        //   if (value.isEmpty) {
+                        //     return 'Please provide registration number';
+                        //   }
+                        //   return null;
+                        // },
                         onSaved: (value) {
                           _rgno = value;
                         },

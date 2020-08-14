@@ -79,70 +79,117 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           )
         : _isInternet
             ? SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (ctx, i) => Column(
-                                children: <Widget>[
-                                  ChangeNotifierProvider.value(
-                                    value: activeorders[i],
-                                    child: ActiveOrderDetail(i),
-                                  ),
-                                  SizedBox(height: 10),
-                                ],
+                child: activeorders.isEmpty && pastorders.isEmpty
+                    ? Column(
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15.0),
+                              child: Text(
+                                'You have no orders currently',
+                                style: TextStyle(
+                                  color: Color.fromRGBO(112, 112, 112, 1),
+                                  fontFamily: 'SourceSansPro',
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              itemCount: activeorders.length,
                             ),
                           ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.15,
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15.0),
+                              child: Text(
+                                'KEEP BIKING....',
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontFamily: 'SourceSansPro',
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                          ),
                         ],
-                      ),
-                    ),
-                    pastorders.isEmpty
-                        ? Container()
-                        : Container(
+                      )
+                    : Column(
+                        children: <Widget>[
+                          Container(
                             width: double.infinity,
                             margin: EdgeInsets.all(16),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(
-                                  '  Past Bookings',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.bold,
+                                Container(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemBuilder: (ctx, i) => Column(
+                                      children: <Widget>[
+                                        ChangeNotifierProvider.value(
+                                          value: activeorders[i],
+                                          child: ActiveOrderDetail(i),
+                                        ),
+                                        SizedBox(height: 10),
+                                      ],
+                                    ),
+                                    itemCount: activeorders.length,
                                   ),
-                                ),
-                                ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemBuilder: (ctx, i) => Column(
-                                    children: <Widget>[
-                                      ChangeNotifierProvider.value(
-                                        value: pastorders[i],
-                                        child: PastOrderDetail(i),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                    ],
-                                  ),
-                                  itemCount: pastorders.length,
                                 ),
                               ],
                             ),
                           ),
-                  ],
-                ),
+                          pastorders.isEmpty
+                              ? Container()
+                              : Container(
+                                  width: double.infinity,
+                                  margin: EdgeInsets.all(16),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        '  Past Bookings',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          color: Theme.of(context).primaryColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      ListView.builder(
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemBuilder: (ctx, i) => Column(
+                                          children: <Widget>[
+                                            ChangeNotifierProvider.value(
+                                              value: pastorders[i],
+                                              child: PastOrderDetail(i),
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                          ],
+                                        ),
+                                        itemCount: pastorders.length,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                        ],
+                      ),
               )
             : NoInternetScreen(retry);
   }
