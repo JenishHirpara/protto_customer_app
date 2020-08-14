@@ -90,7 +90,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                           },
                           elevation: 5,
                           child: Text(
-                            'Jobs',
+                            'Back to Jobs',
                             style: TextStyle(
                               fontFamily: 'SourceSansPro',
                               color: Colors.black,
@@ -106,7 +106,7 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                             borderRadius: BorderRadius.circular(3.0),
                           ),
                           child: Text(
-                            'Checkout',
+                            'Done',
                             style: TextStyle(
                               fontFamily: 'SourceSansProSB',
                               fontSize: 14,
@@ -454,7 +454,8 @@ class _JobsCardScreenState extends State<JobsCardScreen> {
                                           EdgeInsets.symmetric(horizontal: 0),
                                       title: Text(
                                         newJobs[i].name,
-                                        style: GoogleFonts.cantataOne(
+                                        style: TextStyle(
+                                          fontFamily: 'SourceSansPro',
                                           color:
                                               Color.fromRGBO(128, 128, 128, 1),
                                         ),

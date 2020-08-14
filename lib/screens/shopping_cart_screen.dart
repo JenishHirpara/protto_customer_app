@@ -1331,6 +1331,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                     style: TextStyle(
                                       fontFamily: 'SourceSansPro',
                                       fontSize: 14,
+                                      color: Color.fromRGBO(128, 128, 128, 1),
                                     ),
                                     //textAlign: TextAlign.left,
                                   ),
