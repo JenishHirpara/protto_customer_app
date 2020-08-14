@@ -304,12 +304,12 @@ class _NewBikeScreenState extends State<NewBikeScreen> {
                           contentPadding: EdgeInsets.symmetric(horizontal: 10),
                           filled: true,
                         ),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please provide registration number';
-                          }
-                          return null;
-                        },
+                        // validator: (value) {
+                        //   if (value.isEmpty) {
+                        //     return 'Please provide registration number';
+                        //   }
+                        //   return null;
+                        // },
                         onSaved: (value) {
                           _bike = Bike(
                             id: _bike.id,
