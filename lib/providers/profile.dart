@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:crypto/crypto.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 //import 'package:intl/intl.dart';
@@ -74,8 +75,13 @@ class UserProfile with ChangeNotifier {
 
   Future<void> getOtp(String name, String number, String email) async {
     var url =
-        'http://stage.protto.in/api/shivangi/editotp.php?cid=${_item.id}&mobile=$number&email=$email';
-    final response = await http.get(url);
+        'http://api.protto.in/editotp.php?cid=${_item.id}&mobile=$number&email=$email';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
+    final response = await http
+        .get(url, headers: <String, String>{'Authorization': basicAuth});
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     if (extractedData['message'] ==
         'User with that mobile number already exists') {
@@ -96,8 +102,13 @@ class UserProfile with ChangeNotifier {
   }
 
   Future<void> getProfile(String number) async {
-    var url = 'http://stage.protto.in/api/prina/data.php/$number';
-    final response = await http.get(url);
+    var url = 'http://api.protto.in/data.php/$number';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
+    final response = await http
+        .get(url, headers: <String, String>{'Authorization': basicAuth});
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     if (extractedData['message'] == 'User does not exist') {
       _signupOtp = extractedData['otp'];
@@ -132,7 +143,11 @@ class UserProfile with ChangeNotifier {
 
   Future<void> newProfile(
       String name, String email, String number, String referal) async {
-    const url = 'http://stage.protto.in/api/prina/register.php';
+    const url = 'http://api.protto.in/register.php';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
     var response;
     if (referal == '') {
       response = await http.post(url,
@@ -141,7 +156,8 @@ class UserProfile with ChangeNotifier {
             'email': email,
             'mobile': number,
             'otp': signupOtp,
-          }));
+          }),
+          headers: <String, String>{'Authorization': basicAuth});
     } else {
       response = await http.post(url,
           body: json.encode({
@@ -150,7 +166,8 @@ class UserProfile with ChangeNotifier {
             'mobile': number,
             'referal': referal,
             'otp': signupOtp,
-          }));
+          }),
+          headers: <String, String>{'Authorization': basicAuth});
     }
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     if (extractedData['message'] == 'User already Exists') {
@@ -172,13 +189,18 @@ class UserProfile with ChangeNotifier {
   }
 
   Future<void> editProfile() async {
-    final url = 'http://stage.protto.in/api/prina/edit.php/${_item.id}';
+    final url = 'http://api.protto.in/edit.php/${_item.id}';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
     await http.patch(url,
         body: json.encode({
           'name': _name,
           'email': _email,
           'mobile': _number,
-        }));
+        }),
+        headers: <String, String>{'Authorization': basicAuth});
     var id = _item.id;
     var prottoBuck = _item.prottoBucks;
     _item = Profile(
@@ -217,8 +239,13 @@ class UserProfile with ChangeNotifier {
         json.decode(prefs.getString('userData')) as Map<String, Object>;
     try {
       var url =
-          'http://stage.protto.in/api/hitesh/loginwithoutotp.php?mobile=${extractedUserData['number']}';
-      final response = await http.get(url);
+          'http://api.protto.in/loginwithoutotp.php?mobile=${extractedUserData['number']}';
+      final storage = new FlutterSecureStorage();
+      String key = await storage.read(key: 'key');
+      String value = await storage.read(key: 'value');
+      String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
+      final response = await http
+          .get(url, headers: <String, String>{'Authorization': basicAuth});
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       _item = Profile(
         id: extractedData['data']['cid'],

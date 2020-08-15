@@ -574,7 +574,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   }
 
   List<String> _getTime() {
-    if (_date == DateFormat('yy-MM-dd').format(DateTime.now())) {
+    if (_date == DateFormat('yyyy-MM-dd').format(DateTime.now())) {
       if (DateTime.now().hour >= 15 || DateTime.now().hour < 9) {
         return ['9 AM - 11 AM', '11 AM - 1 PM', '1 PM - 3 PM', '3 PM - 5 PM'];
       } else if (DateTime.now().hour >= 9 && DateTime.now().hour < 11) {

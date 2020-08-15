@@ -42,6 +42,7 @@ dependencies:
   fluttertoast: ^5.0.1
   firebase_messaging: ^6.0.16
   crypto: ^2.1.5
+  flutter_secure_storage: ^3.3.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

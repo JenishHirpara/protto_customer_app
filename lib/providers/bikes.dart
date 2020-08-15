@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import './cart_item.dart';
 
 class Bike with ChangeNotifier {
@@ -64,8 +66,13 @@ class Bikes with ChangeNotifier {
   }
 
   Future<void> fetchAndSetBikes() async {
-    final url = 'http://stage.protto.in/api/hitesh/bike/$userId';
-    final response = await http.get(url);
+    final url = 'http://api.protto.in/bike/$userId';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
+    final response = await http
+        .get(url, headers: <String, String>{'Authorization': basicAuth});
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     List<Bike> data = [];
 
@@ -104,8 +111,13 @@ class Bikes with ChangeNotifier {
   }
 
   Future<void> fetchAllBrands() async {
-    const url = 'http://stage.protto.in/api/prina/brand.php';
-    final response = await http.get(url);
+    const url = 'http://api.protto.in/brand.php';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
+    final response = await http
+        .get(url, headers: <String, String>{'Authorization': basicAuth});
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     List<String> brands = List<String>.from(extractedData['data']);
     _brands = brands;
@@ -113,8 +125,13 @@ class Bikes with ChangeNotifier {
   }
 
   Future<void> fetchAllModels(String brand) async {
-    final url = 'http://stage.protto.in/api/shivangi/models.php/$brand';
-    final response = await http.get(url);
+    final url = 'http://api.protto.in/models.php/$brand';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
+    final response = await http
+        .get(url, headers: <String, String>{'Authorization': basicAuth});
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     List<String> models = [];
     models = List<String>.from(extractedData['data']);
@@ -123,7 +140,11 @@ class Bikes with ChangeNotifier {
   }
 
   Future<void> addBike(Bike newBike) async {
-    final url = 'http://stage.protto.in/api/prina/addbike.php/$userId';
+    final url = 'http://api.protto.in/addbike.php/$userId';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
     if (_items.length == 0 || activeBike == null) {
       final response = await http.post(url,
           body: json.encode({
@@ -132,7 +153,8 @@ class Bikes with ChangeNotifier {
             'bike_reg': newBike.number,
             'year': newBike.year,
             'status': '1',
-          }));
+          }),
+          headers: <String, String>{'Authorization': basicAuth});
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       _activeBike = Bike(
         brand: newBike.brand,
@@ -162,7 +184,8 @@ class Bikes with ChangeNotifier {
             'bike_reg': newBike.number,
             'year': newBike.year,
             'status': '0',
-          }));
+          }),
+          headers: <String, String>{'Authorization': basicAuth});
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       _items.add(
         Bike(
@@ -196,14 +219,19 @@ class Bikes with ChangeNotifier {
     String number,
     String active,
   }) async {
-    final url = 'http://stage.protto.in/api/shivangi/editbike.php/$id';
+    final url = 'http://api.protto.in/editbike.php/$id';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
     await http.patch(url,
         body: json.encode({
           'year': year,
           'bike_reg': number,
           'make': brand,
           'model': model,
-        }));
+        }),
+        headers: <String, String>{'Authorization': basicAuth});
     final bikeIndex = _items.indexWhere((bike) => bike.id == id);
     var bike = Bike(
       brand: brand,
@@ -220,8 +248,13 @@ class Bikes with ChangeNotifier {
   }
 
   Future<void> deleteBike(String id) async {
-    final url = 'http://stage.protto.in/api/shivangi/deletebike.php/$id';
-    await http.delete(url);
+    final url = 'http://api.protto.in/deletebike.php/$id';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
+    await http
+        .delete(url, headers: <String, String>{'Authorization': basicAuth});
     if (activeBike != null) {
       if (activeBike.id == id) {
         _activeBike = null;
@@ -233,33 +266,40 @@ class Bikes with ChangeNotifier {
   }
 
   Future<void> changeActive(Bike bike, Cart cart) async {
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
     if (_activeBike != null && bike.id != _activeBike.id) {
       var id1 = bike.id;
       var id2 = activeBike.id;
-      const url = 'http://stage.protto.in/api/prina/flipstatus.php';
+      const url = 'http://api.protto.in/flipstatus.php';
       await http.patch(url,
           body: json.encode({
             'bikeid': id1,
             'bikeid2': id2,
-          }));
+          }),
+          headers: <String, String>{'Authorization': basicAuth});
       _loadServices = true;
       _activeBike = bike;
     } else if (_activeBike == null) {
       var id = bike.id;
-      const url = 'http://stage.protto.in/api/shivangi/setstatus.php';
+      const url = 'http://api.protto.in/setstatus.php';
       await http.patch(url,
           body: json.encode({
             'bikeid': id,
-          }));
+          }),
+          headers: <String, String>{'Authorization': basicAuth});
       _loadServices = true;
       _activeBike = bike;
     } else if (bike.id == _activeBike.id) {
       var id = bike.id;
-      const url = 'http://stage.protto.in/api/shivangi/setstatus.php';
+      const url = 'http://api.protto.in/setstatus.php';
       final response = await http.patch(url,
           body: json.encode({
             'bikeid': id,
-          }));
+          }),
+          headers: <String, String>{'Authorization': basicAuth});
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       if (extractedData['status'] == '0') {
         _loadServices = false;
@@ -274,9 +314,13 @@ class Bikes with ChangeNotifier {
   }
 
   Future<void> getRgPrice(String brand, String model) async {
-    final url =
-        'http://stage.protto.in/api/shivangi/rgservice.php/?brand=$brand&model=$model';
-    final response = await http.get(url);
+    final url = 'http://api.protto.in/rgservice.php?brand=$brand&model=$model';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
+    final response = await http
+        .get(url, headers: <String, String>{'Authorization': basicAuth});
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     _proDry = extractedData['data'][0]['offer'];
     _proWet = extractedData['data'][1]['offer'];

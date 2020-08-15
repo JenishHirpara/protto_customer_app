@@ -275,7 +275,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                         '$_digit1$_digit2$_digit3$_digit4',
                         _order == null ? widget.order.status : _order.status,
                       );
-                      if (message == 'Otp verification successful!') {
+                      if (message == 'Otp approved!') {
                         _refreshPage();
                       }
                       setState(() {
