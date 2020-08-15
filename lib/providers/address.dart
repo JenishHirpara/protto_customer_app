@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Address with ChangeNotifier {
   final String id;
@@ -42,8 +43,13 @@ class Addresses with ChangeNotifier {
   }
 
   Future<void> fetchAndSetAddresses() async {
-    final url = 'http://stage.protto.in/api/hitesh/address/$userId';
-    final response = await http.get(url);
+    final url = 'http://api.protto.in/address/$userId';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
+    final response = await http
+        .get(url, headers: <String, String>{'Authorization': basicAuth});
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     List<Address> data = [];
     for (int i = 0; i < int.parse(extractedData['count']); i++) {
@@ -66,15 +72,24 @@ class Addresses with ChangeNotifier {
   }
 
   Future<void> getpin() async {
-    const url = 'http://stage.protto.in/api/shivangi/targetpin.php';
-    final response = await http.get(url);
+    const url = 'http://api.protto.in/targetpin.php';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
+    final response = await http
+        .get(url, headers: <String, String>{'Authorization': basicAuth});
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     _pincodes = List<String>.from(extractedData['pincodes']);
     notifyListeners();
   }
 
   Future<String> addAddress(Address newAddress) async {
-    final url = 'http://stage.protto.in/api/shivangi/addresses.php/$userId';
+    final url = 'http://api.protto.in/addresses.php/$userId';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
     var landmark = newAddress.landmark.replaceAll("'", "");
     var saveas = newAddress.saveas.replaceAll("'", "");
     var address = newAddress.address.replaceAll("'", "");
@@ -87,7 +102,8 @@ class Addresses with ChangeNotifier {
           'lat': newAddress.latitude,
           'lon': newAddress.longitude,
           'landmark': landmark
-        }));
+        }),
+        headers: <String, String>{'Authorization': basicAuth});
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     _items.insert(
       0,
@@ -107,14 +123,19 @@ class Addresses with ChangeNotifier {
   }
 
   Future<void> editAddress(String id, Address newAddress) async {
-    final url = 'http://stage.protto.in/api/prina/editaddress.php/$id';
+    final url = 'http://api.protto.in/editaddress.php/$id';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
     await http.patch(url,
         body: json.encode({
           'address': newAddress.address,
           'flat': newAddress.flat,
           'latitude': newAddress.latitude,
           'longitude': newAddress.longitude,
-        }));
+        }),
+        headers: <String, String>{'Authorization': basicAuth});
     final addressIndex = _items.indexWhere((address) => address.id == id);
     if (addressIndex >= 0) {
       _items[addressIndex] = newAddress;
@@ -125,8 +146,13 @@ class Addresses with ChangeNotifier {
   }
 
   Future<void> deleteAddress(String id) async {
-    final url = 'http://stage.protto.in/api/prina/deleteaddress.php/$id';
-    await http.delete(url);
+    final url = 'http://api.protto.in/deleteaddress.php/$id';
+    final storage = new FlutterSecureStorage();
+    String key = await storage.read(key: 'key');
+    String value = await storage.read(key: 'value');
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode('$key:$value'));
+    await http
+        .delete(url, headers: <String, String>{'Authorization': basicAuth});
     _items.removeWhere((address) => address.id == id);
     notifyListeners();
   }

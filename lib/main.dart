@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import './screens/home_screen.dart';
 import './screens/verify_phone_screen.dart';
@@ -43,6 +44,7 @@ class _MyAppState extends State<MyApp> {
   FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
   var deviceToken;
   var _isInit = true;
+  final storage = new FlutterSecureStorage();
 
   // @override
   // void initState() {
@@ -78,6 +80,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void didChangeDependencies() async {
     if (_isInit) {
+      await storage.write(key: 'key', value: 'apikey');
+      await storage.write(key: 'value', value: 'proflutter');
       await firebaseMessaging.requestNotificationPermissions(
         const IosNotificationSettings(
           sound: true,
