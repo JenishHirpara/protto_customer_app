@@ -39,7 +39,6 @@ dependencies:
   photo_view: ^0.9.2
   url_launcher: ^5.4.11
   razorpay_flutter: ^1.2.1
-  fluttertoast: ^5.0.1
   firebase_messaging: ^6.0.16
   crypto: ^2.1.5
   flutter_secure_storage: ^3.3.3

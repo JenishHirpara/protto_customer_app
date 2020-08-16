@@ -199,17 +199,52 @@ class _ServiceScreenState extends State<ServiceScreen> {
                 ),
               )
             : _isInternet
-                ? Padding(
-                    padding: EdgeInsets.all(10),
-                    child: TabBarView(
-                      children: <Widget>[
-                        regularServicesPage(),
-                        comingSoonPage(),
-                        comingSoonPage(),
-                        customRepairsPage(),
-                        comingSoonPage(),
-                      ],
-                    ),
+                ? Stack(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: TabBarView(
+                          children: <Widget>[
+                            regularServicesPage(),
+                            comingSoonPage(),
+                            comingSoonPage(),
+                            customRepairsPage(),
+                            comingSoonPage(),
+                          ],
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          height: 45,
+                          width: double.infinity,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey[400],
+                                spreadRadius: 0.0,
+                                offset: Offset(2.0, 2.0), //(x,y)
+                                blurRadius: 4.0,
+                              ),
+                            ],
+                          ),
+                          child: RaisedButton(
+                            color: Theme.of(context).primaryColor,
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .push(shoppingCartRouteBuilder());
+                            },
+                            child: Text(
+                              'Checkout',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   )
                 : NoInternetScreen(retry),
       ),
@@ -249,34 +284,6 @@ class _ServiceScreenState extends State<ServiceScreen> {
               mainAxisSpacing: 10,
             ),
           ),
-          SizedBox(height: 50),
-          Container(
-            height: 45,
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey[400],
-                  spreadRadius: 0.0,
-                  offset: Offset(2.0, 2.0), //(x,y)
-                  blurRadius: 4.0,
-                ),
-              ],
-            ),
-            child: RaisedButton(
-              color: Theme.of(context).primaryColor,
-              onPressed: () {
-                Navigator.of(context).push(shoppingCartRouteBuilder());
-              },
-              child: Text(
-                'Checkout',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-          SizedBox(height: 10),
         ],
       ),
     );
@@ -325,33 +332,6 @@ class _ServiceScreenState extends State<ServiceScreen> {
             ),
           ),
           SizedBox(height: 50),
-          Container(
-            height: 45,
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey[400],
-                  spreadRadius: 0.0,
-                  offset: Offset(2.0, 2.0), //(x,y)
-                  blurRadius: 4.0,
-                ),
-              ],
-            ),
-            child: RaisedButton(
-              color: Theme.of(context).primaryColor,
-              onPressed: () {
-                Navigator.of(context).push(shoppingCartRouteBuilder());
-              },
-              child: Text(
-                'Checkout',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-          SizedBox(height: 10),
         ],
       ),
     );

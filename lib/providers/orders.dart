@@ -256,8 +256,9 @@ class Orders with ChangeNotifier {
     );
   }
 
-  Future<String> addOrder(
-      OrderItem order, double prottoBucks, Bike activeBike, String paid) async {
+  Future<String> addOrder(OrderItem order, double prottoBucks, Bike activeBike,
+      String paid, String paymentId) async {
+    print(paymentId);
     final url1 = 'http://api.protto.in/updatebucks.php';
     final storage = new FlutterSecureStorage();
     String key = await storage.read(key: 'key');
@@ -308,6 +309,7 @@ class Orders with ChangeNotifier {
           'delivery_type': order.deliveryType,
           'make': activeBike.brand,
           'model': activeBike.model,
+          'pid_before': paymentId,
         }),
         headers: <String, String>{'Authorization': basicAuth});
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -525,7 +527,7 @@ class Orders with ChangeNotifier {
       return 'Incorrect OTP';
     }
     if (extractedData['message'] == 'otp approved') {
-      return 'Otp approved!';
+      return 'OTP approved!';
     }
     return 'some error';
   }
