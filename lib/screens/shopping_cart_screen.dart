@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:protto_customer_app/providers/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import '../utils/shopping_cart_item.dart';
 import '../providers/cart_item.dart';
@@ -29,6 +28,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   var percentDiscount;
   var maxDiscount;
   var couponDiscount;
+  var paymentId = "";
   final _form = GlobalKey<FormState>();
   var _textController = TextEditingController();
   var _isLoading = false;
@@ -42,8 +42,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   }
 
   void handlerPaymentSuccess(PaymentSuccessResponse response) async {
-    print("Payment success");
-    FlutterToast.showToast(msg: 'SUCCESS: ' + response.paymentId);
     setState(() {
       _isLoading = true;
     });
@@ -52,6 +50,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       _prottoBucks,
       Provider.of<Bikes>(context, listen: false).activeBike,
       _orderItem.total,
+      response.paymentId,
     );
     setState(() {
       _isLoading = false;
@@ -138,9 +137,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   }
 
   void handlerErrorFailure(PaymentFailureResponse response) {
-    print("Payment error");
-    FlutterToast.showToast(
-        msg: 'ERROR: ' + response.code.toString() + ' - ' + response.message);
     // showDialog(
     //   context: context,
     //   builder: (ctx) {
@@ -238,8 +234,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   }
 
   void handlerExternalWallet(ExternalWalletResponse response) async {
-    print("External Wallet");
-    FlutterToast.showToast(msg: 'EXTERNAL WALLET: ' + response.walletName);
     setState(() {
       _isLoading = true;
     });
@@ -248,6 +242,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
       _prottoBucks,
       Provider.of<Bikes>(context, listen: false).activeBike,
       _orderItem.total,
+      response.walletName,
     );
     setState(() {
       _isLoading = false;
@@ -333,7 +328,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     );
   }
 
-  void _razorPay(Cart cart) {
+  void _razorPay(Cart cart) async {
     final isValid = _form.currentState.validate();
     if (!isValid) {
       return;
@@ -438,7 +433,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         }
       };
       try {
-        _razorpay.open(options);
+        await _razorpay.open(options);
       } catch (e) {
         print(e.toString());
       }
@@ -520,8 +515,15 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   }
 
   void _presentDatePicker() {
-    var nextYear = DateTime.now().year + 1;
-    var month = DateTime.now().month;
+    var nextYear;
+    var nextmonth;
+    if (DateTime.now().month == 12) {
+      nextmonth = 1;
+      nextYear = DateTime.now().year + 1;
+    } else {
+      nextmonth = DateTime.now().month + 1;
+      nextYear = DateTime.now().year;
+    }
     var day = DateTime.now().day;
     var date;
     if (DateTime.now().hour >= 15) {
@@ -536,7 +538,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
           : DateTime(int.parse(_date.split('-')[0]),
               int.parse(_date.split('-')[1]), int.parse(_date.split('-')[2])),
       firstDate: date,
-      lastDate: DateTime(nextYear, month, day),
+      lastDate: DateTime(nextYear, nextmonth, day),
     ).then((pickedDate) {
       if (pickedDate == null) {
         return;
@@ -697,6 +699,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
           _prottoBucks,
           Provider.of<Bikes>(context, listen: false).activeBike,
           '0.0',
+          paymentId,
         );
         setState(() {
           _isLoading = false;
@@ -1326,15 +1329,24 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                                 color: Color.fromRGBO(240, 240, 240, 1),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    _date == null ? 'Date' : _date,
-                                    style: TextStyle(
-                                      fontFamily: 'SourceSansPro',
-                                      fontSize: 14,
-                                      color: Color.fromRGBO(128, 128, 128, 1),
-                                    ),
-                                    //textAlign: TextAlign.left,
-                                  ),
+                                  child: _date == null
+                                      ? Text(
+                                          'Date',
+                                          style: TextStyle(
+                                            fontFamily: 'SourceSansPro',
+                                            fontSize: 14,
+                                            color: Color.fromRGBO(
+                                                128, 128, 128, 1),
+                                          ),
+                                        )
+                                      : Text(
+                                          _date,
+                                          style: TextStyle(
+                                            fontFamily: 'SourceSansPro',
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
                                 ),
                                 elevation: 0,
                                 onPressed: _presentDatePicker,
