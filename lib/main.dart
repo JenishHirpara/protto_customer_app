@@ -46,42 +46,12 @@ class _MyAppState extends State<MyApp> {
   var _isInit = true;
   final storage = new FlutterSecureStorage();
 
-  // @override
-  // void initState() {
-  //   // firebaseMessaging.configure(
-  //   //   onLaunch: (Map<String, dynamic> msg) {
-  //   //     print("onLaunch called");
-  //   //   },
-  //   //   onResume: (Map<String, dynamic> msg) {
-  //   //     print("onResume called");
-  //   //   },
-  //   //   onMessage: (Map<String, dynamic> msg) {
-  //   //     print("onMessage called");
-  //   //   },
-  //   // );
-  //   firebaseMessaging.requestNotificationPermissions(
-  //     const IosNotificationSettings(
-  //       sound: true,
-  //       alert: true,
-  //       badge: true,
-  //     ),
-  //   );
-  //   firebaseMessaging.onIosSettingsRegistered
-  //       .listen((IosNotificationSettings settings) {
-  //     print('IOS setting registered');
-  //   });
-  //   firebaseMessaging.getToken().then((token) {
-  //     print(token);
-  //     deviceToken = token;
-  //   });
-  //   super.initState();
-  // }
-
   @override
   void didChangeDependencies() async {
     if (_isInit) {
       await storage.write(key: 'key', value: 'apikey');
       await storage.write(key: 'value', value: 'proflutter');
+      await storage.write(key: 'username', value: 'rzp_test_rI34j5e3LyHywP');
       await firebaseMessaging.requestNotificationPermissions(
         const IosNotificationSettings(
           sound: true,
