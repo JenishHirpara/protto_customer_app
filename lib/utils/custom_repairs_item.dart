@@ -133,7 +133,7 @@ class CustomRepairsItemState extends State<CustomRepairsItem> {
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<Cart>(context, listen: false);
+    final cart = Provider.of<Cart>(context);
     final activebike = Provider.of<Bikes>(context, listen: false).activeBike;
     if (cart.findByType(widget.type) != -1) {
       swap = true;

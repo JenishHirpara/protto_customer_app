@@ -256,12 +256,10 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                       (_showFull ? 0.65 : 0.5) /
                       2,
                   right: (MediaQuery.of(context).size.width - 40) / 2,
-                  child: Tooltip(
-                    message: 'Move to adjust',
-                    child: new Icon(
-                      Icons.person_pin_circle,
-                      size: 40,
-                    ),
+                  child: Image.asset(
+                    'assets/images/location.png',
+                    height: 40,
+                    width: 40,
                   ),
                 ),
               ],

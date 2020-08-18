@@ -431,7 +431,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
           ],
         ),
         date: _order == null ? widget.order.date : _order.date,
-        time: _order == null ? widget.order.time : _order.time,
       ),
       SampleStepTile(
         title: Column(
@@ -482,7 +481,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
           ],
         ),
         date: _order == null ? widget.order.date : _order.date,
-        time: _order == null ? widget.order.time : _order.time,
       ),
       SampleStepTile(
         title: Column(
@@ -531,7 +529,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
           ],
         ),
         date: _order == null ? widget.order.date : _order.date,
-        time: _order == null ? widget.order.time : _order.time,
       ),
       SampleStepTile(
         title: Text(
@@ -543,7 +540,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
           ),
         ),
         date: widget.order.date,
-        time: widget.order.time,
       ),
       SampleStepTile(
         title: Column(
@@ -559,9 +555,13 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
             ),
             SizedBox(height: 5),
             Text(
-              widget.order.ssName == null
-                  ? 'Service station not allocated'
-                  : widget.order.ssName,
+              _order == null
+                  ? (widget.order.ssName == null
+                      ? 'Service Station not allocated'
+                      : widget.order.ssName)
+                  : (_order.ssName == null
+                      ? 'Service Station not allocated'
+                      : _order.ssName),
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontFamily: 'SourceSansPro',
@@ -572,7 +572,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
           ],
         ),
         date: _order == null ? widget.order.date : _order.date,
-        time: _order == null ? widget.order.time : _order.time,
       ),
       SampleStepTile(
         title: Text(
@@ -584,11 +583,10 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
           ),
         ),
         date: _order == null ? widget.order.date : _order.date,
-        time: _order == null ? widget.order.time : _order.time,
       ),
       SampleStepTile(
         title: Text(
-          'Bike Picked from the service station',
+          'Bike Picked from the Service Station',
           textAlign: TextAlign.left,
           style: TextStyle(
             fontFamily: 'SourceSansPro',
@@ -596,7 +594,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
           ),
         ),
         date: widget.order.date,
-        time: widget.order.time,
       ),
       SampleStepTile(
         title: Column(
@@ -647,7 +644,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
           ],
         ),
         date: _order == null ? widget.order.date : _order.date,
-        time: _order == null ? widget.order.time : _order.time,
       ),
       SampleStepTile(
         title: Column(
@@ -696,7 +692,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
           ],
         ),
         date: _order == null ? widget.order.date : _order.date,
-        time: _order == null ? widget.order.time : _order.time,
       ),
     ];
   }
@@ -865,7 +860,7 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                                                 CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Text(
-                                                DateFormat('dd/MM').format(
+                                                DateFormat('dd/MM/yyyy').format(
                                                     DateTime.parse(step.date)),
                                                 style: TextStyle(
                                                   fontFamily: 'SourceSansPro',
@@ -873,14 +868,14 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                                                       128, 128, 128, 1),
                                                 ),
                                               ),
-                                              Text(
-                                                step.time,
-                                                style: TextStyle(
-                                                  fontFamily: 'SourceSansPro',
-                                                  color: Color.fromRGBO(
-                                                      128, 128, 128, 1),
-                                                ),
-                                              ),
+                                              // Text(
+                                              //   step.time,
+                                              //   style: TextStyle(
+                                              //     fontFamily: 'SourceSansPro',
+                                              //     color: Color.fromRGBO(
+                                              //         128, 128, 128, 1),
+                                              //   ),
+                                              // ),
                                             ],
                                           ),
                                         ),
@@ -950,12 +945,10 @@ class SampleStepTile {
     Key key,
     this.title,
     this.date,
-    this.time,
   });
 
   Widget title;
   String date;
-  String time;
 }
 
 PageRouteBuilder jobsRoute(OrderItem order) {

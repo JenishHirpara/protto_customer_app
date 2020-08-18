@@ -11,7 +11,7 @@
     
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Protto"
+        android:label="Protto - Most Trusted Bike Service"
         android:icon="@mipmap/ic_launcher">
 
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAphGxn5W8zr_gOduftWlO8oHCSDIhkRlk"/>
