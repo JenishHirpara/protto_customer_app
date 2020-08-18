@@ -881,9 +881,9 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
           'Shopping Cart',
           textAlign: TextAlign.start,
           style: TextStyle(
-            fontFamily: 'Montserrrat',
+            fontFamily: 'Montserrat',
             color: Theme.of(context).primaryColor,
-            fontSize: 24,
+            fontSize: 22,
             fontWeight: FontWeight.w500,
           ),
         ),
