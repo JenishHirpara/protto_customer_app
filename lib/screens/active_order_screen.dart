@@ -553,22 +553,6 @@ class _ActiveOrderScreenState extends State<ActiveOrderScreen> {
                 color: Color(0xff707070),
               ),
             ),
-            SizedBox(height: 5),
-            Text(
-              _order == null
-                  ? (widget.order.ssName == null
-                      ? 'Service Station not allocated'
-                      : widget.order.ssName)
-                  : (_order.ssName == null
-                      ? 'Service Station not allocated'
-                      : _order.ssName),
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontFamily: 'SourceSansPro',
-                fontSize: 12,
-                color: Color.fromRGBO(112, 112, 112, 0.7),
-              ),
-            ),
           ],
         ),
         date: _order == null ? widget.order.date : _order.date,

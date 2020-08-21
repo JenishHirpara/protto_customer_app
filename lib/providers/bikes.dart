@@ -156,6 +156,7 @@ class Bikes with ChangeNotifier {
           }),
           headers: <String, String>{'Authorization': basicAuth});
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      print(extractedData);
       _activeBike = Bike(
         brand: newBike.brand,
         model: newBike.model,
@@ -313,8 +314,9 @@ class Bikes with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getRgPrice(String brand, String model) async {
-    final url = 'http://api.protto.in/rgservice.php?brand=$brand&model=$model';
+  Future<void> getRgPrice(String brand, String model, String city) async {
+    final url =
+        'http://api.protto.in/rgservice.php?brand=$brand&model=$model&city=$city';
     final storage = new FlutterSecureStorage();
     String key = await storage.read(key: 'key');
     String value = await storage.read(key: 'value');

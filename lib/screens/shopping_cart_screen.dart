@@ -46,12 +46,14 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     setState(() {
       _isLoading = true;
     });
+    var city = Provider.of<UserProfile>(context, listen: false).city;
     var _id = await Provider.of<Orders>(context, listen: false).addOrder(
       _orderItem,
       _prottoBucks,
       Provider.of<Bikes>(context, listen: false).activeBike,
       _orderItem.total,
       response.paymentId,
+      city,
     );
     setState(() {
       _isLoading = false;
@@ -143,12 +145,14 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     setState(() {
       _isLoading = true;
     });
+    var city = Provider.of<UserProfile>(context, listen: false).city;
     var _id = await Provider.of<Orders>(context, listen: false).addOrder(
       _orderItem,
       _prottoBucks,
       Provider.of<Bikes>(context, listen: false).activeBike,
       _orderItem.total,
       response.walletName,
+      city,
     );
     setState(() {
       _isLoading = false;
@@ -602,12 +606,14 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
         _isLoading = true;
       });
       try {
+        var city = Provider.of<UserProfile>(context, listen: false).city;
         var _id = await Provider.of<Orders>(context, listen: false).addOrder(
           _orderItem,
           _prottoBucks,
           Provider.of<Bikes>(context, listen: false).activeBike,
           '0.0',
           paymentId,
+          city,
         );
         setState(() {
           _isLoading = false;

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import './signup_screen.dart';
 import '../providers/profile.dart';
-import './navigationBarScreen.dart';
+import './select_city_screen.dart';
 import './no_internet_screen.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -37,7 +37,6 @@ class _OtpScreenState extends State<OtpScreen> {
     if (widget.text == 'login') {
       if ('$_digit1$_digit2$_digit3$_digit4' ==
           Provider.of<UserProfile>(context, listen: false).dummyItem.otp) {
-        await Provider.of<UserProfile>(context, listen: false).setProfile();
         Navigator.of(context).pushReplacement(pageRouteBuilder());
       } else {
         showDialog(
@@ -141,7 +140,7 @@ class _OtpScreenState extends State<OtpScreen> {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return NavigationBarScreen();
+        return SelectCityScreen('Mumbai', 1);
       },
       transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,

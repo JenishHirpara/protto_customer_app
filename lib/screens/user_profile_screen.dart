@@ -15,6 +15,7 @@ import '../providers/cart_item.dart';
 import '../providers/orders.dart';
 import './my_bikes_screen.dart';
 import './verify_phone_screen.dart';
+import './select_city_screen.dart';
 
 class UserProfileScreen extends StatefulWidget {
   @override
@@ -55,6 +56,33 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
         return VerifyPhoneScreen();
+      },
+      transitionDuration: Duration(milliseconds: 300),
+      transitionsBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) {
+        return SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: Offset.zero,
+          ).animate(animation),
+          child: new SlideTransition(
+            position: new Tween<Offset>(
+              begin: Offset.zero,
+              end: const Offset(-1.0, 0.0),
+            ).animate(secondaryAnimation),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
+  PageRouteBuilder cityRouteBuilder() {
+    var city = Provider.of<UserProfile>(context, listen: false).city;
+    return PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return SelectCityScreen(city, 2);
       },
       transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
@@ -411,6 +439,44 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         onTap: () {
                           Navigator.of(context).push(myBikesRouteBuilder());
+                        },
+                      ),
+                      SizedBox(height: 30),
+                      InkWell(
+                        child: Container(
+                          width: double.infinity,
+                          child: ListTile(
+                            contentPadding: EdgeInsets.only(
+                              left: 0,
+                              bottom: 0,
+                              right: 16,
+                              top: 0,
+                            ),
+                            leading: Container(
+                              height: 75,
+                              width: 50,
+                              color: Color.fromRGBO(241, 93, 36, 0.3),
+                              child: Icon(
+                                Icons.location_city,
+                                color: Color.fromRGBO(241, 93, 36, 0.6),
+                                size: 40,
+                              ),
+                            ),
+                            title: Text(
+                              'Change City',
+                              style: TextStyle(
+                                fontFamily: 'SourceSansPro',
+                                color: Color.fromRGBO(112, 112, 112, 1),
+                              ),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 14,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.of(context).push(cityRouteBuilder());
                         },
                       ),
                       SizedBox(height: 30),

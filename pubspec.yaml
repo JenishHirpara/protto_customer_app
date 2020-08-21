@@ -90,6 +90,8 @@ flutter:
     - assets/images/coming_soon.png
     - assets/images/no_internet.png
     - assets/images/location.png
+    - assets/images/Mumbai.png
+    - assets/images/Bangalore.png
 
   fonts:
     - family: SourceSansPro
