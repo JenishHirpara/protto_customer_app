@@ -2,11 +2,9 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:math';
 
-import 'package:crypto/crypto.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-//import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/http_exception.dart';
 import '../screens/dashboard_screen.dart';
@@ -37,6 +35,7 @@ class UserProfile with ChangeNotifier {
   String _name;
   String _email;
   String _number;
+  String _city;
 
   Profile get item {
     return _item;
@@ -44,6 +43,10 @@ class UserProfile with ChangeNotifier {
 
   String get number {
     return _number;
+  }
+
+  String get city {
+    return _city;
   }
 
   String get name {
@@ -71,6 +74,11 @@ class UserProfile with ChangeNotifier {
       return _token;
     }
     return null;
+  }
+
+  void setCity(String value) {
+    _city = value;
+    notifyListeners();
   }
 
   Future<void> getOtp(String name, String number, String email) async {
@@ -128,7 +136,21 @@ class UserProfile with ChangeNotifier {
     DashBoardScreen.isSignUp = false;
   }
 
-  Future<void> setProfile() async {
+  Future<void> setCityProfile(String city) async {
+    _city = city;
+    final prefs = await SharedPreferences.getInstance();
+    final extractedUserData =
+        json.decode(prefs.getString('userData')) as Map<String, Object>;
+    final user = json.encode({
+      'token': extractedUserData['token'],
+      'number': extractedUserData['number'],
+      'city': city,
+    });
+    prefs.setString('userData', user);
+    notifyListeners();
+  }
+
+  Future<void> setProfile(String city) async {
     _item = _dummyItem;
     var rng = new Random();
     _token = '${rng.nextInt(90000000) + 10000000}';
@@ -137,6 +159,7 @@ class UserProfile with ChangeNotifier {
     final user = json.encode({
       'token': _token,
       'number': _dummyItem.number,
+      'city': city,
     });
     prefs.setString('userData', user);
   }
@@ -218,16 +241,9 @@ class UserProfile with ChangeNotifier {
     final user = json.encode({
       'token': extractedUserData['token'],
       'number': _number,
+      'city': city,
     });
     prefs.setString('userData', user);
-  }
-
-  String calcHmac(String key, String value) {
-    var key1 = utf8.encode(key);
-    var value1 = utf8.encode(value);
-    var hmacSha256 = new Hmac(sha256, key1);
-    var digest = hmacSha256.convert(value1);
-    return digest.toString();
   }
 
   Future<bool> tryAutoLogin() async {
@@ -257,38 +273,8 @@ class UserProfile with ChangeNotifier {
       );
       _token = extractedUserData['token'];
       _number = extractedUserData['number'];
+      _city = extractedUserData['city'];
       notifyListeners();
-      // print(deviceToken);
-      // var encodedToken = Uri.encodeComponent(deviceToken);
-      // var url2 =
-      //     'https://sns.ap-south-1.amazonaws.com/?Action=CreatePlatformEndpoint&PlatformApplicationArn=arn:aws:sns:ap-south-1:212753112725:app/GCM/Protto&Token=$deviceToken';
-      // var datetime = DateFormat('yyyyMMdd').format(DateTime.now().toUtc());
-      // var datetime2 = DateFormat('HHmmss').format(DateTime.now().toUtc());
-      // var canonicalRequest =
-      //     'GET\n/\nAction=CreatePlatformEndpoint&PlatformApplicationArn=arn%3Aaws%3Asns%3Aap-south-1%3A212753112725%3Aapp%2FGCM%2FProtto&Token=$encodedToken&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATDCIS32KUIQYQJI2%2F$datetime%2Fap-south-1%2Fsns%2Faws4_request&X-Amz-Date=${datetime}T${datetime2}Z&X-Amz-SignedHeaders=accept%3Bhost%3Bx-amz-content-sha256%3Bx-amz-date\naccept:application/json\nhost:sns.ap-south-1.amazonaws.com\nx-amz-content-sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nx-amz-date:${datetime}T${datetime2}Z\n\naccept;host;x-amz-content-sha256;x-amz-date\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
-      // var canonicalString = sha256.convert(utf8.encode(canonicalRequest));
-      // var stringtosign =
-      //     'AWS4-HMAC-SHA256\n${datetime}T${datetime2}Z\n$datetime/ap-south-1/sns/aws4_request\n$canonicalString';
-      // var signature = calcHmac(
-      //     calcHmac(
-      //         calcHmac(
-      //             calcHmac("AWS4" + "bizA5nlN7efa2qSy8/HxCocppPyh8VFngz2oUYVj",
-      //                 '$datetime'),
-      //             "ap-south-1"),
-      //         "sns"),
-      //     "aws4_request");
-      // var finalSignature = calcHmac(signature, stringtosign);
-      // final response2 = await http.get(url2, headers: <String, String>{
-      //   'Accept': 'application/json',
-      //   'x-amz-content-sha256':
-      //       'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
-      //   'Authorization':
-      //       'AWS4-HMAC-SHA256 Credential=AKIATDCIS32KUIQYQJI2/$datetime/ap-south-1/sns/aws4_request, SignedHeaders=accept;host;x-amz-content-sha256;x-amz-date, Signature=$finalSignature',
-      //   'x-amz-date': '${datetime}T${datetime2}Z',
-      // });
-      // final extractedData2 = json.decode(response2.body);
-      // print(finalSignature);
-      // print(extractedData2);
       return true;
     } catch (error) {
       throw error;
@@ -303,6 +289,7 @@ class UserProfile with ChangeNotifier {
     _number = null;
     _signupOtp = null;
     _token = null;
+    _city = null;
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     prefs.clear();

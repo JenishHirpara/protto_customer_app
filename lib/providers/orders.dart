@@ -257,8 +257,7 @@ class Orders with ChangeNotifier {
   }
 
   Future<String> addOrder(OrderItem order, double prottoBucks, Bike activeBike,
-      String paid, String paymentId) async {
-    print(paymentId);
+      String paid, String paymentId, String city) async {
     final url1 = 'http://api.protto.in/updatebucks.php';
     final storage = new FlutterSecureStorage();
     String key = await storage.read(key: 'key');
@@ -303,6 +302,7 @@ class Orders with ChangeNotifier {
           'address_id': order.addressId,
           'total': order.total,
           'paid': paid,
+          'city': city,
           'date': order.date,
           'timestamp': order.time,
           'special_request': specialRequest,

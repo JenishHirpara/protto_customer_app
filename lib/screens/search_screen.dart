@@ -6,6 +6,7 @@ import '../providers/cart_item.dart';
 import './rg_details_screen.dart';
 import './custom_repairs_detail_screen.dart';
 import './no_internet_screen.dart';
+import '../providers/profile.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -21,11 +22,12 @@ class _SearchScreenState extends State<SearchScreen> {
     Provider.of<Bikes>(context, listen: false).startLoad();
     try {
       final activeBike = Provider.of<Bikes>(context, listen: false).activeBike;
+      var city = Provider.of<UserProfile>(context, listen: false).city;
       setState(() {
         _isInternet = true;
       });
       await Provider.of<Bikes>(context, listen: false)
-          .getRgPrice(activeBike.brand, activeBike.model);
+          .getRgPrice(activeBike.brand, activeBike.model, city);
       Provider.of<Bikes>(context, listen: false).endLoad();
       services = [
         CartItem(
@@ -95,6 +97,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void didChangeDependencies() async {
     _isLoading = Provider.of<Bikes>(context, listen: false).loadServices;
+    var city = Provider.of<UserProfile>(context, listen: false).city;
     if (_isInit) {
       final activeBike = Provider.of<Bikes>(context).activeBike;
       if (_isLoading) {
@@ -104,7 +107,7 @@ class _SearchScreenState extends State<SearchScreen> {
               _isInternet = true;
             });
             await Provider.of<Bikes>(context, listen: false)
-                .getRgPrice(activeBike.brand, activeBike.model);
+                .getRgPrice(activeBike.brand, activeBike.model, city);
             Provider.of<Bikes>(context, listen: false).endLoad();
             services = [
               CartItem(

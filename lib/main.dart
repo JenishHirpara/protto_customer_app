@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
     if (_isInit) {
       await storage.write(key: 'key', value: 'apikey');
       await storage.write(key: 'value', value: 'proflutter');
-      await storage.write(key: 'username', value: 'rzp_test_rI34j5e3LyHywP');
+      await storage.write(key: 'username', value: 'rzp_live_6MErVr8nr9qQGG');
       await firebaseMessaging.requestNotificationPermissions(
         const IosNotificationSettings(
           sound: true,
@@ -63,8 +63,9 @@ class _MyAppState extends State<MyApp> {
           .listen((IosNotificationSettings settings) {
         print('IOS setting registered');
       });
-      var _token = await firebaseMessaging.getToken();
-      print(_token);
+      await firebaseMessaging.getToken();
+      //var _token = await firebaseMessaging.getToken();
+      //print(_token);
     }
     _isInit = false;
     super.didChangeDependencies();

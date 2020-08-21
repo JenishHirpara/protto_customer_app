@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../providers/profile.dart';
 import '../models/http_exception.dart';
-import './navigationBarScreen.dart';
 import './no_internet_screen.dart';
+import './select_city_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   static const routeName = '/signup';
@@ -18,7 +18,6 @@ class _SignupScreenState extends State<SignupScreen> {
   final _focus1 = FocusNode();
   final _focus2 = FocusNode();
   final _focus3 = FocusNode();
-  final _focus4 = FocusNode();
   var _name = '';
   var _email = '';
   var _number = '';
@@ -30,7 +29,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return NavigationBarScreen();
+        return SelectCityScreen('Mumbai', 1);
       },
       transitionDuration: Duration(milliseconds: 300),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
@@ -59,7 +58,6 @@ class _SignupScreenState extends State<SignupScreen> {
       });
       await Provider.of<UserProfile>(context, listen: false)
           .newProfile(_name, _email, _number, _referal);
-      await Provider.of<UserProfile>(context, listen: false).setProfile();
       setState(() {
         _isLoading = false;
         _isInternet = true;
@@ -146,7 +144,6 @@ class _SignupScreenState extends State<SignupScreen> {
       });
       await Provider.of<UserProfile>(context, listen: false)
           .newProfile(_name, _email, _number, _referal);
-      await Provider.of<UserProfile>(context, listen: false).setProfile();
       setState(() {
         _isLoading = false;
         _isInternet = true;
@@ -259,11 +256,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                 labelText: 'Mobile No.',
                                 labelStyle:
                                     TextStyle(fontFamily: 'SourceSansPro')),
-                            textInputAction: TextInputAction.next,
-                            focusNode: _focus2,
-                            onFieldSubmitted: (_) {
-                              FocusScope.of(context).requestFocus(_focus3);
-                            },
                             validator: (value) {
                               if (value.isEmpty) {
                                 return 'Please provide a mobile no.';
@@ -285,9 +277,10 @@ class _SignupScreenState extends State<SignupScreen> {
                                   TextStyle(fontFamily: 'SourceSansPro'),
                             ),
                             textInputAction: TextInputAction.next,
-                            focusNode: _focus3,
+                            keyboardType: TextInputType.emailAddress,
+                            focusNode: _focus2,
                             onFieldSubmitted: (_) {
-                              FocusScope.of(context).requestFocus(_focus4);
+                              FocusScope.of(context).requestFocus(_focus3);
                             },
                             validator: (value) {
                               if (value.isEmpty) {
@@ -315,7 +308,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   TextStyle(fontFamily: 'SourceSansPro'),
                             ),
                             textInputAction: TextInputAction.done,
-                            focusNode: _focus4,
+                            focusNode: _focus3,
                             onFieldSubmitted: (_) => _saveForm(),
                             onSaved: (value) {
                               _referal = value;

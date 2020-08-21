@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/rgservice_item.dart';
+import '../providers/profile.dart';
 import './shopping_cart_screen.dart';
 import '../providers/bikes.dart';
 import '../providers/cart_item.dart';
@@ -52,9 +53,10 @@ class _ServiceScreenState extends State<ServiceScreen> {
   void retry() async {
     try {
       final activeBike = Provider.of<Bikes>(context, listen: false).activeBike;
+      var city = Provider.of<UserProfile>(context, listen: false).city;
       Provider.of<Bikes>(context, listen: false).startLoad();
       await Provider.of<Bikes>(context, listen: false)
-          .getRgPrice(activeBike.brand, activeBike.model);
+          .getRgPrice(activeBike.brand, activeBike.model, city);
       Provider.of<Bikes>(context, listen: false).endLoad();
       setState(() {
         _isInternet = true;
@@ -77,6 +79,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
   @override
   void didChangeDependencies() async {
     _isLoading = Provider.of<Bikes>(context, listen: false).loadServices;
+    var city = Provider.of<UserProfile>(context, listen: false).city;
     if (_isInit) {
       if (_isLoading) {
         final activeBike = Provider.of<Bikes>(context).activeBike;
@@ -86,7 +89,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
           });
           try {
             await Provider.of<Bikes>(context, listen: false)
-                .getRgPrice(activeBike.brand, activeBike.model);
+                .getRgPrice(activeBike.brand, activeBike.model, city);
             Provider.of<Bikes>(context, listen: false).endLoad();
           } catch (error) {
             print(error.message);
