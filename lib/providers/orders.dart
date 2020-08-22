@@ -310,6 +310,7 @@ class Orders with ChangeNotifier {
           'make': activeBike.brand,
           'model': activeBike.model,
           'pid_before': paymentId,
+          'platform': 'app',
         }),
         headers: <String, String>{'Authorization': basicAuth});
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
