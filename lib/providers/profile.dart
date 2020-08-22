@@ -78,7 +78,7 @@ class UserProfile with ChangeNotifier {
 
   void setCity(String value) {
     _city = value;
-    notifyListeners();
+    //notifyListeners();
   }
 
   Future<void> getOtp(String name, String number, String email) async {
@@ -147,7 +147,7 @@ class UserProfile with ChangeNotifier {
       'city': city,
     });
     prefs.setString('userData', user);
-    notifyListeners();
+    // notifyListeners();
   }
 
   Future<void> setProfile(String city) async {
