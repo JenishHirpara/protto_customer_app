@@ -351,7 +351,8 @@ class FlashScreen extends StatelessWidget {
               ),
               color: Theme.of(context).primaryColor,
               onPressed: () {
-                Share.share('Referral Code: $referal',
+                Share.share(
+                    'Download this Awesome Bike Service App. Sign up with my referral code $referal & get Flat ₹100 OFF on First Booking. http://bit.ly/protto-app',
                     subject: 'Referral Code for Protto');
               },
             ),
